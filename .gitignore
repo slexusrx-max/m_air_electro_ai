@@ -29,6 +29,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+.next-dev-session*.log
+.docx_render/
+.tmp_*.jpg
+tmp_layout*.png
 
 # env files (can opt-in for committing if needed)
 .env*
