@@ -102,3 +102,17 @@ Before production launch, confirm:
 - Payment flows are designed around marketplace payment providers.
 - AI and marketplace abstractions are prepared without pretending external services already exist.
 - `PROJECT_BLUEPRINT.md` remains the main product and architecture brief.
+# M Air Electro AI
+
+## Supabase authentication setup
+
+1. Create a Supabase project and apply [20260721000000_auth_profiles.sql](./supabase/migrations/20260721000000_auth_profiles.sql) using the Supabase CLI or SQL Editor.
+2. In Supabase Authentication, enable **Email** and turn on **Confirm email**. Keep Google, GitHub, and Microsoft disabled until their provider credentials and redirect settings are ready.
+3. Add `http://localhost:3000/auth/callback` and `https://your-domain.com/auth/callback` to Supabase Authentication URL Configuration → Redirect URLs.
+4. Copy `.env.example` to `.env.local` and provide `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. The publishable key is safe for browser use; security is enforced with Supabase Auth and the profile RLS policies.
+
+The App Router uses `proxy.ts` for optimistic protected-route checks and validates the authenticated user again in every protected Server Component and Server Action. OAuth provider plumbing remains intentionally unconfigured.
+
+### First administrator
+
+Register and verify your own account first. Then, in the Supabase SQL Editor, run the commented promotion query in [20260721000001_add_admin_role.sql](./supabase/migrations/20260721000001_add_admin_role.sql), replacing the email address with yours. Sign in again and you will be routed to `/admin`. There is deliberately no public “administrator” registration option.

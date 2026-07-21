@@ -2,6 +2,8 @@ import Image from "next/image";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { getCurrentProfile } from "@/lib/supabase/auth";
+import { getDictionary } from "@/lib/i18n/dictionaries";
 
 const circuitOverlayStyle = {
   backgroundImage: `
@@ -29,11 +31,13 @@ type PlatformShellProps = {
   prioritizeBackground?: boolean;
 };
 
-export function PlatformShell({
+export async function PlatformShell({
   children,
   contentClassName = "flex-1 px-4 pb-16 pt-10 sm:px-6 lg:px-8",
   prioritizeBackground = false,
 }: PlatformShellProps) {
+  const profile = await getCurrentProfile();
+  const dictionary = getDictionary(profile?.preferred_language === "ru" || profile?.preferred_language === "ro" ? profile.preferred_language : "en");
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-[#07101d] text-white">
       <div className="absolute inset-0">
@@ -56,7 +60,7 @@ export function PlatformShell({
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.14]" />
 
       <div className="relative z-10 flex min-h-screen flex-col">
-        <SiteHeader />
+        <SiteHeader profile={profile ? { email: profile.email, role: profile.role } : null} dictionary={dictionary} />
         <div className={contentClassName}>{children}</div>
         <SiteFooter />
       </div>

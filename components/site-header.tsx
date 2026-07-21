@@ -6,6 +6,9 @@ import { useState } from "react";
 
 import { glassPanelClassName, liquidGlassButtonClassName } from "@/components/ui/glass";
 import { siteNavItems } from "@/lib/site-navigation";
+import type { MarketplaceRole } from "@/lib/i18n/types";
+import type { Dictionary } from "@/lib/i18n/types";
+import { signOut } from "@/app/(auth)/actions";
 
 function isActivePath(pathname: string, href: string) {
   if (href === "/") {
@@ -15,7 +18,7 @@ function isActivePath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function SiteHeader() {
+export function SiteHeader({ profile, dictionary: t }: { profile: { email: string; role: MarketplaceRole } | null; dictionary: Dictionary }) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -60,12 +63,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link
-            href="/contact"
-            className={`${liquidGlassButtonClassName} hidden px-4 py-2 text-sm font-semibold sm:inline-flex`}
-          >
-            Contact
-          </Link>
+          {profile ? <><span className="hidden h-9 w-9 items-center justify-center rounded-full border border-lime-100/40 bg-lime-100/15 text-sm font-semibold text-lime-50 sm:inline-flex" title={profile.email}>{profile.email.slice(0, 1).toUpperCase()}</span><Link href="/dashboard" className={`${liquidGlassButtonClassName} hidden px-4 py-2 text-sm font-semibold sm:inline-flex`}>{t["auth.dashboard"]}</Link><form action={signOut} className="hidden sm:block"><button className={`${liquidGlassButtonClassName} px-4 py-2 text-sm font-semibold`}>{t["auth.logout"]}</button></form></> : <><Link href="/login" className={`${liquidGlassButtonClassName} hidden px-4 py-2 text-sm font-semibold sm:inline-flex`}>{t["auth.login"]}</Link><Link href="/register" className="hidden rounded-full bg-lime-300 px-4 py-2 text-sm font-semibold text-slate-950 sm:inline-flex">{t["auth.register"]}</Link></>}
           <button
             type="button"
             aria-expanded={isMobileMenuOpen}
@@ -120,13 +118,7 @@ export function SiteHeader() {
                 </Link>
               );
             })}
-            <Link
-              href="/contact"
-              className="rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-white/88 transition hover:border-white/20 hover:bg-white/[0.08] sm:hidden"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Contact
-            </Link>
+            {profile ? <><Link href="/dashboard" className="rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-white/88 sm:hidden" onClick={() => setIsMobileMenuOpen(false)}>{t["auth.dashboard"]}</Link><form action={signOut} className="sm:hidden"><button className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-left text-sm font-semibold text-white/88">{t["auth.logout"]}</button></form></> : <div className="grid grid-cols-2 gap-2 sm:hidden"><Link href="/login" className="rounded-2xl border border-white/12 px-4 py-3 text-center text-sm font-semibold" onClick={() => setIsMobileMenuOpen(false)}>{t["auth.login"]}</Link><Link href="/register" className="rounded-2xl bg-lime-300 px-4 py-3 text-center text-sm font-semibold text-slate-950" onClick={() => setIsMobileMenuOpen(false)}>{t["auth.register"]}</Link></div>}
           </nav>
         </div>
       ) : null}
