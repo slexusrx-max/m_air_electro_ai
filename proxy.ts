@@ -2,7 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "@/lib/supabase/types";
 
-const protectedPaths = ["/dashboard", "/client", "/expert", "/supplier", "/admin", "/onboarding"];
+const protectedPaths = ["/dashboard", "/client", "/expert", "/admin", "/onboarding"];
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   if (!protectedPaths.some((path) => pathname === path || pathname.startsWith(`${path}/`))) return NextResponse.next();
@@ -14,4 +14,4 @@ export async function proxy(request: NextRequest) {
   if (!user) { const loginUrl = new URL("/login", request.url); loginUrl.searchParams.set("next", pathname); return NextResponse.redirect(loginUrl); }
   return response;
 }
-export const config = { matcher: ["/dashboard/:path*", "/client/:path*", "/expert/:path*", "/supplier/:path*", "/admin/:path*", "/onboarding/:path*"] };
+export const config = { matcher: ["/dashboard/:path*", "/client/:path*", "/expert/:path*", "/admin/:path*", "/onboarding/:path*"] };

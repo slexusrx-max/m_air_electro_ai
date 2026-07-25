@@ -1,11 +1,48 @@
 "use client";
-import { useActionState, useState } from "react";
-import type { Dictionary, MarketplaceRole } from "@/lib/i18n/types";
-import type { Country } from "@/lib/i18n/countries";
-import type { ActionState } from "@/app/(auth)/actions";
 
-export function OnboardingForm({ dictionary: t, countries, initialRole, action }: { dictionary: Dictionary; countries: Country[]; initialRole: MarketplaceRole; action: (state: ActionState, formData: FormData) => Promise<ActionState> }) {
-  const [step, setStep] = useState(1); const [role, setRole] = useState<MarketplaceRole>(initialRole); const [country, setCountry] = useState(""); const [language, setLanguage] = useState("en"); const [state, formAction, pending] = useActionState(action, {});
-  const canNext = () => step === 1 || (step === 2 && Boolean(country)) || step === 3;
-  return <section className="glass-panel mx-auto w-full max-w-2xl rounded-[2rem] p-6 sm:p-8"><p className="text-sm text-lime-200">{step} / 4</p><h1 className="mt-2 font-display text-3xl font-semibold">{t["onboarding.title"]}</h1><p className="mt-2 text-sm text-white/68">{t["onboarding.description"]}</p><form action={formAction} className="mt-7 space-y-6"><input type="hidden" name="role" value={role} /><input type="hidden" name="country_code" value={country} /><input type="hidden" name="preferred_language" value={language} />{step === 1 && <fieldset><legend className="text-lg font-semibold">{t["onboarding.role"]}</legend><div className="mt-4 grid gap-3 sm:grid-cols-3">{(["client", "expert", "supplier"] as MarketplaceRole[]).map((item) => <label key={item} className="cursor-pointer rounded-2xl border border-white/20 bg-white/5 p-4 has-[:checked]:border-lime-200 has-[:checked]:bg-lime-200/10"><input className="sr-only" type="radio" checked={role === item} onChange={() => setRole(item)} /><span className="block font-semibold">{t[`role.${item}`]}</span><span className="mt-2 block text-xs text-white/60">{t[`role.${item}Description`]}</span></label>)}</div></fieldset>}{step === 2 && <label className="block text-lg font-semibold">{t["onboarding.country"]}<select required value={country} onChange={(event) => setCountry(event.target.value)} className="mt-3 w-full rounded-xl border border-white/20 bg-slate-950/50 px-3 py-3 text-white"><option value="" disabled>{t["common.required"]}</option>{countries.map((countryItem) => <option key={countryItem.code} value={countryItem.code}>{countryItem.name} ({countryItem.code})</option>)}</select></label>}{step === 3 && <fieldset><legend className="text-lg font-semibold">{t["onboarding.language"]}</legend><div className="mt-3 grid grid-cols-3 gap-3">{["en", "ru", "ro"].map((code) => <label key={code} className="rounded-xl border border-white/20 p-3 has-[:checked]:border-lime-200"><input className="mr-2" type="radio" value={code} checked={language === code} onChange={() => setLanguage(code)} />{code.toUpperCase()}</label>)}</div></fieldset>}{step === 4 && role === "expert" && <div className="grid gap-4 sm:grid-cols-2"><label className="block text-sm font-medium sm:col-span-2">{t["onboarding.spokenLanguages"]}<div className="mt-2 flex gap-4">{["en", "ru", "ro"].map((code) => <label key={code}><input type="checkbox" name="spoken_languages" value={code} /> {code.toUpperCase()}</label>)}</div></label><fieldset><legend className="text-sm font-medium">{t["onboarding.remote"]}</legend><label className="mr-4"><input required type="radio" name="remote_available" value="yes" /> {t["onboarding.yes"]}</label><label><input required type="radio" name="remote_available" value="no" /> {t["onboarding.no"]}</label></fieldset><label className="block text-sm font-medium">{t["onboarding.city"]}<input required name="city" className="mt-2 w-full rounded-xl border border-white/20 bg-slate-950/30 px-3 py-3" /></label><label className="block text-sm font-medium">{t["onboarding.timezone"]}<input required name="timezone" defaultValue={Intl.DateTimeFormat().resolvedOptions().timeZone} className="mt-2 w-full rounded-xl border border-white/20 bg-slate-950/30 px-3 py-3" /></label><label className="block text-sm font-medium">{t["onboarding.currency"]}<input required name="currency" maxLength={3} placeholder="USD" className="mt-2 w-full rounded-xl border border-white/20 bg-slate-950/30 px-3 py-3" /></label></div>}{state.error && <p role="alert" className="text-sm text-red-200">{state.error}</p>}<div className="flex justify-end"><button type={step < 4 ? "button" : "submit"} disabled={pending} onClick={() => { if (step < 4 && canNext()) setStep((current) => current + 1); }} className="rounded-xl bg-lime-300 px-5 py-3 font-semibold text-slate-950">{step < 4 ? t["onboarding.continue"] : t["onboarding.complete"]}</button></div></form></section>;
+import { useActionState, useState } from "react";
+
+import type { ActionState } from "@/app/(auth)/actions";
+import type { Country } from "@/lib/i18n/countries";
+import type { Dictionary, RegistrationRole } from "@/lib/i18n/types";
+
+type Props = {
+  action: (state: ActionState, formData: FormData) => Promise<ActionState>;
+  countries: Country[];
+  dictionary: Dictionary;
+  initialRole: RegistrationRole;
+};
+
+const inputClassName = "mt-2 w-full rounded-xl border border-white/20 bg-slate-950/30 px-3 py-3 text-white";
+
+export function OnboardingForm({ action, countries, dictionary: t, initialRole }: Props) {
+  const [step, setStep] = useState(1);
+  const [role] = useState<RegistrationRole>(initialRole);
+  const [country, setCountry] = useState("");
+  const [language, setLanguage] = useState("en");
+  const [state, formAction, pending] = useActionState(action, {});
+  const advance = () => { if (step === 1 || (step === 2 && country) || step === 3) setStep((current) => current + 1); };
+  const specializations = ["diagnostics", "automation", "marine", "power"] as const;
+
+  return (
+    <section className="glass-panel mx-auto w-full max-w-2xl rounded-[2rem] p-6 sm:p-8">
+      <p className="text-sm text-lime-200">{step} / 4</p>
+      <h1 className="mt-2 font-display text-3xl font-semibold">{t["onboarding.title"]}</h1>
+      <p className="mt-2 text-sm text-white/68">{t["onboarding.description"]}</p>
+      <form action={formAction} className="mt-7 space-y-6">
+        <input type="hidden" name="country_code" value={country} />
+        <input type="hidden" name="preferred_language" value={language} />
+        {step === 1 && <section><h2 className="text-lg font-semibold">{t[`role.${role}`]}</h2><p className="mt-2 text-sm text-white/70">{t[`role.${role}Description`]}</p><p className="mt-4 text-sm text-lime-100">{t["onboarding.roleFixed"]}</p></section>}
+        {step === 2 && <label className="block text-lg font-semibold">{t["onboarding.country"]}<select required value={country} onChange={(event) => setCountry(event.target.value)} className={inputClassName}><option value="" disabled>{t["common.required"]}</option>{countries.map((item) => <option key={item.code} value={item.code}>{item.name} ({item.code})</option>)}</select></label>}
+        {step === 3 && <fieldset><legend className="text-lg font-semibold">{t["onboarding.language"]}</legend><div className="mt-3 grid grid-cols-3 gap-3">{["en", "ru", "ro"].map((code) => <label key={code} className="rounded-xl border border-white/20 p-3 has-[:checked]:border-lime-200"><input className="mr-2" type="radio" value={code} checked={language === code} onChange={() => setLanguage(code)} />{code.toUpperCase()}</label>)}</div></fieldset>}
+        {step === 4 && <section className="grid gap-4 sm:grid-cols-2">
+          <label className="block text-sm font-medium sm:col-span-2">{t["onboarding.fullName"]}<input required name="full_name" className={inputClassName} /></label>
+          {role === "client" && <><label className="block text-sm font-medium sm:col-span-2">{t["onboarding.assistance"]}<textarea required name="assistance_type" rows={3} className={inputClassName} /></label><label className="block text-sm font-medium sm:col-span-2">{t["onboarding.companyOptional"]}<input name="company_name" className={inputClassName} /></label><label className="block text-sm font-medium sm:col-span-2">{t["onboarding.companyDescription"]}<textarea name="company_description" rows={3} className={inputClassName} /></label></>}
+          {role === "expert" && <><label className="block text-sm font-medium">{t["onboarding.professionalTitle"]}<input required name="professional_title" className={inputClassName} /></label><label className="block text-sm font-medium">{t["onboarding.yearsExperience"]}<input required name="years_experience" type="number" min="0" max="80" className={inputClassName} /></label><fieldset className="sm:col-span-2"><legend className="text-sm font-medium">{t["onboarding.specializations"]}</legend><div className="mt-2 flex flex-wrap gap-4">{specializations.map((item) => <label key={item}><input type="checkbox" name="specializations" value={t[`onboarding.specialization.${item}`]} /> {t[`onboarding.specialization.${item}`]}</label>)}</div></fieldset><label className="block text-sm font-medium sm:col-span-2">{t["onboarding.professionalDescription"]}<textarea required name="professional_description" rows={4} className={inputClassName} /></label></>}
+        </section>}
+        {state.error && <p role="alert" className="text-sm text-red-200">{state.error}</p>}
+        <div className="flex justify-end"><button type={step < 4 ? "button" : "submit"} disabled={pending} onClick={step < 4 ? advance : undefined} className="rounded-xl bg-lime-300 px-5 py-3 font-semibold text-slate-950 disabled:opacity-60">{step < 4 ? t["onboarding.continue"] : t["onboarding.complete"]}</button></div>
+      </form>
+    </section>
+  );
 }

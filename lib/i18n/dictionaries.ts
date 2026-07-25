@@ -19,6 +19,12 @@ const en: Dictionary = {
   "role.clientDescription": "Find electrical services and solutions.", "role.expertDescription": "Offer specialist electrical expertise.", "role.supplierDescription": "Supply products and equipment.",
   "dashboard.client.title": "Client Dashboard", "dashboard.expert.title": "Expert Dashboard", "dashboard.supplier.title": "Supplier Dashboard",
   "dashboard.placeholder": "Your marketplace workspace is being prepared.", "dashboard.profile": "Profile", "common.required": "Required",
+  "onboarding.roleFixed": "Your role was selected when you registered and cannot be changed here.", "onboarding.fullName": "Full name",
+  "onboarding.assistance": "Type of assistance needed", "onboarding.companyOptional": "Company (optional)", "onboarding.professionalTitle": "Professional title",
+  "onboarding.yearsExperience": "Years of experience", "onboarding.specializations": "Specializations", "onboarding.professionalDescription": "Short professional description",
+  "onboarding.contactPerson": "Contact person", "onboarding.companyName": "Company name", "onboarding.productCategories": "Supplied product categories", "onboarding.companyDescription": "Short company description",
+  "onboarding.specialization.diagnostics": "Diagnostics", "onboarding.specialization.automation": "Automation", "onboarding.specialization.marine": "Marine", "onboarding.specialization.power": "Power systems",
+  "onboarding.category.cables": "Cables", "onboarding.category.protection": "Protection", "onboarding.category.automation": "Automation", "onboarding.category.marine": "Marine equipment",
 };
 
 const ru: Dictionary = { ...en,

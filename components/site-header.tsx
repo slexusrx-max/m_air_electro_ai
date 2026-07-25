@@ -41,7 +41,7 @@ export function SiteHeader({ profile, dictionary: t }: { profile: { email: strin
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-2 md:flex">
+        <nav className="hidden items-center gap-2 xl:flex">
           {siteNavItems.map((item) => {
             const isActive = isActivePath(pathname, item.href);
 
@@ -63,12 +63,12 @@ export function SiteHeader({ profile, dictionary: t }: { profile: { email: strin
         </nav>
 
         <div className="flex items-center gap-2">
-          {profile ? <><span className="hidden h-9 w-9 items-center justify-center rounded-full border border-lime-100/40 bg-lime-100/15 text-sm font-semibold text-lime-50 sm:inline-flex" title={profile.email}>{profile.email.slice(0, 1).toUpperCase()}</span><Link href="/dashboard" className={`${liquidGlassButtonClassName} hidden px-4 py-2 text-sm font-semibold sm:inline-flex`}>{t["auth.dashboard"]}</Link><form action={signOut} className="hidden sm:block"><button className={`${liquidGlassButtonClassName} px-4 py-2 text-sm font-semibold`}>{t["auth.logout"]}</button></form></> : <><Link href="/login" className={`${liquidGlassButtonClassName} hidden px-4 py-2 text-sm font-semibold sm:inline-flex`}>{t["auth.login"]}</Link><Link href="/register" className="hidden rounded-full bg-lime-300 px-4 py-2 text-sm font-semibold text-slate-950 sm:inline-flex">{t["auth.register"]}</Link></>}
+          {profile ? <><span className="hidden h-9 w-9 items-center justify-center rounded-full border border-lime-100/40 bg-lime-100/15 text-sm font-semibold text-lime-50 xl:inline-flex" title={profile.email}>{profile.email.slice(0, 1).toUpperCase()}</span><Link href="/dashboard" className={`${liquidGlassButtonClassName} hidden px-4 py-2 text-sm font-semibold xl:inline-flex`}>{t["auth.dashboard"]}</Link><form action={signOut} className="hidden xl:block"><button className={`${liquidGlassButtonClassName} px-4 py-2 text-sm font-semibold`}>{t["auth.logout"]}</button></form></> : <><Link href="/login" className={`${liquidGlassButtonClassName} hidden px-4 py-2 text-sm font-semibold xl:inline-flex`}>{t["auth.login"]}</Link><Link href="/register" className="hidden rounded-full bg-lime-300 px-4 py-2 text-sm font-semibold text-slate-950 xl:inline-flex">{t["auth.register"]}</Link></>}
           <button
             type="button"
             aria-expanded={isMobileMenuOpen}
             aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-            className={`${liquidGlassButtonClassName} px-3 py-2 text-sm font-semibold md:hidden`}
+            className={`${liquidGlassButtonClassName} px-3 py-2 text-sm font-semibold xl:hidden`}
             onClick={() => setIsMobileMenuOpen((currentState) => !currentState)}
           >
             <span className="sr-only">{isMobileMenuOpen ? "Close menu" : "Open menu"}</span>
@@ -96,7 +96,7 @@ export function SiteHeader({ profile, dictionary: t }: { profile: { email: strin
       </header>
 
       {isMobileMenuOpen ? (
-        <div className={`${glassPanelClassName} mt-3 rounded-[1.75rem] p-3 md:hidden`}>
+        <div className={`${glassPanelClassName} mt-3 rounded-[1.75rem] p-3 xl:hidden`}>
           <nav className="flex flex-col gap-2">
             {siteNavItems.map((item) => {
               const isActive = isActivePath(pathname, item.href);
@@ -118,7 +118,7 @@ export function SiteHeader({ profile, dictionary: t }: { profile: { email: strin
                 </Link>
               );
             })}
-            {profile ? <><Link href="/dashboard" className="rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-white/88 sm:hidden" onClick={() => setIsMobileMenuOpen(false)}>{t["auth.dashboard"]}</Link><form action={signOut} className="sm:hidden"><button className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-left text-sm font-semibold text-white/88">{t["auth.logout"]}</button></form></> : <div className="grid grid-cols-2 gap-2 sm:hidden"><Link href="/login" className="rounded-2xl border border-white/12 px-4 py-3 text-center text-sm font-semibold" onClick={() => setIsMobileMenuOpen(false)}>{t["auth.login"]}</Link><Link href="/register" className="rounded-2xl bg-lime-300 px-4 py-3 text-center text-sm font-semibold text-slate-950" onClick={() => setIsMobileMenuOpen(false)}>{t["auth.register"]}</Link></div>}
+            {profile ? <><Link href="/dashboard" className="rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-white/88" onClick={() => setIsMobileMenuOpen(false)}>{t["auth.dashboard"]}</Link><form action={signOut}><button className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-left text-sm font-semibold text-white/88">{t["auth.logout"]}</button></form></> : <div className="grid grid-cols-2 gap-2"><Link href="/login" className="rounded-2xl border border-white/12 px-4 py-3 text-center text-sm font-semibold" onClick={() => setIsMobileMenuOpen(false)}>{t["auth.login"]}</Link><Link href="/register" className="rounded-2xl bg-lime-300 px-4 py-3 text-center text-sm font-semibold text-slate-950" onClick={() => setIsMobileMenuOpen(false)}>{t["auth.register"]}</Link></div>}
           </nav>
         </div>
       ) : null}
