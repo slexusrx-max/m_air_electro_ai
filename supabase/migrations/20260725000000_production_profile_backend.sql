@@ -62,6 +62,10 @@ create table if not exists public.company_profiles (
   updated_at timestamptz not null default now()
 );
 
+drop trigger if exists set_expert_profiles_updated_at on public.expert_profiles;
+drop trigger if exists set_client_profiles_updated_at on public.client_profiles;
+drop trigger if exists set_company_profiles_updated_at on public.company_profiles;
+
 create trigger set_expert_profiles_updated_at before update on public.expert_profiles
   for each row execute function public.set_updated_at();
 create trigger set_client_profiles_updated_at before update on public.client_profiles
@@ -72,6 +76,10 @@ create trigger set_company_profiles_updated_at before update on public.company_p
 alter table public.expert_profiles enable row level security;
 alter table public.client_profiles enable row level security;
 alter table public.company_profiles enable row level security;
+
+drop policy if exists "Users can read their expert profile" on public.expert_profiles;
+drop policy if exists "Users can read their client profile" on public.client_profiles;
+drop policy if exists "Users can read their company profile" on public.company_profiles;
 
 create policy "Users can read their expert profile" on public.expert_profiles
   for select to authenticated using (profile_id = auth.uid());
