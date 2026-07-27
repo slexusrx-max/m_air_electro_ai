@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { getCurrentProfile } from "@/lib/supabase/auth";
+import { getCurrentProfile, getCurrentUser } from "@/lib/supabase/auth";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 
 const circuitOverlayStyle = {
@@ -36,7 +36,7 @@ export async function PlatformShell({
   contentClassName = "flex-1 px-4 pb-16 pt-10 sm:px-6 lg:px-8",
   prioritizeBackground = false,
 }: PlatformShellProps) {
-  const profile = await getCurrentProfile();
+  const [profile, user] = await Promise.all([getCurrentProfile(), getCurrentUser()]);
   const dictionary = getDictionary(profile?.preferred_language === "ru" || profile?.preferred_language === "ro" ? profile.preferred_language : "en");
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-[#07101d] text-white">
@@ -60,7 +60,11 @@ export async function PlatformShell({
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.14]" />
 
       <div className="relative z-10 flex min-h-screen flex-col">
-        <SiteHeader profile={profile ? { email: profile.email, role: profile.role } : null} dictionary={dictionary} />
+        <SiteHeader
+          profile={user ? { email: profile?.email ?? user.email ?? "", role: profile?.role ?? "client" } : null}
+          dashboardHref={profile ? "/dashboard" : "/onboarding"}
+          dictionary={dictionary}
+        />
         <div className={contentClassName}>{children}</div>
         <SiteFooter />
       </div>
