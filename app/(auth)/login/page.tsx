@@ -5,6 +5,8 @@ import { getDictionary } from "@/lib/i18n/dictionaries";
 import { PlatformShell } from "@/components/platform-shell";
 import { getCurrentProfile, rolePath } from "@/lib/supabase/auth";
 
+export const dynamic = "force-dynamic";
+
 export default async function LoginPage() {
   const profile = await getCurrentProfile();
   if (profile) redirect(profile.onboarding_completed ? rolePath[profile.role] : "/onboarding");
