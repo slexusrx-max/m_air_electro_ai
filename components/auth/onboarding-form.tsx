@@ -19,9 +19,16 @@ export function OnboardingForm({ action, countries, dictionary: t, initialRole }
   const [step, setStep] = useState(1);
   const [role] = useState<RegistrationRole>(initialRole);
   const [country, setCountry] = useState("");
+  const [countryError, setCountryError] = useState(false);
   const [language, setLanguage] = useState("en");
   const [state, formAction, pending] = useActionState(action, {});
-  const advance = () => { if (step === 1 || (step === 2 && country) || step === 3) setStep((current) => current + 1); };
+  const advance = () => {
+    if (step === 2 && !country) {
+      setCountryError(true);
+      return;
+    }
+    setStep((current) => current + 1);
+  };
   const specializations = ["diagnostics", "automation", "marine", "power"] as const;
 
   return (
@@ -30,10 +37,9 @@ export function OnboardingForm({ action, countries, dictionary: t, initialRole }
       <h1 className="mt-2 font-display text-3xl font-semibold">{t["onboarding.title"]}</h1>
       <p className="mt-2 text-sm text-white/68">{t["onboarding.description"]}</p>
       <form action={formAction} className="mt-7 space-y-6">
-        <input type="hidden" name="country_code" value={country} />
         <input type="hidden" name="preferred_language" value={language} />
         {step === 1 && <section><h2 className="text-lg font-semibold">{t[`role.${role}`]}</h2><p className="mt-2 text-sm text-white/70">{t[`role.${role}Description`]}</p><p className="mt-4 text-sm text-lime-100">{t["onboarding.roleFixed"]}</p></section>}
-        {step === 2 && <label className="block text-lg font-semibold">{t["onboarding.country"]}<select required value={country} onChange={(event) => setCountry(event.target.value)} className={inputClassName}><option value="" disabled>{t["common.required"]}</option>{countries.map((item) => <option key={item.code} value={item.code}>{item.name} ({item.code})</option>)}</select></label>}
+        {step === 2 && <section><label className="block text-lg font-semibold">{t["onboarding.country"]}<select required name="country_code" autoComplete="country" value={country} onChange={(event) => { setCountry(event.target.value); setCountryError(false); }} className={inputClassName}><option value="" disabled>{t["common.required"]}</option>{countries.map((item) => <option key={item.code} value={item.code}>{item.name} ({item.code})</option>)}</select></label>{countryError && <p role="alert" className="mt-2 text-sm text-red-200">Choose your country to continue.</p>}</section>}
         {step === 3 && <fieldset><legend className="text-lg font-semibold">{t["onboarding.language"]}</legend><div className="mt-3 grid grid-cols-3 gap-3">{["en", "ru", "ro"].map((code) => <label key={code} className="rounded-xl border border-white/20 p-3 has-[:checked]:border-lime-200"><input className="mr-2" type="radio" value={code} checked={language === code} onChange={() => setLanguage(code)} />{code.toUpperCase()}</label>)}</div></fieldset>}
         {step === 4 && <section className="grid gap-4 sm:grid-cols-2">
           <label className="block text-sm font-medium sm:col-span-2">{t["onboarding.fullName"]}<input required name="full_name" className={inputClassName} /></label>
