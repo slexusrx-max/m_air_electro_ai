@@ -47,7 +47,7 @@ export async function PlatformShell({
           fill
           priority={prioritizeBackground}
           sizes="100vw"
-          className="object-cover brightness-110 contrast-95 saturate-75"
+          className="object-cover brightness-105 contrast-100 saturate-150"
         />
       </div>
       <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.04),rgba(2,6,23,0.34))]" />
