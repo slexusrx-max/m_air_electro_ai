@@ -47,10 +47,10 @@ export async function PlatformShell({
           fill
           priority={prioritizeBackground}
           sizes="100vw"
-          className="object-cover"
+          className="object-cover brightness-110 contrast-95 saturate-75"
         />
       </div>
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.12),rgba(2,6,23,0.74))]" />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.04),rgba(2,6,23,0.34))]" />
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.16),transparent_28%),radial-gradient(circle_at_78%_18%,rgba(163,230,53,0.12),transparent_26%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_24%)]" />
       <div
         className="pointer-events-none absolute inset-y-[8%] right-[-12%] hidden w-[72%] opacity-50 md:block"
