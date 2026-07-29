@@ -41,7 +41,7 @@ export async function PlatformShell({
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-[#07101d] text-white">
       {prioritizeBackground && (
-        <>
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-[100svh] overflow-hidden">
           <div className="absolute inset-0">
             <Image
               src="/hero.png"
@@ -60,7 +60,7 @@ export async function PlatformShell({
           />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-[48%] bg-[radial-gradient(circle_at_60%_50%,rgba(163,230,53,0.16),transparent_58%)] opacity-80" />
           <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.14]" />
-        </>
+        </div>
       )}
 
       <div className="relative z-10 flex min-h-screen flex-col">
