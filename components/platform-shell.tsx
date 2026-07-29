@@ -66,7 +66,7 @@ export async function PlatformShell({
       <div className="relative z-10 flex min-h-screen flex-col">
         <SiteHeader
           profile={user ? { email: profile?.email ?? user.email ?? "", role: profile?.role ?? "client" } : null}
-          dashboardHref={profile ? "/dashboard" : "/onboarding"}
+          dashboardHref="/dashboard"
           dictionary={dictionary}
         />
         <div className={contentClassName}>{children}</div>

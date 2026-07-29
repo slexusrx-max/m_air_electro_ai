@@ -19,14 +19,14 @@ export async function signIn(_: ActionState, formData: FormData): Promise<Action
   if (authError) return error(authError.message);
   const profile = await getCurrentProfile();
   if (profile?.account_status === "blocked") { await supabase.auth.signOut(); return error("This account is blocked."); }
-  redirect(profile?.onboarding_completed_at ? rolePath[profile.role] : "/onboarding");
+  redirect(profile ? rolePath[profile.role] : "/dashboard");
 }
 
 export async function signUp(_: ActionState, formData: FormData): Promise<ActionState> {
   const email = value(formData, "email"); const password = value(formData, "password"); const confirmation = value(formData, "confirmation"); const role = value(formData, "role");
   if (!email || password.length < 8) return error("Enter a valid email and a password of at least 8 characters.");
   if (password !== confirmation) return error("Passwords do not match."); if (!validRole(role)) return error("Choose a valid role.");
-  const supabase = await createActionClient(); const { error: authError } = await supabase.auth.signUp({ email, password, options: { data: { role }, emailRedirectTo: absoluteUrl("/auth/callback?next=/onboarding") } });
+  const supabase = await createActionClient(); const { error: authError } = await supabase.auth.signUp({ email, password, options: { data: { role }, emailRedirectTo: absoluteUrl(`/auth/callback?next=${rolePath[role]}`) } });
   if (authError) return error(authError.message); return { message: "Check your email to verify your account." };
 }
 

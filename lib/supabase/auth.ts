@@ -12,6 +12,5 @@ export async function requireCompletedProfile() {
   const profile = await getCurrentProfile();
   if (!profile) redirect("/login");
   if (profile.account_status === "blocked") redirect("/login?error=account-blocked");
-  if (!profile.onboarding_completed) redirect("/onboarding");
   return profile;
 }

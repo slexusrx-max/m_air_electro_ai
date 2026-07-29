@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 export default async function LoginPage() {
   const profile = await getCurrentProfile();
-  if (profile) redirect(profile.onboarding_completed ? rolePath[profile.role] : "/onboarding");
+  if (profile) redirect(rolePath[profile.role]);
 
   return <PlatformShell contentClassName="flex flex-1 items-center px-4 py-12"><AuthForm dictionary={getDictionary()} action={signIn} mode="login" /></PlatformShell>;
 }
