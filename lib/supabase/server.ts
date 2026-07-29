@@ -1,5 +1,6 @@
 import "server-only";
 import { createServerClient } from "@supabase/ssr";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import type { Database } from "@/lib/supabase/types";
 
@@ -37,5 +38,15 @@ export async function createActionClient() {
         }
       },
     },
+  });
+}
+
+export function createAdminClient() {
+  const { url } = getSupabaseConfig();
+  const secretKey = process.env.SUPABASE_SECRET_KEY;
+  if (!secretKey) return null;
+
+  return createSupabaseClient<Database>(url, secretKey, {
+    auth: { autoRefreshToken: false, persistSession: false },
   });
 }
