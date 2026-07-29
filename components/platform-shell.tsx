@@ -40,24 +40,28 @@ export async function PlatformShell({
   const dictionary = getDictionary(profile?.preferred_language === "ru" || profile?.preferred_language === "ro" ? profile.preferred_language : "en");
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-[#07101d] text-white">
-      <div className="absolute inset-0">
-        <Image
-          src="/hero.png"
-          alt="M Air Electro AI hero"
-          fill
-          priority={prioritizeBackground}
-          sizes="100vw"
-          className="object-cover brightness-105 contrast-100 saturate-150"
-        />
-      </div>
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.04),rgba(2,6,23,0.34))]" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.16),transparent_28%),radial-gradient(circle_at_78%_18%,rgba(163,230,53,0.12),transparent_26%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_24%)]" />
-      <div
-        className="pointer-events-none absolute inset-y-[8%] right-[-12%] hidden w-[72%] opacity-50 md:block"
-        style={circuitOverlayStyle}
-      />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-[48%] bg-[radial-gradient(circle_at_60%_50%,rgba(163,230,53,0.16),transparent_58%)] opacity-80" />
-      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.14]" />
+      {prioritizeBackground && (
+        <>
+          <div className="absolute inset-0">
+            <Image
+              src="/hero.png"
+              alt="M Air Electro AI hero"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover brightness-105 contrast-100 saturate-150"
+            />
+          </div>
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(2,6,23,0.04),rgba(2,6,23,0.34))]" />
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.16),transparent_28%),radial-gradient(circle_at_78%_18%,rgba(163,230,53,0.12),transparent_26%),linear-gradient(180deg,rgba(255,255,255,0.04),transparent_24%)]" />
+          <div
+            className="pointer-events-none absolute inset-y-[8%] right-[-12%] hidden w-[72%] opacity-50 md:block"
+            style={circuitOverlayStyle}
+          />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-[48%] bg-[radial-gradient(circle_at_60%_50%,rgba(163,230,53,0.16),transparent_58%)] opacity-80" />
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(180deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:72px_72px] opacity-[0.14]" />
+        </>
+      )}
 
       <div className="relative z-10 flex min-h-screen flex-col">
         <SiteHeader
