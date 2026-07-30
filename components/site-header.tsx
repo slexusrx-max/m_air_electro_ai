@@ -25,7 +25,7 @@ export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: 
   return (
     <div className="mx-4 mt-4 sm:mx-6 lg:mx-8">
       <header
-        className={`${glassPanelClassName} flex items-center justify-between gap-3 rounded-[2rem] px-4 py-3 sm:rounded-full sm:px-6 lg:px-8`}
+        className={`${glassPanelClassName} flex items-center justify-between gap-3 rounded-[2rem] bg-teal-950/95 px-4 py-3 sm:rounded-full sm:px-6 lg:px-8`}
       >
         <Link href="/" className="flex min-w-0 items-center gap-3" onClick={() => setIsMobileMenuOpen(false)}>
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/15 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] backdrop-blur-xl">

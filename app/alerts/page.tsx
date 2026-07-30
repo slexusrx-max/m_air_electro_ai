@@ -1,0 +1,3 @@
+import { SignInRequired, SimplePowerPage } from "@/components/power/simple-pages";
+import { getCurrentUser } from "@/lib/supabase/auth";
+export default async function AlertsPage() { const user = await getCurrentUser(); return <SimplePowerPage eyebrow="Alerts" title="Monitor meaningful changes.">{user ? <div className="info-card"><h2>No alerts configured</h2><p>Alert delivery will only be enabled after the persistence and notification backend are configured.</p></div> : <SignInRequired feature="alerts"/>}<p className="mt-4 text-sm text-slate-600">Browser notifications are coming soon. No notification permission is requested until delivery is configured.</p></SimplePowerPage>; }
