@@ -14,5 +14,5 @@ export default async function RegisterPage() {
     redirect(profile ? rolePath[profile.role] : "/dashboard");
   }
 
-  return <PlatformShell contentClassName="flex flex-1 items-center px-4 py-12"><AuthForm dictionary={getDictionary()} action={signUp} mode="register" /></PlatformShell>;
+  return <PlatformShell prioritizeBackground contentClassName="flex flex-1 items-center px-4 py-12"><AuthForm dictionary={getDictionary()} action={signUp} mode="register" /></PlatformShell>;
 }
