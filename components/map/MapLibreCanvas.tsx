@@ -5,6 +5,7 @@ import { powerPlantsToGeoJson } from "@/lib/map/power-plants-to-geojson";
 import type { PowerPlant } from "@/types/power";
 
 const sourceId = "power-plants";
+const demoMapStyleUrl = "https://tiles.openfreemap.org/styles/liberty";
 
 export function MapLibreCanvas({ plants, onSelect, onError }: { plants: PowerPlant[]; onSelect: (plant: PowerPlant) => void; onError: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -13,7 +14,7 @@ export function MapLibreCanvas({ plants, onSelect, onError }: { plants: PowerPla
   useEffect(() => { plantsRef.current = plants; }, [plants]);
 
   useEffect(() => {
-    const styleUrl = process.env.NEXT_PUBLIC_MAP_STYLE_URL;
+    const styleUrl = process.env.NEXT_PUBLIC_MAP_STYLE_URL ?? demoMapStyleUrl;
     if (!styleUrl || !containerRef.current || mapRef.current) return;
     let cancelled = false;
     let map: import("maplibre-gl").Map | null = null;
