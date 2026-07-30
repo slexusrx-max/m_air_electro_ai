@@ -17,6 +17,12 @@ export type CalculatorItem = {
 };
 
 export const siteNavItems: SiteNavItem[] = [
+  { label: "Power Map", href: "/map", description: "Global power infrastructure and regional resilience." },
+  { label: "Compare", href: "/compare", description: "Compare regional electricity resilience." },
+  { label: "Alerts", href: "/alerts", description: "Monitor configured power-condition changes." },
+  { label: "Saved", href: "/saved", description: "Your saved facilities and regions." },
+  { label: "Methodology", href: "/methodology", description: "Score and data-coverage methodology." },
+  { label: "Pricing", href: "/pricing", description: "Free, Premium and Professional plans." },
   {
     label: "AI Assistant",
     href: "/assistant",

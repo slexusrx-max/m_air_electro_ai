@@ -1,0 +1,6 @@
+import type { RegionPowerSummary } from "@/types/power";
+export const mockRegions: RegionPowerSummary[] = [
+  { id: "constanta", name: "Constanța", type: "city", countryCode: "RO", stabilityScore: 82, gridStatus: "normal", installedCapacityMw: 1953, activePlants: 2, plantsOnOutage: 0, renewableShare: 18, generationMix: [{ source: "nuclear", percentage: 72 }, { source: "gas", percentage: 28 }], confidence: "high", lastUpdatedAt: "2026-07-30T09:00:00.000Z", isDemo: true },
+  { id: "warsaw", name: "Warsaw", type: "city", countryCode: "PL", stabilityScore: 74, gridStatus: "strained", installedCapacityMw: 5962, activePlants: 2, plantsOnOutage: 1, renewableShare: 14, generationMix: [{ source: "coal", percentage: 72 }, { source: "gas", percentage: 28 }], confidence: "medium", lastUpdatedAt: "2026-07-30T07:00:00.000Z", isDemo: true },
+  { id: "valencia", name: "Valencia", type: "city", countryCode: "ES", stabilityScore: 88, gridStatus: "normal", installedCapacityMw: 240, activePlants: 2, plantsOnOutage: 0, renewableShare: 64, generationMix: [{ source: "solar", percentage: 75 }, { source: "wind", percentage: 25 }], confidence: "medium", lastUpdatedAt: "2026-07-29T18:00:00.000Z", isDemo: true }
+];

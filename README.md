@@ -1,4 +1,26 @@
-# M Air Electro AI
+# MR Electro AI — Global Power Resilience Map
+
+MR Electro AI helps people explore power infrastructure, understand regional electricity resilience and monitor available changes in power conditions. The application uses a typed demonstration dataset; it does not present plant status as live operational data.
+
+## Stack
+
+Next.js App Router, React, TypeScript, Tailwind CSS, Supabase SSR and ESLint.
+
+## Run locally
+
+Use npm: `npm install`, then `npm run dev`. Quality checks are `npm run lint`, `npm run typecheck`, and `npm run build`.
+
+## Configuration
+
+Copy `.env.example` and configure Supabase when authentication is required. `NEXT_PUBLIC_MAP_STYLE_URL` enables a production map style. Without it, `/map` intentionally displays a controlled fallback and accessible demonstration-facility list. Paddle keys remain server-only and billing buttons never create a subscription until an integration is configured.
+
+## Data and limitations
+
+Current power plant statuses in the demo dataset are demonstration values and must not be treated as live operational data. Real datasets, verified refresh jobs, Supabase import, Paddle checkout/webhooks, email delivery and production legal review remain backend work. Legal text requires professional legal review before production launch.
+
+## Screenshots
+
+Placeholder — add verified product screenshots before release.
 
 Production-ready MVP repository for an AI-first electrical engineering platform focused on:
 

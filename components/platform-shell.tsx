@@ -39,7 +39,7 @@ export async function PlatformShell({
   const [profile, user] = await Promise.all([getCurrentProfile(), getCurrentUser()]);
   const dictionary = getDictionary(profile?.preferred_language === "ru" || profile?.preferred_language === "ro" ? profile.preferred_language : "en");
   return (
-    <main className="relative min-h-screen overflow-x-hidden bg-[#07101d] text-white">
+    <main className="relative min-h-screen overflow-x-hidden bg-[#f3fbfb] text-slate-900">
       {prioritizeBackground && (
         <div className="pointer-events-none absolute inset-x-0 top-0 h-[100svh] overflow-hidden">
           <div className="absolute inset-0">

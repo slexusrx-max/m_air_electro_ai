@@ -2,6 +2,7 @@ import { PageHero } from "@/components/page-hero";
 import { PlatformShell } from "@/components/platform-shell";
 import { glassPanelClassName } from "@/components/ui/glass";
 import { buildMetadata } from "@/lib/metadata";
+import { DataDisclaimer } from "@/components/power/marketing";
 
 const privacySections = [
   {
@@ -59,6 +60,7 @@ export default function PrivacyPage() {
 
         <div className={`${glassPanelClassName} p-6 sm:p-8 lg:p-10`}>
           <div className="space-y-8">
+            <DataDisclaimer />
             {privacySections.map((section) => (
               <section key={section.title}>
                 <h2 className="text-xl font-semibold text-white">{section.title}</h2>
