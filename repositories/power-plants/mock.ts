@@ -1,3 +1,32 @@
 import { mockPowerPlants } from "@/data/mock-power-plants";
 import type { PowerPlantsRepository } from "@/repositories/power-plants/types";
-export const mockPowerPlantsRepository: PowerPlantsRepository = { async getPowerPlants(filters = {}) { return mockPowerPlants.filter((plant) => (!filters.statuses?.length || filters.statuses.includes(plant.status)) && (!filters.sources?.length || filters.sources.includes(plant.source)) && (!filters.confidence?.length || filters.confidence.includes(plant.confidence)) && (!filters.capacity || filters.capacity === "any" || (filters.capacity === "under-100" && (plant.installedCapacityMw ?? 0) < 100) || (filters.capacity === "100-500" && (plant.installedCapacityMw ?? 0) >= 100 && (plant.installedCapacityMw ?? 0) <= 500) || (filters.capacity === "500-1000" && (plant.installedCapacityMw ?? 0) >= 500 && (plant.installedCapacityMw ?? 0) <= 1000) || (filters.capacity === "over-1000" && (plant.installedCapacityMw ?? 0) > 1000))); }, async getPowerPlantById(id) { return mockPowerPlants.find((plant) => plant.id === id) ?? null; }, async search(query) { const normalized = query.trim().toLowerCase(); if (!normalized) return []; return mockPowerPlants.filter((plant) => [plant.name, plant.country, plant.countryCode, plant.city, plant.region, plant.source].filter(Boolean).some((value) => value!.toLowerCase().includes(normalized))).slice(0, 8).map((plant) => ({ type: "plant" as const, id: plant.id, label: plant.name, detail: `${plant.country} · ${plant.source}` })); } };
+
+export const mockPowerPlantsRepository: PowerPlantsRepository = {
+  async getPowerPlants(filters = {}) {
+    return mockPowerPlants.filter((plant) => (
+      (!filters.statuses?.length || filters.statuses.includes(plant.status)) &&
+      (!filters.sources?.length || filters.sources.includes(plant.source)) &&
+      (!filters.countries?.length || filters.countries.includes(plant.countryCode)) &&
+      (!filters.regions?.length || (plant.region !== undefined && filters.regions.includes(plant.region))) &&
+      (!filters.confidence?.length || filters.confidence.includes(plant.confidence)) &&
+      (!filters.capacity || filters.capacity === "any" ||
+        (filters.capacity === "under-100" && (plant.installedCapacityMw ?? 0) < 100) ||
+        (filters.capacity === "100-500" && (plant.installedCapacityMw ?? 0) >= 100 && (plant.installedCapacityMw ?? 0) <= 500) ||
+        (filters.capacity === "500-1000" && (plant.installedCapacityMw ?? 0) >= 500 && (plant.installedCapacityMw ?? 0) <= 1000) ||
+        (filters.capacity === "over-1000" && (plant.installedCapacityMw ?? 0) > 1000))
+    ));
+  },
+  async getPowerPlantById(id) {
+    return mockPowerPlants.find((plant) => plant.id === id) ?? null;
+  },
+  async search(query) {
+    const normalized = query.trim().toLowerCase();
+    if (!normalized) return [];
+    return mockPowerPlants
+      .filter((plant) => [plant.name, plant.country, plant.countryCode, plant.city, plant.region, plant.operator, plant.source]
+        .filter(Boolean)
+        .some((value) => value!.toLowerCase().includes(normalized)))
+      .slice(0, 8)
+      .map((plant) => ({ type: "plant" as const, id: plant.id, label: plant.name, detail: `${plant.country} · ${plant.source}` }));
+  },
+};

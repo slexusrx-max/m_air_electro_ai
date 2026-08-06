@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Map as MapLibreMap } from "maplibre-gl";
+import { useSearchParams } from "next/navigation";
 
 import { MapFallback } from "@/components/map/MapFallback";
 import { MapFilters } from "@/components/map/MapFilters";
@@ -23,6 +24,7 @@ const legend = [
 export function PowerMap({ plants }: { plants: PowerPlant[] }) {
   const mapRef = useRef<MapLibreMap | null>(null);
   const selectedPlantRef = useRef<PowerPlant | null>(null);
+  const searchParams = useSearchParams();
   const normalized = useMemo(() => normalizePowerPlants(plants), [plants]);
   const [filters, setFilters] = useState<PowerFilters>({});
   const [selectedPlant, setSelectedPlant] = useState<PowerPlant | null>(null);
@@ -30,11 +32,17 @@ export function PowerMap({ plants }: { plants: PowerPlant[] }) {
   const [mapError, setMapError] = useState<string | null>(null);
   const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(true);
 
+  const countries = useMemo(() => Array.from(new Map(normalized.plants.map((plant) => [plant.countryCode, plant.country])).entries())
+    .map(([code, name]) => ({ code, name })).sort((a, b) => a.name.localeCompare(b.name)), [normalized.plants]);
+  const regions = useMemo(() => Array.from(new Set(normalized.plants.flatMap((plant) => plant.region ? [plant.region] : []))).sort(), [normalized.plants]);
+
   useEffect(() => { selectedPlantRef.current = selectedPlant; }, [selectedPlant]);
 
   const visible = useMemo(() => normalized.plants.filter((plant) => (
     (!filters.statuses?.length || filters.statuses.includes(plant.status)) &&
     (!filters.sources?.length || filters.sources.includes(plant.source)) &&
+    (!filters.countries?.length || filters.countries.includes(plant.countryCode)) &&
+    (!filters.regions?.length || (plant.region !== undefined && filters.regions.includes(plant.region))) &&
     (!filters.confidence?.length || filters.confidence.includes(plant.confidence)) &&
     (!filters.capacity || filters.capacity === "any" ||
       (filters.capacity === "under-100" && (plant.installedCapacityMw ?? 0) < 100) ||
@@ -72,8 +80,11 @@ export function PowerMap({ plants }: { plants: PowerPlant[] }) {
 
   const handleReady = useCallback((map: MapLibreMap) => {
     mapRef.current = map;
-    if (selectedPlantRef.current) selectPlant(selectedPlantRef.current);
-  }, [selectPlant]);
+    const selectedId = searchParams.get("plant");
+    const plantFromUrl = selectedId ? normalized.plants.find((item) => item.id === selectedId) : null;
+    if (plantFromUrl) selectPlant(plantFromUrl);
+    else if (selectedPlantRef.current) selectPlant(selectedPlantRef.current);
+  }, [normalized.plants, searchParams, selectPlant]);
 
   const focusUkraine = useCallback(() => {
     const ukrainePlants = normalized.plants.filter((plant) => plant.countryCode === "UA");
@@ -95,7 +106,7 @@ export function PowerMap({ plants }: { plants: PowerPlant[] }) {
             <button type="button" onClick={() => setIsFilterPanelOpen(false)} className="text-xs font-semibold text-teal-700 lg:inline">Hide</button>
           </div>
           <MapSearch onSelect={select} />
-          <div className="mt-5"><MapFilters filters={filters} onChange={setFilters} visibleCount={visible.length} /></div>
+          <div className="mt-5"><MapFilters filters={filters} onChange={setFilters} visibleCount={visible.length} countries={countries} regions={regions} /></div>
           <div className="mt-5 border-t border-teal-950/10 pt-4">
             <button type="button" onClick={focusUkraine} className="button-outline w-full">Focus Ukraine</button>
           </div>
