@@ -18,6 +18,7 @@ export type CalculatorItem = {
 
 export const siteNavItems: SiteNavItem[] = [
   { label: "Power Map", href: "/map", description: "Global power infrastructure and regional resilience." },
+  { label: "Ukraine Energy", href: "/energy/ukraine", description: "Ukraine energy-system dashboard with clear data status." },
   { label: "Compare", href: "/compare", description: "Compare regional electricity resilience." },
   { label: "Alerts", href: "/alerts", description: "Monitor configured power-condition changes." },
   { label: "Saved", href: "/saved", description: "Your saved facilities and regions." },
