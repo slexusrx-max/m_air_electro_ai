@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 
+import { PageBackground } from "@/components/page-background";
 import { buildMetadata } from "@/lib/metadata";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 import "./globals.css";
@@ -65,7 +66,10 @@ export default function RootLayout({
       data-scroll-behavior="smooth"
       className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="relative isolate flex min-h-full flex-col">
+        <PageBackground />
+        <div className="relative z-10 flex min-h-full flex-1 flex-col">{children}</div>
+      </body>
     </html>
   );
 }
