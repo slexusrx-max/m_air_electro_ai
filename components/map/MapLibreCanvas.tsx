@@ -101,6 +101,11 @@ export function MapLibreCanvas({ mapRef, plants, selectedPlant, onSelect, onRead
         instance.addSource(selectedSourceId, { type: "geojson", data: emptyCollection() });
         instance.addLayer({ id: "selected-plant", type: "circle", source: selectedSourceId, paint: { "circle-color": "#ffffff", "circle-radius": 18, "circle-stroke-color": "#0f766e", "circle-stroke-width": 4 } });
         instance.addLayer({ id: "selected-plant-label", type: "symbol", source: selectedSourceId, layout: { "text-field": ["get", "name"], "text-offset": [0, 2.1], "text-size": 13, "text-max-width": 16 }, paint: { "text-color": "#092b35", "text-halo-color": "#ffffff", "text-halo-width": 2 } });
+        const initialBounds = boundsFor(plantsRef.current);
+        if (initialBounds) {
+          fittedSignatureRef.current = plantsRef.current.map((plant) => plant.id).sort().join(",");
+          instance.fitBounds(initialBounds, { padding: 64, maxZoom: plantsRef.current.length === 1 ? 9 : 4.5, duration: 0 });
+        }
         instance.on("click", "plants", (event) => {
           const id = event.features?.[0]?.properties?.id;
           const plant = plantsRef.current.find((item) => item.id === id);
