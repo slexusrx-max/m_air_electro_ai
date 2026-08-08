@@ -1,107 +1,11 @@
 import { notFound } from "next/navigation";
-
 import { PageHero } from "@/components/page-hero";
 import { PlatformShell } from "@/components/platform-shell";
-import { StatusPill } from "@/components/status-pill";
-import { glassPanelClassName, moduleCardClassName } from "@/components/ui/glass";
-import { expertProfiles, getExpertProfileBySlug } from "@/lib/experts";
+import { getExpertProfileBySlug, expertProfiles } from "@/lib/experts";
+import { getRequestDictionary } from "@/lib/i18n/request";
 import { buildMetadata } from "@/lib/metadata";
-
-type ExpertPageProps = {
-  params: Promise<{ slug: string }>;
-};
-
-export async function generateMetadata({ params }: ExpertPageProps) {
-  const { slug } = await params;
-  const profile = getExpertProfileBySlug(slug);
-
-  if (!profile) {
-    return buildMetadata({
-      title: "Expert Not Found",
-      path: "/experts",
-    });
-  }
-
-  return buildMetadata({
-    title: profile.title,
-    description: profile.description,
-    path: `/experts/${profile.slug}`,
-  });
-}
-
-export function generateStaticParams() {
-  return expertProfiles.map((profile) => ({ slug: profile.slug }));
-}
-
-export default async function ExpertDetailPage({ params }: ExpertPageProps) {
-  const { slug } = await params;
-  const profile = getExpertProfileBySlug(slug);
-
-  if (!profile) {
-    notFound();
-  }
-
-  return (
-    <PlatformShell>
-      <section className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8">
-        <PageHero
-          eyebrow="Verified Expert Profile"
-          title={profile.title}
-          description={profile.description}
-          actions={[
-            { href: "/contact", label: "Request onboarding" },
-            { href: "/experts", label: "Back to experts", variant: "secondary" },
-          ]}
-        />
-
-        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <article className={moduleCardClassName}>
-            <p className="text-xs uppercase tracking-[0.26em] text-lime-100/76">Track</p>
-            <div className="mt-4">
-              <StatusPill label={profile.premium ? "Premium" : "Core"} tone={profile.premium ? "success" : "neutral"} />
-            </div>
-          </article>
-          <article className={moduleCardClassName}>
-            <p className="text-xs uppercase tracking-[0.26em] text-lime-100/76">Response</p>
-            <p className="mt-4 text-lg font-semibold text-white">{profile.responseWindow}</p>
-          </article>
-          <article className={moduleCardClassName}>
-            <p className="text-xs uppercase tracking-[0.26em] text-lime-100/76">Regions</p>
-            <p className="mt-4 text-sm leading-7 text-white/76">{profile.regions.join(", ")}</p>
-          </article>
-          <article className={moduleCardClassName}>
-            <p className="text-xs uppercase tracking-[0.26em] text-lime-100/76">Delivery</p>
-            <p className="mt-4 text-sm leading-7 text-white/76">{profile.serviceModes.join(", ")}</p>
-          </article>
-        </section>
-
-        <div className={`${glassPanelClassName} grid gap-8 p-6 sm:p-8 lg:grid-cols-3`}>
-          <section>
-            <h2 className="text-lg font-semibold text-white">Verification signals</h2>
-            <ul className="mt-4 space-y-3 text-sm leading-7 text-white/78">
-              {profile.signals.map((signal) => (
-                <li key={signal}>{signal}</li>
-              ))}
-            </ul>
-          </section>
-          <section>
-            <h2 className="text-lg font-semibold text-white">Typical cases</h2>
-            <ul className="mt-4 space-y-3 text-sm leading-7 text-white/78">
-              {profile.useCases.map((signal) => (
-                <li key={signal}>{signal}</li>
-              ))}
-            </ul>
-          </section>
-          <section>
-            <h2 className="text-lg font-semibold text-white">Primary audience</h2>
-            <ul className="mt-4 space-y-3 text-sm leading-7 text-white/78">
-              {profile.audience.map((signal) => (
-                <li key={signal}>{signal}</li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      </section>
-    </PlatformShell>
-  );
-}
+type Props={params:Promise<{slug:string}>};
+const groups: Record<string,string>={"residential-diagnostics-specialist":"residential","industrial-controls-and-drives-engineer":"industrial","marine-and-offshore-electro-technical-expert":"marine"};
+export async function generateMetadata({params}:Props){const {slug}=await params; const p=getExpertProfileBySlug(slug); const t=await getRequestDictionary(); return buildMetadata({title:p?`${t[`experts.cards.${groups[slug]}.title`]} | Electro-AI`:t["experts.metadataTitle"],description:p?t[`experts.cards.${groups[slug]}.description`]:t["experts.empty.title"],path:"/experts"});}
+export function generateStaticParams(){return expertProfiles.map((profile)=>({slug:profile.slug}));}
+export default async function ExpertDetailPage({params}:Props){const {slug}=await params; const profile=getExpertProfileBySlug(slug); if(!profile) notFound(); const t=await getRequestDictionary(); const group=groups[slug]; return <PlatformShell><section className="mx-auto flex w-full max-w-5xl flex-col gap-6"><PageHero eyebrow={t["experts.badges.verifiedTrack"]} title={t[`experts.cards.${group}.title`]} description={t[`experts.cards.${group}.description`]} actions={[{href:"/contact",label:t["experts.requestHelp"]},{href:"/experts",label:t["experts.back"],variant:"secondary"}]}/><div className="info-card grid gap-4 md:grid-cols-3"><article><p className="text-xs text-slate-500">{t["experts.responseTime"]}</p><p className="mt-2 font-semibold">{t[`experts.cards.${group}.response`]}</p></article><article><p className="text-xs text-slate-500">{t["experts.availability"]}</p><p className="mt-2 font-semibold">{t["experts.available"]}</p></article><article><p className="text-xs text-slate-500">{t["experts.specialties"]}</p><p className="mt-2 font-semibold">{t[`experts.cards.${group}.tags`]}</p></article></div></section></PlatformShell>;}
