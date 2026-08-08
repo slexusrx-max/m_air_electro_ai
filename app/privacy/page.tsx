@@ -60,7 +60,7 @@ export default function PrivacyPage() {
 
         <div className={`${glassPanelClassName} p-6 sm:p-8 lg:p-10`}>
           <div className="space-y-8">
-            <DataDisclaimer />
+            <DataDisclaimer title="Data disclaimer" text="Information from Electro-AI is provided for general informational purposes and must not be the sole basis for safety, emergency, financial, or investment decisions." />
             {privacySections.map((section) => (
               <section key={section.title}>
                 <h2 className="text-xl font-semibold text-white">{section.title}</h2>
