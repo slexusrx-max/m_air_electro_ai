@@ -1,4 +1,4 @@
-export const supportedLocales = ["en", "ru", "ro"] as const;
+export const supportedLocales = ["en", "uk"] as const;
 export type Locale = (typeof supportedLocales)[number];
 
 export const roles = ["client", "expert"] as const;

@@ -44,7 +44,7 @@ export async function updatePassword(_: ActionState, formData: FormData): Promis
 export async function completeOnboarding(_: ActionState, formData: FormData): Promise<ActionState> {
   const profile = await getCurrentProfile(); if (!profile) redirect("/login");
   const countryCode = value(formData, "country_code"); const language = value(formData, "preferred_language"); const fullName = value(formData, "full_name");
-  if (!fullName || !/^[A-Z]{2}$/.test(countryCode) || !/^(en|ru|ro)$/.test(language)) return error("Please complete all required fields.");
+  if (!fullName || !/^[A-Z]{2}$/.test(countryCode) || !/^(en|uk)$/.test(language)) return error("Please complete all required fields.");
   const supabase = await createActionClient(); const { error: updateError } = await supabase.rpc("complete_user_onboarding", {
     p_full_name: fullName, p_country_code: countryCode, p_preferred_language: language,
     p_company_name: value(formData, "company_name") || null, p_company_description: value(formData, "company_description") || null,

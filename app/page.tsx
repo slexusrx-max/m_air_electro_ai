@@ -1,3 +1,4 @@
 import { PlatformShell } from "@/components/platform-shell";
 import { HomeContent } from "@/components/product/page-content";
-export default function Home() { return <PlatformShell><HomeContent /></PlatformShell>; }
+import { getRequestDictionary } from "@/lib/i18n/request";
+export default async function Home() { return <PlatformShell><HomeContent dictionary={await getRequestDictionary()} /></PlatformShell>; }

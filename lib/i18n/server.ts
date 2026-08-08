@@ -5,6 +5,6 @@ import { getCurrentProfile } from "@/lib/supabase/auth";
 
 export async function getUserDictionary() {
   const profile = await getCurrentProfile();
-  const locale: Locale = profile?.preferred_language === "ru" || profile?.preferred_language === "ro" ? profile.preferred_language : "en";
+  const locale: Locale = profile?.preferred_language === "uk" ? "uk" : "en";
   return getDictionary(locale);
 }
