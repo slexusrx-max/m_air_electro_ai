@@ -8,5 +8,5 @@ type PlatformShellProps = { children: React.ReactNode; contentClassName?: string
 export async function PlatformShell({ children, contentClassName = "flex-1 px-4 pb-16 pt-10 sm:px-6 lg:px-8" }: PlatformShellProps) {
   const [profile, user, locale] = await Promise.all([getCurrentProfile(), getCurrentUser(), getRequestLocale()]);
   const dictionary = getDictionary(locale);
-  return <main className="relative min-h-screen overflow-x-hidden bg-transparent text-slate-900"><div className="relative flex min-h-screen flex-col"><SiteHeader profile={user ? { email: profile?.email ?? user.email ?? "", role: profile?.role ?? "client" } : null} dashboardHref="/dashboard" dictionary={dictionary} locale={locale}/><div className={contentClassName}>{children}</div><SiteFooter/></div></main>;
+  return <main className="relative min-h-screen overflow-x-hidden bg-transparent text-slate-900"><div className="relative flex min-h-screen flex-col"><SiteHeader profile={user ? { email: profile?.email ?? user.email ?? "", role: profile?.role ?? "client" } : null} dashboardHref="/dashboard" dictionary={dictionary} locale={locale}/><div className={contentClassName}>{children}</div><SiteFooter dictionary={dictionary}/></div></main>;
 }

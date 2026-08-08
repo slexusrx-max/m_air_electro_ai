@@ -3,8 +3,11 @@ import Link from "next/link";
 import { glassPanelClassName } from "@/components/ui/glass";
 import { footerNavGroups } from "@/lib/site-navigation";
 import { siteConfig } from "@/lib/site";
+import type { Dictionary } from "@/lib/i18n/types";
 
-export function SiteFooter() {
+const footerKeys: Record<string, string> = { Platform: "footer.platform", Marketplace: "footer.marketplace", Company: "footer.company", "AI Assistant": "footer.ai", Diagnostics: "footer.diagnostics", "Documents AI": "footer.documents", Calculators: "nav.calculators", Experts: "footer.experts", "Knowledge Base": "footer.knowledge", Contact: "footer.contact", About: "footer.about", "Privacy Policy": "footer.privacy", Terms: "footer.terms", "Sign In": "auth.login" };
+
+export function SiteFooter({ dictionary: t }: { dictionary: Dictionary }) {
   return (
     <footer className="mx-4 mb-4 mt-10 sm:mx-6 lg:mx-8">
       <div className={`${glassPanelClassName} overflow-hidden rounded-[2rem] px-6 py-8 sm:px-8 lg:px-10`}>
@@ -12,20 +15,18 @@ export function SiteFooter() {
           <div className="max-w-lg">
             <div className="inline-flex items-center gap-3 rounded-full border border-white/16 bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-lime-100/80">
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/10 text-[0.7rem] tracking-[0.2em] text-white">
-                MA
+                EA
               </span>
-              <span>M Air Electro AI</span>
+              <span>Electro-AI</span>
             </div>
             <h2 className="mt-5 max-w-md text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-              Built for electrical trust, not generic service noise.
+              {t["footer.title"]}
             </h2>
             <p className="mt-4 text-sm leading-7 text-white/74 sm:text-base">
-              AI diagnostics, deterministic calculators, expert verification, protected electrical
-              transactions, and premium marine and industrial workflows.
+              {t["footer.description"]}
             </p>
             <p className="mt-5 text-sm text-white/56">
-              Primary commercial focus: {siteConfig.primaryMarket}. International technical
-              operations ready.
+              {t["footer.market"]}: {siteConfig.primaryMarket}. {t["footer.international"]}
             </p>
           </div>
 
@@ -33,7 +34,7 @@ export function SiteFooter() {
             {footerNavGroups.map((group) => (
               <div key={group.title}>
                 <h3 className="text-sm font-semibold uppercase tracking-[0.28em] text-lime-100/78">
-                  {group.title}
+                  {t[footerKeys[group.title]] ?? group.title}
                 </h3>
                 <ul className="mt-4 space-y-3">
                   {group.items.map((item) => (
@@ -43,10 +44,7 @@ export function SiteFooter() {
                         className="group block rounded-2xl border border-transparent bg-white/[0.03] px-3 py-3 transition hover:border-white/12 hover:bg-white/[0.06]"
                       >
                         <span className="block text-sm font-medium text-white/92 transition group-hover:text-lime-50">
-                          {item.label}
-                        </span>
-                        <span className="mt-1 block text-xs leading-6 text-white/50">
-                          {item.description}
+                          {t[footerKeys[item.label]] ?? item.label}
                         </span>
                       </Link>
                     </li>
@@ -58,8 +56,8 @@ export function SiteFooter() {
         </div>
 
         <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-5 text-xs text-white/48 sm:flex-row sm:items-center sm:justify-between">
-          <p>(c) 2026 {siteConfig.name}. Electrical engineering only.</p>
-          <p>Payments should be handled by marketplace providers such as Stripe Connect.</p>
+          <p>(c) 2026 Electro-AI. {t["footer.engineering"]}</p>
+          <p>{t["footer.payments"]}</p>
         </div>
       </div>
     </footer>

@@ -35,14 +35,14 @@ export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: 
       >
         <Link href="/" className="flex min-w-0 items-center gap-3" onClick={() => setIsMobileMenuOpen(false)}>
           <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/15 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] backdrop-blur-xl">
-            MA
+            EA
           </div>
           <div className="min-w-0">
             <span className="block max-w-[11rem] text-sm font-semibold leading-tight tracking-[0.16em] text-white/95 sm:max-w-none sm:text-lg sm:tracking-[0.2em]">
-              M Air Electro AI
+              Electro-AI
             </span>
             <span className="mt-1 hidden text-[0.68rem] uppercase tracking-[0.24em] text-white/46 lg:block">
-              Diagnostics - Calculators - Experts - Protected marketplace
+              {t["header.tagline"]}
             </span>
           </div>
         </Link>
@@ -68,7 +68,7 @@ export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: 
           })}
           <div className="relative">
             <button type="button" onClick={() => setIsMoreOpen((open) => !open)} aria-expanded={isMoreOpen} className={`${liquidGlassButtonClassName} px-4 py-2 text-sm font-medium`}>{t["nav.more"] ?? "More"}</button>
-            {isMoreOpen ? <div className="absolute right-0 z-30 mt-2 w-72 rounded-2xl border border-white/20 bg-teal-950/95 p-2 shadow-xl backdrop-blur-xl">{moreNavItems.map((item) => <Link key={item.href} href={item.href} onClick={() => setIsMoreOpen(false)} className="block rounded-xl px-3 py-2 text-sm text-white/85 hover:bg-white/10"><span className="font-semibold">{t[navKeys[item.label]] ?? item.label}</span><span className="mt-1 block text-xs text-white/55">{item.description}</span></Link>)}</div> : null}
+            {isMoreOpen ? <div className="absolute right-0 z-30 mt-2 w-72 rounded-2xl border border-white/20 bg-teal-950/95 p-2 shadow-xl backdrop-blur-xl">{moreNavItems.map((item) => <Link key={item.href} href={item.href} onClick={() => setIsMoreOpen(false)} className="block rounded-xl px-3 py-2 text-sm text-white/85 hover:bg-white/10"><span className="font-semibold">{t[navKeys[item.label]] ?? item.label}</span></Link>)}</div> : null}
           </div>
           <Link href="/pro" className="rounded-full bg-lime-300 px-4 py-2 text-sm font-bold text-slate-950 shadow-sm">PRO</Link>
         </nav>
@@ -78,11 +78,11 @@ export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: 
           <button
             type="button"
             aria-expanded={isMobileMenuOpen}
-            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-label={isMobileMenuOpen ? t["header.closeMenu"] : t["header.openMenu"]}
             className={`${liquidGlassButtonClassName} px-3 py-2 text-sm font-semibold xl:hidden`}
             onClick={() => setIsMobileMenuOpen((currentState) => !currentState)}
           >
-            <span className="sr-only">{isMobileMenuOpen ? "Close menu" : "Open menu"}</span>
+            <span className="sr-only">{isMobileMenuOpen ? t["header.closeMenu"] : t["header.openMenu"]}</span>
             <span className="block h-5 w-5">
               <span className="flex h-full flex-col items-center justify-center gap-[3px]">
                 <span
@@ -125,7 +125,6 @@ export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: 
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <span className="block">{t[navKeys[item.label]] ?? item.label}</span>
-                  <span className="mt-1 block text-xs leading-6 text-white/58">{item.description}</span>
                 </Link>
               );
             })}
