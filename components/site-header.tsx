@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { glassPanelClassName, liquidGlassButtonClassName } from "@/components/ui/glass";
-import { siteNavItems } from "@/lib/site-navigation";
+import { moreNavItems, primaryNavItems, siteNavItems } from "@/lib/site-navigation";
 import type { MarketplaceRole } from "@/lib/i18n/types";
 import type { Dictionary } from "@/lib/i18n/types";
 import { signOut } from "@/app/(auth)/actions";
@@ -21,6 +21,7 @@ function isActivePath(pathname: string, href: string) {
 export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: t }: { profile: { email: string; role: MarketplaceRole } | null; dashboardHref?: string; dictionary: Dictionary }) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMoreOpen, setIsMoreOpen] = useState(false);
 
   return (
     <div className="mx-4 mt-4 sm:mx-6 lg:mx-8">
@@ -42,7 +43,7 @@ export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: 
         </Link>
 
         <nav className="hidden items-center gap-2 xl:flex">
-          {siteNavItems.map((item) => {
+          {primaryNavItems.map((item) => {
             const isActive = isActivePath(pathname, item.href);
 
             return (
@@ -60,6 +61,11 @@ export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: 
               </Link>
             );
           })}
+          <div className="relative">
+            <button type="button" onClick={() => setIsMoreOpen((open) => !open)} aria-expanded={isMoreOpen} className={`${liquidGlassButtonClassName} px-4 py-2 text-sm font-medium`}>More</button>
+            {isMoreOpen ? <div className="absolute right-0 z-30 mt-2 w-72 rounded-2xl border border-white/20 bg-teal-950/95 p-2 shadow-xl backdrop-blur-xl">{moreNavItems.map((item) => <Link key={item.href} href={item.href} onClick={() => setIsMoreOpen(false)} className="block rounded-xl px-3 py-2 text-sm text-white/85 hover:bg-white/10"><span className="font-semibold">{item.label}</span><span className="mt-1 block text-xs text-white/55">{item.description}</span></Link>)}</div> : null}
+          </div>
+          <Link href="/pro" className="rounded-full bg-lime-300 px-4 py-2 text-sm font-bold text-slate-950 shadow-sm">PRO</Link>
         </nav>
 
         <div className="flex items-center gap-2">

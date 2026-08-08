@@ -1,0 +1,3 @@
+import { PlatformShell } from "@/components/platform-shell";
+import { ProductPage } from "@/components/product/page-content";
+export default function BusinessPage() { return <PlatformShell><ProductPage eyebrow="For Business" title="Keep your business running when the grid does not." description="Plan energy continuity with outage-cost estimates, backup sizing, procurement support and future multi-location monitoring."><section className="grid gap-4 md:grid-cols-3">{["Business Energy Audit","Outage Cost Calculator","Backup System Sizing"].map((item) => <article className="info-card rounded-3xl p-5" key={item}><h2>{item}</h2><p>Estimate only — not a guarantee of savings or uptime.</p></article>)}</section></ProductPage></PlatformShell>; }

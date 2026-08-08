@@ -17,44 +17,22 @@ export type CalculatorItem = {
 };
 
 export const siteNavItems: SiteNavItem[] = [
-  { label: "Power Map", href: "/map", description: "Global power infrastructure and regional resilience." },
-  { label: "Ukraine Energy", href: "/energy/ukraine", description: "Ukraine energy-system dashboard with clear data status." },
-  { label: "Compare", href: "/compare", description: "Compare regional electricity resilience." },
-  { label: "Alerts", href: "/alerts", description: "Monitor configured power-condition changes." },
-  { label: "Saved", href: "/saved", description: "Your saved facilities and regions." },
-  { label: "Methodology", href: "/methodology", description: "Score and data-coverage methodology." },
-  { label: "Pricing", href: "/pricing", description: "Free, Premium and Professional plans." },
-  {
-    label: "AI Assistant",
-    href: "/assistant",
-    description: "Electrical AI assistant for technical Q&A and guidance.",
-  },
-  {
-    label: "Diagnostics",
-    href: "/diagnostics",
-    description: "Step-by-step electrical fault diagnostics.",
-  },
-  {
-    label: "Calculators",
-    href: "/calculators",
-    description: "Engineering calculators for electrical work.",
-  },
-  {
-    label: "Marketplace",
-    href: "/marketplace",
-    description: "Verified experts, protected services, and trusted parts exchange.",
-  },
-  {
-    label: "Experts",
-    href: "/experts",
-    description: "Verified expert tracks for residential, industrial, and marine work.",
-  },
-  {
-    label: "Knowledge Base",
-    href: "/knowledge-base",
-    description: "Technical articles, playbooks, and reusable electrical guidance.",
-  },
+  { label: "Home", href: "/", description: "Energy resilience for Ukraine." },
+  { label: "Ukraine Energy Live", href: "/ukraine-energy", description: "System status, restrictions and sources." },
+  { label: "My Home", href: "/my-home", description: "Your household energy readiness." },
+  { label: "Energy AI", href: "/energy-ai", description: "Specialist backup-power guidance." },
+  { label: "Energy Marketplace", href: "/marketplace", description: "Energy equipment catalogue." },
+  { label: "Energy Map", href: "/energy-map", description: "Ukraine-focused public energy map." },
+  { label: "For Business", href: "/business", description: "Business continuity and energy planning." },
+  { label: "Backup Calculator", href: "/backup-calculator", description: "Size a household backup system." },
+  { label: "Find Installer", href: "/installers", description: "Find energy installation specialists." },
+  { label: "Buildings", href: "/buildings", description: "Building energy-resilience information." },
+  { label: "Professionals", href: "/professionals", description: "Profiles and leads for energy specialists." },
+  { label: "Calculators", href: "/calculators", description: "Engineering calculation tools." },
 ];
+
+export const primaryNavItems = siteNavItems.slice(1, 7);
+export const moreNavItems = siteNavItems.slice(7);
 
 export const calculatorItems: CalculatorItem[] = [
   {

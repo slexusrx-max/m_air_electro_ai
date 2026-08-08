@@ -1,0 +1,3 @@
+import { PlatformShell } from "@/components/platform-shell";
+import { ProductPage } from "@/components/product/page-content";
+export default function BuildingsPage() { return <PlatformShell><ProductPage eyebrow="Buildings" title="Building energy resilience, without guessing." description="Discover reported building backup features and Estimated Energy Resilience Scores when managers, residents or developers submit verified information."><section className="info-card rounded-3xl p-6"><h2>No building selected</h2><p className="mt-3">Generator, battery, solar, lift, water, heating and internet states remain Unknown until supported by a verified report.</p></section></ProductPage></PlatformShell>; }
