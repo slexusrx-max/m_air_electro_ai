@@ -14,11 +14,12 @@ type ProfileTable = { Row: Profile; Insert: Partial<Profile> & Pick<Profile, "id
 type ExpertProfile = { profile_id: string; professional_title: string | null; specializations: string[]; years_experience: number | null; professional_description: string | null; created_at: string; updated_at: string };
 type ClientProfile = { profile_id: string; assistance_type: string | null; created_at: string; updated_at: string };
 type CompanyProfile = { id: string; profile_id: string; company_name: string; description: string | null; created_at: string; updated_at: string };
+type TechnicalDocument = { id: string; owner_id: string; name: string; storage_path: string; mime_type: string; byte_size: number; created_at: string; updated_at: string };
 type Table<Row> = { Row: Row; Insert: Partial<Row>; Update: Partial<Row>; Relationships: [] };
 
 export type Database = {
   public: {
-    Tables: { profiles: ProfileTable; expert_profiles: Table<ExpertProfile>; client_profiles: Table<ClientProfile>; company_profiles: Table<CompanyProfile> };
+    Tables: { profiles: ProfileTable; expert_profiles: Table<ExpertProfile>; client_profiles: Table<ClientProfile>; company_profiles: Table<CompanyProfile>; technical_documents: Table<TechnicalDocument> };
     Views: Record<string, never>;
     Functions: {
       complete_user_onboarding: {
