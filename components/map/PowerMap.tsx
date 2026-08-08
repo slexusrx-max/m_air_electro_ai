@@ -26,7 +26,7 @@ export function PowerMap({ plants }: { plants: PowerPlant[] }) {
   const selectedPlantRef = useRef<PowerPlant | null>(null);
   const searchParams = useSearchParams();
   const normalized = useMemo(() => normalizePowerPlants(plants), [plants]);
-  const [filters, setFilters] = useState<PowerFilters>({});
+  const [filters, setFilters] = useState<PowerFilters>(() => searchParams.get("country") === "UA" ? { countries: ["UA"] } : {});
   const [selectedPlant, setSelectedPlant] = useState<PowerPlant | null>(null);
   const [region, setRegion] = useState<(typeof mockRegions)[number] | null>(null);
   const [mapError, setMapError] = useState<string | null>(null);
@@ -78,20 +78,21 @@ export function PowerMap({ plants }: { plants: PowerPlant[] }) {
     setRegion(mockRegions.find((item) => item.id === result.id) ?? null);
   }, [normalized.plants, selectPlant]);
 
-  const handleReady = useCallback((map: MapLibreMap) => {
-    mapRef.current = map;
-    const selectedId = searchParams.get("plant");
-    const plantFromUrl = selectedId ? normalized.plants.find((item) => item.id === selectedId) : null;
-    if (plantFromUrl) selectPlant(plantFromUrl);
-    else if (selectedPlantRef.current) selectPlant(selectedPlantRef.current);
-  }, [normalized.plants, searchParams, selectPlant]);
-
   const focusUkraine = useCallback(() => {
     const ukrainePlants = normalized.plants.filter((plant) => plant.countryCode === "UA");
     if (ukrainePlants.length) {
       mapRef.current?.fitBounds([[22.1, 44.1], [40.3, 52.5]], { padding: 48, maxZoom: 7, duration: 700 });
     }
   }, [normalized.plants]);
+
+  const handleReady = useCallback((map: MapLibreMap) => {
+    mapRef.current = map;
+    const selectedId = searchParams.get("plant");
+    const plantFromUrl = selectedId ? normalized.plants.find((item) => item.id === selectedId) : null;
+    if (plantFromUrl) selectPlant(plantFromUrl);
+    else if (selectedPlantRef.current) selectPlant(selectedPlantRef.current);
+    else if (searchParams.get("country") === "UA") focusUkraine();
+  }, [focusUkraine, normalized.plants, searchParams, selectPlant]);
 
   const styleUrl = process.env.NEXT_PUBLIC_MAP_STYLE_URL ?? demoMapStyleUrl;
   const retry = useCallback(() => setMapError(null), []);
