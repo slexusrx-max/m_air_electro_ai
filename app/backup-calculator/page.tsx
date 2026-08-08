@@ -1,4 +1,5 @@
 import { PlatformShell } from "@/components/platform-shell";
 import { BackupCalculator } from "@/components/product/backup-calculator";
 import { ProductPage } from "@/components/product/page-content";
-export default function BackupCalculatorPage() { return <PlatformShell><ProductPage eyebrow="Backup Calculator" title="Plan your essential power." description="Choose household loads and a desired outage duration for a preliminary, technically transparent battery and inverter estimate."><BackupCalculator /></ProductPage></PlatformShell>; }
+import { getRequestDictionary } from "@/lib/i18n/request";
+export default async function BackupCalculatorPage() { const t=await getRequestDictionary(); return <PlatformShell><ProductPage eyebrow={t["backup.eyebrow"]} title={t["backup.title"]} description={t["backup.description"]}><BackupCalculator dictionary={t} /></ProductPage></PlatformShell>; }

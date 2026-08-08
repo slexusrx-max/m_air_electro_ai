@@ -1,0 +1,5 @@
+import { readFileSync } from "node:fs";
+const source=readFileSync(new URL("../lib/i18n/dictionaries.ts",import.meta.url),"utf8");
+function keys(locale){const assigned=[...source.matchAll(new RegExp(`Object\\.assign\\(${locale}, \\{([\\s\\S]*?)\\}\\);`,`g`))].flatMap((match)=>[...match[1].matchAll(/"([^"]+)"\s*:/g)].map((entry)=>entry[1])); const base=locale==="uk"?source.match(/const uk: Dictionary = \{([\s\S]*?)\n\};\nObject\.assign/ )?.[1]??"":source.match(/const en: Dictionary = \{([\s\S]*?)\n\};\n\nconst ru/)?.[1]??""; return [...assigned,...base.matchAll(/"([^"]+)"\s*:/g)].map((entry)=>entry[1]);}
+const en=new Set(keys("en")); const uk=new Set(keys("uk")); const missing=[...en].filter((key)=>!uk.has(key)); const extra=[...uk].filter((key)=>!en.has(key));
+if(missing.length||extra.length){console.error(`i18n assignment parity failed\nmissing uk: ${missing.join(", ")||"none"}\nextra uk: ${extra.join(", ")||"none"}`);process.exit(1);} console.log(`i18n assignment parity passed (${en.size} explicit keys)`);
