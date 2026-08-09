@@ -1,0 +1,1880 @@
+Ты работаешь внутри существующего production-проекта MR Electro AI.
+
+Твоя задача — профессионально переработать пользовательский интерфейс сайта и внедрить новый основной сервис:
+
+GLOBAL POWER RESILIENCE MAP
+
+Это интерактивная карта мировой энергетической инфраструктуры. Она должна помогать пользователям:
+
+* находить электростанции по всему миру;
+* видеть доступную информацию об их типе, мощности и состоянии;
+* оценивать устойчивость электроснабжения стран и регионов;
+* сравнивать разные места;
+* сохранять выбранные станции и регионы;
+* создавать уведомления;
+* пользоваться бесплатным или платным тарифом.
+
+Нужен не статический макет и не один демонстрационный экран, а законченный frontend MVP, связанный с существующим приложением.
+
+После выполнения проект должен запускаться и собираться без ошибок.
+
+# 1. Критические правила
+
+Перед изменением кода обязательно изучи существующий проект.
+
+Проверь:
+
+* package.json;
+* lock-файл;
+* структуру app или pages;
+* components;
+* lib;
+* services;
+* public;
+* styles;
+* middleware;
+* конфигурацию TypeScript;
+* конфигурацию Tailwind;
+* существующую Supabase-интеграцию;
+* текущую авторизацию;
+* переменные окружения;
+* существующие маршруты;
+* текущий дизайн и компоненты.
+
+Не начинай переписывать проект до завершения аудита.
+
+Не удаляй существующие рабочие функции без необходимости.
+
+Не заменяй существующее приложение статическим HTML-файлом.
+
+Не складывай весь новый функционал в один page.tsx.
+
+Не изменяй версии Next.js, React, TypeScript, Tailwind или Supabase без реальной необходимости.
+
+Не устанавливай несколько библиотек, выполняющих одну и ту же задачу.
+
+Не используй Google Maps.
+
+Не добавляй секретные ключи в frontend.
+
+Не коммить реальные значения из .env.
+
+Не утверждай, что демонстрационные статусы электростанций являются текущими реальными данными.
+
+Не создавай фиктивные успешные платежи, уведомления или подписки.
+
+Не ломай существующую авторизацию.
+
+Не останавливайся после создания главной страницы.
+
+# 2. Безопасный порядок работы
+
+Работай по этапам.
+
+После каждого крупного этапа проверяй TypeScript и сборку, чтобы не накапливать большое количество ошибок.
+
+Порядок:
+
+1. Провести аудит существующего проекта.
+2. Вывести краткий список найденной структуры и потенциальных проблем.
+3. Создать git-ветку:
+
+feature/global-power-resilience-map
+
+Если git недоступен, продолжить без ветки, но не удалять существующие файлы необратимо.
+
+4. Создать план изменений.
+5. Установить только необходимые зависимости.
+6. Создать типы данных.
+7. Создать mock repository и сервисный слой.
+8. Создать дизайн-систему.
+9. Обновить общий layout.
+10. Создать главную страницу.
+11. Реализовать карту.
+12. Реализовать поиск и фильтрацию.
+13. Реализовать карточку электростанции.
+14. Реализовать региональную аналитику.
+15. Реализовать Compare, Saved, Alerts, Dashboard и Pricing.
+16. Интегрировать существующую Supabase Auth.
+17. Добавить billing abstraction.
+18. Добавить Supabase migration.
+19. Добавить юридические и методологические страницы.
+20. Проверить desktop, tablet и mobile.
+21. Выполнить lint, typecheck и production build.
+22. Исправить все найденные ошибки.
+23. Предоставить итоговый отчёт.
+
+Не спрашивай подтверждение после каждого этапа. Выполни задачу последовательно.
+
+# 3. Технологический стек
+
+Сохрани существующий стек проекта.
+
+Ожидаемый стек:
+
+* Next.js App Router;
+* React;
+* TypeScript;
+* Tailwind CSS;
+* Supabase;
+* ESLint.
+
+Разрешено добавить, если аналогов ещё нет:
+
+* maplibre-gl;
+* lucide-react;
+* clsx;
+* tailwind-merge;
+* zod;
+* recharts.
+
+Не устанавливай дополнительную UI-библиотеку, если существующие компоненты и Tailwind позволяют выполнить задачу.
+
+Не устанавливай одновременно несколько библиотек:
+
+* карт;
+* графиков;
+* иконок;
+* форм;
+* уведомлений;
+* анимации.
+
+Для анимаций сначала используй CSS transitions. Framer Motion добавляй только при реальной необходимости и только если он уже используется в проекте.
+
+# 4. Концепция продукта
+
+Продукт не должен обещать пользователю гарантированное наличие электричества.
+
+Основная формулировка:
+
+MR Electro AI helps people explore power infrastructure, understand regional electricity resilience and monitor available changes in power conditions.
+
+Сервис должен чётко разделять:
+
+1. Plant status — статус отдельной электростанции.
+2. Grid status — состояние региональной энергосистемы.
+3. Power Stability Score — расчётная оценка устойчивости.
+4. Data confidence — степень надёжности информации.
+5. Data freshness — время последнего подтверждённого обновления.
+
+Нельзя делать вывод, что отсутствие свежих данных означает остановку электростанции или отсутствие электричества.
+
+# 5. Визуальная концепция
+
+Основной визуальный стиль:
+
+LIQUID GLASS + TURQUOISE
+
+Интерфейс должен выглядеть:
+
+* современно;
+* технологично;
+* дорого;
+* чисто;
+* спокойно;
+* профессионально;
+* не перегруженно;
+* не как криптовалютная биржа;
+* не как военная система;
+* не как игровой интерфейс.
+
+## Цветовая основа
+
+Используй CSS variables и theme tokens.
+
+Основные цвета:
+
+* turquoise primary;
+* cyan-turquoise accent;
+* soft mint green;
+* deep navy text;
+* light cool background;
+* white translucent surfaces;
+* muted blue-gray borders;
+* amber warning;
+* red only for confirmed critical conditions.
+
+Ориентировочные значения:
+
+```css
+:root {
+  --background: #f3fbfb;
+  --background-secondary: #eaf7f7;
+  --foreground: #092b35;
+  --foreground-muted: #607983;
+
+  --primary: #16b8b1;
+  --primary-hover: #109c97;
+  --primary-soft: rgba(22, 184, 177, 0.14);
+
+  --secondary: #9de8c1;
+  --secondary-soft: rgba(157, 232, 193, 0.18);
+
+  --glass-background: rgba(255, 255, 255, 0.62);
+  --glass-background-strong: rgba(255, 255, 255, 0.78);
+  --glass-border: rgba(255, 255, 255, 0.72);
+  --glass-shadow: rgba(10, 66, 75, 0.12);
+
+  --border: rgba(76, 124, 132, 0.18);
+  --danger: #dc5a64;
+  --warning: #e3a42d;
+  --success: #2da87b;
+  --info: #368fd8;
+}
+```
+
+Можно немного скорректировать значения для контраста, но сохранить turquoise и soft mint как фирменную основу.
+
+Не использовать коричневый.
+
+Не использовать агрессивный неон.
+
+Не делать весь текст бирюзовым.
+
+## Liquid Glass
+
+Liquid Glass означает:
+
+* полупрозрачные поверхности;
+* backdrop blur;
+* мягкие внутренние блики;
+* тонкие светлые границы;
+* плавные скругления;
+* ощущение глубины;
+* аккуратные отражения;
+* мягкое наложение слоёв;
+* отсутствие тяжёлых чёрных теней.
+
+Пример базовой glass-поверхности:
+
+```css
+.glass-panel {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.78),
+      rgba(240, 255, 253, 0.5)
+    );
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  box-shadow:
+    0 20px 60px rgba(10, 66, 75, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(22px) saturate(135%);
+  -webkit-backdrop-filter: blur(22px) saturate(135%);
+}
+```
+
+Обязательно предусмотреть fallback для браузеров без backdrop-filter:
+
+```css
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-panel {
+    background: rgba(247, 253, 253, 0.96);
+  }
+}
+```
+
+Не применять сильный blur ко всей странице.
+
+Не использовать Liquid Glass на каждом маленьком элементе.
+
+Использовать glass-эффект для:
+
+* navigation;
+* floating map panels;
+* station details drawer;
+* search;
+* filter panel;
+* pricing highlight;
+* hero preview;
+* mobile bottom sheet.
+
+Обычные информационные секции могут иметь непрозрачный светлый фон.
+
+## Скругления и тени
+
+* основные панели: 20–28 px;
+* карточки: 18–24 px;
+* кнопки: 12–16 px;
+* поля: 14–18 px;
+* badges: полностью скруглённые.
+
+Тени должны быть мягкими и холодными.
+
+Избегать:
+
+* тяжёлых чёрных теней;
+* сильных свечений;
+* слишком большого количества декоративных бликов;
+* постоянной анимации фона.
+
+# 6. Типографика
+
+Используй существующий шрифт, если он качественно подключён.
+
+В противном случае используй:
+
+* Geist;
+* Inter;
+* системный fallback.
+
+Текст должен быть хорошо читаемым.
+
+Не использовать сверхтонкий шрифт для основного текста.
+
+Иерархия:
+
+* hero title: крупный, но не огромный;
+* page title;
+* section heading;
+* card title;
+* body;
+* supporting text;
+* label;
+* caption.
+
+Не использовать более четырёх заметно разных размеров текста на одном экране.
+
+# 7. Маршруты
+
+Создай или обнови:
+
+* /
+* /map
+* /compare
+* /alerts
+* /saved
+* /pricing
+* /dashboard
+* /login
+* /signup
+* /forgot-password
+* /account
+* /about
+* /methodology
+* /privacy
+* /terms
+
+Если часть маршрутов уже существует, аккуратно адаптируй их.
+
+Главным пользовательским продуктом должна быть страница /map.
+
+# 8. Общий layout
+
+Создай единый App Shell.
+
+Desktop navigation:
+
+Слева:
+
+MR Electro AI
+
+Навигация:
+
+* Power Map;
+* Compare;
+* Alerts;
+* Saved;
+* Methodology;
+* Pricing.
+
+Справа:
+
+* переключатель языка;
+* Sign in или avatar menu;
+* Get Premium.
+
+Mobile navigation:
+
+* logo;
+* search shortcut;
+* account;
+* menu button.
+
+Navigation должна быть полупрозрачной glass-панелью.
+
+На странице карты навигация может располагаться поверх карты, но не должна закрывать важные элементы.
+
+Добавь footer для обычных страниц.
+
+На полноэкранной карте footer не нужен.
+
+# 9. Главная страница
+
+Главная страница должна продавать пользу сервиса, а не техническую карту.
+
+Hero title:
+
+Know where power is stable.
+
+Hero description:
+
+Explore power plants, grid conditions and regional electricity resilience across the world.
+
+Primary CTA:
+
+Explore Global Power Map
+
+Secondary CTA:
+
+Compare Locations
+
+В hero должен присутствовать интерактивно выглядящий preview карты:
+
+* мировой глобус или карта;
+* несколько станций;
+* glass-карточка региона;
+* stability score;
+* миниатюрный grid status.
+
+Если полноценная карта в hero ухудшает производительность, используй облегчённую визуальную композицию, но не обычную статическую фотографию.
+
+Ниже разместить:
+
+## Key benefits
+
+* Global infrastructure visibility;
+* Regional power resilience;
+* Alerts and location comparison.
+
+## How it works
+
+1. Choose a country, region or city.
+2. Review available power infrastructure.
+3. Examine stability indicators and data confidence.
+4. Save locations and create alerts.
+
+## Example comparison
+
+* Constanța;
+* Warsaw;
+* Valencia.
+
+## Trust section
+
+Объяснить:
+
+* данные поступают из разных источников;
+* не все страны предоставляют realtime-информацию;
+* система показывает время обновления;
+* оценки не являются гарантией.
+
+## Pricing preview
+
+Показать Free и Premium.
+
+## FAQ
+
+Минимум вопросы:
+
+* Are plant statuses live?
+* Does a nearby plant guarantee electricity?
+* How is the stability score calculated?
+* Can this service be used during emergencies?
+* Which countries are supported?
+* How often is the information updated?
+
+# 10. Карта /map
+
+Страница должна быть основным рабочим пространством.
+
+Desktop layout:
+
+* карта занимает основную часть экрана;
+* слева floating glass sidebar;
+* справа station или region details panel;
+* сверху компактная navigation;
+* снизу или в углу legend;
+* zoom controls;
+* map style control;
+* user location control только если он уже безопасно реализован.
+
+Mobile layout:
+
+* карта занимает весь экран;
+* поиск сверху;
+* quick filters под поиском;
+* filters открываются в bottom sheet;
+* карточка станции открывается снизу;
+* панели не должны одновременно перекрывать большую часть карты;
+* нижняя карточка должна поддерживать collapsed и expanded states.
+
+# 11. Реализация MapLibre
+
+Используй MapLibre GL JS.
+
+Создай отдельный клиентский компонент:
+
+components/map/PowerMap.tsx
+
+Загружай карту через dynamic import с:
+
+ssr: false
+
+Не импортируй maplibre-gl в Server Component.
+
+CSS MapLibre импортируй безопасно один раз в подходящем клиентском или глобальном слое.
+
+Карта должна:
+
+* инициализироваться только один раз;
+* корректно уничтожаться при unmount;
+* не пересоздаваться при изменении фильтров;
+* обновлять GeoJSON source через setData;
+* вызывать resize после изменения размеров панелей;
+* корректно работать после client navigation;
+* не падать при отсутствии map style URL.
+
+Добавь fallback:
+
+Если NEXT_PUBLIC_MAP_STYLE_URL не задан или стиль не загрузился:
+
+* показать понятное сообщение;
+* не оставлять пустой белый экран;
+* показать кнопку Retry;
+* показать альтернативный список demo-станций;
+* приложение всё равно должно собираться.
+
+Поддержать:
+
+* pan;
+* zoom;
+* world view;
+* optional globe projection, если стабильно поддерживается используемой версией;
+* navigation controls;
+* scale;
+* fullscreen на desktop;
+* clusters;
+* cluster count;
+* selected feature;
+* hover state;
+* popup;
+* fitBounds;
+* flyTo;
+* responsive resize.
+
+Не использовать тысячи React Marker компонентов.
+
+Использовать:
+
+* GeoJSON source;
+* symbol layers;
+* circle layers;
+* cluster layers;
+* cluster count layer;
+* selected point layer.
+
+# 12. Map style
+
+Переменная:
+
+NEXT_PUBLIC_MAP_STYLE_URL
+
+Добавь её в .env.example.
+
+Не вставляй коммерческий ключ непосредственно в код.
+
+Если для локального demo используется публичный стиль, вынеси его в конфигурацию и обозначь как development fallback.
+
+Стиль карты должен быть:
+
+* светлым;
+* чистым;
+* похожим по качеству на современные карты;
+* с хорошо различимыми странами, городами и береговой линией;
+* не слишком цветным;
+* подходящим под turquoise glass UI.
+
+Добавь опциональный переключатель:
+
+* Light;
+* Dark;
+* Satellite — только как Coming soon, если реального источника нет.
+
+Не делай фиктивный спутниковый слой.
+
+# 13. Типы электростанций
+
+Поддержать:
+
+* nuclear;
+* gas;
+* coal;
+* hydro;
+* solar;
+* wind;
+* oil;
+* geothermal;
+* biomass;
+* storage;
+* other.
+
+Различать типы:
+
+* иконкой;
+* формой;
+* подписью в карточке.
+
+Размер маркера зависит от установленной мощности.
+
+Не использовать только цвет для передачи типа или статуса.
+
+# 14. Статусы
+
+PowerPlantStatus:
+
+* operating;
+* partial;
+* planned_outage;
+* unplanned_outage;
+* construction;
+* decommissioned;
+* unknown.
+
+Цвета:
+
+* operating — success;
+* partial — warning;
+* planned outage — amber;
+* unplanned outage — danger;
+* construction — info;
+* decommissioned — muted;
+* unknown — neutral.
+
+Для каждого статуса обязательно:
+
+* текст;
+* цвет;
+* иконка или форма;
+* tooltip.
+
+# 15. Поиск
+
+Создай MapSearch.
+
+Placeholder:
+
+Search country, city, region or power plant
+
+Поддержать поиск по:
+
+* названию станции;
+* городу;
+* региону;
+* стране;
+* коду страны;
+* типу генерации.
+
+Добавить:
+
+* debounce;
+* recent searches;
+* keyboard navigation;
+* Escape для закрытия;
+* Enter для выбора;
+* loading state;
+* empty state;
+* clear button.
+
+При выборе станции:
+
+* выполнить flyTo;
+* выделить объект;
+* открыть details panel.
+
+При выборе региона:
+
+* выполнить fitBounds, если bounds доступны;
+* открыть regional summary.
+
+На первом этапе разрешено использовать mock repository.
+
+Компоненты не должны импортировать mock data напрямую.
+
+# 16. Фильтры
+
+Создай MapFilters.
+
+Фильтры:
+
+## Status
+
+* Operating;
+* Partially operating;
+* Planned outage;
+* Unplanned outage;
+* Under construction;
+* Decommissioned;
+* Unknown.
+
+## Energy source
+
+* Nuclear;
+* Gas;
+* Coal;
+* Hydro;
+* Solar;
+* Wind;
+* Oil;
+* Geothermal;
+* Biomass;
+* Storage;
+* Other.
+
+## Capacity
+
+* Any;
+* Under 100 MW;
+* 100–500 MW;
+* 500–1,000 MW;
+* Over 1,000 MW.
+
+## Data confidence
+
+* High;
+* Medium;
+* Low.
+
+## Data freshness
+
+* Last hour;
+* Last 24 hours;
+* Last 7 days;
+* Older;
+* Unknown.
+
+Добавить:
+
+* Apply filters;
+* Clear all;
+* active filter count;
+* number of visible objects;
+* aria-live для количества результатов.
+
+На desktop фильтрация может обновляться сразу.
+
+На mobile применять после нажатия Apply, чтобы избежать постоянного закрытия sheet.
+
+Фильтрация должна реально обновлять GeoJSON source.
+
+# 17. Legend
+
+Legend должна быть компактной.
+
+Показывать:
+
+* основные статусы;
+* power plant categories;
+* marker size meaning;
+* Demo data badge, если используются mock-данные.
+
+На mobile legend открывается отдельной кнопкой.
+
+# 18. Карточка электростанции
+
+Создай:
+
+PlantDetailsPanel
+
+Поля:
+
+* name;
+* country;
+* region;
+* city;
+* coordinates;
+* energy source;
+* primary fuel;
+* installed capacity;
+* available generation;
+* number of units;
+* operator;
+* commissioning year;
+* current status;
+* last confirmed update;
+* data freshness;
+* data confidence;
+* data sources.
+
+Пример:
+
+Cernavodă Nuclear Power Plant
+Romania · Constanța County
+
+Status: Operating
+Installed capacity: 1,413 MW
+Current generation: Not available
+Units: 2
+Primary source: Nuclear
+Last confirmed update: 2 hours ago
+Data confidence: High
+
+Действия:
+
+* Save;
+* Create alert;
+* Compare region;
+* Share;
+* View methodology.
+
+Если функция ещё не подключена:
+
+* показать Coming soon;
+* не выводить фиктивный успех.
+
+Для Share разрешено сформировать безопасную ссылку на текущий объект.
+
+Если Clipboard API недоступен, показать selectable URL.
+
+Добавить секцию:
+
+Generation and availability history
+
+Если данных нет:
+
+Live generation data is not available for this facility.
+
+Не генерировать случайный realtime-график.
+
+Для demo допускается график только с явной подписью:
+
+Demonstration data
+
+# 19. Региональная карточка
+
+Создай:
+
+RegionDetailsPanel
+
+Показать:
+
+* region name;
+* country;
+* Power Stability Score;
+* current grid status;
+* installed capacity;
+* generation mix;
+* active plants;
+* reported outages;
+* grid interconnections, если доступны;
+* renewable share, если доступна;
+* recent disruptions;
+* data confidence;
+* last update.
+
+Power Stability Score:
+
+* 85–100: Very stable;
+* 70–84: Stable;
+* 50–69: Moderate;
+* 30–49: At risk;
+* 0–29: Critical;
+* null: Not enough data.
+
+Обязательно добавить объяснение:
+
+This score is an estimate based on available infrastructure, generation, outage and grid data. It is not a guarantee of uninterrupted electricity supply.
+
+Не считать score непосредственно в UI-компоненте.
+
+Создай отдельную функцию или сервис.
+
+Для demo можно использовать заранее рассчитанные значения.
+
+# 20. Compare
+
+Страница:
+
+/compare
+
+Пользователь может выбрать до трёх мест.
+
+Сравнивать:
+
+* Power Stability Score;
+* grid condition;
+* installed generation;
+* generation diversity;
+* recent reported disruptions;
+* data freshness;
+* data confidence;
+* renewable share;
+* active plants;
+* plants on outage.
+
+Desktop:
+
+* сравнительные колонки.
+
+Mobile:
+
+* последовательные карточки;
+* sticky selector;
+* удобное переключение.
+
+Добавить:
+
+* Add location;
+* Remove;
+* Swap;
+* Save comparison;
+* Upgrade CTA.
+
+Не создавать выдуманный comparison history.
+
+# 21. Saved
+
+Страница:
+
+/saved
+
+Показывать:
+
+* saved plants;
+* saved cities;
+* saved regions;
+* current available status;
+* score;
+* score change, только если есть история;
+* last updated;
+* confidence;
+* buttons Compare и Create alert.
+
+Если пользователь не авторизован:
+
+* показать Sign in required;
+* не падать;
+* не выполнять запросы с undefined user ID.
+
+Если данных нет:
+
+* качественный EmptyState;
+* CTA Explore the map.
+
+Для demo mode разрешено показывать локальное демонстрационное состояние, но оно должно быть явно обозначено.
+
+# 22. Alerts
+
+Страница:
+
+/alerts
+
+Типы уведомлений:
+
+* stability score falls below a selected threshold;
+* major plant outage;
+* regional grid warning;
+* rolling blackout announcement;
+* station status change;
+* station returns to service;
+* data confidence changes materially.
+
+Free:
+
+* одно базовое уведомление.
+
+Premium:
+
+* до 10 сохранённых регионов;
+* несколько условий;
+* email notifications;
+* alert history.
+
+Browser notifications:
+
+* показать Coming soon, если backend и permission flow не реализованы.
+
+Создание alert не должно показывать успешное сохранение, если данные не были реально сохранены.
+
+Если Supabase не подключён:
+
+* использовать demo mode;
+* показывать соответствующий badge.
+
+# 23. Pricing
+
+Страница:
+
+/pricing
+
+Тарифы:
+
+## Free
+
+* World power plant map;
+* Basic facility information;
+* Limited regional scores;
+* One saved location;
+* One basic alert;
+* Standard filters;
+* delayed data where applicable.
+
+## Premium
+
+$5.99/month
+
+$49.99/year
+
+Показать:
+
+Save 30%
+
+Premium включает:
+
+* advanced regional analysis;
+* up to 10 saved locations;
+* advanced filters;
+* location comparison;
+* outage and status alerts;
+* data history where available;
+* no advertising.
+
+## Professional
+
+* advanced datasets;
+* exports;
+* team access;
+* API access;
+* priority support.
+
+Цена:
+
+Contact us
+
+Pricing cards должны использовать Liquid Glass умеренно.
+
+Premium card может быть визуально выделена turquoise border и soft inner glow.
+
+Не использовать aggressive animated gradient.
+
+До подключения Paddle:
+
+* кнопка должна открывать честный billing setup dialog;
+* сообщение: Billing integration is being configured;
+* не создавать активную подписку;
+* не изменять роль пользователя;
+* не показывать payment successful.
+
+# 24. Billing architecture
+
+Подготовить:
+
+* lib/billing/config.ts;
+* lib/billing/types.ts;
+* lib/billing/client.ts;
+* services/subscriptions.ts.
+
+Создать безопасный интерфейс:
+
+```ts
+export async function startCheckout(planId: string): Promise<void>
+```
+
+До подключения Paddle функция должна:
+
+* проверять planId;
+* не изменять подписку;
+* возвращать контролируемую ошибку или открывать configuration modal;
+* иметь понятный TODO.
+
+Не добавлять секретный API key в client code.
+
+В .env.example:
+
+```env
+PADDLE_API_KEY=
+PADDLE_WEBHOOK_SECRET=
+NEXT_PUBLIC_PADDLE_CLIENT_TOKEN=
+NEXT_PUBLIC_PADDLE_ENVIRONMENT=sandbox
+```
+
+PADDLE_API_KEY и PADDLE_WEBHOOK_SECRET должны использоваться только на сервере.
+
+# 25. Dashboard
+
+Страница:
+
+/dashboard
+
+Показать:
+
+* greeting;
+* subscription status;
+* saved locations;
+* active alerts;
+* recently viewed;
+* changes in monitored regions;
+* data freshness summary;
+* Upgrade card для Free;
+* Manage subscription для Premium.
+
+Если backend не готов:
+
+* использовать typed demo state;
+* обозначить Demo mode;
+* не показывать выдуманные платежи.
+
+# 26. Авторизация
+
+Сохрани существующую Supabase Auth.
+
+Не переписывай её без необходимости.
+
+Проверить:
+
+* login;
+* signup;
+* logout;
+* forgot password;
+* redirect after login;
+* protected dashboard;
+* protected alerts;
+* protected saved;
+* account page;
+* loading state;
+* auth errors;
+* expired session;
+* missing environment variables.
+
+Не хранить пароли самостоятельно.
+
+Не использовать service role key в браузере.
+
+Если Supabase variables отсутствуют:
+
+* приложение должно собираться;
+* публичные страницы должны открываться;
+* auth pages должны показывать понятное configuration message;
+* не должно быть бесконечного loading state.
+
+# 27. Локализация
+
+Подготовить:
+
+* English;
+* Russian.
+
+English — язык по умолчанию.
+
+Не хранить пользовательские строки хаотично внутри компонентов.
+
+Используй существующую i18n-систему, если она уже есть.
+
+Если её нет, создай лёгкую структуру:
+
+```text
+i18n/
+  en.ts
+  ru.ts
+  types.ts
+  provider.tsx
+```
+
+Не устанавливай тяжёлую i18n-библиотеку только ради двух языков.
+
+Переключение языка должно сохраняться безопасно на клиенте.
+
+Не дублировать весь layout для каждого языка.
+
+# 28. Типы данных
+
+Создай:
+
+types/power.ts
+
+```ts
+export type PowerPlantStatus =
+  | "operating"
+  | "partial"
+  | "planned_outage"
+  | "unplanned_outage"
+  | "construction"
+  | "decommissioned"
+  | "unknown";
+
+export type EnergySource =
+  | "nuclear"
+  | "gas"
+  | "coal"
+  | "hydro"
+  | "solar"
+  | "wind"
+  | "oil"
+  | "geothermal"
+  | "biomass"
+  | "storage"
+  | "other";
+
+export type DataConfidence = "high" | "medium" | "low";
+
+export type GridStatus =
+  | "normal"
+  | "strained"
+  | "shortage"
+  | "rolling_blackouts"
+  | "major_outage"
+  | "unknown";
+
+export interface DataSourceReference {
+  id: string;
+  name: string;
+  url?: string;
+  retrievedAt?: string;
+  isOfficial?: boolean;
+}
+
+export interface PowerPlant {
+  id: string;
+  name: string;
+  country: string;
+  countryCode: string;
+  region?: string;
+  city?: string;
+  latitude: number;
+  longitude: number;
+  source: EnergySource;
+  primaryFuel?: string;
+  status: PowerPlantStatus;
+  installedCapacityMw?: number;
+  currentGenerationMw?: number | null;
+  units?: number;
+  operator?: string;
+  commissioningYear?: number;
+  lastUpdatedAt?: string;
+  confidence: DataConfidence;
+  isDemo?: boolean;
+  dataSources: DataSourceReference[];
+}
+
+export interface GenerationMixItem {
+  source: EnergySource;
+  percentage?: number;
+  capacityMw?: number;
+}
+
+export interface RegionPowerSummary {
+  id: string;
+  name: string;
+  type: "city" | "region" | "country";
+  countryCode: string;
+  stabilityScore?: number | null;
+  gridStatus: GridStatus;
+  installedCapacityMw?: number;
+  activePlants?: number;
+  plantsOnOutage?: number;
+  renewableShare?: number;
+  generationMix: GenerationMixItem[];
+  confidence: DataConfidence;
+  lastUpdatedAt?: string;
+  isDemo?: boolean;
+}
+```
+
+Добавь типы:
+
+* filters;
+* search results;
+* saved locations;
+* alerts;
+* subscription plans.
+
+Не использовать any без крайней необходимости.
+
+# 29. Демонстрационные данные
+
+Создай:
+
+data/mock-power-plants.ts
+data/mock-regions.ts
+
+Добавь минимум 40 демонстрационных станций из разных регионов.
+
+Включить:
+
+* Cernavodă;
+* Zaporizhzhia;
+* Drax;
+* Three Gorges;
+* Itaipu;
+* Grand Coulee;
+* Kashiwazaki-Kariwa;
+* Barakah;
+* Noor Ouarzazate;
+* Hornsea;
+* газовые станции;
+* угольные станции;
+* солнечные станции;
+* ветровые станции;
+* гидростанции;
+* строящиеся объекты;
+* выведенные из эксплуатации объекты.
+
+Требования:
+
+* координаты должны быть валидными;
+* longitude от -180 до 180;
+* latitude от -90 до 90;
+* id уникальные;
+* capacity не может быть отрицательной;
+* currentGeneration не должна превышать установленную мощность без понятного объяснения;
+* dataSources не должны ссылаться на выдуманные официальные API;
+* status в mock data не должен называться current live status;
+* isDemo должен быть true.
+
+Показывать в UI:
+
+Demonstration data
+
+Не использовать слова Live или Realtime для mock datasets.
+
+# 30. GeoJSON
+
+Создай:
+
+lib/map/power-plants-to-geojson.ts
+
+Функция должна:
+
+* принимать PowerPlant[];
+* возвращать валидный FeatureCollection;
+* сохранять id;
+* включать свойства, необходимые слоям карты;
+* фильтровать объекты с невалидными координатами;
+* не мутировать исходный массив.
+
+Добавь небольшие unit tests, если тестовая инфраструктура уже есть.
+
+Если тестовой инфраструктуры нет, не устанавливай тяжёлый test runner только для одной функции. Сделай понятную runtime validation через zod или TypeScript guards.
+
+# 31. Сервисный слой
+
+Компоненты не должны импортировать mock data напрямую.
+
+Создай:
+
+* services/power-plants.ts;
+* services/regions.ts;
+* services/alerts.ts;
+* services/saved-locations.ts;
+* services/subscriptions.ts.
+
+Интерфейсы:
+
+```ts
+getPowerPlants(filters)
+getPowerPlantById(id)
+searchPowerInfrastructure(query)
+getRegionPowerSummary(id)
+getSavedLocations(userId)
+saveLocation(userId, input)
+removeSavedLocation(userId, id)
+getAlerts(userId)
+createAlert(userId, input)
+deleteAlert(userId, id)
+getSubscription(userId)
+```
+
+На первом этапе реализация может использовать mock repository.
+
+Архитектура должна позволить заменить mock repository на Supabase или API без переписывания UI.
+
+Добавь:
+
+```text
+repositories/
+  power-plants/
+    types.ts
+    mock.ts
+    supabase.ts
+```
+
+Supabase repository можно оставить подготовленным, но не подключать, если schema ещё не заполнена.
+
+# 32. Supabase migration
+
+Создай новую безопасную миграцию.
+
+Не называй её 001, если в проекте уже есть миграции.
+
+Используй следующий свободный timestamp-based filename.
+
+Таблицы:
+
+* profiles;
+* subscriptions;
+* power_plants;
+* plant_status_history;
+* generation_measurements;
+* regions;
+* region_power_summaries;
+* saved_locations;
+* alerts;
+* data_sources;
+* power_plant_data_sources.
+
+Добавить:
+
+* UUID primary keys;
+* created_at;
+* updated_at;
+* foreign keys;
+* indexes;
+* uniqueness constraints;
+* check constraints;
+* RLS;
+* policies.
+
+Правила:
+
+* публичные verified power plants могут читаться без авторизации;
+* пользователь читает и изменяет только свои saved locations;
+* пользователь читает и изменяет только свои alerts;
+* пользователь читает только собственную subscription;
+* обычный пользователь не может самостоятельно установить себе Premium;
+* subscription updates выполняются сервером после подтверждённого webhook;
+* service role key используется только на сервере;
+* migration не должна удалять существующие таблицы;
+* migration должна по возможности использовать IF NOT EXISTS;
+* существующие profiles и subscriptions нельзя пересоздавать вслепую.
+
+Перед созданием migration проверь существующую schema проекта.
+
+# 33. Структура компонентов
+
+Ориентировочная структура:
+
+```text
+app/
+  page.tsx
+  map/page.tsx
+  compare/page.tsx
+  alerts/page.tsx
+  saved/page.tsx
+  pricing/page.tsx
+  dashboard/page.tsx
+  login/page.tsx
+  signup/page.tsx
+  forgot-password/page.tsx
+  account/page.tsx
+  about/page.tsx
+  methodology/page.tsx
+  privacy/page.tsx
+  terms/page.tsx
+
+components/
+  layout/
+    AppHeader.tsx
+    MobileNavigation.tsx
+    Footer.tsx
+    AppShell.tsx
+
+  map/
+    PowerMap.tsx
+    PowerMapClient.tsx
+    MapSearch.tsx
+    MapFilters.tsx
+    MapLegend.tsx
+    MapControls.tsx
+    PlantDetailsPanel.tsx
+    RegionDetailsPanel.tsx
+    MobileMapSheet.tsx
+    MapFallback.tsx
+
+  power/
+    StabilityScore.tsx
+    GridStatusBadge.tsx
+    PowerPlantStatusBadge.tsx
+    GenerationMix.tsx
+    DataConfidenceBadge.tsx
+    FreshnessIndicator.tsx
+    DemoDataBadge.tsx
+
+  pricing/
+  dashboard/
+  alerts/
+  saved/
+  compare/
+
+  ui/
+    Button.tsx
+    IconButton.tsx
+    Badge.tsx
+    Card.tsx
+    GlassPanel.tsx
+    MetricCard.tsx
+    Input.tsx
+    Select.tsx
+    Modal.tsx
+    Drawer.tsx
+    BottomSheet.tsx
+    Tooltip.tsx
+    Skeleton.tsx
+    EmptyState.tsx
+    ErrorState.tsx
+    UpgradeBanner.tsx
+
+data/
+types/
+services/
+repositories/
+lib/
+i18n/
+supabase/
+```
+
+Адаптируй структуру под существующий проект.
+
+Не создавай дубли существующих компонентов с другим названием.
+
+# 34. UI components
+
+Все компоненты должны поддерживать:
+
+* loading;
+* disabled;
+* hover;
+* focus-visible;
+* keyboard navigation;
+* reasonable aria attributes;
+* className extension;
+* TypeScript props;
+* mobile layout.
+
+Button variants:
+
+* primary;
+* secondary;
+* glass;
+* outline;
+* ghost;
+* danger.
+
+Не использовать случайные цвета внутри компонентов.
+
+Использовать design tokens.
+
+# 35. Accessibility
+
+Обязательно:
+
+* WCAG-friendly contrast;
+* видимый focus;
+* управление клавиатурой;
+* labels для form controls;
+* aria-live для результатов поиска и фильтрации;
+* reduced-motion support;
+* status нельзя передавать только цветом;
+* карта должна иметь текстовый альтернативный список объектов;
+* drawers и modals должны иметь правильный focus flow;
+* Escape закрывает dialogs;
+* кнопки-иконки имеют aria-label;
+* декоративные иконки имеют aria-hidden.
+
+Не блокировать zoom страницы на мобильном устройстве.
+
+# 36. Performance
+
+Обязательно:
+
+* dynamic import карты;
+* code splitting;
+* GeoJSON layers вместо DOM markers;
+* useMemo для тяжёлой фильтрации;
+* debounce поиска;
+* AbortController для будущих API requests;
+* cleanup MapLibre;
+* resize handling;
+* skeleton states;
+* error boundaries;
+* lazy loading тяжёлых страниц;
+* минимизация rerenders;
+* отсутствие повторной инициализации карты;
+* отсутствие гигантского JSON в initial page bundle.
+
+Архитектура будущих данных должна поддерживать:
+
+* bounding box queries;
+* server-side filters;
+* vector tiles;
+* pagination;
+* caching;
+* incremental loading;
+* clustering.
+
+# 37. Error handling
+
+Каждая async-функция должна иметь контролируемую обработку ошибок.
+
+Не оставлять:
+
+* unhandled promise rejection;
+* бесконечный loading;
+* пустой экран;
+* console spam;
+* undefined access;
+* hydration mismatch.
+
+Для ошибок показать:
+
+* понятный текст;
+* Retry;
+* fallback data, если допустимо;
+* technical details только в development.
+
+# 38. Methodology
+
+Создай страницу:
+
+/methodology
+
+Объяснить:
+
+* что означает Power Stability Score;
+* какие категории данных могут использоваться;
+* разницу plant status и grid status;
+* разницу measured data и estimated score;
+* data confidence;
+* data freshness;
+* ограничения realtime-покрытия;
+* отсутствие данных;
+* почему близость электростанции не гарантирует питание;
+* почему сервис не является единственным основанием для переезда или экстренного решения.
+
+Не публиковать:
+
+* закрытые схемы;
+* уязвимости;
+* внутренние планы;
+* непубличные технические подробности критической инфраструктуры.
+
+# 39. Legal pages
+
+Создай:
+
+* /privacy;
+* /terms.
+
+Добавь заметный Data Disclaimer:
+
+The information provided by MR Electro AI is intended for general informational purposes only.
+
+MR Electro AI does not guarantee the accuracy, completeness, real-time availability or continued operation of any power facility, regional grid or related infrastructure.
+
+Do not rely on this service as the sole basis for emergency, personal safety, relocation, financial or investment decisions.
+
+Добавь пометку в исходном коде или документации:
+
+Legal text requires professional legal review before production launch.
+
+# 40. Переменные окружения
+
+Обнови .env.example:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+
+SUPABASE_SERVICE_ROLE_KEY=
+
+NEXT_PUBLIC_MAP_STYLE_URL=
+
+PADDLE_API_KEY=
+PADDLE_WEBHOOK_SECRET=
+NEXT_PUBLIC_PADDLE_CLIENT_TOKEN=
+NEXT_PUBLIC_PADDLE_ENVIRONMENT=sandbox
+
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+Правила:
+
+* не добавлять реальные значения;
+* не выводить secret values в console;
+* service role и Paddle secrets использовать только на сервере;
+* приложение должно собираться без необязательных integrations;
+* для отсутствующей конфигурации показывать controlled fallback.
+
+# 41. Проверки качества
+
+Добавь scripts только если их ещё нет:
+
+```json
+{
+  "lint": "next lint или актуальная команда ESLint проекта",
+  "typecheck": "tsc --noEmit",
+  "build": "next build"
+}
+```
+
+Не заменяй существующие рабочие scripts без необходимости.
+
+После каждого основного этапа выполняй:
+
+1. typecheck;
+2. lint;
+3. build, когда структура приложения уже собрана.
+
+В конце обязательно выполнить:
+
+* npm install или соответствующую команду текущего package manager;
+* lint;
+* typecheck;
+* production build.
+
+Исправить:
+
+* TypeScript errors;
+* ESLint errors;
+* hydration warnings;
+* invalid hooks;
+* missing keys;
+* server/client boundary errors;
+* MapLibre SSR errors;
+* unused imports;
+* broken routes;
+* missing environment handling.
+
+Warnings, которые могут привести к production-проблеме, также исправить.
+
+# 42. Проверка функциональности
+
+Работа считается завершённой только если:
+
+1. Главная страница открывается.
+2. /map открывается.
+3. Карта загружается при корректном style URL.
+4. Без style URL показывается fallback.
+5. Demo-станции отображаются.
+6. Clusters работают.
+7. Cluster раскрывается по клику.
+8. Фильтры изменяют набор объектов.
+9. Search находит станции.
+10. Выбор станции перемещает карту.
+11. Station panel открывается.
+12. Station panel закрывается.
+13. Region panel открывается.
+14. Legend работает.
+15. Mobile bottom sheet работает.
+16. /compare работает с demo data.
+17. /saved имеет auth и empty states.
+18. /alerts имеет auth, free и premium states.
+19. /pricing не создаёт фиктивный платёж.
+20. /dashboard имеет demo или real state.
+21. Login и signup не сломаны.
+22. Переключение языка работает.
+23. Нет постоянных browser console errors.
+24. Нет horizontal overflow на 320 px.
+25. Desktop layout работает на 1440 px.
+26. Tablet layout работает.
+27. Keyboard navigation доступна.
+28. Build проходит.
+29. Typecheck проходит.
+30. Lint проходит.
+
+# 43. README
+
+Обнови README.
+
+Добавь:
+
+* назначение проекта;
+* screenshots section placeholder;
+* стек;
+* установка;
+* package manager;
+* запуск;
+* build;
+* typecheck;
+* lint;
+* environment variables;
+* Supabase setup;
+* migration;
+* map style setup;
+* demo mode;
+* data architecture;
+* billing architecture;
+* localization;
+* security notes;
+* known limitations;
+* дальнейшее подключение реальных источников;
+* дальнейшее подключение Paddle;
+* legal disclaimer.
+
+Чётко написать:
+
+Current power plant statuses in the demo dataset are demonstration values and must not be treated as live operational data.
+
+# 44. Итоговый отчёт
+
+После завершения предоставь:
+
+## Audit summary
+
+* какая структура была до изменений;
+* какие проблемы были обнаружены.
+
+## Changes
+
+* список созданных файлов;
+* список изменённых файлов;
+* список удалённых файлов и причина удаления;
+* установленные зависимости.
+
+## Validation
+
+* результат lint;
+* результат typecheck;
+* результат build.
+
+## Working functionality
+
+* что полностью работает.
+
+## Demo functionality
+
+* что использует demonstration data.
+
+## Configuration required
+
+* какие переменные окружения нужны;
+* что произойдёт без них.
+
+## Remaining backend work
+
+* реальные power plant APIs;
+* verified realtime statuses;
+* Supabase data import;
+* Paddle checkout;
+* Paddle webhook;
+* email delivery;
+* background data refresh;
+* production legal review.
+
+## Risks
+
+* оставшиеся технические риски;
+* места, требующие ручной проверки.
+
+# 45. Финальное требование
+
+Не заканчивай выполнение после того, как интерфейс стал визуально красивым.
+
+Сначала добейся:
+
+* корректной архитектуры;
+* рабочего routing;
+* безопасной авторизации;
+* корректного поведения карты;
+* реальной фильтрации;
+* responsive layout;
+* controlled fallbacks;
+* отсутствия ложных данных;
+* успешного production build.
+
+При конфликте между визуальным эффектом и стабильностью выбирай стабильность.
+
+При конфликте между анимацией и доступностью выбирай доступность.
+
+При конфликте между демонстрацией и правдивостью данных выбирай правдивость.
+
+Результат должен выглядеть как серьёзный международный SaaS-продукт MR Electro AI в стиле Liquid Glass с фирменной бирюзовой визуальной системой.

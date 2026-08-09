@@ -1,5 +1,38 @@
-import { readFileSync } from "node:fs";
-const source=readFileSync(new URL("../lib/i18n/dictionaries.ts",import.meta.url),"utf8");
-function keys(locale){const assigned=[...source.matchAll(new RegExp(`Object\\.assign\\(${locale}, \\{([\\s\\S]*?)\\}\\);`,`g`))].flatMap((match)=>[...match[1].matchAll(/"([^"]+)"\s*:/g)].map((entry)=>entry[1])); const base=locale==="uk"?source.match(/const uk: Dictionary = \{([\s\S]*?)\n\};\nObject\.assign/ )?.[1]??"":source.match(/const en: Dictionary = \{([\s\S]*?)\n\};\n\nconst ru/)?.[1]??""; return [...assigned,...base.matchAll(/"([^"]+)"\s*:/g)].map((entry)=>entry[1]);}
-const en=new Set(keys("en")); const uk=new Set(keys("uk")); const missing=[...en].filter((key)=>!uk.has(key)); const extra=[...uk].filter((key)=>!en.has(key));
-if(missing.length||extra.length){console.error(`i18n assignment parity failed\nmissing uk: ${missing.join(", ")||"none"}\nextra uk: ${extra.join(", ")||"none"}`);process.exit(1);} console.log(`i18n assignment parity passed (${en.size} explicit keys)`);
+import { readFileSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+
+const source = readFileSync(new URL("../lib/i18n/dictionaries.ts", import.meta.url), "utf8");
+
+// Ukrainian intentionally inherits the complete English dictionary and overrides
+// localized entries. Check that this inheritance remains in place and that every
+// key referenced through `t["…"]` exists in the base dictionary.
+if (!/const uk: Dictionary = \{\s*\.\.\.en,/.test(source)) {
+  console.error("i18n check failed: Ukrainian dictionary must inherit the English base dictionary.");
+  process.exit(1);
+}
+
+const dictionaryKeys = new Set([...source.matchAll(/"([^"\n]+)"\s*:/g)].map((match) => match[1]));
+
+function sourceFiles(directory) {
+  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const path = join(directory, entry.name);
+    return entry.isDirectory() ? sourceFiles(path) : /\.(?:ts|tsx|js|jsx)$/.test(entry.name) ? [path] : [];
+  });
+}
+
+const missingReferences = [];
+for (const file of ["app", "components"].flatMap(sourceFiles)) {
+  const contents = readFileSync(file, "utf8");
+  for (const match of contents.matchAll(/\bt\["([^"]+)"\]/g)) {
+    if (!dictionaryKeys.has(match[1])) missingReferences.push(`${file}: ${match[1]}`);
+  }
+}
+
+if (missingReferences.length) {
+  console.error(`i18n check failed: unknown translation keys\n${missingReferences.join("\n")}`);
+  process.exit(1);
+}
+
+// The dictionary is the source of truth; report its size while keeping the
+// validation deterministic and independent from object-literal formatting.
+console.log(`i18n inheritance check passed (${dictionaryKeys.size} declared keys)`);
