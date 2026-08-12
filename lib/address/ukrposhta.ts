@@ -1,2 +1,35 @@
-import "server-only"; import type { AddressProvider,AddressSettlement,AddressStreet,AddressBuilding,AddressValidation } from "./types";
-export class UkrposhtaAddressProvider implements AddressProvider { private token=process.env.UKRPOSHTA_ADDRESS_API_TOKEN; private async get(path:string){if(!this.token) throw new Error("Ukrposhta address API token is not configured"); const r=await fetch(`https://www.ukrposhta.ua/address-classifier-ws/${path}`,{headers:{Authorization:`Bearer ${this.token}`,Accept:"application/json"},next:{revalidate:3600}});if(!r.ok)throw new Error("Address provider unavailable");return r.json();} async searchSettlements(query:string):Promise<AddressSettlement[]>{const data=await this.get(`get_city_by_name?city_name=${encodeURIComponent(query)}&lang=UA`);return (data.Entries?.Entry??[]).map((x:Record<string,string>)=>({id:x.CITY_ID,name:x.CITY_NAME,region:x.REGION_NAME}));} async getStreets(settlementId:string,query:string):Promise<AddressStreet[]>{const data=await this.get(`get_street_by_name?city_id=${encodeURIComponent(settlementId)}&street_name=${encodeURIComponent(query)}&lang=UA`);return (data.Entries?.Entry??[]).map((x:Record<string,string>)=>({id:x.STREET_ID,name:`${x.SHORTSTREETTYPE_NAME??""} ${x.STREET_NAME}`.trim(),settlementId}));} async getBuildings(streetId:string,query:string):Promise<AddressBuilding[]>{const data=await this.get(`get_house_by_street_id?street_id=${encodeURIComponent(streetId)}&house_number=${encodeURIComponent(query)}&lang=UA`);return (data.Entries?.Entry??[]).map((x:Record<string,string>)=>({id:x.HOUSE_ID??x.HOUSENUMBER,number:x.HOUSENUMBER,streetId,postalCode:x.POSTCODE}));} async validateAddress(streetId:string,buildingNumber:string):Promise<AddressValidation>{const normalized=buildingNumber.trim().toLocaleLowerCase("uk-UA");const building=(await this.getBuildings(streetId,buildingNumber)).find((candidate)=>candidate.number.trim().toLocaleLowerCase("uk-UA")===normalized);return building?{valid:true,building}:{valid:false};}}
+import "server-only";
+import type { AddressBuilding, AddressProvider, AddressSettlement, AddressStreet, AddressValidation } from "./types";
+
+export class AddressProviderError extends Error {
+  constructor(public readonly code: "not_configured" | "upstream_rejected" | "upstream_unavailable" | "invalid_response", message: string, public readonly status?: number) { super(message); }
+}
+
+export class UkrposhtaAddressProvider implements AddressProvider {
+  private token = process.env.UKRPOSHTA_ADDRESS_API_TOKEN?.trim();
+
+  private async get(path: string) {
+    if (!this.token) throw new AddressProviderError("not_configured", "Ukrposhta address API token is not configured");
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8_000);
+    try {
+      const response = await fetch(`https://www.ukrposhta.ua/address-classifier-ws/${path}`, { headers: { Authorization: `Bearer ${this.token}`, Accept: "application/json" }, cache: "no-store", signal: controller.signal });
+      if (!response.ok) {
+        console.error("Ukrposhta address request failed", { status: response.status, path: path.split("?")[0] });
+        throw new AddressProviderError(response.status === 401 || response.status === 403 ? "upstream_rejected" : "upstream_unavailable", "Ukrposhta address API request failed", response.status);
+      }
+      const data: unknown = await response.json().catch(() => null);
+      if (!data || typeof data !== "object") throw new AddressProviderError("invalid_response", "Ukrposhta returned an invalid response");
+      return data as { Entries?: { Entry?: Record<string, string>[] } };
+    } catch (error) {
+      if (error instanceof AddressProviderError) throw error;
+      console.error("Ukrposhta address request failed", { reason: error instanceof Error ? error.name : "unknown", path: path.split("?")[0] });
+      throw new AddressProviderError("upstream_unavailable", "Ukrposhta address API is unavailable");
+    } finally { clearTimeout(timeout); }
+  }
+
+  async searchSettlements(query: string): Promise<AddressSettlement[]> { const data = await this.get(`get_city_by_name?city_name=${encodeURIComponent(query)}&lang=UA`); return (data.Entries?.Entry ?? []).map((item) => ({ id: item.CITY_ID, name: item.CITY_NAME, region: item.REGION_NAME })).filter((item) => item.id && item.name); }
+  async getStreets(settlementId: string, query: string): Promise<AddressStreet[]> { const data = await this.get(`get_street_by_name?city_id=${encodeURIComponent(settlementId)}&street_name=${encodeURIComponent(query)}&lang=UA`); return (data.Entries?.Entry ?? []).map((item) => ({ id: item.STREET_ID, name: `${item.SHORTSTREETTYPE_NAME ?? ""} ${item.STREET_NAME ?? ""}`.trim(), settlementId })).filter((item) => item.id && item.name); }
+  async getBuildings(streetId: string, query: string): Promise<AddressBuilding[]> { const data = await this.get(`get_house_by_street_id?street_id=${encodeURIComponent(streetId)}&house_number=${encodeURIComponent(query)}&lang=UA`); return (data.Entries?.Entry ?? []).map((item) => ({ id: item.HOUSE_ID ?? item.HOUSENUMBER, number: item.HOUSENUMBER, streetId, postalCode: item.POSTCODE })).filter((item) => item.id && item.number); }
+  async validateAddress(streetId: string, buildingNumber: string): Promise<AddressValidation> { const normalized = buildingNumber.trim().toLocaleLowerCase("uk-UA"); const building = (await this.getBuildings(streetId, buildingNumber)).find((candidate) => candidate.number.trim().toLocaleLowerCase("uk-UA") === normalized); return building ? { valid: true, building } : { valid: false }; }
+}

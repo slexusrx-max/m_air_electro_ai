@@ -4,6 +4,7 @@ import { expertProfiles } from "@/lib/experts";
 import { knowledgeArticles } from "@/lib/knowledge-base";
 import { absoluteUrl } from "@/lib/site";
 import { calculatorItems, footerNavGroups, siteNavItems } from "@/lib/site-navigation";
+import { catalog, marketplaceCategories } from "@/lib/affiliate/catalog";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [
@@ -16,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/experts",
     "/knowledge-base",
     "/marketplace",
+    "/marketplace/find-my-solution",
     "/privacy",
     "/sign-in",
     "/terms",
@@ -24,6 +26,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...footerNavGroups.flatMap((group) => group.items.map((item) => item.href)),
     ...expertProfiles.map((profile) => `/experts/${profile.slug}`),
     ...knowledgeArticles.map((article) => `/knowledge-base/${article.slug}`),
+    ...marketplaceCategories.map((category) => `/marketplace/category/${category.slug}`),
+    ...catalog.map((product) => `/marketplace/products/${product.slug}`),
   ];
 
   return [...new Set(staticRoutes)].map((route) => ({

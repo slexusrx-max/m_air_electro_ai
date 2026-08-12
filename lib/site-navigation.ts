@@ -18,10 +18,14 @@ export type CalculatorItem = {
 
 export const siteNavItems: SiteNavItem[] = [
   { label: "Home", href: "/", description: "Energy resilience for Ukraine." },
+  { label: "AI Assistant", href: "/assistant", description: "AI assistance for electrical reasoning." },
+  { label: "Diagnostics", href: "/diagnostics", description: "Structured troubleshooting workflows." },
+  { label: "Calculators", href: "/calculators", description: "Engineering calculation tools." },
+  { label: "Marketplace", href: "/marketplace", description: "Engineering-led product discovery." },
+  { label: "Energy Solutions", href: "/marketplace/find-my-solution", description: "Size an energy system before shopping." },
+  { label: "Experts", href: "/experts", description: "Verified expert profiles and specializations." },
   { label: "Ukraine Energy Live", href: "/ukraine-energy", description: "System status, restrictions and sources." },
   { label: "My Home", href: "/my-home", description: "Your household energy readiness." },
-  { label: "Energy AI", href: "/energy-ai", description: "Specialist backup-power guidance." },
-  { label: "Energy Marketplace", href: "/marketplace", description: "Energy equipment catalogue." },
   { label: "Energy Map", href: "/energy-map", description: "Ukraine-focused public energy map." },
   { label: "For Business", href: "/business", description: "Business continuity and energy planning." },
   { label: "Backup Calculator", href: "/backup-calculator", description: "Size a household backup system." },
@@ -31,8 +35,19 @@ export const siteNavItems: SiteNavItem[] = [
   { label: "Calculators", href: "/calculators", description: "Engineering calculation tools." },
 ];
 
-export const primaryNavItems = siteNavItems.slice(1, 7);
-export const moreNavItems = siteNavItems.slice(7);
+export const primaryNavItems = siteNavItems.slice(1, 6);
+export const moreNavItems = siteNavItems.slice(6);
+export const marketplaceNavItems: SiteNavItem[] = [
+  { label: "Marketplace overview", href: "/marketplace", description: "Calculate, compare and choose." },
+  { label: "Solar", href: "/marketplace/category/solar-panels", description: "Solar panels and kits." },
+  { label: "Batteries", href: "/marketplace/category/lithium-batteries", description: "Lithium storage." },
+  { label: "Inverters", href: "/marketplace/category/inverters", description: "DC-to-AC conversion." },
+  { label: "Backup Power", href: "/marketplace/category/backup-power", description: "Essential-load systems." },
+  { label: "Charge Controllers", href: "/marketplace/category/charge-controllers", description: "Solar charging." },
+  { label: "Electrical Components", href: "/marketplace/category/electrical-accessories", description: "Wiring and protection." },
+  { label: "Industrial Parts", href: "/marketplace/category/industrial-electrical", description: "Professional electrical parts." },
+  { label: "Marine Electrical", href: "/marketplace/category/marine-electrical", description: "Vessel DC power planning." },
+];
 
 export const calculatorItems: CalculatorItem[] = [
   {

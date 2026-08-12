@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 import { glassPanelClassName, liquidGlassButtonClassName } from "@/components/ui/glass";
-import { moreNavItems, primaryNavItems, siteNavItems } from "@/lib/site-navigation";
+import { marketplaceNavItems, moreNavItems, primaryNavItems, siteNavItems } from "@/lib/site-navigation";
 import type { MarketplaceRole } from "@/lib/i18n/types";
 import type { Dictionary } from "@/lib/i18n/types";
 import type { Locale } from "@/lib/i18n/types";
@@ -19,12 +19,13 @@ function isActivePath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-const navKeys: Record<string, string> = { Home: "nav.home", "Ukraine Energy Live": "nav.energy", "My Home": "nav.myHome", "Energy AI": "nav.energyAi", "Energy Marketplace": "nav.marketplace", "Energy Map": "nav.map", "For Business": "nav.business", "Backup Calculator": "nav.backup", "Find Installer": "nav.installers", Buildings: "nav.buildings", Professionals: "nav.professionals", Calculators: "nav.calculators" };
+const navKeys: Record<string, string> = { Home: "nav.home", "Ukraine Energy Live": "nav.energy", "My Home": "nav.myHome", "Energy Map": "nav.map", "For Business": "nav.business", "Backup Calculator": "nav.backup", "Find Installer": "nav.installers", Buildings: "nav.buildings", Professionals: "nav.professionals", Calculators: "nav.calculators" };
 
 export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: t, locale }: { profile: { email: string; role: MarketplaceRole } | null; dashboardHref?: string; dictionary: Dictionary; locale: Locale }) {
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const [isMarketplaceOpen, setIsMarketplaceOpen] = useState(false);
   const switchLocale = async (nextLocale: Locale) => { if (nextLocale === locale) return; const response = await fetch("/api/locale", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ locale: nextLocale }) }); if (response.ok) window.location.reload(); };
   const languageControl = <div className="flex rounded-full border border-white/20 p-1 text-xs font-bold text-white"><button type="button" onClick={() => switchLocale("en")} aria-pressed={locale === "en"} className={`rounded-full px-2 py-1 ${locale === "en" ? "bg-white text-teal-950" : "text-white/75"}`}>EN</button><button type="button" onClick={() => switchLocale("uk")} aria-pressed={locale === "uk"} className={`rounded-full px-2 py-1 ${locale === "uk" ? "bg-white text-teal-950" : "text-white/75"}`}>UA</button></div>;
 
@@ -50,6 +51,8 @@ export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: 
         <nav className="hidden items-center gap-2 xl:flex">
           {primaryNavItems.map((item) => {
             const isActive = isActivePath(pathname, item.href);
+
+            if (item.href === "/marketplace") return <div className="relative" key={item.href}><button type="button" onClick={() => setIsMarketplaceOpen((open) => !open)} aria-expanded={isMarketplaceOpen} className={`${liquidGlassButtonClassName} px-4 py-2 text-sm font-medium ${isActive ? "border-lime-100/80 bg-[linear-gradient(135deg,rgba(246,255,235,0.28),rgba(163,230,53,0.16))] text-lime-50" : ""}`}>Marketplace</button>{isMarketplaceOpen ? <div className="absolute left-0 z-30 mt-2 grid w-[32rem] grid-cols-2 gap-1 rounded-2xl border border-white/20 bg-teal-950/95 p-2 shadow-xl backdrop-blur-xl">{marketplaceNavItems.map((entry) => <Link key={entry.href} href={entry.href} onClick={() => setIsMarketplaceOpen(false)} className="rounded-xl px-3 py-2 text-sm text-white/85 hover:bg-white/10"><span className="block font-semibold">{entry.label}</span><span className="mt-1 block text-xs text-white/55">{entry.description}</span></Link>)}</div> : null}</div>;
 
             return (
               <Link

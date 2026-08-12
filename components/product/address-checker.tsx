@@ -26,14 +26,15 @@ export function AddressSelector({ dictionary: t }: { dictionary: Dictionary }) {
   const [retry, setRetry] = useState(0);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [result, setResult] = useState("");
+  const [manualMode, setManualMode] = useState(false);
   const listId = useId();
 
   const query = activeField === "city" ? cityQuery : activeField === "street" ? streetQuery : buildingQuery;
-  const selectedBuilding = building ?? (street && buildingQuery.trim() ? { id: `manual:${buildingQuery.trim()}`, number: buildingQuery.trim() } : null);
+  const selectedBuilding = building ?? ((street || manualMode) && buildingQuery.trim() ? { id: `manual:${buildingQuery.trim()}`, number: buildingQuery.trim() } : null);
 
   useEffect(() => {
     const minimumLength = activeField === "building" ? 1 : 2;
-    if (!activeField || query.trim().length < minimumLength) {
+    if (manualMode || !activeField || query.trim().length < minimumLength) {
       return;
     }
 
@@ -69,7 +70,7 @@ export function AddressSelector({ dictionary: t }: { dictionary: Dictionary }) {
       controller.abort();
       window.clearTimeout(timer);
     };
-  }, [activeField, city, query, retry, street, t]);
+  }, [activeField, city, manualMode, query, retry, street, t]);
 
   const choose = (item: Item) => {
     if (activeField === "city") {
@@ -142,6 +143,7 @@ export function AddressSelector({ dictionary: t }: { dictionary: Dictionary }) {
 
   return <form onSubmit={async (event) => {
     event.preventDefault();
+    if (manualMode) { if (!cityQuery.trim() || !streetQuery.trim() || !buildingQuery.trim()) return; setResult(`${cityQuery.trim()}, ${streetQuery.trim()}, ${buildingQuery.trim()}${apartment.trim() ? `, ${t["home.apartment"]}: ${apartment.trim()}` : ""}`); return; }
     if (!city || !street || !selectedBuilding) return;
     let verifiedBuilding = building;
     if (!verifiedBuilding) {
@@ -173,19 +175,20 @@ export function AddressSelector({ dictionary: t }: { dictionary: Dictionary }) {
       {showSuggestions("city") ? <Options items={suggestions} highlightedIndex={highlightedIndex} listId={listId} onChoose={choose} /> : null}
     </label>
     <label className="relative">{t["home.street"]}
-      <input disabled={!city} value={street?.name ?? streetQuery} onFocus={() => city && setActiveField("street")} onChange={(event) => changeField("street", event.target.value)} onKeyDown={handleKeys} placeholder={city ? t["address.selectStreet"] : t["address.selectCityFirst"]} aria-autocomplete="list" aria-controls={showSuggestions("street") ? listId : undefined} className={inputClass} />
+      <input disabled={!city && !manualMode} value={street?.name ?? streetQuery} onFocus={() => (city || manualMode) && setActiveField("street")} onChange={(event) => changeField("street", event.target.value)} onKeyDown={handleKeys} placeholder={city || manualMode ? t["address.selectStreet"] : t["address.selectCityFirst"]} aria-autocomplete="list" aria-controls={showSuggestions("street") ? listId : undefined} className={inputClass} />
       {showSuggestions("street") ? <Options items={suggestions} highlightedIndex={highlightedIndex} listId={listId} onChoose={choose} /> : null}
     </label>
     <label className="relative">{t["home.building"]}
-      <input disabled={!street} value={building?.number ?? buildingQuery} onFocus={() => street && setActiveField("building")} onChange={(event) => changeField("building", event.target.value)} onKeyDown={handleKeys} placeholder={street ? t["address.selectBuilding"] : t["address.selectStreetFirst"]} aria-autocomplete="list" aria-controls={showSuggestions("building") ? listId : undefined} className={inputClass} />
+      <input disabled={!street && !manualMode} value={building?.number ?? buildingQuery} onFocus={() => (street || manualMode) && setActiveField("building")} onChange={(event) => changeField("building", event.target.value)} onKeyDown={handleKeys} placeholder={street || manualMode ? t["address.selectBuilding"] : t["address.selectStreetFirst"]} aria-autocomplete="list" aria-controls={showSuggestions("building") ? listId : undefined} className={inputClass} />
       {showSuggestions("building") ? <Options items={suggestions} highlightedIndex={highlightedIndex} listId={listId} onChoose={choose} /> : null}
       {activeField === "building" && hasSearched && !isLoading && !suggestions.length ? <span className="mt-1 block text-xs text-slate-500">{t["address.manualBuilding"]}</span> : null}
     </label>
     <label>{t["home.apartment"]}<input value={apartment} onChange={(event) => { setApartment(event.target.value); setResult(""); }} className={inputClass} /></label>
     {isLoading ? <p className="sm:col-span-2 text-sm text-slate-600" role="status">{t["address.searching"]}</p> : null}
     {activeField !== "building" && hasSearched && !isLoading && !suggestions.length ? <p className="sm:col-span-2 text-sm text-slate-600">{t["address.noResults"]}</p> : null}
-    {error ? <p className="sm:col-span-2 text-sm text-amber-800" role="alert">{error} <button type="button" onClick={() => setRetry((value) => value + 1)} className="underline">{t["address.retry"]}</button></p> : null}
-    <button disabled={!city || !street || !selectedBuilding} className="button-primary sm:col-span-2">{t["home.checkAddress"]}</button>
+    {error ? <p className="sm:col-span-2 text-sm text-amber-800" role="alert">{error} <button type="button" onClick={() => setRetry((value) => value + 1)} className="underline">{t["address.retry"]}</button> <button type="button" onClick={() => { setManualMode(true); setActiveField(null); setSuggestions([]); setError(""); }} className="ml-2 underline">{t["address.manual"]}</button></p> : null}
+    {manualMode ? <p className="sm:col-span-2 text-xs text-slate-600">Address lookup is unavailable. This manually entered address is not verified against Ukrposhta data.</p> : null}
+    <button disabled={manualMode ? !cityQuery.trim() || !streetQuery.trim() || !buildingQuery.trim() : !city || !street || !selectedBuilding} className="button-primary sm:col-span-2">{t["home.checkAddress"]}</button>
     {result ? <p className="sm:col-span-2 text-sm text-slate-700" role="status"><strong>{t["address.selected"]}</strong><br />{result}<br />{t["home.statusUnknown"]}</p> : null}
   </form>;
 }

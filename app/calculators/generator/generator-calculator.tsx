@@ -20,6 +20,7 @@ import {
   getPositiveNumber,
   type StartingMethod,
 } from "@/lib/electrical-calculations";
+import { CalculatorRecommendation } from "@/components/marketplace/calculator-recommendation";
 
 type FormState = {
   largestMotorKw: string;
@@ -129,6 +130,7 @@ export default function GeneratorCalculator() {
               value={`${formatElectricalNumber(result.recommendedGeneratorKva)} kVA`}
               detail="Rounded preliminary generator rating from the governing running or start case."
             />
+            <CalculatorRecommendation title="Explore backup-system components" copy="Compare inverter, battery and protection categories after confirming the load profile with a qualified professional." category="backup-power" />
           </>
         )}
       </CalculatorResultsPanel>

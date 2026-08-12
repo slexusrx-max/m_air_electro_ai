@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { glassPanelClassName, moduleCardClassName } from "@/components/ui/glass";
+import { CalculatorRecommendation } from "@/components/marketplace/calculator-recommendation";
 import {
   calculateCableSizing,
   formatElectricalNumber,
@@ -221,6 +222,7 @@ export default function CableSizingCalculator() {
               value={`${formatElectricalNumber(result.requiredVoltageDropSize)} mm^2`}
               detail="Calculated minimum cross-sectional area before rounding up to the nearest standard size."
             />
+            <CalculatorRecommendation title="Review wiring and protection categories" copy="Use the output to define a product category, then verify insulation, installation method and protection coordination." category="electrical-accessories" />
           </>
         )}
       </section>
