@@ -1,4 +1,5 @@
+import { HomeEnergyProfileForm } from "@/components/home-energy/home-energy-profile";
 import { PlatformShell } from "@/components/platform-shell";
-import { ProductPage } from "@/components/product/page-content";
-import { getRequestDictionary } from "@/lib/i18n/request";
-export default async function MyHomePage() { const t = await getRequestDictionary(); return <PlatformShell><ProductPage eyebrow={t["myHome.eyebrow"]} title={t["myHome.title"]} description={t["myHome.description"]}><section className="grid gap-4 md:grid-cols-3">{["home", "battery", "score"].map((item) => <article className="info-card rounded-3xl p-5" key={item}><h2>{t[`myHome.cards.${item}.title`]}</h2><p>{t[`myHome.cards.${item}.description`]}</p></article>)}</section></ProductPage></PlatformShell>; }
+import { getHomeEnergyCopy } from "@/lib/i18n/home-energy";
+import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
+export default async function MyHomePage() { const [locale, dictionary] = await Promise.all([getRequestLocale(), getRequestDictionary()]); const t = getHomeEnergyCopy(locale); return <PlatformShell><main className="mx-auto w-full max-w-6xl text-slate-800"><p className="eyebrow">{t.eyebrow}</p><h1 className="mt-3 text-4xl font-bold text-slate-950">{t.title}</h1><p className="mt-4 max-w-3xl text-slate-700">{t.description}</p><div className="mt-8"><HomeEnergyProfileForm locale={locale} dictionary={dictionary}/></div></main></PlatformShell>; }

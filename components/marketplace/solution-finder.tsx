@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ProductCard } from "@/components/marketplace/product-card";
 import { catalog } from "@/lib/affiliate/catalog";
 import type { MarketplaceRegion, ProductCategory } from "@/lib/affiliate/types";
+import { calculateHomeEnergy, loadHomeEnergyProfile } from "@/lib/home-energy/profile";
 
 type Application = "Home" | "RV / Caravan" | "Boat" | "Off-grid cabin" | "Industrial" | "Other";
 type FormState = { application: Application; load: string; peakLoad: string; hours: string; region: MarketplaceRegion; budget: string; solar: "yes" | "no" | "unknown"; battery: "yes" | "no" | "unknown"; generator: "yes" | "no" | "unknown"; installation: "fixed" | "mobile" | "unknown" };
@@ -21,6 +22,7 @@ export function SolutionFinder() {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormState>(initialForm);
   const [ready, setReady] = useState(false);
+  useEffect(() => { const timer = window.setTimeout(() => { const profile = loadHomeEnergyProfile(); const calculated = calculateHomeEnergy(profile); if (calculated.continuousLoad > 0) setForm((current) => ({ ...current, application: "Home", load: String(calculated.continuousLoad), peakLoad: String(calculated.peakLoad), hours: String(profile.desiredBackupHours), region: profile.location.region, solar: profile.existingSolar ? "yes" : "no", battery: profile.existingBattery ? "yes" : "no", generator: profile.existingGenerator ? "yes" : "no" })); }, 0); return () => window.clearTimeout(timer); }, []);
   const update = <Key extends keyof FormState>(key: Key, value: FormState[Key]) => setForm((current) => ({ ...current, [key]: value }));
   const recommendation = useMemo(() => {
     const load = Math.max(0, Number(form.load) || 0);

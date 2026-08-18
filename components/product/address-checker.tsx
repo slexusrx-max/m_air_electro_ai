@@ -4,13 +4,13 @@ import { useEffect, useId, useState } from "react";
 import type { Dictionary } from "@/lib/i18n/types";
 
 type Field = "city" | "street" | "building";
-type Item = { id: string; name?: string; number?: string; region?: string };
+type Item = { id: string; name?: string; number?: string; region?: string; source?: "ukrposhta" | "nominatim"; settlementId?: string; settlementName?: string };
 
 function itemLabel(item: Item) {
   return item.name ?? item.number ?? "";
 }
 
-export function AddressSelector({ dictionary: t }: { dictionary: Dictionary }) {
+export function AddressSelector({ dictionary: t, onAddressChange }: { dictionary: Dictionary; onAddressChange?: (address: { city: string; street: string; house: string; apartment: string }) => void }) {
   const [city, setCity] = useState<Item | null>(null);
   const [street, setStreet] = useState<Item | null>(null);
   const [building, setBuilding] = useState<Item | null>(null);
@@ -23,6 +23,7 @@ export function AddressSelector({ dictionary: t }: { dictionary: Dictionary }) {
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
   const [retry, setRetry] = useState(0);
   const [highlightedIndex, setHighlightedIndex] = useState(0);
   const [result, setResult] = useState("");
@@ -44,8 +45,8 @@ export function AddressSelector({ dictionary: t }: { dictionary: Dictionary }) {
         mode: activeField === "city" ? "settlements" : activeField === "street" ? "streets" : "buildings",
         q: query.trim(),
       });
-      if (activeField === "street" && city) params.set("settlementId", city.id);
-      if (activeField === "building" && street) params.set("streetId", street.id);
+      if (activeField === "street" && city) { params.set("settlementId", city.id); params.set("settlementName", city.name ?? ""); params.set("settlementSource", city.source ?? "nominatim"); }
+      if (activeField === "building" && street) { params.set("streetId", street.id); params.set("streetName", street.name ?? ""); params.set("streetSource", street.source ?? "nominatim"); params.set("settlementId", street.settlementId ?? city?.id ?? ""); params.set("settlementName", street.settlementName ?? city?.name ?? ""); }
 
       setIsLoading(true);
       setError("");
@@ -90,6 +91,7 @@ export function AddressSelector({ dictionary: t }: { dictionary: Dictionary }) {
     setSuggestions([]);
     setHasSearched(false);
     setResult("");
+    setNotice("");
   };
 
   const changeField = (field: Field, value: string) => {
@@ -98,6 +100,7 @@ export function AddressSelector({ dictionary: t }: { dictionary: Dictionary }) {
     setHasSearched(false);
     setError("");
     setResult("");
+    setNotice("");
     if (field === "city") {
       setCity(null);
       setStreet(null);
@@ -140,34 +143,36 @@ export function AddressSelector({ dictionary: t }: { dictionary: Dictionary }) {
 
   const showSuggestions = (field: Field) => activeField === field && suggestions.length > 0;
   const inputClass = "mt-1 w-full rounded-xl border border-slate-200 bg-white/90 p-3 text-slate-900 placeholder:text-slate-400 disabled:cursor-not-allowed disabled:bg-slate-100";
+  const enterManualMode = () => {
+    setCityQuery(city?.name ?? cityQuery); setStreetQuery(street?.name ?? streetQuery); setBuildingQuery(building?.number ?? buildingQuery);
+    setCity(null); setStreet(null); setBuilding(null); setManualMode(true); setActiveField(null); setSuggestions([]); setError(""); setNotice(""); setResult("");
+  };
 
   return <form onSubmit={async (event) => {
     event.preventDefault();
-    if (manualMode) { if (!cityQuery.trim() || !streetQuery.trim() || !buildingQuery.trim()) return; setResult(`${cityQuery.trim()}, ${streetQuery.trim()}, ${buildingQuery.trim()}${apartment.trim() ? `, ${t["home.apartment"]}: ${apartment.trim()}` : ""}`); return; }
+    if (manualMode) { if (!cityQuery.trim() || !streetQuery.trim() || !buildingQuery.trim()) return; setResult(`${cityQuery.trim()}, ${streetQuery.trim()}, ${buildingQuery.trim()}${apartment.trim() ? `, ${t["home.apartment"]}: ${apartment.trim()}` : ""}`); onAddressChange?.({ city: cityQuery.trim(), street: streetQuery.trim(), house: buildingQuery.trim(), apartment: apartment.trim() }); return; }
     if (!city || !street || !selectedBuilding) return;
     let verifiedBuilding = building;
     if (!verifiedBuilding) {
       setIsLoading(true);
       setError("");
       try {
-        const params = new URLSearchParams({ mode: "validate", streetId: street.id, q: selectedBuilding.number ?? "" });
+        const params = new URLSearchParams({ mode: "validate", streetId: street.id, streetName: street.name ?? "", streetSource: street.source ?? "nominatim", settlementId: street.settlementId ?? city.id, settlementName: street.settlementName ?? city.name ?? "", q: selectedBuilding.number ?? "" });
         const response = await fetch(`/api/address?${params}`);
         if (!response.ok) throw new Error("Address provider unavailable");
         const validation: { valid: boolean; building?: Item } = await response.json();
-        if (!validation.valid || !validation.building) {
-          setError(t["address.notVerified"]);
-          return;
-        }
-        verifiedBuilding = validation.building;
-        setBuilding(validation.building);
+        if (validation.valid && validation.building) { verifiedBuilding = validation.building; setBuilding(validation.building); }
+        else setNotice(t["address.unverified"]);
       } catch {
-        setError(t["address.providerUnavailable"]);
-        return;
+        setNotice(t["address.unverified"]);
       } finally {
         setIsLoading(false);
       }
     }
-    setResult(`${city.name}, ${street.name}, ${verifiedBuilding.number}${apartment.trim() ? `, ${t["home.apartment"]}: ${apartment.trim()}` : ""}`);
+    const finalBuilding = verifiedBuilding ?? selectedBuilding;
+    if (!finalBuilding) return;
+    setResult(`${city.name}, ${street.name}, ${finalBuilding.number}${apartment.trim() ? `, ${t["home.apartment"]}: ${apartment.trim()}` : ""}`);
+    onAddressChange?.({ city: city.name ?? "", street: street.name ?? "", house: finalBuilding.number ?? "", apartment: apartment.trim() });
     setActiveField(null);
   }} className="grid gap-3 rounded-3xl border border-teal-100 bg-white/80 p-5 shadow-sm sm:grid-cols-2">
     <label className="relative">{t["home.city"]}
@@ -186,8 +191,9 @@ export function AddressSelector({ dictionary: t }: { dictionary: Dictionary }) {
     <label>{t["home.apartment"]}<input value={apartment} onChange={(event) => { setApartment(event.target.value); setResult(""); }} className={inputClass} /></label>
     {isLoading ? <p className="sm:col-span-2 text-sm text-slate-600" role="status">{t["address.searching"]}</p> : null}
     {activeField !== "building" && hasSearched && !isLoading && !suggestions.length ? <p className="sm:col-span-2 text-sm text-slate-600">{t["address.noResults"]}</p> : null}
-    {error ? <p className="sm:col-span-2 text-sm text-amber-800" role="alert">{error} <button type="button" onClick={() => setRetry((value) => value + 1)} className="underline">{t["address.retry"]}</button> <button type="button" onClick={() => { setManualMode(true); setActiveField(null); setSuggestions([]); setError(""); }} className="ml-2 underline">{t["address.manual"]}</button></p> : null}
-    {manualMode ? <p className="sm:col-span-2 text-xs text-slate-600">Address lookup is unavailable. This manually entered address is not verified against Ukrposhta data.</p> : null}
+    {error ? <p className="sm:col-span-2 text-sm text-amber-800" role="alert">{error} <button type="button" onClick={() => { setError(""); setRetry((value) => value + 1); }} className="underline">{t["address.retry"]}</button> <button type="button" onClick={enterManualMode} className="ml-2 underline">{t["address.manual"]}</button></p> : null}
+    {notice ? <p className="sm:col-span-2 text-sm text-amber-800" role="status">{notice}</p> : null}
+    {manualMode ? <p className="sm:col-span-2 text-xs text-slate-600">{t["address.manualDescription"]} <button type="button" onClick={() => setManualMode(false)} className="underline">{t["address.useAutomatic"]}</button></p> : <p className="sm:col-span-2 text-xs text-slate-600"><button type="button" onClick={enterManualMode} className="underline">{t["address.manual"]}</button></p>}
     <button disabled={manualMode ? !cityQuery.trim() || !streetQuery.trim() || !buildingQuery.trim() : !city || !street || !selectedBuilding} className="button-primary sm:col-span-2">{t["home.checkAddress"]}</button>
     {result ? <p className="sm:col-span-2 text-sm text-slate-700" role="status"><strong>{t["address.selected"]}</strong><br />{result}<br />{t["home.statusUnknown"]}</p> : null}
   </form>;
