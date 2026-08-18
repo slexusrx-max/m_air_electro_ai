@@ -11,7 +11,7 @@ function errorResponse(error: unknown) {
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const mode = url.searchParams.get("mode");
-  if (mode === "status") return Response.json({ configured: Boolean(process.env.UKRPOSHTA_ADDRESS_API_TOKEN?.trim()), provider: "ukrposhta" }, { headers: { "Cache-Control": "no-store" } });
+  if (mode === "status") return Response.json({ primary: { provider: "ukrposhta", configured: Boolean(process.env.UKRPOSHTA_ADDRESS_API_TOKEN?.trim()) }, fallback: { provider: "nominatim", enabled: true } }, { headers: { "Cache-Control": "no-store" } });
   const query = (url.searchParams.get("q") ?? "").trim().slice(0, 120);
   const settlementId = url.searchParams.get("settlementId") ?? "";
   const settlementName = url.searchParams.get("settlementName") ?? "";

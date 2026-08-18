@@ -54,11 +54,12 @@ export function AddressSelector({ dictionary: t, onAddressChange }: { dictionary
         const response = await fetch(`/api/address?${params}`, { signal: controller.signal });
         if (!response.ok) throw new Error("Address provider unavailable");
         const data: Item[] = await response.json();
+        if (controller.signal.aborted) return;
         setSuggestions(data);
         setHighlightedIndex(0);
         setHasSearched(true);
       } catch (requestError) {
-        if (!(requestError instanceof DOMException && requestError.name === "AbortError")) {
+        if (!controller.signal.aborted && !(requestError instanceof DOMException && requestError.name === "AbortError")) {
           setSuggestions([]);
           setError(t["address.providerUnavailable"]);
         }

@@ -1,1 +1,2 @@
-export function AffiliateDisclosure() { return <p className="rounded-xl border border-lime-100/20 bg-lime-100/[0.06] p-3 text-xs leading-5 text-white/70">Purchase is completed on the partner’s website. M Air Electro AI may earn a commission from qualifying purchases. The merchant controls price, stock, delivery and returns; prices may change.</p>; }
+import type { Dictionary } from "@/lib/i18n/types";
+export function AffiliateDisclosure({ dictionary: t }: { dictionary: Dictionary }) { return <p className="rounded-xl border border-lime-100/20 bg-lime-100/[0.06] p-3 text-xs leading-5 text-white/70">{t["marketplace.disclosure"]}</p>; }
