@@ -150,7 +150,7 @@ export function AddressSelector({ dictionary: t, onAddressChange }: { dictionary
 
   return <form onSubmit={async (event) => {
     event.preventDefault();
-    if (manualMode) { if (!cityQuery.trim() || !streetQuery.trim() || !buildingQuery.trim()) return; setResult(`${cityQuery.trim()}, ${streetQuery.trim()}, ${buildingQuery.trim()}${apartment.trim() ? `, ${t["home.apartment"]}: ${apartment.trim()}` : ""}`); onAddressChange?.({ city: cityQuery.trim(), street: streetQuery.trim(), house: buildingQuery.trim(), apartment: apartment.trim() }); return; }
+    if (manualMode) { if (!cityQuery.trim() || !streetQuery.trim() || !buildingQuery.trim()) return; setResult(`${cityQuery.trim()}, ${streetQuery.trim()}, ${buildingQuery.trim()}${apartment.trim() ? `, ${t["home.apartment"]}: ${apartment.trim()}` : ""}`); setHasSearched(false); onAddressChange?.({ city: cityQuery.trim(), street: streetQuery.trim(), house: buildingQuery.trim(), apartment: apartment.trim() }); return; }
     if (!city || !street || !selectedBuilding) return;
     let verifiedBuilding = building;
     if (!verifiedBuilding) {
@@ -174,6 +174,7 @@ export function AddressSelector({ dictionary: t, onAddressChange }: { dictionary
     setResult(`${city.name}, ${street.name}, ${finalBuilding.number}${apartment.trim() ? `, ${t["home.apartment"]}: ${apartment.trim()}` : ""}`);
     onAddressChange?.({ city: city.name ?? "", street: street.name ?? "", house: finalBuilding.number ?? "", apartment: apartment.trim() });
     setActiveField(null);
+    setHasSearched(false);
   }} className="grid gap-3 rounded-3xl border border-teal-100 bg-white/80 p-5 shadow-sm sm:grid-cols-2">
     <label className="relative">{t["home.city"]}
       <input value={city?.name ?? cityQuery} onFocus={() => setActiveField("city")} onChange={(event) => changeField("city", event.target.value)} onKeyDown={handleKeys} placeholder={t["address.selectCity"]} aria-autocomplete="list" aria-controls={showSuggestions("city") ? listId : undefined} className={inputClass} />
