@@ -33,6 +33,17 @@ export class NominatimAddressProvider implements AddressProvider {
     const places = await this.search({ street: query, city: settlement.name, country: "Україна" });
     const results: AddressStreet[] = [];
     for (const place of places) { const name = place.address?.road; if (name && matchesStreetQuery(name, query)) results.push({ id: `nominatim:${place.place_id}`, name, settlementId: settlement.id, settlementName: settlement.name, source: "nominatim" }); }
+    if (results.length) return unique(results, (place) => place.name.toLocaleLowerCase("uk-UA"));
+
+    // Nominatim may resolve a former street name to a current street through a
+    // real address record. Keep this separate from exact matching and only
+    // accept results whose returned city is the selected city.
+    const aliases = await this.search({ q: `${query}, ${settlement.name}, Україна` });
+    for (const place of aliases) {
+      const name = place.address?.road;
+      const city = place.address?.city ?? place.address?.town ?? place.address?.village;
+      if (name && city && normal(city) === normal(settlement.name)) results.push({ id: `nominatim:${place.place_id}`, name, settlementId: settlement.id, settlementName: settlement.name, source: "nominatim", matchedBy: "alternate_name" });
+    }
     return unique(results, (place) => place.name.toLocaleLowerCase("uk-UA"));
   }
 

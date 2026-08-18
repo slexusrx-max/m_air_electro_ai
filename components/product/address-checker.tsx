@@ -4,7 +4,7 @@ import { useEffect, useId, useState } from "react";
 import type { Dictionary } from "@/lib/i18n/types";
 
 type Field = "city" | "street" | "building";
-type Item = { id: string; name?: string; number?: string; region?: string; source?: "ukrposhta" | "nominatim"; settlementId?: string; settlementName?: string };
+type Item = { id: string; name?: string; number?: string; region?: string; source?: "ukrposhta" | "nominatim"; settlementId?: string; settlementName?: string; matchedBy?: "alternate_name" };
 
 function itemLabel(item: Item) {
   return item.name ?? item.number ?? "";
@@ -181,7 +181,7 @@ export function AddressSelector({ dictionary: t, onAddressChange }: { dictionary
     </label>
     <label className="relative">{t["home.street"]}
       <input disabled={!city && !manualMode} value={street?.name ?? streetQuery} onFocus={() => (city || manualMode) && setActiveField("street")} onChange={(event) => changeField("street", event.target.value)} onKeyDown={handleKeys} placeholder={city || manualMode ? t["address.selectStreet"] : t["address.selectCityFirst"]} aria-autocomplete="list" aria-controls={showSuggestions("street") ? listId : undefined} className={inputClass} />
-      {showSuggestions("street") ? <Options items={suggestions} highlightedIndex={highlightedIndex} listId={listId} onChoose={choose} /> : null}
+      {showSuggestions("street") ? <Options items={suggestions} highlightedIndex={highlightedIndex} listId={listId} onChoose={choose} alternateNameLabel={t["address.alternateName"]} /> : null}
     </label>
     <label className="relative">{t["home.building"]}
       <input disabled={!street && !manualMode} value={building?.number ?? buildingQuery} onFocus={() => (street || manualMode) && setActiveField("building")} onChange={(event) => changeField("building", event.target.value)} onKeyDown={handleKeys} placeholder={street || manualMode ? t["address.selectBuilding"] : t["address.selectStreetFirst"]} aria-autocomplete="list" aria-controls={showSuggestions("building") ? listId : undefined} className={inputClass} />
@@ -199,9 +199,9 @@ export function AddressSelector({ dictionary: t, onAddressChange }: { dictionary
   </form>;
 }
 
-function Options({ items, highlightedIndex, listId, onChoose }: { items: Item[]; highlightedIndex: number; listId: string; onChoose: (item: Item) => void }) {
+function Options({ items, highlightedIndex, listId, onChoose, alternateNameLabel }: { items: Item[]; highlightedIndex: number; listId: string; onChoose: (item: Item) => void; alternateNameLabel?: string }) {
   return <div id={listId} role="listbox" className="absolute z-20 mt-1 max-h-56 w-full overflow-auto rounded-xl border border-slate-200 bg-white shadow-lg">
-    {items.map((item, index) => <button type="button" role="option" aria-selected={index === highlightedIndex} onMouseDown={(event) => event.preventDefault()} onClick={() => onChoose(item)} className={`block w-full px-3 py-2 text-left text-sm ${index === highlightedIndex ? "bg-teal-50" : "hover:bg-slate-50"}`} key={item.id}>{itemLabel(item)}{item.region ? ` — ${item.region}` : ""}</button>)}
+    {items.map((item, index) => <button type="button" role="option" aria-selected={index === highlightedIndex} onMouseDown={(event) => event.preventDefault()} onClick={() => onChoose(item)} className={`block w-full px-3 py-2 text-left text-sm ${index === highlightedIndex ? "bg-teal-50" : "hover:bg-slate-50"}`} key={item.id}>{itemLabel(item)}{item.region ? ` — ${item.region}` : ""}{item.matchedBy === "alternate_name" && alternateNameLabel ? <span className="block text-xs text-slate-500">{alternateNameLabel}</span> : null}</button>)}
   </div>;
 }
 
