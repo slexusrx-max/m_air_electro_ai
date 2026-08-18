@@ -67,5 +67,5 @@ function normal(value: string) { return value.toLocaleLowerCase("uk-UA").replace
 function matchesStreetQuery(name: string, query: string) {
   const streetName = normal(name).replace(/^(вулиця|вул|проспект|просп|провулок|пров|бульвар|бул)\s+/, "");
   const requested = normal(query).replace(/^(вулиця|вул|проспект|просп|провулок|пров|бульвар|бул)\s+/, "");
-  return requested.length > 0 && streetName.startsWith(requested);
+  return requested.length > 0 && streetName.includes(requested);
 }
