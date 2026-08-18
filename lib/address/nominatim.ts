@@ -30,16 +30,16 @@ export class NominatimAddressProvider implements AddressProvider {
   }
 
   async getStreets(settlement: AddressSettlement, query: string): Promise<AddressStreet[]> {
-    const places = await this.search({ q: `${query}, ${settlement.name}, Україна` });
+    const places = await this.search({ street: query, city: settlement.name, country: "Україна" });
     const results: AddressStreet[] = [];
-    for (const place of places) { const name = place.address?.road; if (name) results.push({ id: `nominatim:${place.place_id}`, name, settlementId: settlement.id, settlementName: settlement.name, source: "nominatim" }); }
+    for (const place of places) { const name = place.address?.road; if (name && matchesStreetQuery(name, query)) results.push({ id: `nominatim:${place.place_id}`, name, settlementId: settlement.id, settlementName: settlement.name, source: "nominatim" }); }
     return unique(results, (place) => place.name.toLocaleLowerCase("uk-UA"));
   }
 
   async getBuildings(street: AddressStreet, query: string): Promise<AddressBuilding[]> {
     const places = await this.search({ q: `${query} ${street.name}, ${street.settlementName}, Україна` });
     const results: AddressBuilding[] = [];
-    for (const place of places) { const number = place.address?.house_number; if (number) results.push({ id: `nominatim:${place.place_id}`, number, streetId: street.id, postalCode: place.address?.postcode, source: "nominatim" }); }
+    for (const place of places) { const number = place.address?.house_number; if (number && normal(number).startsWith(normal(query))) results.push({ id: `nominatim:${place.place_id}`, number, streetId: street.id, postalCode: place.address?.postcode, source: "nominatim" }); }
     return unique(results, (place) => place.number.toLocaleLowerCase("uk-UA"));
   }
 
@@ -51,3 +51,10 @@ export class NominatimAddressProvider implements AddressProvider {
 }
 
 function unique<T>(items: T[], key: (item: T) => string) { return [...new Map(items.map((item) => [key(item), item])).values()]; }
+
+function normal(value: string) { return value.toLocaleLowerCase("uk-UA").replace(/и/g, "і").replace(/[^\p{L}\p{N}]+/gu, " ").trim(); }
+function matchesStreetQuery(name: string, query: string) {
+  const streetName = normal(name).replace(/^(вулиця|вул|проспект|просп|провулок|пров|бульвар|бул)\s+/, "");
+  const requested = normal(query).replace(/^(вулиця|вул|проспект|просп|провулок|пров|бульвар|бул)\s+/, "");
+  return requested.length > 0 && streetName.startsWith(requested);
+}
