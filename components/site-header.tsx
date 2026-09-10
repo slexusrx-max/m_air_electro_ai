@@ -27,7 +27,7 @@ export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: 
   const [isMoreOpen, setIsMoreOpen] = useState(false);
   const [isMarketplaceOpen, setIsMarketplaceOpen] = useState(false);
   const switchLocale = async (nextLocale: Locale) => { if (nextLocale === locale) return; const response = await fetch("/api/locale", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ locale: nextLocale }) }); if (response.ok) window.location.reload(); };
-  const languageControl = <div className="flex rounded-full border border-white/20 p-1 text-xs font-bold text-white"><button type="button" onClick={() => switchLocale("en")} aria-pressed={locale === "en"} className={`rounded-full px-2 py-1 ${locale === "en" ? "bg-white text-teal-950" : "text-white/75"}`}>EN</button><button type="button" onClick={() => switchLocale("uk")} aria-pressed={locale === "uk"} className={`rounded-full px-2 py-1 ${locale === "uk" ? "bg-white text-teal-950" : "text-white/75"}`}>UA</button></div>;
+  const languageControl = <div className="flex rounded-full border border-white/20 p-1 text-xs font-bold text-white"><button type="button" onClick={() => switchLocale("en")} aria-pressed={locale === "en"} className={`rounded-full px-2 py-1 ${locale === "en" ? "bg-white text-teal-950" : "text-white/75"}`}>EN</button><button type="button" onClick={() => switchLocale("ro")} aria-pressed={locale === "ro"} className={`rounded-full px-2 py-1 ${locale === "ro" ? "bg-white text-teal-950" : "text-white/75"}`}>RO</button></div>;
 
   return (
     <div className="mx-4 mt-4 sm:mx-6 lg:mx-8">

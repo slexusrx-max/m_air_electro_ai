@@ -17,16 +17,14 @@ export type CalculatorItem = {
 };
 
 export const siteNavItems: SiteNavItem[] = [
-  { label: "Home", href: "/", description: "Energy resilience for Ukraine." },
+  { label: "Home", href: "/", description: "Backup-power planning for Romania." },
   { label: "AI Assistant", href: "/assistant", description: "AI assistance for electrical reasoning." },
   { label: "Diagnostics", href: "/diagnostics", description: "Structured troubleshooting workflows." },
   { label: "Calculators", href: "/calculators", description: "Engineering calculation tools." },
   { label: "Marketplace", href: "/marketplace", description: "Engineering-led product discovery." },
   { label: "Energy Solutions", href: "/marketplace/find-my-solution", description: "Size an energy system before shopping." },
   { label: "Experts", href: "/experts", description: "Verified expert profiles and specializations." },
-  { label: "Ukraine Energy Live", href: "/ukraine-energy", description: "System status, restrictions and sources." },
   { label: "My Home", href: "/my-home", description: "Your household energy readiness." },
-  { label: "Energy Map", href: "/energy-map", description: "Ukraine-focused public energy map." },
   { label: "For Business", href: "/business", description: "Business continuity and energy planning." },
   { label: "Backup Calculator", href: "/backup-calculator", description: "Size a household backup system." },
   { label: "Find Installer", href: "/installers", description: "Find energy installation specialists." },

@@ -7,5 +7,5 @@ for (const route of routes) {
 }
 const status = await fetch(`${baseUrl}/api/address?mode=status`);
 const payload = await status.json();
-if (status.status !== 200 || typeof payload.configured !== "boolean") { failed = true; console.error("FAIL address status endpoint"); } else console.log(`OK address status configured=${payload.configured}`);
+if (status.status !== 200 || typeof payload?.primary?.configured !== "boolean" || typeof payload?.fallback?.enabled !== "boolean") { failed = true; console.error("FAIL address status endpoint"); } else console.log(`OK address status primary=${payload.primary.configured} fallback=${payload.fallback.enabled}`);
 if (failed) process.exit(1);
