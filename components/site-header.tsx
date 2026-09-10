@@ -19,7 +19,7 @@ function isActivePath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-const navKeys: Record<string, string> = { Home: "nav.home", "Ukraine Energy Live": "nav.energy", "My Home": "nav.myHome", "Energy Map": "nav.map", "For Business": "nav.business", "Backup Calculator": "nav.backup", "Find Installer": "nav.installers", Buildings: "nav.buildings", Professionals: "nav.professionals", Calculators: "nav.calculators" };
+const navKeys: Record<string, string> = { Home: "nav.home", "My Home": "nav.myHome", "For Business": "nav.business", "Backup Calculator": "nav.backup", "Find Installer": "nav.installers", Buildings: "nav.buildings", Professionals: "nav.professionals", Calculators: "nav.calculators" };
 
 export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: t, locale }: { profile: { email: string; role: MarketplaceRole } | null; dashboardHref?: string; dictionary: Dictionary; locale: Locale }) {
   const pathname = usePathname();

@@ -7,13 +7,13 @@ export const siteConfig = {
   domainFocus:
     "Electrical engineering only. No general handyman services, no generic classifieds, no low-trust service sprawl.",
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@mairelectro.ai",
-  defaultLocale: "en-US",
-  primaryMarket: "United States",
+  defaultLocale: "ro-RO",
+  primaryMarket: "Romania",
   launchMarkets: [
-    "United States home electrical",
-    "Industrial electrical and automation",
-    "Marine and offshore electrical systems",
-    "Verified electrical parts and remote diagnostics",
+    "Romanian home energy resilience",
+    "Solar, batteries and backup-power planning",
+    "Electrical diagnostics and technical calculators",
+    "Verified EU supplier research",
   ],
   keywords: [
     "electrical diagnostics",

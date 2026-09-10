@@ -6,7 +6,7 @@ import { catalog, marketplaceCategories } from "@/lib/affiliate/catalog";
 import { buildMetadata } from "@/lib/metadata";
 import { getRequestDictionary } from "@/lib/i18n/request";
 
-export const metadata = buildMetadata({ title: "Energy Marketplace", description: "Calculate, compare and choose electrical and energy solutions before visiting approved external sellers.", path: "/marketplace" });
+export const metadata = buildMetadata({ title: "Energy Marketplace", description: "Calculate, compare and choose electrical and energy solutions before consulting an external supplier.", path: "/marketplace" });
 
 export default async function MarketplacePage({ searchParams }: { searchParams: Promise<{ batteryKwh?: string; inverterKw?: string; surgeKw?: string; region?: string }> }) {
   const requirements = await searchParams;

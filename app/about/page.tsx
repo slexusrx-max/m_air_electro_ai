@@ -45,7 +45,7 @@ export default function AboutPage() {
           <div>
             <SectionHeading
               eyebrow="Markets"
-              title="Primary launch focus starts in the United States and extends into specialist global electrical workflows."
+              title="Primary launch focus is Romania, with practical home-energy planning and transparent EU supplier research."
               description="The first commercial motion is aimed at residential electrical diagnostics, verified electrical services, verified parts, and premium marine and industrial remote expertise."
             />
           </div>

@@ -20,7 +20,7 @@ export const expertProfiles: ExpertProfile[] = [
     audience: ["Home users", "Property owners", "Electrical contractors"],
     serviceModes: ["Remote diagnosis", "Job scope review", "Safety triage"],
     responseWindow: "Same day for pilot users",
-    regions: ["United States"],
+    regions: ["Romania"],
     premium: false,
     signals: [
       "Panel and branch-circuit troubleshooting experience",
@@ -42,7 +42,7 @@ export const expertProfiles: ExpertProfile[] = [
     audience: ["Industrial electricians", "Maintenance teams", "OEM integrators"],
     serviceModes: ["Remote diagnostics", "Document review", "Spare-parts advisory"],
     responseWindow: "Priority scheduling for verified companies",
-    regions: ["United States", "International"],
+    regions: ["Romania", "European Union"],
     premium: true,
     signals: [
       "VFD and motor control expertise",
