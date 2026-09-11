@@ -8,36 +8,36 @@ const privacySections = [
   {
     title: "Scope",
     body: [
-      "This MVP privacy page describes how M Air Electro AI may collect and use account information, usage data, uploaded technical files, and marketplace workflow evidence.",
-      "Because the platform is built for electrical diagnostics and technical collaboration, uploaded content can include manuals, schematics, photos, fault descriptions, and marketplace transaction records.",
+      "This page describes the privacy principles for visitors using M Air Electro AI's public planning tools and contacting the team.",
+      "The public website does not process payments or create supplier orders. A supplier's privacy policy applies when you visit its website or make a purchase there.",
     ],
   },
   {
     title: "Data categories",
     body: [
-      "Potential data categories include contact details, account role, usage analytics, calculation inputs, support messages, uploaded technical documents, device and browser metadata, and marketplace workflow events.",
-      "Sensitive payment data should be handled by third-party payment providers rather than stored directly by the platform wherever possible.",
+      "Information may include a contact email sent to us, calculator inputs you enter in your browser, and ordinary technical data needed to operate and secure the site.",
+      "Do not send payment-card details or sensitive identity documents to M Air Electro AI through this website.",
     ],
   },
   {
     title: "How data is used",
     body: [
-      "Data may be used to operate the platform, improve AI diagnostics, secure accounts, moderate marketplace activity, investigate disputes, and maintain product reliability.",
-      "Uploaded documents and technical evidence should only be processed in line with the service purpose, access controls, and applicable contractual obligations.",
+      "Information is used to reply to questions, maintain the site and improve the planning content.",
+      "We do not sell personal data or use contact information for unrelated purposes.",
     ],
   },
   {
     title: "Sharing",
     body: [
-      "Data may be shared with infrastructure providers, analytics tools, authentication providers, or payment providers strictly as needed to run the service.",
-      "Marketplace evidence may be shared with counterparties, moderators, and payment providers when required for completion confirmation, fraud review, or dispute handling.",
+      "Information is shared only with service providers needed to host and secure this website, or where required by law.",
+      "External suppliers receive information only when you voluntarily visit their site or contact them directly.",
     ],
   },
   {
     title: "Retention and deletion",
     body: [
-      "Retention periods should be tied to product operations, legal requirements, fraud prevention, dispute handling, and customer support history.",
-      "Production deployment should define documented retention schedules for AI conversations, marketplace evidence, uploaded files, and account records.",
+      "We keep contact information only for as long as needed to handle the request, comply with legal obligations or resolve a dispute.",
+      "You may ask about personal information held in connection with a contact request by using the public email address on the Contact page.",
     ],
   },
 ];
@@ -55,7 +55,7 @@ export default function PrivacyPage() {
         <PageHero
           eyebrow="Privacy Policy"
           title="Privacy principles for diagnostics, documents, marketplace workflows, and expert collaboration."
-          description="This MVP privacy policy should be reviewed by legal counsel before public launch. It is structured for an AI-first electrical engineering platform with protected marketplace workflows."
+          description="This policy explains how the public planning site handles contact information and its relationship with external supplier websites."
         />
 
         <div className={`${glassPanelClassName} p-6 sm:p-8 lg:p-10`}>

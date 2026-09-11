@@ -18,19 +18,14 @@ export type CalculatorItem = {
 
 export const siteNavItems: SiteNavItem[] = [
   { label: "Home", href: "/", description: "Backup-power planning for Romania." },
-  { label: "AI Assistant", href: "/assistant", description: "AI assistance for electrical reasoning." },
-  { label: "Diagnostics", href: "/diagnostics", description: "Structured troubleshooting workflows." },
-  { label: "Calculators", href: "/calculators", description: "Engineering calculation tools." },
   { label: "Marketplace", href: "/marketplace", description: "Engineering-led product discovery." },
   { label: "Energy Solutions", href: "/marketplace/find-my-solution", description: "Size an energy system before shopping." },
-  { label: "Experts", href: "/experts", description: "Verified expert profiles and specializations." },
-  { label: "My Home", href: "/my-home", description: "Your household energy readiness." },
-  { label: "For Business", href: "/business", description: "Business continuity and energy planning." },
   { label: "Backup Calculator", href: "/backup-calculator", description: "Size a household backup system." },
-  { label: "Find Installer", href: "/installers", description: "Find energy installation specialists." },
-  { label: "Buildings", href: "/buildings", description: "Building energy-resilience information." },
-  { label: "Professionals", href: "/professionals", description: "Profiles and leads for energy specialists." },
   { label: "Calculators", href: "/calculators", description: "Engineering calculation tools." },
+  { label: "About", href: "/about", description: "How this independent planning service works." },
+  { label: "Knowledge Base", href: "/knowledge-base", description: "Practical battery, inverter and solar guidance." },
+  { label: "Contact", href: "/contact", description: "Questions about planning and suppliers." },
+  { label: "Affiliate disclosure", href: "/affiliate-disclosure", description: "How external supplier links are disclosed." },
 ];
 
 export const primaryNavItems = siteNavItems.slice(1, 6);
@@ -100,19 +95,17 @@ export const calculatorItems: CalculatorItem[] = [
 
 export const footerNavGroups: FooterNavGroup[] = [
   {
-    title: "Platform",
+    title: "Planning tools",
     items: [
-      { label: "AI Assistant", href: "/assistant", description: "AI assistance for electrical reasoning." },
-      { label: "Diagnostics", href: "/diagnostics", description: "Structured troubleshooting workflows." },
-      { label: "Documents AI", href: "/documents", description: "Manual, PDF, and schematic analysis." },
+      { label: "Energy Solutions", href: "/marketplace/find-my-solution", description: "Start from energy needs." },
       { label: "Calculators", href: "/calculators", description: "Deterministic engineering tools." },
+      { label: "Backup Calculator", href: "/backup-calculator", description: "Estimate home backup capacity." },
     ],
   },
   {
-    title: "Marketplace",
+    title: "Equipment guidance",
     items: [
-      { label: "Marketplace", href: "/marketplace", description: "Protected services and verified parts." },
-      { label: "Experts", href: "/experts", description: "Verified expert profiles and specializations." },
+      { label: "Marketplace", href: "/marketplace", description: "Independent component guidance." },
       { label: "Knowledge Base", href: "/knowledge-base", description: "Articles and operating guidance." },
       { label: "Contact", href: "/contact", description: "Commercial, pilot, and support contact." },
       { label: "Affiliate disclosure", href: "/affiliate-disclosure", description: "Supplier-link and commission disclosure." },
@@ -124,7 +117,6 @@ export const footerNavGroups: FooterNavGroup[] = [
       { label: "About", href: "/about", description: "Positioning, focus, and product direction." },
       { label: "Privacy Policy", href: "/privacy", description: "Privacy and data handling." },
       { label: "Terms", href: "/terms", description: "Terms of use and marketplace rules." },
-      { label: "Sign In", href: "/sign-in", description: "Access architecture and future auth flows." },
     ],
   },
 ];

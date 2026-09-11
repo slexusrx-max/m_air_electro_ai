@@ -10,7 +10,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata = buildMetadata({
   title: "Contact",
   description:
-    "Contact M Air Electro AI for pilot access, specialist marketplace onboarding, marine and industrial cases, or commercial partnership discussions.",
+    "Contact M Air Electro AI about independent home-energy planning and external supplier guidance for Romania.",
   path: "/contact",
 });
 
@@ -22,8 +22,8 @@ export default function ContactPage() {
       <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10">
         <PageHero
           eyebrow="Contact"
-          title="Start with the right electrical context, and we can route the conversation correctly."
-          description="Use contact for pilot access, expert onboarding, marine and industrial support requests, marketplace partnerships, and early enterprise discussions."
+          title="Questions about a backup-power plan start here."
+          description="Use contact for independent planning guidance, calculator feedback, or questions about the supplier-link disclosure for Romania."
           actions={[
             { href: mailto, label: "Email the team" },
             { href: "/experts", label: "Review expert tracks", variant: "secondary" },
@@ -33,16 +33,16 @@ export default function ContactPage() {
         <section className="grid gap-4 md:grid-cols-3">
           {[
             {
-              title: "Commercial & pilot access",
-              body: "Use this path for early customer access, team onboarding, and deployment conversations.",
+              title: "Backup-power planning",
+              body: "Ask about batteries, inverters, solar components and the assumptions used by the planning tools.",
             },
             {
-              title: "Expert verification",
-              body: "Use this path if you are an electrician, marine ETO, or controls specialist seeking verified profile onboarding.",
+              title: "Supplier-link disclosure",
+              body: "Ask how external supplier links are selected and how disclosure will change after any affiliate approval.",
             },
             {
-              title: "Marketplace partnerships",
-              body: "Use this path for verified parts, specialist services, or payment-provider integration discussions.",
+              title: "Safety and final design",
+              body: "A qualified installer must validate final compatibility, protection and local electrical requirements.",
             },
           ].map((item) => (
             <article key={item.title} className={moduleCardClassName}>
@@ -57,7 +57,7 @@ export default function ContactPage() {
             <SectionHeading
               eyebrow="Contact Details"
               title="Direct commercial contact"
-              description="For launch readiness, update the production inbox and public site URL in Vercel environment variables before going live."
+              description="For product questions and disclosure feedback, use the public inbox below."
             />
           </div>
           <div className={`${glassPanelClassName} p-6 sm:p-8`}>
@@ -77,7 +77,7 @@ export default function ContactPage() {
               <div>
                 <dt className="text-xs font-semibold uppercase tracking-[0.28em] text-lime-100/76">Coverage</dt>
                 <dd className="mt-2 text-sm leading-7 text-white/76">
-                  Residential, industrial, marine, offshore, verified experts, verified parts, and protected electrical marketplace flows.
+                  Romania-focused planning for home backup, batteries, inverters, solar and external supplier research.
                 </dd>
               </div>
             </dl>

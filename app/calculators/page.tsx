@@ -21,7 +21,7 @@ export default function CalculatorsPage() {
         <PageHero
           eyebrow="Electrical Calculators"
           title="Deterministic engineering tools for real electrical decisions."
-          description="The MVP calculator suite now covers voltage drop, cable sizing, motor current, transformer loading, battery sizing, generator sizing, breaker selection, and fuse selection."
+          description="The calculator suite covers voltage drop, cable sizing, motor current, transformer loading, battery sizing, generator sizing, breaker selection, and fuse selection."
           actions={[
             { href: "/calculators/cable-sizing", label: "Open cable sizing" },
             { href: "/diagnostics", label: "Go to diagnostics", variant: "secondary" },

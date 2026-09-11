@@ -8,7 +8,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata = buildMetadata({
   title: "About",
   description:
-    "Learn why M Air Electro AI focuses on electrical diagnostics, engineering tools, verified experts, and high-trust marketplace workflows.",
+    "Learn how M Air Electro AI helps Romanian households plan batteries, inverters, solar and backup power before choosing a supplier.",
   path: "/about",
 });
 
@@ -18,19 +18,19 @@ export default function AboutPage() {
       <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10">
         <PageHero
           eyebrow="About"
-          title="An AI-first platform built for electrical work where trust, diagnostics, and technical depth matter."
-          description="M Air Electro AI is designed for electrical professionals, specialist companies, and serious equipment owners who need engineering reasoning, deterministic tools, verified expertise, and protected transactions in one place."
+          title="Independent energy planning for Romanian homes."
+          description="M Air Electro AI helps you turn essential loads and desired backup time into a clear starting point for batteries, inverters and solar components."
           actions={[
-            { href: "/assistant", label: "Open AI Assistant" },
-            { href: "/marketplace", label: "See marketplace workflow", variant: "secondary" },
+            { href: "/marketplace/find-my-solution", label: "Plan my system" },
+            { href: "/affiliate-disclosure", label: "Read supplier-link disclosure", variant: "secondary" },
           ]}
         />
 
         <section className="grid gap-4 lg:grid-cols-3">
           {[
-            "Electrical engineering only. The platform is intentionally narrow to stay high-trust and technically credible.",
-            "AI diagnostics is the center of the product. Marketplace workflows support decisions instead of replacing them.",
-            "Marine and industrial electrical expertise are premium differentiators, not side categories.",
+            "Start with what must keep running, then choose the backup duration and compare suitable equipment categories.",
+            "Calculators make assumptions visible so you can discuss a final design with a qualified installer.",
+            "External supplier links are reference links. The supplier controls checkout, delivery, returns and warranty.",
           ].map((item, index) => (
             <article key={item} className={moduleCardClassName}>
               <p className="text-xs font-semibold uppercase tracking-[0.28em] text-lime-100/78">
@@ -46,7 +46,7 @@ export default function AboutPage() {
             <SectionHeading
               eyebrow="Markets"
               title="Primary launch focus is Romania, with practical home-energy planning and transparent EU supplier research."
-              description="The first commercial motion is aimed at residential electrical diagnostics, verified electrical services, verified parts, and premium marine and industrial remote expertise."
+              description="The service is focused on practical household energy resilience: batteries, inverters, solar components and backup planning."
             />
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -61,14 +61,14 @@ export default function AboutPage() {
         <section className={`${glassPanelClassName} p-6 sm:p-8 lg:p-10`}>
           <SectionHeading
             eyebrow="What We Solve"
-            title="The product closes the gap between diagnosis, documentation, expertise, and transaction trust."
+            title="A simple path from energy need to an informed supplier visit."
           />
           <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {[
-              "Users need a fast path from electrical symptoms to structured next actions.",
-              "Specialist calculations should be available without switching tools or digging through spreadsheets.",
-              "Technical documents and images should feed reasoning instead of staying disconnected from the workflow.",
-              "Service and parts transactions need verification, payment protection, and dispute structure.",
+              "List the appliances that must remain powered.",
+              "Choose the number of backup hours you need.",
+              "Review the estimated battery, inverter and solar requirements.",
+              "Confirm the final equipment choice and installation with a qualified installer and the supplier.",
             ].map((problem) => (
               <article key={problem} className={moduleCardClassName}>
                 <p className="text-sm leading-7 text-white/78">{problem}</p>

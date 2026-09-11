@@ -8,8 +8,8 @@ const termsSections = [
   {
     title: "Platform scope",
     body: [
-      "M Air Electro AI is a specialist electrical engineering platform. It is not a general handyman marketplace and should not be described or operated as one.",
-      "The platform may provide AI guidance, calculators, technical document analysis, verified expert discovery, and protected marketplace workflows for electrical services and parts.",
+      "M Air Electro AI provides independent planning tools and educational information for batteries, inverters, solar components and home backup systems in Romania.",
+      "It is not an installer, retailer, marketplace operator or emergency service. It does not accept payment, fulfil orders, or make availability promises for equipment.",
     ],
   },
   {
@@ -20,24 +20,17 @@ const termsSections = [
     ],
   },
   {
-    title: "Marketplace and payments",
+    title: "External supplier links",
     body: [
-      "Marketplace payments should be handled by third-party providers such as Stripe Connect or another supported marketplace payment provider.",
-      "The platform should not independently store or transmit customer funds as if acting as an escrow company. Completion confirmation, delayed payout, and dispute windows must align with platform rules and payment-provider capabilities.",
-    ],
-  },
-  {
-    title: "Verification and moderation",
-    body: [
-      "Expert, seller, and company verification may require identity, business, credential, experience, or product-condition evidence.",
-      "The platform reserves the right to suspend, reject, or remove users, listings, or requests that do not fit the platform focus or trust requirements.",
+      "Supplier links are provided for reference after a planning step. Prices, stock, delivery, warranty, returns, customer support and the purchase contract belong to the supplier, not M Air Electro AI.",
+      "M Air Electro AI is preparing an application to the Renogy Affiliate Program through Impact. Until approval, Renogy EU links are ordinary, untracked supplier links. See the Affiliate disclosure page for the current status.",
     ],
   },
   {
     title: "Service availability",
     body: [
-      "The MVP is provided on an evolving basis and may change as AI providers, marketplace rules, or specialist verification systems mature.",
-      "Production launch should add jurisdiction-specific legal terms, refund handling, tax language, and enterprise contracting where needed.",
+      "The planning tools are provided as-is and may be updated as assumptions or product categories improve.",
+      "These terms apply to use of this informational website. For an equipment purchase, read and accept the supplier's own terms before checkout.",
     ],
   },
 ];
@@ -55,7 +48,7 @@ export default function TermsPage() {
         <PageHero
           eyebrow="Terms"
           title="Terms of use for an AI-first electrical engineering platform."
-          description="These MVP terms establish the platform scope, marketplace posture, and user responsibilities. They should be reviewed by legal counsel before public launch."
+          description="These terms explain the website's planning-only scope, external supplier links and user responsibilities."
         />
 
         <div className={`${glassPanelClassName} p-6 sm:p-8 lg:p-10`}>
