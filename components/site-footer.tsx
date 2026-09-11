@@ -5,7 +5,7 @@ import { footerNavGroups } from "@/lib/site-navigation";
 import { siteConfig } from "@/lib/site";
 import type { Dictionary } from "@/lib/i18n/types";
 
-const footerKeys: Record<string, string> = { Platform: "footer.platform", Marketplace: "footer.marketplace", Company: "footer.company", "AI Assistant": "footer.ai", Diagnostics: "footer.diagnostics", "Documents AI": "footer.documents", Calculators: "nav.calculators", Experts: "footer.experts", "Knowledge Base": "footer.knowledge", Contact: "footer.contact", About: "footer.about", "Privacy Policy": "footer.privacy", Terms: "footer.terms", "Sign In": "auth.login" };
+const footerKeys: Record<string, string> = { Platform: "footer.platform", Marketplace: "footer.marketplace", Company: "footer.company", "AI Assistant": "footer.ai", Diagnostics: "footer.diagnostics", "Documents AI": "footer.documents", Calculators: "nav.calculators", Experts: "footer.experts", "Knowledge Base": "footer.knowledge", Contact: "footer.contact", "Affiliate disclosure": "footer.affiliateDisclosure", About: "footer.about", "Privacy Policy": "footer.privacy", Terms: "footer.terms", "Sign In": "auth.login" };
 
 export function SiteFooter({ dictionary: t }: { dictionary: Dictionary }) {
   return (

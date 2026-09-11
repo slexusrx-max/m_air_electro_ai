@@ -115,6 +115,7 @@ export const footerNavGroups: FooterNavGroup[] = [
       { label: "Experts", href: "/experts", description: "Verified expert profiles and specializations." },
       { label: "Knowledge Base", href: "/knowledge-base", description: "Articles and operating guidance." },
       { label: "Contact", href: "/contact", description: "Commercial, pilot, and support contact." },
+      { label: "Affiliate disclosure", href: "/affiliate-disclosure", description: "Supplier-link and commission disclosure." },
     ],
   },
   {
