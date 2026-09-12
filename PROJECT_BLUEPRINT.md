@@ -1,3 +1,9 @@
+# Current delivery scope — 2026-09-12
+
+The owner’s current product direction supersedes conflicting launch assumptions in the historical blueprint below. M Air is an independent Romanian/EU energy equipment publisher: demand → transparent calculations → equipment comparison → external supplier. No inventory, payments, shipping, dealer status or approved Renogy partnership is claimed. Eight primary categories and two secondary editorial categories are supported. Public commercial language is Romanian with English available. Legacy technical architecture is retained but unfinished paid/alerts/expert surfaces are not published as active services. See README.md for verified behavior, configuration and security migrations.
+
+---
+
 # PROJECT BLUEPRINT
 
 ## M Air Electro AI

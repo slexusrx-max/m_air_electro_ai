@@ -1,65 +1,75 @@
 import Link from "next/link";
-
-import { glassPanelClassName } from "@/components/ui/glass";
-import { footerNavGroups } from "@/lib/site-navigation";
-import { siteConfig } from "@/lib/site";
 import type { Dictionary } from "@/lib/i18n/types";
-
-const footerKeys: Record<string, string> = { Platform: "footer.platform", Marketplace: "footer.marketplace", Company: "footer.company", "AI Assistant": "footer.ai", Diagnostics: "footer.diagnostics", "Documents AI": "footer.documents", Calculators: "nav.calculators", Experts: "footer.experts", "Knowledge Base": "footer.knowledge", Contact: "footer.contact", "Affiliate disclosure": "footer.affiliateDisclosure", About: "footer.about", "Privacy Policy": "footer.privacy", Terms: "footer.terms", "Sign In": "auth.login" };
-
+import { commercialCopy } from "@/lib/marketplace/copy";
 export function SiteFooter({ dictionary: t }: { dictionary: Dictionary }) {
+  const c = commercialCopy(t);
+  const groups = [
+    {
+      title: c.ro ? "Planifică" : "Plan",
+      items: [
+        ["/marketplace/find-my-solution", c.finder],
+        ["/backup-calculator", c.backup],
+        ["/calculators", c.ro ? "Instrumente tehnice" : "Technical tools"],
+      ],
+    },
+    {
+      title: c.ro ? "Informează-te" : "Explore",
+      items: [
+        ["/marketplace", c.marketplace],
+        ["/knowledge-base", c.ro ? "Ghiduri practice" : "Practical guides"],
+        ["/about", c.about],
+        ["/contact", c.contact],
+      ],
+    },
+    {
+      title: c.ro ? "Transparență" : "Transparency",
+      items: [
+        ["/affiliate-disclosure", c.disclosure],
+        ["/privacy", c.privacy],
+        ["/terms", c.terms],
+      ],
+    },
+  ];
   return (
-    <footer className="mx-4 mb-4 mt-10 sm:mx-6 lg:mx-8">
-      <div className={`${glassPanelClassName} overflow-hidden rounded-[2rem] px-6 py-8 sm:px-8 lg:px-10`}>
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1.8fr)]">
-          <div className="max-w-lg">
-            <div className="inline-flex items-center gap-3 rounded-full border border-white/16 bg-white/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-lime-100/80">
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-white/20 bg-white/10 text-[0.7rem] tracking-[0.2em] text-white">
-                EA
-              </span>
-              <span>Electro-AI</span>
-            </div>
-            <h2 className="mt-5 max-w-md text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-              {t["footer.title"]}
-            </h2>
-            <p className="mt-4 text-sm leading-7 text-white/74 sm:text-base">
-              {t["footer.description"]}
-            </p>
-            <p className="mt-5 text-sm text-white/56">
-              {t["footer.market"]}: {siteConfig.primaryMarket}. {t["footer.international"]}
-            </p>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-3">
-            {footerNavGroups.map((group) => (
-              <div key={group.title}>
-                <h3 className="text-sm font-semibold uppercase tracking-[0.28em] text-lime-100/78">
-                  {t[footerKeys[group.title]] ?? group.title}
-                </h3>
-                <ul className="mt-4 space-y-3">
-                  {group.items.map((item) => (
-                    <li key={item.href}>
-                      <Link
-                        href={item.href}
-                        className="group block rounded-2xl border border-transparent bg-white/[0.03] px-3 py-3 transition hover:border-white/12 hover:bg-white/[0.06]"
-                      >
-                        <span className="block text-sm font-medium text-white/92 transition group-hover:text-lime-50">
-                          {t[footerKeys[item.label]] ?? item.label}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+    <footer className="mx-4 mb-4 mt-10 rounded-3xl border border-teal-900/15 bg-white/95 p-6 sm:mx-6 lg:mx-8 lg:p-10">
+      <div className="grid gap-8 lg:grid-cols-[1.2fr_2fr]">
+        <div>
+          <p className="text-xl font-extrabold">M Air Electro AI</p>
+          <p className="mt-3 max-w-md leading-7 text-slate-700">
+            {c.ro
+              ? "Instrumente și ghiduri independente pentru baterii, invertoare, energie solară și autonomie în România și UE."
+              : "Independent tools and guidance for batteries, inverters, solar and backup power in Romania and the EU."}
+          </p>
+          <p className="mt-4 text-sm leading-6 text-slate-600">
+            {c.supplierNote}
+          </p>
         </div>
-
-        <div className="mt-8 flex flex-col gap-3 border-t border-white/10 pt-5 text-xs text-white/48 sm:flex-row sm:items-center sm:justify-between">
-          <p>(c) 2026 Electro-AI. {t["footer.engineering"]}</p>
-          <p>{t["footer.payments"]}</p>
+        <div className="grid gap-6 sm:grid-cols-3">
+          {groups.map((g) => (
+            <nav key={g.title} aria-label={g.title}>
+              <h2 className="font-bold">{g.title}</h2>
+              <ul className="mt-3 space-y-3">
+                {g.items.map(([href, label]) => (
+                  <li key={href}>
+                    <Link
+                      className="text-sm text-slate-700 hover:underline"
+                      href={href}
+                    >
+                      {label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
       </div>
+      <p className="mt-8 border-t border-teal-900/15 pt-5 text-xs text-slate-600">
+        © 2026 M Air Electro AI ·{" "}
+        {c.ro
+          ? "Informare și planificare. Achizițiile se fac la furnizori externi."
+          : "Information and planning. Purchases are made with external suppliers."}
+      </p>
     </footer>
   );
 }

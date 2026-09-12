@@ -1,19 +1,155 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PlatformShell } from "@/components/platform-shell";
 import { AffiliateDisclosure } from "@/components/marketplace/affiliate-disclosure";
-import { BreadcrumbStructuredData, ProductStructuredData } from "@/components/marketplace/structured-data";
-import { productBySlug } from "@/lib/affiliate/catalog";
+import { EquipmentIllustration } from "@/components/marketplace/equipment-illustration";
+import {
+  BreadcrumbStructuredData,
+  ProductStructuredData,
+} from "@/components/marketplace/structured-data";
+import {
+  productBySlug,
+  localizedProduct,
+  marketplaceCategories,
+} from "@/lib/affiliate/catalog";
+import { supplierLink } from "@/lib/affiliate/providers";
 import { buildMetadata } from "@/lib/metadata";
 import { getRequestDictionary } from "@/lib/i18n/request";
-
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  const product = productBySlug((await params).slug);
-  return buildMetadata({ title: product?.name ?? "Product", description: product?.description, path: `/marketplace/products/${product?.slug ?? ""}` });
+import { commercialCopy } from "@/lib/marketplace/copy";
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const p = productBySlug((await params).slug);
+  return buildMetadata({
+    title: p?.name ?? "Echipament",
+    description: p?.description,
+    path: `/marketplace/products/${p?.slug ?? ""}`,
+  });
 }
-
-export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
-  const product = productBySlug((await params).slug);
-  if (!product) notFound();
-  const categoryName = product.category.replaceAll("-", " "); const t = await getRequestDictionary();
-  return <PlatformShell><main className="mx-auto grid w-full max-w-5xl gap-8 lg:grid-cols-[.8fr_1.2fr]"><ProductStructuredData product={product}/><BreadcrumbStructuredData items={[{ name: "Marketplace", path: "/marketplace" }, { name: categoryName, path: `/marketplace/category/${product.category}` }, { name: product.name, path: `/marketplace/products/${product.slug}` }]}/><div className="brand-glass-card grid min-h-80 place-items-center rounded-[2rem] text-8xl text-lime-100" aria-label={t["marketplace.card.placeholder"]}>⌁</div><article><p className="eyebrow">{product.brand} · {categoryName}</p><h1 className="mt-3 text-4xl font-bold text-white">{product.name}</h1><p className="mt-4 text-lg leading-8 text-white/75">{product.description}</p><div className="mt-5 rounded-2xl border border-white/15 bg-white/[.04] p-4 text-sm text-white/72"><p><strong className="text-white">{t["marketplace.product.merchant"]}</strong> {product.merchant} ({product.merchantRegion})</p><p className="mt-2"><strong className="text-white">{t["marketplace.product.price"]}</strong> {product.price === null ? t["marketplace.product.priceUnknown"] : `${product.price} ${product.currency}`}</p><p className="mt-2"><strong className="text-white">{t["marketplace.product.reviewed"]}</strong> {product.lastUpdated}</p></div><dl className="mt-7 grid gap-3 sm:grid-cols-2">{Object.entries(product.technicalSpecs).map(([key, value]) => <div key={key} className="rounded-xl border border-white/15 bg-white/[.05] p-3"><dt className="text-xs uppercase tracking-wide text-white/55">{key}</dt><dd className="mt-1 font-semibold text-white">{value}</dd></div>)}</dl><section className="mt-7 rounded-2xl border border-lime-100/20 bg-lime-100/[.07] p-4 text-sm leading-6 text-white/75"><h2 className="font-semibold text-white">{t["marketplace.product.use"]}</h2><p className="mt-2">{product.recommendedFor.join(" · ")}</p><h2 className="mt-4 font-semibold text-white">{t["marketplace.product.why"]}</h2><p className="mt-2">{product.whyRecommended}</p></section><section className="mt-4 rounded-2xl border border-amber-200/25 bg-amber-200/10 p-4 text-sm leading-6 text-amber-50"><strong>{t["marketplace.product.delivery"]}</strong> {t["marketplace.product.deliveryText"]}</section><section className="mt-4 rounded-2xl border border-amber-200/25 bg-amber-200/10 p-4 text-sm leading-6 text-amber-50"><strong>{t["marketplace.product.limitations"]}</strong> {product.compatibilityNotes} {t["marketplace.product.limitationText"]}</section><a href={product.affiliateUrl} target="_blank" rel="noreferrer sponsored" className="button-primary mt-7">{t["marketplace.product.partner"]}</a><div className="mt-4"><AffiliateDisclosure dictionary={t}/></div></article></main></PlatformShell>;
+export default async function ProductPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const original = productBySlug((await params).slug);
+  if (!original) notFound();
+  const t = await getRequestDictionary(),
+    c = commercialCopy(t),
+    p = localizedProduct(original, c.ro),
+    cat = marketplaceCategories.find((x) => x.slug === p.category)!,
+    link = supplierLink(p);
+  return (
+    <PlatformShell>
+      <main className="mx-auto max-w-5xl space-y-8">
+        <ProductStructuredData product={p} />
+        <BreadcrumbStructuredData
+          items={[
+            { name: c.marketplace, path: "/marketplace" },
+            {
+              name: c.ro ? cat.name : cat.nameEn,
+              path: `/marketplace/category/${cat.slug}`,
+            },
+            { name: p.name, path: `/marketplace/products/${p.slug}` },
+          ]}
+        />
+        <nav
+          aria-label={c.ro ? "Traseu de navigare" : "Breadcrumb"}
+          className="flex flex-wrap gap-2 text-sm"
+        >
+          <Link className="underline" href="/marketplace">
+            {c.marketplace}
+          </Link>
+          <span>/</span>
+          <Link
+            className="underline"
+            href={`/marketplace/category/${p.category}`}
+          >
+            {c.ro ? cat.name : cat.nameEn}
+          </Link>
+        </nav>
+        <div className="grid gap-8 md:grid-cols-[.8fr_1.2fr]">
+          <aside className="brand-glass-card self-start rounded-3xl p-5">
+            <EquipmentIllustration category={p.category} />
+            <p className="mt-3 text-xs leading-5 text-slate-600">
+              {c.illustration}
+            </p>
+          </aside>
+          <article>
+            <p className="eyebrow">
+              {p.kind === "product" ? c.productExample : c.equipmentClass}
+            </p>
+            <h1 className="mt-3 text-3xl font-bold sm:text-4xl">{p.name}</h1>
+            <p className="mt-3 text-sm text-slate-600">
+              {p.brand} · {c.checked}: {p.lastUpdated}
+            </p>
+            <p className="mt-5 text-lg leading-8">{p.description}</p>
+            <h2 className="mt-7 text-xl font-bold">{c.specs}</h2>
+            <dl className="mt-4 grid gap-3 sm:grid-cols-2">
+              {Object.entries(p.technicalSpecs).map(([key, value]) => (
+                <div key={key} className="info-card">
+                  <dt className="text-sm text-slate-600">{key}</dt>
+                  <dd className="mt-2 font-bold">{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </article>
+        </div>
+        <div className="grid gap-5 md:grid-cols-2">
+          {[
+            [c.use, p.recommendedFor.join(" · ")],
+            [c.advantages, p.advantages],
+            [c.why, p.whyRecommended],
+            [c.limits, p.compatibilityNotes],
+          ].map(([title, text]) => (
+            <section key={title} className="info-card">
+              <h2>{title}</h2>
+              <p>{text}</p>
+            </section>
+          ))}
+        </div>
+        <section className="brand-glass-card rounded-3xl p-6">
+          <h2 className="text-xl font-bold">
+            {c.ro
+              ? "Consultă sursa înainte de cumpărare"
+              : "Check the source before buying"}
+          </h2>
+          <p className="mt-3 leading-7">
+            {c.price}.{" "}
+            {c.ro
+              ? "Contractul de achiziție este între tine și comerciant. M Air nu deține stoc, nu încasează plata și nu oferă garanția comerciantului."
+              : "The purchase contract is between you and the merchant. M Air holds no stock, takes no payment and provides no merchant warranty."}
+          </p>
+          <a
+            href={link.href}
+            target="_blank"
+            rel={
+              link.tracked
+                ? "sponsored noopener noreferrer"
+                : "noopener noreferrer"
+            }
+            className="button-primary mt-5"
+          >
+            {c.visit}
+          </a>
+          <p className="mt-3 text-xs">
+            {link.tracked
+              ? c.ro
+                ? "Legătură afiliată. "
+                : "Affiliate link. "
+              : ""}
+            {c.ro ? "Se deschide într-o filă nouă." : "Opens in a new tab."}
+          </p>
+        </section>
+        <p className="rounded-2xl bg-amber-50 p-5 text-sm leading-7 text-amber-950">
+          {c.safety}
+        </p>
+        <AffiliateDisclosure dictionary={t} />
+        <Link href="/marketplace/find-my-solution" className="button-outline">
+          {c.finder}
+        </Link>
+      </main>
+    </PlatformShell>
+  );
 }

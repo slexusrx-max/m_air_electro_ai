@@ -1,11 +1,4 @@
-import { notFound } from "next/navigation";
-import { PageHero } from "@/components/page-hero";
-import { PlatformShell } from "@/components/platform-shell";
-import { getExpertProfileBySlug, expertProfiles } from "@/lib/experts";
-import { getRequestDictionary } from "@/lib/i18n/request";
-import { buildMetadata } from "@/lib/metadata";
-type Props={params:Promise<{slug:string}>};
-const groups: Record<string,string>={"residential-diagnostics-specialist":"residential","industrial-controls-and-drives-engineer":"industrial","marine-and-offshore-electro-technical-expert":"marine"};
-export async function generateMetadata({params}:Props){const {slug}=await params; const p=getExpertProfileBySlug(slug); const t=await getRequestDictionary(); return buildMetadata({title:p?`${t[`experts.cards.${groups[slug]}.title`]} | Electro-AI`:t["experts.metadataTitle"],description:p?t[`experts.cards.${groups[slug]}.description`]:t["experts.empty.title"],path:"/experts"});}
-export function generateStaticParams(){return expertProfiles.map((profile)=>({slug:profile.slug}));}
-export default async function ExpertDetailPage({params}:Props){const {slug}=await params; const profile=getExpertProfileBySlug(slug); if(!profile) notFound(); const t=await getRequestDictionary(); const group=groups[slug]; return <PlatformShell><section className="mx-auto flex w-full max-w-5xl flex-col gap-6"><PageHero eyebrow={t["experts.badges.verifiedTrack"]} title={t[`experts.cards.${group}.title`]} description={t[`experts.cards.${group}.description`]} actions={[{href:"/contact",label:t["experts.requestHelp"]},{href:"/experts",label:t["experts.back"],variant:"secondary"}]}/><div className="info-card grid gap-4 md:grid-cols-3"><article><p className="text-xs text-slate-500">{t["experts.responseTime"]}</p><p className="mt-2 font-semibold">{t[`experts.cards.${group}.response`]}</p></article><article><p className="text-xs text-slate-500">{t["experts.availability"]}</p><p className="mt-2 font-semibold">{t["experts.available"]}</p></article><article><p className="text-xs text-slate-500">{t["experts.specialties"]}</p><p className="mt-2 font-semibold">{t[`experts.cards.${group}.tags`]}</p></article></div></section></PlatformShell>;}
+import { redirect } from "next/navigation";
+export default function Page() {
+  redirect("/contact");
+}

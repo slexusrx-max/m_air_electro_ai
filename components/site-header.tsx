@@ -1,139 +1,144 @@
 "use client";
-
 import Link from "next/link";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
-
-import { glassPanelClassName, liquidGlassButtonClassName } from "@/components/ui/glass";
-import { marketplaceNavItems, moreNavItems, primaryNavItems, siteNavItems } from "@/lib/site-navigation";
-import type { MarketplaceRole } from "@/lib/i18n/types";
-import type { Dictionary } from "@/lib/i18n/types";
-import type { Locale } from "@/lib/i18n/types";
-import { signOut } from "@/app/(auth)/actions";
-
-function isActivePath(pathname: string, href: string) {
-  if (href === "/") {
-    return pathname === href;
+import type { Dictionary, Locale, MarketplaceRole } from "@/lib/i18n/types";
+import { commercialCopy } from "@/lib/marketplace/copy";
+const subscribe = () => () => {};
+export function SiteHeader({
+  dictionary: t,
+  locale,
+}: {
+  profile: { email: string; role: MarketplaceRole } | null;
+  dashboardHref?: string;
+  dictionary: Dictionary;
+  locale: Locale;
+}) {
+  const hydrated = useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false,
+  );
+  const c = commercialCopy(t),
+    path = usePathname();
+  const menuButton = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false),
+    [error, setError] = useState("");
+  const links = [
+    ["/marketplace/find-my-solution", c.finder],
+    ["/marketplace", c.marketplace],
+    ["/backup-calculator", c.backup],
+    ["/about", c.about],
+    ["/contact", c.contact],
+  ];
+  async function language(next: string) {
+    try {
+      const r = await fetch("/api/locale", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ locale: next }),
+      });
+      if (!r.ok) throw Error();
+      window.location.reload();
+    } catch {
+      setError(
+        c.ro
+          ? "Limba nu a putut fi schimbată. Încearcă din nou."
+          : "Could not change language. Try again.",
+      );
+    }
   }
-
-  return pathname === href || pathname.startsWith(`${href}/`);
-}
-
-const navKeys: Record<string, string> = { Home: "nav.home", "My Home": "nav.myHome", "For Business": "nav.business", "Backup Calculator": "nav.backup", "Find Installer": "nav.installers", Buildings: "nav.buildings", Professionals: "nav.professionals", Calculators: "nav.calculators" };
-
-export function SiteHeader({ profile, dashboardHref = "/dashboard", dictionary: t, locale }: { profile: { email: string; role: MarketplaceRole } | null; dashboardHref?: string; dictionary: Dictionary; locale: Locale }) {
-  const pathname = usePathname();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isMoreOpen, setIsMoreOpen] = useState(false);
-  const [isMarketplaceOpen, setIsMarketplaceOpen] = useState(false);
-  const switchLocale = async (nextLocale: Locale) => { if (nextLocale === locale) return; const response = await fetch("/api/locale", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ locale: nextLocale }) }); if (response.ok) window.location.reload(); };
-  const languageControl = <div className="flex rounded-full border border-white/20 p-1 text-xs font-bold text-white"><button type="button" onClick={() => switchLocale("en")} aria-pressed={locale === "en"} className={`rounded-full px-2 py-1 ${locale === "en" ? "bg-white text-teal-950" : "text-white/75"}`}>EN</button><button type="button" onClick={() => switchLocale("ro")} aria-pressed={locale === "ro"} className={`rounded-full px-2 py-1 ${locale === "ro" ? "bg-white text-teal-950" : "text-white/75"}`}>RO</button></div>;
-
   return (
-    <div className="mx-4 mt-4 sm:mx-6 lg:mx-8">
-      <header
-        className={`${glassPanelClassName} flex items-center justify-between gap-3 rounded-[2rem] bg-teal-950/95 px-4 py-3 sm:rounded-full sm:px-6 lg:px-8`}
-      >
-        <Link href="/" className="flex min-w-0 items-center gap-3" onClick={() => setIsMobileMenuOpen(false)}>
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/30 bg-white/15 text-sm font-semibold text-white shadow-[0_8px_24px_rgba(0,0,0,0.18)] backdrop-blur-xl">
-            EA
-          </div>
-          <div className="min-w-0">
-            <span className="block max-w-[11rem] text-sm font-semibold leading-tight tracking-[0.16em] text-white/95 sm:max-w-none sm:text-lg sm:tracking-[0.2em]">
-              Electro-AI
-            </span>
-            <span className="mt-1 hidden text-[0.68rem] uppercase tracking-[0.24em] text-white/46 lg:block">
-              {t["header.tagline"]}
-            </span>
-          </div>
+    <header className="site-header mx-4 mt-4 rounded-3xl border border-teal-900/15 bg-white/95 px-4 py-4 shadow-sm sm:mx-6 lg:mx-8">
+      <div className="flex items-center justify-between gap-3">
+        <Link
+          href="/"
+          className="flex min-w-0 items-center gap-2"
+          onClick={() => setOpen(false)}
+        >
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-teal-900 text-sm font-bold text-white">
+            MA
+          </span>
+          <span className="text-sm font-extrabold tracking-tight sm:text-lg">
+            M Air Electro AI
+          </span>
         </Link>
-
-        <nav className="hidden items-center gap-2 xl:flex">
-          {primaryNavItems.map((item) => {
-            const isActive = isActivePath(pathname, item.href);
-
-            if (item.href === "/marketplace") return <div className="relative" key={item.href}><button type="button" onClick={() => setIsMarketplaceOpen((open) => !open)} aria-expanded={isMarketplaceOpen} className={`${liquidGlassButtonClassName} px-4 py-2 text-sm font-medium ${isActive ? "border-lime-100/80 bg-[linear-gradient(135deg,rgba(246,255,235,0.28),rgba(163,230,53,0.16))] text-lime-50" : ""}`}>Marketplace</button>{isMarketplaceOpen ? <div className="absolute left-0 z-30 mt-2 grid w-[32rem] grid-cols-2 gap-1 rounded-2xl border border-white/20 bg-teal-950/95 p-2 shadow-xl backdrop-blur-xl">{marketplaceNavItems.map((entry) => <Link key={entry.href} href={entry.href} onClick={() => setIsMarketplaceOpen(false)} className="rounded-xl px-3 py-2 text-sm text-white/85 hover:bg-white/10"><span className="block font-semibold">{entry.label}</span><span className="mt-1 block text-xs text-white/55">{entry.description}</span></Link>)}</div> : null}</div>;
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                aria-current={isActive ? "page" : undefined}
-                className={`${liquidGlassButtonClassName} px-4 py-2 text-sm font-medium ${
-                  isActive
-                    ? "border-lime-100/80 bg-[linear-gradient(135deg,rgba(246,255,235,0.28),rgba(163,230,53,0.16))] text-lime-50 shadow-[0_0_26px_rgba(163,230,53,0.28),0_10px_30px_rgba(0,0,0,0.12)]"
-                    : ""
-                }`}
-              >
-                {t[navKeys[item.label]] ?? item.label}
-              </Link>
-            );
-          })}
-          <div className="relative">
-            <button type="button" onClick={() => setIsMoreOpen((open) => !open)} aria-expanded={isMoreOpen} className={`${liquidGlassButtonClassName} px-4 py-2 text-sm font-medium`}>{t["nav.more"] ?? "More"}</button>
-            {isMoreOpen ? <div className="absolute right-0 z-30 mt-2 w-72 rounded-2xl border border-white/20 bg-teal-950/95 p-2 shadow-xl backdrop-blur-xl">{moreNavItems.map((item) => <Link key={item.href} href={item.href} onClick={() => setIsMoreOpen(false)} className="block rounded-xl px-3 py-2 text-sm text-white/85 hover:bg-white/10"><span className="font-semibold">{t[navKeys[item.label]] ?? item.label}</span></Link>)}</div> : null}
-          </div>
+        <nav
+          aria-label={c.ro ? "Navigare principală" : "Main navigation"}
+          className="hidden items-center gap-5 xl:flex"
+        >
+          {links.map(([href, label]) => (
+            <Link
+              key={href}
+              href={href}
+              aria-current={path === href ? "page" : undefined}
+              className="text-sm font-semibold hover:underline"
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
-
-        <div className="flex items-center gap-2">{languageControl}
-          {profile ? <><span className="hidden h-9 w-9 items-center justify-center rounded-full border border-lime-100/40 bg-lime-100/15 text-sm font-semibold text-lime-50 xl:inline-flex" title={profile.email}>{profile.email.slice(0, 1).toUpperCase()}</span><Link href={dashboardHref} className={`${liquidGlassButtonClassName} hidden px-4 py-2 text-sm font-semibold xl:inline-flex`}>{t["auth.dashboard"]}</Link><form action={signOut} className="hidden xl:block"><button className={`${liquidGlassButtonClassName} px-4 py-2 text-sm font-semibold`}>{t["auth.logout"]}</button></form></> : <Link href="/contact" className="hidden rounded-full bg-lime-300 px-4 py-2 text-sm font-semibold text-slate-950 xl:inline-flex">Contact</Link>}
-          <button
-            type="button"
-            aria-expanded={isMobileMenuOpen}
-            aria-label={isMobileMenuOpen ? t["header.closeMenu"] : t["header.openMenu"]}
-            className={`${liquidGlassButtonClassName} px-3 py-2 text-sm font-semibold xl:hidden`}
-            onClick={() => setIsMobileMenuOpen((currentState) => !currentState)}
+        <div className="flex items-center gap-2">
+          <label className="sr-only" htmlFor="site-language">
+            {c.ro ? "Limba" : "Language"}
+          </label>
+          <select
+            disabled={!hydrated}
+            id="site-language"
+            value={locale === "en" ? "en" : "ro"}
+            onChange={(e) => language(e.target.value)}
+            className="rounded-lg border border-teal-900/20 bg-white px-1 py-2 text-sm"
           >
-            <span className="sr-only">{isMobileMenuOpen ? t["header.closeMenu"] : t["header.openMenu"]}</span>
-            <span className="block h-5 w-5">
-              <span className="flex h-full flex-col items-center justify-center gap-[3px]">
-                <span
-                  className={`block h-[1.5px] w-4 rounded-full bg-white transition ${
-                    isMobileMenuOpen ? "translate-y-[4.5px] rotate-45" : ""
-                  }`}
-                />
-                <span
-                  className={`block h-[1.5px] w-4 rounded-full bg-white transition ${
-                    isMobileMenuOpen ? "opacity-0" : ""
-                  }`}
-                />
-                <span
-                  className={`block h-[1.5px] w-4 rounded-full bg-white transition ${
-                    isMobileMenuOpen ? "-translate-y-[4.5px] -rotate-45" : ""
-                  }`}
-                />
-              </span>
-            </span>
+            <option value="ro">RO</option>
+            <option value="en">EN</option>
+          </select>
+          <button
+            disabled={!hydrated}
+            type="button"
+            aria-expanded={open}
+            aria-controls="mobile-navigation"
+            aria-label={
+              open
+                ? c.ro
+                  ? "Închide meniul"
+                  : "Close menu"
+                : c.ro
+                  ? "Deschide meniul"
+                  : "Open menu"
+            }
+            ref={menuButton}
+            className="rounded-lg border border-teal-900/20 px-3 py-2 xl:hidden"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? "✕" : "☰"}
           </button>
         </div>
-      </header>
-
-      {isMobileMenuOpen ? (
-        <div className={`${glassPanelClassName} mt-3 rounded-[1.75rem] p-3 xl:hidden`}>
-          <nav className="flex flex-col gap-2">
-            {siteNavItems.map((item) => {
-              const isActive = isActivePath(pathname, item.href);
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  aria-current={isActive ? "page" : undefined}
-                  className={`rounded-2xl border px-4 py-3 text-sm font-medium transition ${
-                    isActive
-                      ? "border-lime-100/60 bg-lime-100/10 text-lime-50"
-                      : "border-white/12 bg-white/[0.04] text-white/88 hover:border-white/20 hover:bg-white/[0.08]"
-                  }`}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  <span className="block">{t[navKeys[item.label]] ?? item.label}</span>
-                </Link>
-              );
-            })}
-            <div className="pt-2">{languageControl}</div>{profile ? <><Link href={dashboardHref} className="rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-sm font-semibold text-white/88" onClick={() => setIsMobileMenuOpen(false)}>{t["auth.dashboard"]}</Link><form action={signOut}><button className="w-full rounded-2xl border border-white/12 bg-white/[0.04] px-4 py-3 text-left text-sm font-semibold text-white/88">{t["auth.logout"]}</button></form></> : <Link href="/contact" className="rounded-2xl bg-lime-300 px-4 py-3 text-center text-sm font-semibold text-slate-950" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link>}
-          </nav>
-        </div>
+      </div>
+      {error ? <p role="alert">{error}</p> : null}
+      {open ? (
+        <nav
+          id="mobile-navigation"
+          aria-label={c.ro ? "Navigare mobilă" : "Mobile navigation"}
+          className="mt-4 grid gap-1 border-t border-teal-900/15 pt-3 xl:hidden"
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              setOpen(false);
+              menuButton.current?.focus();
+            }
+          }}
+        >
+          {links.map(([href, label]) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setOpen(false)}
+              className="rounded-xl px-3 py-3 font-semibold hover:bg-teal-50"
+            >
+              {label}
+            </Link>
+          ))}
+        </nav>
       ) : null}
-    </div>
+    </header>
   );
 }

@@ -1,95 +1,82 @@
-import Link from "next/link";
-
-import { PageHero } from "@/components/page-hero";
 import { PlatformShell } from "@/components/platform-shell";
-import { SectionHeading } from "@/components/section-heading";
-import { glassPanelClassName, liquidGlassPrimaryButtonClassName, moduleCardClassName } from "@/components/ui/glass";
-import { buildMetadata } from "@/lib/metadata";
+import { getRequestDictionary } from "@/lib/i18n/request";
+import { commercialCopy } from "@/lib/marketplace/copy";
 import { siteConfig } from "@/lib/site";
-
+import { buildMetadata } from "@/lib/metadata";
 export const metadata = buildMetadata({
-  title: "Contact",
+  title: "Contact M Air Electro AI",
   description:
-    "Contact M Air Electro AI about independent home-energy planning and external supplier guidance for Romania.",
+    "Întrebări despre calcule, conținut editorial și selecția echipamentelor pentru România.",
   path: "/contact",
 });
-
-export default function ContactPage() {
-  const mailto = `mailto:${siteConfig.contactEmail}?subject=M%20Air%20Electro%20AI%20Inquiry`;
-
+export default async function ContactPage() {
+  const t = await getRequestDictionary(),
+    c = commercialCopy(t),
+    mailto = siteConfig.contactEmail
+      ? `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent("M Air Electro AI enquiry")}`
+      : siteConfig.publicContactUrl;
   return (
     <PlatformShell>
-      <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10">
-        <PageHero
-          eyebrow="Contact"
-          title="Questions about a backup-power plan start here."
-          description="Use contact for independent planning guidance, calculator feedback, or questions about the supplier-link disclosure for Romania."
-          actions={[
-            { href: mailto, label: "Email the team" },
-            { href: "/experts", label: "Review expert tracks", variant: "secondary" },
-          ]}
-        />
-
-        <section className="grid gap-4 md:grid-cols-3">
-          {[
-            {
-              title: "Backup-power planning",
-              body: "Ask about batteries, inverters, solar components and the assumptions used by the planning tools.",
-            },
-            {
-              title: "Supplier-link disclosure",
-              body: "Ask how external supplier links are selected and how disclosure will change after any affiliate approval.",
-            },
-            {
-              title: "Safety and final design",
-              body: "A qualified installer must validate final compatibility, protection and local electrical requirements.",
-            },
-          ].map((item) => (
-            <article key={item.title} className={moduleCardClassName}>
-              <h2 className="text-lg font-semibold text-white">{item.title}</h2>
-              <p className="mt-3 text-sm leading-7 text-white/76">{item.body}</p>
-            </article>
-          ))}
+      <main className="mx-auto max-w-4xl space-y-7">
+        <section className="brand-glass-card rounded-3xl p-7">
+          <p className="eyebrow">M Air Electro AI</p>
+          <h1 className="mt-3 text-4xl font-bold">
+            {c.ro
+              ? "Ai o întrebare despre planul tău energetic?"
+              : "A question about your energy plan?"}
+          </h1>
+          <p className="mt-5 text-lg leading-8">
+            {c.ro
+              ? "Scrie pentru clarificări despre formule, corecturi ale ghidurilor sau informații despre legăturile către furnizori."
+              : "Write for clarification about formulas, corrections to guides or information about supplier links."}
+          </p>
         </section>
-
-        <section className="grid gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-          <div>
-            <SectionHeading
-              eyebrow="Contact Details"
-              title="Direct commercial contact"
-              description="For product questions and disclosure feedback, use the public inbox below."
-            />
-          </div>
-          <div className={`${glassPanelClassName} p-6 sm:p-8`}>
-            <dl className="space-y-5">
-              <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.28em] text-lime-100/76">Email</dt>
-                <dd className="mt-2 text-lg font-medium text-white">
-                  <Link href={mailto} className="hover:text-lime-50">
-                    {siteConfig.contactEmail}
-                  </Link>
-                </dd>
-              </div>
-              <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.28em] text-lime-100/76">Primary market</dt>
-                <dd className="mt-2 text-sm leading-7 text-white/76">{siteConfig.primaryMarket}</dd>
-              </div>
-              <div>
-                <dt className="text-xs font-semibold uppercase tracking-[0.28em] text-lime-100/76">Coverage</dt>
-                <dd className="mt-2 text-sm leading-7 text-white/76">
-                  Romania-focused planning for home backup, batteries, inverters, solar and external supplier research.
-                </dd>
-              </div>
-            </dl>
-
-            <div className="mt-8">
-              <Link href={mailto} className={`${liquidGlassPrimaryButtonClassName} px-5 py-3 text-sm font-semibold`}>
-                Open email draft
-              </Link>
-            </div>
-          </div>
+        <section className="info-card">
+          <h2>{c.ro ? "Contact direct" : "Direct contact"}</h2>
+          <a
+            className="mt-4 inline-block break-all text-xl font-bold text-teal-800 underline"
+            href={mailto}
+          >
+            {siteConfig.contactEmail ??
+              (c.ro
+                ? "Contactează proiectul pe GitHub"
+                : "Contact the project on GitHub")}
+          </a>
+          <p>
+            {siteConfig.contactEmail
+              ? c.ro
+                ? "Butonul deschide aplicația ta de email. Mesajul este trimis numai după ce îl trimiți din acea aplicație."
+                : "The button opens your email application. Your message is sent only when you submit it there."
+              : c.ro
+                ? "Poți trimite întrebări și corecturi prin pagina publică a proiectului. Ai nevoie de un cont GitHub; mesajul va fi public. Nu include date personale, parole sau documente."
+                : "Send questions and corrections through the public project page. A GitHub account is required and your message will be public. Do not include personal data, passwords or documents."}
+          </p>
+          <a href={mailto} className="button-primary mt-5">
+            {siteConfig.contactEmail
+              ? c.ro
+                ? "Scrie un email"
+                : "Write an email"
+              : c.ro
+                ? "Deschide pagina de contact"
+                : "Open contact page"}
+          </a>
         </section>
-      </section>
+        <section className="info-card">
+          <h2>
+            {c.ro
+              ? "Întrebări despre o comandă?"
+              : "A question about an order?"}
+          </h2>
+          <p>
+            {c.ro
+              ? "Pentru plată, livrare, garanție sau retur, contactează comerciantul de la care ai cumpărat. M Air nu primește comenzile și nu are acces la contul tău de client la furnizor."
+              : "For payment, delivery, warranty or returns, contact the merchant you bought from. M Air does not receive orders or access your supplier customer account."}
+          </p>
+        </section>
+        <p className="rounded-2xl bg-amber-50 p-5 text-sm leading-7">
+          {c.safety}
+        </p>
+      </main>
     </PlatformShell>
   );
 }

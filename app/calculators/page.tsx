@@ -1,55 +1,72 @@
 import Link from "next/link";
-
-import { PageHero } from "@/components/page-hero";
 import { PlatformShell } from "@/components/platform-shell";
-import {
-  moduleCardClassName,
-} from "@/components/ui/glass";
-import { buildMetadata } from "@/lib/metadata";
+import { getRequestDictionary } from "@/lib/i18n/request";
+import { commercialCopy } from "@/lib/marketplace/copy";
 import { calculatorItems } from "@/lib/site-navigation";
-
+import { buildMetadata } from "@/lib/metadata";
 export const metadata = buildMetadata({
-  title: "Electrical Calculators",
-  description: "Deterministic electrical calculators for voltage drop, cable size, motor current, transformer, battery, generator, breaker, and fuse sizing.",
+  title: "Calculatoare electrice",
+  description:
+    "Calcul de autonomie și instrumente tehnice pentru baterii, cabluri, generatoare și protecții.",
   path: "/calculators",
 });
-
-export default function CalculatorsPage() {
+export default async function Page() {
+  const c = commercialCopy(await getRequestDictionary());
+  const names = [
+    "Dimensionarea cablurilor",
+    "Căderea de tensiune",
+    "Curentul motorului",
+    "Transformator",
+    "Baterie",
+    "Generator",
+    "Întreruptor automat",
+    "Siguranță fuzibilă",
+  ];
   return (
     <PlatformShell>
-      <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-8">
-        <PageHero
-          eyebrow="Electrical Calculators"
-          title="Deterministic engineering tools for real electrical decisions."
-          description="The calculator suite covers voltage drop, cable sizing, motor current, transformer loading, battery sizing, generator sizing, breaker selection, and fuse selection."
-          actions={[
-            { href: "/calculators/cable-sizing", label: "Open cable sizing" },
-            { href: "/diagnostics", label: "Go to diagnostics", variant: "secondary" },
-          ]}
-        />
-
-        <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          {calculatorItems.map((item) => {
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`${moduleCardClassName} transition duration-300 hover:-translate-y-1 hover:border-lime-100/30 hover:shadow-[0_18px_40px_rgba(0,0,0,0.22),0_0_24px_rgba(163,230,53,0.16)]`}
-              >
-                <div className="mb-4 flex items-center justify-between gap-3">
-                  <span className="inline-flex rounded-full border border-lime-100/20 bg-white/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-lime-100/82">
-                    Ready
-                  </span>
-                  <span className="text-xs uppercase tracking-[0.25em] text-white/45">Open now</span>
-                </div>
-                <h2 className="text-lg font-semibold text-white/96">{item.label}</h2>
-                <p className="mt-3 text-sm leading-7 text-white/76">{item.description}</p>
-                <div className="mt-6 text-sm font-semibold text-lime-100/90">Launch calculator</div>
-              </Link>
-            );
-          })}
+      <main className="mx-auto max-w-6xl space-y-7">
+        <section className="brand-glass-card rounded-3xl p-7">
+          <p className="eyebrow">
+            {c.ro
+              ? "Formule și ipoteze explicate"
+              : "Explained formulas and assumptions"}
+          </p>
+          <h1 className="mt-3 text-4xl font-bold">
+            {c.ro ? "Calculatoare electrice" : "Electrical calculators"}
+          </h1>
+          <p className="mt-4 leading-7">
+            {c.ro
+              ? "Începe cu autonomia aparatelor sau cu configuratorul în trei pași. Instrumentele tehnice detaliate de mai jos sunt disponibile în engleză."
+              : "Start with appliance backup time or the three-step system planner. Detailed technical tools below are available in English."}
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link className="button-primary" href="/backup-calculator">
+              {c.backup}
+            </Link>
+            <Link
+              className="button-outline"
+              href="/marketplace/find-my-solution"
+            >
+              {c.finder}
+            </Link>
+          </div>
         </section>
-      </section>
+        <p className="rounded-xl bg-amber-50 p-5 leading-7">{c.safety}</p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {calculatorItems.map((x, i) => (
+            <Link href={x.href} className="info-card" key={x.href}>
+              <h2>{c.ro ? names[i] : x.label}</h2>
+              <p lang="en">{x.description}</p>
+              <span className="mt-5 block font-bold">
+                {c.ro
+                  ? "Deschide instrumentul (EN)"
+                  : "Open technical tool (EN)"}{" "}
+                →
+              </span>
+            </Link>
+          ))}
+        </div>
+      </main>
     </PlatformShell>
   );
 }

@@ -1,140 +1,35 @@
-# MR Electro AI — Global Power Resilience Map
-
-MR Electro AI helps people explore power infrastructure, understand regional electricity resilience and monitor available changes in power conditions. The application uses a typed demonstration dataset; it does not present plant status as live operational data.
-
-## Stack
-
-Next.js App Router, React, TypeScript, Tailwind CSS, Supabase SSR and ESLint.
-
-## Run locally
-
-Use npm: `npm install`, then `npm run dev`. Quality checks are `npm run lint`, `npm run typecheck`, and `npm run build`.
-
-## Configuration
-
-Copy `.env.example` and configure Supabase when authentication is required. `NEXT_PUBLIC_MAP_STYLE_URL` enables a production map style. Without it, `/map` intentionally displays a controlled fallback and accessible demonstration-facility list. Paddle keys remain server-only and billing buttons never create a subscription until an integration is configured.
-
-## Data and limitations
-
-Current power plant statuses in the demo dataset are demonstration values and must not be treated as live operational data. Real datasets, verified refresh jobs, Supabase import, Paddle checkout/webhooks, email delivery and production legal review remain backend work. Legal text requires professional legal review before production launch.
-
-## Screenshots
-
-Placeholder — add verified product screenshots before release.
-
-Production-ready MVP repository for an AI-first electrical engineering platform focused on:
-
-- AI electrical diagnostics
-- Electrical calculators
-- Technical document analysis
-- Verified electrical experts
-- Protected marketplace workflows for electrical services and parts
-- Marine and industrial premium support paths
-
-The product is intentionally **not** a general handyman marketplace. Electrical engineering is the focus across UX, content, and architecture.
-
-## Stack
-
-- Next.js 16
-- React 19
-- TypeScript
-- Tailwind CSS 4
-- App Router
-
-## MVP Surface
-
-- Landing page
-- AI Assistant page
-- Electrical calculators
-- Marketplace page
-- Expert Profiles
-- Knowledge Base
-- About
-- Contact
-- Privacy Policy
-- Terms
-
-## Calculators Included
-
-- Cable sizing
-- Voltage drop
-- Motor current
-- Transformer
-- Battery
-- Generator
-- Breaker selection
-- Fuse selection
-
-All calculator outputs are framed as **preliminary engineering guidance** and intentionally include safety and design caveats.
-
-## Architecture Prepared
-
-- AI provider abstraction for OpenAI, Anthropic, Google, and Azure OpenAI
-- Authentication architecture with role model and runtime status checks
-- Database abstraction and deployment readiness checks
-- Marketplace payment abstraction centered on Stripe Connect-style flows
-- Marketplace workflow model with deposit, completion confirmation, and dispute window concepts
-- PWA-ready metadata structure
-- Security headers, robots, sitemap, OG image routes, icons, and manifest
-
-## Local Development
-
-```powershell
-npm.cmd run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-## Verification
-
-```powershell
-npm.cmd run lint
-npm.cmd run build
-```
-
-## Environment Variables
-
-Create a local `.env.local` from `.env.example` and configure:
-
-- `NEXT_PUBLIC_SITE_URL`
-- `NEXT_PUBLIC_CONTACT_EMAIL`
-- `AI_PROVIDER`
-- Provider-specific AI credentials
-- `AUTH_SECRET`
-- `DATABASE_URL`
-- OAuth provider credentials if used
-- Stripe / marketplace payment credentials
-
-## Deployment
-
-The repository is ready to deploy to Vercel.
-
-Before production launch, confirm:
-
-1. `NEXT_PUBLIC_SITE_URL` points at the real public domain.
-2. Contact email is replaced with a monitored inbox.
-3. AI provider credentials are configured for the chosen provider.
-4. Authentication and database credentials are configured.
-5. Stripe Connect or another marketplace payment provider is configured.
-6. Legal review is completed for Privacy Policy and Terms.
-
-## Notes
-
-- The marketplace architecture does **not** implement escrow.
-- Payment flows are designed around marketplace payment providers.
-- AI and marketplace abstractions are prepared without pretending external services already exist.
-- `PROJECT_BLUEPRINT.md` remains the main product and architecture brief.
 # M Air Electro AI
 
-## Supabase authentication setup
+Independent energy-equipment planning and editorial discovery for Romania / the EU. Public flows run without an account: calculate demand, compare equipment classes and documented product examples, then visit the external supplier. M Air holds no stock and processes no merchant checkout.
 
-1. Create a Supabase project and apply [20260721000000_auth_profiles.sql](./supabase/migrations/20260721000000_auth_profiles.sql) using the Supabase CLI or SQL Editor.
-2. In Supabase Authentication, enable **Email** and turn on **Confirm email**. Keep Google, GitHub, and Microsoft disabled until their provider credentials and redirect settings are ready.
-3. Add `http://localhost:3000/auth/callback` and `https://your-domain.com/auth/callback` to Supabase Authentication URL Configuration → Redirect URLs.
-4. Copy `.env.example` to `.env.local` and provide `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. The publishable key is safe for browser use; security is enforced with Supabase Auth and the profile RLS policies.
+## Development and verification
 
-The App Router uses `proxy.ts` for optimistic protected-route checks and validates the authenticated user again in every protected Server Component and Server Action. OAuth provider plumbing remains intentionally unconfigured.
+Use Node.js 20.9+ and npm. Run npm ci, npm run dev. Run npm test, npm run i18n:check, npm run lint, npm run typecheck and npm run build. Browser tests: npm run start -- --port 3137, then npm run test:e2e. The local browser test configuration uses installed Microsoft Edge; set PLAYWRIGHT_CHANNEL=chromium with Playwright Chromium installed on CI. Set PLAYWRIGHT_BASE_URL to test a deployed site. Browser tests do not submit messages, place orders or mutate production data.
 
-### First administrator
+## Production configuration
 
-Register and verify your own account first. Then, in the Supabase SQL Editor, run the commented promotion query in [20260721000001_add_admin_role.sql](./supabase/migrations/20260721000001_add_admin_role.sql), replacing the email address with yours. Sign in again and you will be routed to `/admin`. There is deliberately no public “administrator” registration option.
+NEXT_PUBLIC_SITE_URL should be the canonical deployed HTTPS origin. It defaults to https://m-air-electro-ai.vercel.app.
+
+Set NEXT_PUBLIC_OPERATOR_NAME to the confirmed publisher identity. Set NEXT_PUBLIC_CONTACT_EMAIL to a mailbox the publisher monitors, and CONTACT_EMAIL_VERIFIED=true only after receiving a test message. An unverified invented mailbox is never shown; without verification the contact page links to the real project GitHub issue form, explicitly warning that messages are public. This fallback does not establish that a private privacy-contact channel is ready for an affiliate application.
+
+## Affiliate status
+
+No Renogy approval is claimed. Ordinary supplier links are the default. Do not enable tracking before approval.
+
+After approval, set RENOGY_AFFILIATE_APPROVED=true, AFFILIATE_TRACKING_ENABLED=true and RENOGY_IMPACT_LINKS_JSON to a JSON object mapping each exact catalog productUrl to its approved HTTPS Impact URL. Use URLs provided by the program, never guessed IDs. Invalid or unmapped URLs fail closed to ordinary links. The same configuration updates visible disclosure text and marks tracked links. Redeploy after environment changes. Review the approved program’s privacy/consent obligations before activation. No affiliate pixel is included. Amazon/eBay are future adapters, disabled unless their own approval flag and the global tracking flag are both true; no products use them at launch.
+
+## Calculations
+
+Finder: load × duration / 0.80 usable discharge / 0.92 inverter efficiency. Inverter continuous reserve 25%; surge reserve 10%; ratings round upward to 100 W. Solar uses an explicit 3.5-equivalent-sun-hour scenario and 0.80 derating, not a Romanian yield forecast.
+
+Backup: sum watts × quantity × each appliance’s runtime capped at overall backup duration. Disabled items do not contribute. Nominal battery energy uses editable inverter efficiency and usable discharge. Simultaneous starting is conservative. Marketplace shows transferred criteria without pretending all examples satisfy them.
+
+## Optional services and database
+
+Supabase auth/documents and the optional AI API retain their architecture. Public commercial pages do not need database queries. The assistant redirects to the planner when its provider is unconfigured. Unfinished alerts, paid plans, comparison demos and unverified expert listings redirect to completed public tools/contact.
+
+The migrations 20260912000000_secure_onboarding.sql and 20260912000001_ai_request_quota.sql were applied transactionally through the production SQL editor on 2026-09-12. Verified: legacy onboarding RPC denied; anonymous quota execution denied; authenticated direct quota-table writes denied; RLS enabled; blocked-account guard present. The existing database has no Supabase CLI migration-history table. Do not blindly replay migrations; baseline/repair history before introducing CLI deployment. PGlite tests cover the actual migration SQL and database permissions using an isolated fixture.
+
+## Content policy
+
+Five named Renogy EU product examples and six equipment-class guides. Technical illustrations are original SVGs. No copied merchant images, fabricated offers, reviews, stock, ratings or certifications. Product pages link to reviewed manufacturer sources. Site results are preliminary; final selection and installation require qualified review.

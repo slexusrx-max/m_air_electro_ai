@@ -1,38 +1,26 @@
 import { readFileSync, readdirSync } from "node:fs";
 import { join } from "node:path";
-
-const source = readFileSync(new URL("../lib/i18n/dictionaries.ts", import.meta.url), "utf8");
-
-// Romanian intentionally inherits the complete English dictionary and overrides
-// localized entries. Check that this inheritance remains in place and that every
-// key referenced through `t["…"]` exists in the base dictionary.
-if (!/const uk: Dictionary = \{\s*\.\.\.en,/.test(source)) {
-  console.error("i18n check failed: Romanian dictionary must inherit the English base dictionary.");
-  process.exit(1);
+import { load } from "../tests/helpers.mjs";
+const { getDictionary } = load("lib/i18n/dictionaries.ts");
+function files(d) {
+  return readdirSync(d, { withFileTypes: true }).flatMap((e) =>
+    e.isDirectory()
+      ? files(join(d, e.name))
+      : /\.(ts|tsx)$/.test(e.name)
+        ? [join(d, e.name)]
+        : [],
+  );
 }
-
-const dictionaryKeys = new Set([...source.matchAll(/"([^"\n]+)"\s*:/g)].map((match) => match[1]));
-
-function sourceFiles(directory) {
-  return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
-    const path = join(directory, entry.name);
-    return entry.isDirectory() ? sourceFiles(path) : /\.(?:ts|tsx|js|jsx)$/.test(entry.name) ? [path] : [];
-  });
+const keys = new Set(Object.keys(getDictionary("en")));
+for (const f of ["app", "components"].flatMap(files))
+  for (const m of readFileSync(f, "utf8").matchAll(/\bt\["([^"]+)"\]/g))
+    if (m[1] !== "affiliate.active") keys.add(m[1]);
+for (const locale of ["ro", "en", "uk"]) {
+  const t = getDictionary(locale);
+  for (const key of keys)
+    if (typeof t[key] !== "string" || !t[key].trim())
+      throw Error(locale + ": missing " + key);
 }
-
-const missingReferences = [];
-for (const file of ["app", "components"].flatMap(sourceFiles)) {
-  const contents = readFileSync(file, "utf8");
-  for (const match of contents.matchAll(/\bt\["([^"]+)"\]/g)) {
-    if (!dictionaryKeys.has(match[1])) missingReferences.push(`${file}: ${match[1]}`);
-  }
-}
-
-if (missingReferences.length) {
-  console.error(`i18n check failed: unknown translation keys\n${missingReferences.join("\n")}`);
-  process.exit(1);
-}
-
-// The dictionary is the source of truth; report its size while keeping the
-// validation deterministic and independent from object-literal formatting.
-console.log(`i18n inheritance check passed (${dictionaryKeys.size} declared keys)`);
+console.log(
+  "Runtime dictionaries verified: " + keys.size + " keys in ro/en/uk",
+);

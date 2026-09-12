@@ -1,5 +1,10 @@
+import { getRequestLocale } from "@/lib/i18n/request";
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
+import {
+  IBM_Plex_Mono,
+  Plus_Jakarta_Sans,
+  Space_Grotesk,
+} from "next/font/google";
 
 import { PageBackground } from "@/components/page-background";
 import { buildMetadata } from "@/lib/metadata";
@@ -51,24 +56,26 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  colorScheme: "dark",
+  colorScheme: "light",
   themeColor: "#08121f",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html
-      lang="en"
+      lang={await getRequestLocale()}
       data-scroll-behavior="smooth"
       className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
       <body className="relative isolate flex min-h-full flex-col">
         <PageBackground />
-        <div className="relative z-10 flex min-h-full flex-1 flex-col">{children}</div>
+        <div className="relative z-10 flex min-h-full flex-1 flex-col">
+          {children}
+        </div>
       </body>
     </html>
   );

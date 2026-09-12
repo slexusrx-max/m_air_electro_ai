@@ -2,11 +2,18 @@ export const siteConfig = {
   name: "M Air Electro AI",
   shortName: "M Air Electro AI",
   description:
-    "AI-first electrical engineering platform for diagnostics, calculators, technical document analysis, verified experts, and protected electrical marketplace workflows.",
+    "Ghid independent pentru baterii, invertoare, panouri solare și energie de rezervă în România. Calculează necesarul și compară echipamente înainte de a vizita furnizorul.",
   tagline: "Intelligence. Energy. Future.",
   domainFocus:
     "Electrical engineering only. No general handyman services, no generic classifieds, no low-trust service sprawl.",
-  contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@mairelectro.ai",
+  contactEmail:
+    process.env.CONTACT_EMAIL_VERIFIED === "true"
+      ? process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim()
+      : undefined,
+  operatorName: process.env.NEXT_PUBLIC_OPERATOR_NAME?.trim(),
+  publisherProfile: "https://github.com/slexusrx-max",
+  publicContactUrl:
+    "https://github.com/slexusrx-max/m_air_electro_ai/issues/new",
   defaultLocale: "ro-RO",
   primaryMarket: "Romania",
   launchMarkets: [
@@ -16,25 +23,20 @@ export const siteConfig = {
     "Verified EU supplier research",
   ],
   keywords: [
-    "electrical diagnostics",
-    "electrical calculators",
-    "marine electrical",
-    "offshore electrical",
-    "verified electrical experts",
-    "electrical marketplace",
-    "voltage drop calculator",
-    "cable sizing calculator",
-    "motor current calculator",
-    "generator sizing",
-    "battery sizing",
-    "breaker selection",
-    "fuse selection",
+    "energie de rezervă România",
+    "baterii litiu",
+    "panouri solare",
+    "invertoare",
+    "calculator autonomie",
+    "echipamente energie",
   ],
 } as const;
 
 export function getSiteUrl() {
   const value = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  return value ? value.replace(/\/+$/, "") : "http://localhost:3000";
+  return value
+    ? value.replace(/\/+$/, "")
+    : "https://m-air-electro-ai.vercel.app";
 }
 
 export function absoluteUrl(path = "/") {

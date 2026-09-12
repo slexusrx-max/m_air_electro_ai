@@ -1,21 +1,23 @@
-import { PlatformShell } from "@/components/platform-shell";
-import { glassPanelClassName } from "@/components/ui/glass";
-
+// Loading and the resolved page can coexist while Next streams a response.
+// Do not render the full shell here: duplicated navigation IDs break early focus.
 export default function Loading() {
   return (
-    <PlatformShell contentClassName="flex flex-1 items-center px-4 pb-16 pt-10 sm:px-6 lg:px-8">
-      <section className="mx-auto w-full max-w-5xl">
-        <div className={`${glassPanelClassName} animate-pulse p-8 sm:p-10`}>
-          <div className="h-4 w-36 rounded-full bg-white/10" />
-          <div className="mt-6 h-10 w-full max-w-3xl rounded-2xl bg-white/10" />
-          <div className="mt-4 h-5 w-full max-w-2xl rounded-2xl bg-white/10" />
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            <div className="h-36 rounded-[1.5rem] bg-white/8" />
-            <div className="h-36 rounded-[1.5rem] bg-white/8" />
-            <div className="h-36 rounded-[1.5rem] bg-white/8" />
-          </div>
-        </div>
-      </section>
-    </PlatformShell>
+    <div
+      className="mx-auto my-16 w-full max-w-5xl px-5"
+      role="status"
+      aria-live="polite"
+    >
+      <div className="info-card p-8">
+        <p className="font-semibold">Se încarcă pagina…</p>
+        <div
+          className="mt-6 h-10 animate-pulse rounded-xl bg-teal-100"
+          aria-hidden="true"
+        />
+        <div
+          className="mt-4 h-40 animate-pulse rounded-xl bg-teal-50"
+          aria-hidden="true"
+        />
+      </div>
+    </div>
   );
 }

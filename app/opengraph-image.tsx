@@ -24,7 +24,13 @@ export default function OpenGraphImage() {
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <div
             style={{
               display: "flex",
@@ -51,17 +57,37 @@ export default function OpenGraphImage() {
             >
               MA
             </div>
-            <div style={{ fontSize: 20, letterSpacing: "0.3em", textTransform: "uppercase" }}>
+            <div
+              style={{
+                fontSize: 20,
+                letterSpacing: "0.3em",
+                textTransform: "uppercase",
+              }}
+            >
               M Air Electro AI
             </div>
           </div>
         </div>
-        <div style={{ maxWidth: 920, display: "flex", flexDirection: "column", gap: 22 }}>
-          <div style={{ color: "#dff8a5", fontSize: 18, letterSpacing: "0.34em", textTransform: "uppercase" }}>
-            Electrical diagnostics - calculators - experts - protected marketplace
+        <div
+          style={{
+            maxWidth: 920,
+            display: "flex",
+            flexDirection: "column",
+            gap: 22,
+          }}
+        >
+          <div
+            style={{
+              color: "#dff8a5",
+              fontSize: 18,
+              letterSpacing: "0.34em",
+              textTransform: "uppercase",
+            }}
+          >
+            Baterii · Invertoare · Solar · România / EU
           </div>
           <div style={{ fontSize: 72, lineHeight: 1.05, fontWeight: 700 }}>
-            The premium operating layer for electrical trust.
+            Calculează necesarul. Alege informat.
           </div>
         </div>
       </div>

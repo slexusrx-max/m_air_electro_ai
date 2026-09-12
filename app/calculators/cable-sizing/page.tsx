@@ -4,7 +4,8 @@ import { buildMetadata } from "@/lib/metadata";
 
 export const metadata = buildMetadata({
   title: "Cable Sizing Calculator",
-  description: "Preliminary cable sizing based on current, ampacity, and voltage drop.",
+  description:
+    "Preliminary cable sizing based on current, ampacity, and voltage drop.",
   path: "/calculators/cable-sizing",
 });
 
@@ -14,8 +15,12 @@ export default function CableSizingPage() {
       title="Cable sizing calculator"
       description="Preliminary conductor sizing using deterministic logic: a simplified ampacity table combined with a resistive voltage-drop estimate."
       actions={[
-        { href: "/calculators", label: "Back to calculators", variant: "secondary" },
-        { href: "/diagnostics", label: "Go to diagnostics" },
+        {
+          href: "/calculators",
+          label: "Back to calculators",
+          variant: "secondary",
+        },
+        { href: "/calculators/voltage-drop", label: "Open voltage drop" },
       ]}
     >
       <CableSizingCalculator />

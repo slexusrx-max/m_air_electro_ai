@@ -1,29 +1,338 @@
 "use client";
-
 import Link from "next/link";
 import { useState } from "react";
-import { calculateBattery, formatElectricalNumber, resolveCalculation } from "@/lib/electrical-calculations";
 import type { Dictionary } from "@/lib/i18n/types";
-
-type Load = { id: string; name: string; watts: number; quantity: number; hours: number; surge: number; enabled: boolean };
-const presets: Load[] = [{ id: "router", name: "Wi-Fi router", watts: 15, quantity: 1, hours: 24, surge: 1, enabled: true }, { id: "fridge", name: "Fridge", watts: 150, quantity: 1, hours: 8, surge: 3, enabled: true }, { id: "lighting", name: "Lighting", watts: 80, quantity: 1, hours: 6, surge: 1, enabled: true }, { id: "tv", name: "TV", watts: 100, quantity: 1, hours: 4, surge: 1, enabled: false }, { id: "laptop", name: "Laptop / PC", watts: 90, quantity: 1, hours: 6, surge: 1, enabled: false }, { id: "boiler", name: "Gas boiler", watts: 120, quantity: 1, hours: 8, surge: 1.5, enabled: false }, { id: "pump", name: "Water pump", watts: 800, quantity: 1, hours: 1, surge: 3, enabled: false }];
-const number = (value: number) => Number.isFinite(value) && value >= 0 ? value : 0;
-
-export function BackupCalculator({ dictionary: t }: { dictionary: Dictionary }) {
-  const [loads, setLoads] = useState(presets);
-  const [duration, setDuration] = useState(8);
-  const [voltage, setVoltage] = useState(48);
-  const [dod, setDod] = useState(80);
-  const [efficiency, setEfficiency] = useState(92);
-  const update = (id: string, field: keyof Load, value: string | boolean) => setLoads((items) => items.map((item) => item.id === id ? { ...item, [field]: typeof value === "boolean" ? value : field === "name" ? value : number(Number(value)) } : item));
-  const activeLoads = loads.filter((load) => load.enabled && load.watts > 0 && load.quantity > 0);
-  const continuous = activeLoads.reduce((total, load) => total + load.watts * load.quantity, 0);
-  const surge = activeLoads.reduce((total, load) => total + load.watts * load.quantity * Math.max(1, load.surge), 0);
-  const loadEnergyWh = activeLoads.reduce((total, load) => total + load.watts * load.quantity * Math.min(duration, load.hours), 0);
-  const calculation = resolveCalculation(() => calculateBattery({ loadPowerWatts: Math.max(continuous, 1), backupHours: duration, systemVoltage: voltage, maxDepthOfDischargePercent: dod, inverterEfficiencyPercent: efficiency }));
-  const result = "error" in calculation ? null : calculation;
-  const equipmentHref = result ? `/marketplace?batteryKwh=${encodeURIComponent((result.minimumNominalWh / 1000).toFixed(1))}&inverterKw=${encodeURIComponent((Math.ceil(continuous * 1.25 / 100) * 100 / 1000).toFixed(1))}&surgeKw=${encodeURIComponent((Math.ceil(surge * 1.1 / 100) * 100 / 1000).toFixed(1))}&region=RO` : null;
-  const addCustom = () => setLoads((items) => [...items, { id: crypto.randomUUID(), name: "Custom device", watts: 100, quantity: 1, hours: duration, surge: 1, enabled: true }]);
-  const metrics = result ? [["Continuous load", `${formatElectricalNumber(continuous)} W`], ["Estimated peak / surge", `${formatElectricalNumber(surge)} W`], ["Backup energy", `${formatElectricalNumber(loadEnergyWh / 1000)} kWh`], ["Recommended usable battery", `${formatElectricalNumber((result.minimumNominalWh * dod / 100) / 1000)} kWh`], ["Recommended nominal battery", `${formatElectricalNumber(result.minimumNominalWh / 1000)} kWh`], ["Inverter continuous", `${formatElectricalNumber(Math.ceil(continuous * 1.25 / 100) * 100)} W`], ["Inverter surge", `${formatElectricalNumber(Math.ceil(surge * 1.1 / 100) * 100)} W`]] : [];
-  return <div className="space-y-6"><div className="overflow-x-auto rounded-3xl border border-slate-200 bg-white/85"><table className="min-w-[760px] w-full text-left text-sm"><thead className="border-b border-slate-200 text-slate-500"><tr><th className="p-3">Use</th><th>Device</th><th>Power (W)</th><th>Qty</th><th>Running hours</th><th>Surge ×</th><th>Row total</th></tr></thead><tbody>{loads.map((load) => <tr className="border-b border-slate-100" key={load.id}><td className="p-3"><input aria-label={`Enable ${load.name}`} type="checkbox" checked={load.enabled} onChange={(event) => update(load.id, "enabled", event.target.checked)} /></td><td><input aria-label={`${load.name} name`} value={load.name} onChange={(event) => update(load.id, "name", event.target.value)} className="w-36 rounded-lg border border-slate-200 p-2" /></td><td><input aria-label={`${load.name} power`} value={load.watts} onChange={(event) => update(load.id, "watts", event.target.value)} type="number" min="0" max="100000" className="w-24 rounded-lg border border-slate-200 p-2" /></td><td><input aria-label={`${load.name} quantity`} value={load.quantity} onChange={(event) => update(load.id, "quantity", event.target.value)} type="number" min="0" max="100" className="w-20 rounded-lg border border-slate-200 p-2" /></td><td><input aria-label={`${load.name} hours`} value={load.hours} onChange={(event) => update(load.id, "hours", event.target.value)} type="number" min="0" max="168" step="0.5" className="w-24 rounded-lg border border-slate-200 p-2" /></td><td><input aria-label={`${load.name} surge multiplier`} value={load.surge} onChange={(event) => update(load.id, "surge", event.target.value)} type="number" min="1" max="10" step="0.1" className="w-20 rounded-lg border border-slate-200 p-2" /></td><td className="font-semibold">{formatElectricalNumber(load.watts * load.quantity)} W</td></tr>)}</tbody></table></div><button type="button" onClick={addCustom} className="button-outline">Add custom device</button><div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4"><label>Backup duration (hours)<input value={duration} onChange={(event) => setDuration(number(Number(event.target.value)))} type="number" min="0.1" max="168" step="0.5" className="form-control" /></label><label>System voltage<select value={voltage} onChange={(event) => setVoltage(Number(event.target.value))} className="form-control"><option value="12">12 V</option><option value="24">24 V</option><option value="48">48 V</option></select></label><label>Usable depth of discharge (%)<input value={dod} onChange={(event) => setDod(Math.min(99, Math.max(1, number(Number(event.target.value)))))} type="number" min="1" max="99" className="form-control" /></label><label>Inverter efficiency (%)<input value={efficiency} onChange={(event) => setEfficiency(Math.min(100, Math.max(1, number(Number(event.target.value)))))} type="number" min="1" max="100" className="form-control" /></label></div>{"error" in calculation ? <p role="alert" className="rounded-xl bg-amber-50 p-4 text-amber-950">{calculation.error}</p> : null}<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">{metrics.map(([label, value]) => <article className="info-card rounded-2xl p-4" key={label}><p className="text-sm text-slate-600">{label}</p><p className="mt-2 text-2xl font-bold text-slate-950">{value}</p></article>)}</div><p className="text-sm text-slate-600">{t["backup.assumptions"]} Load running hours are capped at the selected backup duration. Enter a higher surge multiplier only where the appliance or motor documentation supports it.</p><div className="flex flex-wrap gap-3">{equipmentHref ? <Link className="button-primary" href={equipmentHref}>Find matching equipment</Link> : null}<Link className="button-outline" href="/installers">{t["backup.findInstaller"]}</Link><Link className="button-outline" href="/assistant">{t["backup.askAi"]}</Link></div></div>;
+import { commercialCopy } from "@/lib/marketplace/copy";
+import {
+  calculateAppliances,
+  requirementsUrl,
+  requiredBatteryKwh,
+  type Appliance,
+} from "@/lib/marketplace/planning";
+export function BackupCalculator({
+  dictionary: t,
+}: {
+  dictionary: Dictionary;
+}) {
+  const c = commercialCopy(t),
+    ro = c.ro,
+    tx = (a: string, b: string) => (ro ? a : b);
+  const [loads, setLoads] = useState<Appliance[]>([
+    {
+      id: "router",
+      name: "Router Wi-Fi",
+      watts: 15,
+      quantity: 1,
+      hours: 8,
+      surge: 1,
+      enabled: true,
+    },
+    {
+      id: "fridge",
+      name: ro ? "Frigider" : "Refrigerator",
+      watts: 150,
+      quantity: 1,
+      hours: 4,
+      surge: 3,
+      enabled: true,
+    },
+    {
+      id: "lighting",
+      name: ro ? "Iluminat" : "Lighting",
+      watts: 80,
+      quantity: 1,
+      hours: 6,
+      surge: 1,
+      enabled: true,
+    },
+    {
+      id: "laptop",
+      name: "Laptop",
+      watts: 90,
+      quantity: 1,
+      hours: 4,
+      surge: 1,
+      enabled: false,
+    },
+    {
+      id: "boiler",
+      name: ro ? "Comenzi centrală" : "Boiler controls",
+      watts: 120,
+      quantity: 1,
+      hours: 4,
+      surge: 1.5,
+      enabled: false,
+    },
+  ]);
+  const [hours, setHours] = useState(8),
+    [dod, setDod] = useState(80),
+    [efficiency, setEfficiency] = useState(92);
+  const update = (
+    id: string,
+    key: keyof Appliance,
+    value: string | number | boolean,
+  ) =>
+    setLoads((ls) => ls.map((l) => (l.id === id ? { ...l, [key]: value } : l)));
+  let result: ReturnType<typeof calculateAppliances> | null = null,
+    error = "";
+  try {
+    result = calculateAppliances(loads, hours, dod, efficiency);
+  } catch (e) {
+    error = e instanceof Error ? e.message : "invalid-load";
+  }
+  const errors: Record<string, string> = {
+    "empty-loads": tx(
+      "Activează cel puțin un aparat.",
+      "Enable at least one appliance.",
+    ),
+    "invalid-settings": tx(
+      "Autonomie: 0,1–168 ore; descărcare utilă: 1–99%; randament: 1–100%.",
+      "Backup: 0.1–168 hours; usable discharge: 1–99%; efficiency: 1–100%.",
+    ),
+    "invalid-load": tx(
+      "Verifică aparatele active: nume, 1–100.000 W, cantitate întreagă 1–100, 0,1–168 ore și multiplicator 1–10.",
+      "Check enabled appliances: name, 1–100,000 W, whole quantity 1–100, 0.1–168 hours and multiplier 1–10.",
+    ),
+    "invalid-total": tx(
+      "Sarcina totală depășește 100 kW. Solicită un calcul pentru instalația ta.",
+      "Total load exceeds 100 kW. Request a site-specific calculation.",
+    ),
+  };
+  const fmt = (n: number) =>
+    n.toLocaleString(c.locale, { maximumFractionDigits: 2 });
+  const metrics = result
+    ? ([
+        [
+          tx("Sarcină continuă", "Continuous load"),
+          result.continuousW,
+          "W",
+          "continuous",
+        ],
+        [
+          tx("Vârf estimat al consumatorilor", "Estimated load surge"),
+          result.peakW,
+          "W",
+          "peak",
+        ],
+        [
+          tx("Energia consumatorilor", "Load energy"),
+          result.energyWh / 1000,
+          "kWh",
+          "energy",
+        ],
+        [
+          tx(
+            "Baterie — energie utilă necesară",
+            "Battery — required usable energy",
+          ),
+          result.usableWh / 1000,
+          "kWh",
+          "usable",
+        ],
+        [
+          tx("Baterie — energie nominală", "Battery — nominal energy"),
+          requiredBatteryKwh(result.nominalWh),
+          "kWh",
+          "nominal",
+        ],
+        [
+          tx("Invertor — putere continuă", "Inverter — continuous output"),
+          result.inverterW,
+          "W",
+          "inverter",
+        ],
+        [
+          tx("Invertor — putere de vârf", "Inverter — surge output"),
+          result.surgeW,
+          "W",
+          "surge",
+        ],
+      ] as const)
+    : [];
+  return (
+    <section className="space-y-7">
+      <div className="grid gap-4">
+        {loads.map((load, index) => (
+          <fieldset key={load.id} className="info-card" data-testid="appliance">
+            <legend className="px-2 font-bold">
+              {tx("Aparat", "Appliance")} {index + 1}
+            </legend>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <label className="flex items-center gap-3 font-semibold">
+                <input
+                  type="checkbox"
+                  checked={load.enabled}
+                  onChange={(e) => update(load.id, "enabled", e.target.checked)}
+                  className="h-5 w-5"
+                />
+                {tx("Inclus în calcul", "Include in calculation")}
+              </label>
+              {load.id.startsWith("custom-") ? (
+                <button
+                  type="button"
+                  className="text-sm font-bold underline"
+                  onClick={() =>
+                    setLoads((ls) => ls.filter((x) => x.id !== load.id))
+                  }
+                >
+                  {tx("Elimină", "Remove")}
+                </button>
+              ) : null}
+            </div>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              <label>
+                {tx("Denumire", "Name")}
+                <input
+                  className="form-control"
+                  value={load.name}
+                  onChange={(e) => update(load.id, "name", e.target.value)}
+                />
+              </label>
+              {(
+                [
+                  ["watts", tx("Putere (W)", "Power (W)")],
+                  ["quantity", tx("Cantitate", "Quantity")],
+                  ["hours", tx("Ore de funcționare", "Operating hours")],
+                  ["surge", tx("Multiplicator pornire", "Starting multiplier")],
+                ] as const
+              ).map(([key, label]) => (
+                <label key={key}>
+                  {label}
+                  <input
+                    className="form-control"
+                    type="number"
+                    step={key === "quantity" ? "1" : "any"}
+                    disabled={!load.enabled}
+                    value={Number.isNaN(load[key]) ? "" : load[key]}
+                    onChange={(e) =>
+                      update(
+                        load.id,
+                        key,
+                        e.target.value === "" ? NaN : Number(e.target.value),
+                      )
+                    }
+                  />
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        ))}
+      </div>
+      <button
+        type="button"
+        className="button-outline"
+        onClick={() =>
+          setLoads((ls) => [
+            ...ls,
+            {
+              id: "custom-" + crypto.randomUUID(),
+              name: tx("Aparat personalizat", "Custom device"),
+              watts: 100,
+              quantity: 1,
+              hours: Math.max(0.1, hours || 1),
+              surge: 1,
+              enabled: true,
+            },
+          ])
+        }
+      >
+        {tx("Adaugă aparat", "Add custom device")}
+      </button>
+      <section className="brand-glass-card rounded-3xl p-6">
+        <h2 className="text-xl font-bold">
+          {tx("Ipotezele sistemului", "System assumptions")}
+        </h2>
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          {[
+            [
+              tx("Autonomie dorită (ore)", "Backup duration (hours)"),
+              hours,
+              setHours,
+            ],
+            [tx("Descărcare utilă (%)", "Usable discharge (%)"), dod, setDod],
+            [
+              tx("Randament invertor (%)", "Inverter efficiency (%)"),
+              efficiency,
+              setEfficiency,
+            ],
+          ].map(([label, value, setter]) => (
+            <label key={String(label)}>
+              {String(label)}
+              <input
+                className="form-control"
+                type="number"
+                step="any"
+                value={Number.isNaN(value) ? "" : Number(value)}
+                onChange={(e) =>
+                  (setter as (n: number) => void)(
+                    e.target.value === "" ? NaN : Number(e.target.value),
+                  )
+                }
+              />
+            </label>
+          ))}
+        </div>
+      </section>
+      {error ? (
+        <p role="alert" className="rounded-xl bg-red-50 p-5 text-red-900">
+          {errors[error] ?? errors["invalid-load"]}
+        </p>
+      ) : null}
+      {result ? (
+        <section
+          aria-label={tx("Rezultate calcul", "Calculation results")}
+          data-testid="backup-results"
+          className="space-y-5"
+        >
+          <p role="status" aria-live="polite" className="text-sm font-semibold">
+            {tx(
+              "Rezultate actualizate automat",
+              "Results update automatically",
+            )}
+          </p>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {metrics.map(([label, value, unit, id]) => (
+              <article key={id} className="info-card">
+                <h3 className="font-semibold">{label}</h3>
+                <p
+                  data-testid={`backup-${id}`}
+                  className="!text-2xl !font-bold !text-teal-950"
+                >
+                  {fmt(value)} {unit}
+                </p>
+              </article>
+            ))}
+          </div>
+          <Link
+            href={requirementsUrl(
+              result.nominalWh,
+              result.inverterW,
+              result.surgeW,
+            )}
+            className="button-primary"
+          >
+            {tx("Găsește echipamente potrivite", "Find Matching Equipment")}
+          </Link>
+        </section>
+      ) : null}
+      <section className="info-card">
+        <h2>{tx("Cum se calculează", "How this is calculated")}</h2>
+        <p>
+          {tx(
+            "Adunăm puterea × cantitatea × orele fiecărui aparat, limitate la durata de autonomie. Energia utilă a bateriei include pierderile invertorului; energia nominală include și rezerva de descărcare. Puterea invertorului include 25% marjă, iar vârful 10%.",
+            "We sum power × quantity × each appliance’s operating hours, capped at the backup duration. Usable battery energy accounts for inverter losses; nominal energy also includes discharge reserve. Inverter continuous output includes 25% margin and surge 10%.",
+          )}
+        </p>
+        <p>
+          {tx(
+            "Puterea continuă presupune aparatele active simultan; vârful adună pornirile simultane, un scenariu conservator. Pentru frigider, orele se referă la timpul efectiv al compresorului. Folosește măsurători și datele producătorului.",
+            "Continuous load assumes enabled appliances run together; surge adds simultaneous starts, a conservative scenario. Refrigerator hours mean actual compressor operating time. Use measurements and manufacturer data.",
+          )}
+        </p>
+      </section>
+      <p className="rounded-2xl bg-amber-50 p-5 text-sm leading-7 text-amber-950">
+        {c.safety}
+      </p>
+    </section>
+  );
 }
