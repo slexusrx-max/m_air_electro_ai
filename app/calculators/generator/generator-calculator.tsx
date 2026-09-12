@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { resolveCalculation } from "@/lib/electrical-calculations";
 
 import {
   CalculatorAssumptions,
@@ -54,13 +55,13 @@ function resolveGenerator(formState: FormState): CalculationResult {
     return { error: "Power factor must stay between 0 and 1." };
   }
 
-  return calculateGenerator({
+  return resolveCalculation(() => calculateGenerator({
     runningLoadKw,
     powerFactor,
     largestMotorKw,
     reservePercent,
     startingMethod: formState.startingMethod,
-  });
+  }));
 }
 
 export default function GeneratorCalculator() {

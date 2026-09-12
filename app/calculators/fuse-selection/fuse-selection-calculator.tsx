@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { resolveCalculation } from "@/lib/electrical-calculations";
 
 import {
   CalculatorAssumptions,
@@ -45,12 +46,12 @@ function resolveFuse(formState: FormState): CalculationResult {
     return { error: "Enter valid positive numbers for current and spare margin." };
   }
 
-  return calculateFuseSelection({
+  return resolveCalculation(() => calculateFuseSelection({
     designCurrent,
     spareMarginPercent,
     applicationType: formState.applicationType,
     continuousLoad: formState.continuousLoad === "yes",
-  });
+  }));
 }
 
 export default function FuseSelectionCalculator() {

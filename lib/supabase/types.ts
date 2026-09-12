@@ -22,6 +22,7 @@ export type Database = {
     Tables: { profiles: ProfileTable; expert_profiles: Table<ExpertProfile>; client_profiles: Table<ClientProfile>; company_profiles: Table<CompanyProfile>; technical_documents: Table<TechnicalDocument> };
     Views: Record<string, never>;
     Functions: {
+      consume_ai_request: { Args: Record<string, never>; Returns: boolean };
       complete_user_onboarding: {
         Args: {
           p_full_name: string; p_country_code: string; p_preferred_language: string; p_assistance_type?: string | null;

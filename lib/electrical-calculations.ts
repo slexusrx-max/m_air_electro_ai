@@ -226,7 +226,11 @@ export function getMotorCurrentSystemFactor(systemType: MotorSystemType) {
 }
 
 export function getNextStandardValue(standards: number[], value: number) {
-  return standards.find((entry) => entry >= value) ?? standards[standards.length - 1];
+  const match = standards.find((entry) => entry >= value);
+  if (!Number.isFinite(value) || value <= 0 || match === undefined) {
+    throw new Error("The required rating exceeds the supported range or the input is invalid. A custom engineering calculation is required.");
+  }
+  return match;
 }
 
 export function getCableAmpacity(material: CableMaterial, cableSize: number) {
@@ -255,11 +259,9 @@ export function calculateCableSizing({
   }
 
   const roundedVoltageDropSize =
-    standardCableSizes.find((size) => size >= requiredVoltageDropSize) ??
-    standardCableSizes[standardCableSizes.length - 1];
+    getNextStandardValue(standardCableSizes, requiredVoltageDropSize);
   const recommendedSize =
-    standardCableSizes.find((size) => size >= Math.max(roundedVoltageDropSize, ampacityMatch.size)) ??
-    standardCableSizes[standardCableSizes.length - 1];
+    getNextStandardValue(standardCableSizes, Math.max(roundedVoltageDropSize, ampacityMatch.size));
 
   const recommendedAmpacity =
     ampacityTable.find((entry) => entry.size === recommendedSize)?.ampacity ?? ampacityMatch.ampacity;
@@ -459,4 +461,11 @@ export function calculateFuseSelection({
         ? "Semiconductor protection requires manufacturer-specific I2t and coordination review."
         : "Use this as a preliminary fuse selection only. Final coordination and fault-duty checks remain mandatory.",
   };
+}
+
+export function resolveCalculation<T>(calculate: () => T): T | { error: string } {
+  try { return calculate(); } catch (error) {
+    if (!(error instanceof Error)) throw error;
+    return { error: error.message };
+  }
 }

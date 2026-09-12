@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { resolveCalculation } from "@/lib/electrical-calculations";
 
 import {
   CalculatorAssumptions,
@@ -53,13 +54,13 @@ function resolveBreaker(formState: FormState): CalculationResult {
     return { error: "Ambient derating should be expressed as a percent up to 100." };
   }
 
-  return calculateBreakerSelection({
+  return resolveCalculation(() => calculateBreakerSelection({
     designCurrent,
     ambientDeratingPercent,
     spareMarginPercent,
     inrushMultiplier,
     loadType: formState.loadType,
-  });
+  }));
 }
 
 export default function BreakerSelectionCalculator() {

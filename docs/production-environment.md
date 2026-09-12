@@ -32,3 +32,13 @@ After deployment, open `/api/address?mode=status`. It must return `{"configured"
 3. Verify `/api/address?mode=status`, then test Ukrainian city → street → house selection.
 4. Confirm `NEXT_PUBLIC_SITE_URL` contains the deployed HTTPS domain.
 5. Keep payment and affiliate variables blank until the corresponding commercial approval is live.
+## Security fixes (September 2026)
+
+Apply all Supabase migrations in order before deploying the updated AI route. In particular:
+
+- `20260912000000_secure_onboarding.sql` preserves account status, rejects blocked accounts and revokes access to the legacy onboarding RPC.
+- `20260912000001_ai_request_quota.sql` adds an atomic quota of 30 AI requests per active user per UTC day. The database owns the counter; browser clients cannot reset it. Failed provider requests also consume a slot. Quota lookup errors stop the request before calling the provider.
+
+The AI assistant now requires a signed-in active account. Provider calls time out after 30 seconds. Keep provider-side project spending limits configured separately; the per-user quota is not a global spending cap.
+
+Run `npm test` for calculator, redirect, AI handler and PostgreSQL migration regression coverage. Database tests use an isolated in-memory PGlite instance with minimal Supabase auth fixtures; they do not access production. Run `npm run lint`, `npm run typecheck`, `npm run build`, and the existing `npm run smoke` against a local server as well.
