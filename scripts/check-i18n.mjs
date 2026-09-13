@@ -3,13 +3,15 @@ import { join } from "node:path";
 
 const source = readFileSync(new URL("../lib/i18n/dictionaries.ts", import.meta.url), "utf8");
 
-// Ukrainian intentionally inherits the complete English dictionary and overrides
+// Retained Ukrainian and first-class Romanian inherit the English base and override
 // localized entries. Check that this inheritance remains in place and that every
 // key referenced through `t["…"]` exists in the base dictionary.
 if (!/const uk: Dictionary = \{\s*\.\.\.en,/.test(source)) {
   console.error("i18n check failed: Ukrainian dictionary must inherit the English base dictionary.");
   process.exit(1);
 }
+
+if (!/const ro: Dictionary = \{\s*\.\.\.en,/.test(source)) throw new Error("Romanian dictionary is required");
 
 const dictionaryKeys = new Set([...source.matchAll(/"([^"\n]+)"\s*:/g)].map((match) => match[1]));
 

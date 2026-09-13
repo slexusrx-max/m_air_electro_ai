@@ -77,6 +77,7 @@ export function AddressSelector({ dictionary: t, onAddressChange }: { dictionary
   const choose = (item: Item) => {
     if (activeField === "city") {
       setCity(item);
+      setCityQuery(itemLabel(item));
       setStreet(null);
       setBuilding(null);
       setStreetQuery("");
@@ -84,10 +85,11 @@ export function AddressSelector({ dictionary: t, onAddressChange }: { dictionary
     }
     if (activeField === "street") {
       setStreet(item);
+      setStreetQuery(itemLabel(item));
       setBuilding(null);
       setBuildingQuery("");
     }
-    if (activeField === "building") setBuilding(item);
+    if (activeField === "building") { setBuilding(item); setBuildingQuery(itemLabel(item)); }
     setActiveField(null);
     setSuggestions([]);
     setHasSearched(false);
@@ -95,10 +97,20 @@ export function AddressSelector({ dictionary: t, onAddressChange }: { dictionary
     setNotice("");
   };
 
+  const focusField = (field: Field) => {
+    setSuggestions([]);
+    setHasSearched(false);
+    setIsLoading(false);
+    setError("");
+    setHighlightedIndex(0);
+    setActiveField(field);
+  };
+
   const changeField = (field: Field, value: string) => {
     setActiveField(field);
     setSuggestions([]);
     setHasSearched(false);
+    setIsLoading(false);
     setError("");
     setResult("");
     setNotice("");
@@ -178,19 +190,20 @@ export function AddressSelector({ dictionary: t, onAddressChange }: { dictionary
     setHasSearched(false);
   }} className="grid gap-3 rounded-3xl border border-teal-100 bg-white/80 p-5 shadow-sm sm:grid-cols-2">
     <label className="relative">{t["home.city"]}
-      <input value={city?.name ?? cityQuery} onFocus={() => setActiveField("city")} onChange={(event) => changeField("city", event.target.value)} onKeyDown={handleKeys} placeholder={t["address.selectCity"]} aria-autocomplete="list" aria-controls={showSuggestions("city") ? listId : undefined} className={inputClass} />
+      <input value={city?.name ?? cityQuery} onFocus={() => focusField("city")} onChange={(event) => changeField("city", event.target.value)} onKeyDown={handleKeys} placeholder={t["address.selectCity"]} aria-autocomplete="list" aria-controls={showSuggestions("city") ? listId : undefined} className={inputClass} />
       {showSuggestions("city") ? <Options items={suggestions} highlightedIndex={highlightedIndex} listId={listId} onChoose={choose} /> : null}
     </label>
     <label className="relative">{t["home.street"]}
-      <input disabled={!city && !manualMode} value={street?.name ?? streetQuery} onFocus={() => (city || manualMode) && setActiveField("street")} onChange={(event) => changeField("street", event.target.value)} onKeyDown={handleKeys} placeholder={city || manualMode ? t["address.selectStreet"] : t["address.selectCityFirst"]} aria-autocomplete="list" aria-controls={showSuggestions("street") ? listId : undefined} className={inputClass} />
+      <input disabled={!city && !manualMode} value={street?.name ?? streetQuery} onFocus={() => focusField("street")} onChange={(event) => changeField("street", event.target.value)} onKeyDown={handleKeys} placeholder={city || manualMode ? t["address.selectStreet"] : t["address.selectCityFirst"]} aria-autocomplete="list" aria-controls={showSuggestions("street") ? listId : undefined} className={inputClass} />
       {showSuggestions("street") ? <Options items={suggestions} highlightedIndex={highlightedIndex} listId={listId} onChoose={choose} alternateNameLabel={t["address.alternateName"]} /> : null}
     </label>
     <label className="relative">{t["home.building"]}
-      <input disabled={!street && !manualMode} value={building?.number ?? buildingQuery} onFocus={() => (street || manualMode) && setActiveField("building")} onChange={(event) => changeField("building", event.target.value)} onKeyDown={handleKeys} placeholder={street || manualMode ? t["address.selectBuilding"] : t["address.selectStreetFirst"]} aria-autocomplete="list" aria-controls={showSuggestions("building") ? listId : undefined} className={inputClass} />
+      <input disabled={!street && !manualMode} value={building?.number ?? buildingQuery} onFocus={() => focusField("building")} onChange={(event) => changeField("building", event.target.value)} onKeyDown={handleKeys} placeholder={street || manualMode ? t["address.selectBuilding"] : t["address.selectStreetFirst"]} aria-autocomplete="list" aria-controls={showSuggestions("building") ? listId : undefined} className={inputClass} />
       {showSuggestions("building") ? <Options items={suggestions} highlightedIndex={highlightedIndex} listId={listId} onChoose={choose} /> : null}
       {activeField === "building" && hasSearched && !isLoading && !suggestions.length ? <span className="mt-1 block text-xs text-slate-500">{t["address.manualBuilding"]}</span> : null}
     </label>
     <label>{t["home.apartment"]}<input value={apartment} onChange={(event) => { setApartment(event.target.value); setResult(""); }} className={inputClass} /></label>
+    {!manualMode && activeField && query.trim().length < (activeField === "building" ? 1 : 2) ? <p className="sm:col-span-2 text-sm text-slate-600" role="status">{t[activeField === "building" ? "address.enterHouse" : "address.enterQuery"]}</p> : null}
     {isLoading ? <p className="sm:col-span-2 text-sm text-slate-600" role="status">{t["address.searching"]}</p> : null}
     {activeField !== "building" && hasSearched && !isLoading && !suggestions.length ? <p className="sm:col-span-2 text-sm text-slate-600">{t["address.noResults"]}</p> : null}
     {error ? <p className="sm:col-span-2 text-sm text-amber-800" role="alert">{error} <button type="button" onClick={() => { setError(""); setRetry((value) => value + 1); }} className="underline">{t["address.retry"]}</button> <button type="button" onClick={enterManualMode} className="ml-2 underline">{t["address.manual"]}</button></p> : null}

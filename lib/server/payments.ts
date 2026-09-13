@@ -1,3 +1,4 @@
+/** Future service-payment adapter types. No equipment checkout is offered. */
 import "server-only";
 
 export type PaymentProviderId = "stripe-connect";

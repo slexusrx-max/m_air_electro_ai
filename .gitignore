@@ -43,3 +43,8 @@ tmp_layout*.png
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local task evidence and generated browser reports
+.task-work/
+test-results/
+playwright-report/

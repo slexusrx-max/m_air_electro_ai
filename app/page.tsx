@@ -1,4 +1,6 @@
-import { PlatformShell } from "@/components/platform-shell";
-import { HomeContent } from "@/components/product/page-content";
-import { getRequestDictionary } from "@/lib/i18n/request";
-export default async function Home() { return <PlatformShell><HomeContent dictionary={await getRequestDictionary()} /></PlatformShell>; }
+import { PlatformShell } from '@/components/platform-shell';
+import { DiscoveryHome } from '@/components/marketplace/discovery-home';
+import { buildMetadata } from '@/lib/metadata';
+import { getRequestLocale } from '@/lib/i18n/request';
+export async function generateMetadata(){const ro=await getRequestLocale()==='ro';return buildMetadata({title:ro?'Marketplace energetic, calcule și comparații':'Energy marketplace, sizing and comparison',description:ro?'Descoperă baterii, panouri solare, invertoare și echipamente electrice pentru România și UE. Calculează, compară și vizitează furnizorul.':'Discover batteries, solar panels, inverters and electrical equipment for Romania and the EU. Calculate, compare and visit the supplier.',path:'/'});}
+export default function Home(){return <PlatformShell><DiscoveryHome/></PlatformShell>;}

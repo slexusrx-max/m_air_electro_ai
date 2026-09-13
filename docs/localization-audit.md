@@ -1,20 +1,9 @@
-# Localization audit
+# Localization architecture
 
-This checklist records verified route status. A route is not complete until desktop, mobile, hidden UI and metadata have all been checked in English and Ukrainian.
+Romania/EU is the commercial focus. Romanian is the default request locale, English is selectable in the header, and the full pathname/query is preserved when switching. The existing mr-electro-locale cookie name is retained for preference compatibility. Ukrainian preferences remain supported for retained specialist modules.
 
-| Route | EN | UK | hidden UI | metadata | status |
-|---|---:|---:|---:|---:|---|
-| `/` | pending | pending | pending | pending | audit required |
-| `/energy/ukraine` | pending | pending | pending | pending | audit required |
-| `/methodology` | checked | checked | checked | checked | localized |
-| `/marketplace` | pending | pending | pending | pending | localized copy; verification pending |
-| `/documents` | pending | pending | pending | pending | audit required |
-| `/experts` and `/experts/[slug]` | pending | pending | pending | pending | localized copy; verification pending |
-| `/diagnostics` | pending | pending | pending | pending | audit required |
-| `/calculators` | pending | pending | pending | pending | audit required |
-| `/my-home` | pending | pending | pending | pending | audit required |
-| `/installers` | pending | pending | pending | pending | audit required |
-| `/energy-map` and `/map` | pending | pending | pending | pending | audit required |
-| `/buildings`, `/business`, `/professionals`, `/pro` | pending | pending | pending | pending | audit required |
-| `/knowledge-base` | pending | pending | pending | pending | audit required |
-| `/terms`, `/privacy`, `/about`, `/contact` | pending | pending | pending | pending | audit required |
+Marketplace, new solution/learning content, navigation, comparison, search, system finder, solar sizing and public information pages use explicit Romanian/English copy. Manufacturer model names and units remain intact. Existing advanced electrical/AI/document interfaces retain some English or Ukrainian supporting copy; do not claim their translation coverage is complete.
+
+Typed LocalText records live alongside content data rather than being embedded in duplicated page components. Future languages should extend the supported-locale registry and content validation. Commercial paths stay stable; a separate path-based locale/SEO strategy can be scoped if independently indexable language variants are needed.
+
+npm run i18n:check validates dictionary references and the Romanian/English inheritance mechanism. npm test validates bilingual category/guide/solution fields. Playwright checks default Romanian, language switching on a deep route, and mobile navigation. Do not interpret key completeness as proof that every legacy string has a translation.

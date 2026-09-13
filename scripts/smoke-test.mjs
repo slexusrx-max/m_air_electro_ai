@@ -1,5 +1,5 @@
 const baseUrl = (process.env.SMOKE_BASE_URL ?? "http://localhost:3000").replace(/\/$/, "");
-const routes = ["/", "/marketplace", "/marketplace?batteryKwh=5.4&inverterKw=2&surgeKw=3&region=EU", "/marketplace/find-my-solution", "/marketplace/category/lithium-batteries", "/marketplace/products/lfp-battery-12v-100ah", "/backup-calculator", "/assistant", "/installers", "/experts", "/calculators", "/my-home", "/energy-ai"];
+const routes = ["/", "/marketplace", "/marketplace?batteryKwh=5.4&inverterKw=2&surgeKw=3&region=EU", "/marketplace/find-my-solution", "/marketplace/batteries", "/marketplace/products/lfp-battery-12v-100ah", "/backup-calculator", "/assistant", "/solutions", "/experts", "/calculators", "/my-home", "/energy-ai"];
 let failed = false;
 for (const route of routes) {
   const response = await fetch(`${baseUrl}${route}`, { redirect: "manual" });

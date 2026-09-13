@@ -1,3 +1,4 @@
+export const metadata = { robots: {index:false,follow:false} };
 // Authenticated content must be rendered per request so server-side session and role checks are never cached.
 export const dynamic = "force-dynamic";
 

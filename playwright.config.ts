@@ -1,0 +1,2 @@
+import { defineConfig } from "@playwright/test";
+export default defineConfig({testDir:"./tests/e2e",timeout:60000,expect:{timeout:10000},fullyParallel:false,workers:2,retries:0,reporter:[["list"],["html",{open:"never"}]],use:{baseURL:process.env.TEST_BASE_URL??"http://localhost:3100",browserName:"chromium",headless:true,trace:"retain-on-failure",screenshot:"only-on-failure",ignoreHTTPSErrors:false}});

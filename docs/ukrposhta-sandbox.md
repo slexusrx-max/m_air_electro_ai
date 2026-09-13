@@ -1,3 +1,5 @@
+> Retained specialized integration. This is not the marketplace-first Romania/EU product identity or a commercial launch prerequisite. See PROJECT_BLUEPRINT.md.
+
 # Ukrposhta sandbox integration
 
 The provider lives in `lib/ukrposhta/sandbox.ts`, which is marked `server-only`. It uses only `https://dev.ukrposhta.ua/ecom/0.0.1/`; no production Ukrposhta request is made by this integration.

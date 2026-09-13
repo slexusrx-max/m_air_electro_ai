@@ -1,3 +1,4 @@
+import { getRequestLocale } from "@/lib/i18n/request";
 import BatteryCalculator from "@/app/calculators/battery/battery-calculator";
 import { CalculatorPageShell } from "@/components/calculators/calculator-page-shell";
 import { buildMetadata } from "@/lib/metadata";
@@ -8,17 +9,17 @@ export const metadata = buildMetadata({
   path: "/calculators/battery",
 });
 
-export default function BatteryPage() {
+export default async function BatteryPage() { const ro=await getRequestLocale()==="ro";
   return (
     <CalculatorPageShell
-      title="Battery calculator"
-      description="Estimate nominal battery-bank capacity from load power, autonomy time, system voltage, efficiency, and depth-of-discharge limits."
+      title={ro?"Calculator baterie":"Battery calculator"}
+      description={ro?"Estimează capacitatea nominală din consum, autonomie, tensiune, randament și fracția de descărcare.":"Estimate nominal battery-bank capacity from load power, autonomy time, system voltage, efficiency, and depth-of-discharge limits."}
       actions={[
         { href: "/calculators", label: "Back to calculators", variant: "secondary" },
         { href: "/calculators/fuse-selection", label: "Open fuse selection" },
       ]}
     >
-      <BatteryCalculator />
+      <BatteryCalculator ro={ro}/>
     </CalculatorPageShell>
   );
 }

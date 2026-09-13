@@ -52,7 +52,7 @@ export function CalculatorSelect(props: CalculatorSelectProps) {
   );
 }
 
-export function CalculatorAssumptions({ children, title = "Assumptions used by this MVP calculator" }: { children: React.ReactNode; title?: string }) {
+export function CalculatorAssumptions({ children, title = "Assumptions used by this preliminary calculator" }: { children: React.ReactNode; title?: string }) {
   return (
     <div className="mt-6 rounded-[1.5rem] border border-lime-100/16 bg-lime-100/[0.06] p-4 text-sm leading-7 text-white/78">
       <p className="font-semibold text-lime-50">{title}</p>

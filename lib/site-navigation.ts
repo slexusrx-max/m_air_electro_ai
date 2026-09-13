@@ -1,55 +1,13 @@
-export type SiteNavItem = {
-  description: string;
-  href: string;
-  label: string;
-};
-
-export type FooterNavGroup = {
-  items: SiteNavItem[];
-  title: string;
-};
-
-export type CalculatorItem = {
-  description: string;
-  href: string;
-  label: string;
-  status: "available";
-};
-
-export const siteNavItems: SiteNavItem[] = [
-  { label: "Home", href: "/", description: "Energy resilience for Ukraine." },
-  { label: "AI Assistant", href: "/assistant", description: "AI assistance for electrical reasoning." },
-  { label: "Diagnostics", href: "/diagnostics", description: "Structured troubleshooting workflows." },
-  { label: "Calculators", href: "/calculators", description: "Engineering calculation tools." },
-  { label: "Marketplace", href: "/marketplace", description: "Engineering-led product discovery." },
-  { label: "Energy Solutions", href: "/marketplace/find-my-solution", description: "Size an energy system before shopping." },
-  { label: "Experts", href: "/experts", description: "Verified expert profiles and specializations." },
-  { label: "Ukraine Energy Live", href: "/ukraine-energy", description: "System status, restrictions and sources." },
-  { label: "My Home", href: "/my-home", description: "Your household energy readiness." },
-  { label: "Energy Map", href: "/energy-map", description: "Ukraine-focused public energy map." },
-  { label: "For Business", href: "/business", description: "Business continuity and energy planning." },
-  { label: "Backup Calculator", href: "/backup-calculator", description: "Size a household backup system." },
-  { label: "Find Installer", href: "/installers", description: "Find energy installation specialists." },
-  { label: "Buildings", href: "/buildings", description: "Building energy-resilience information." },
-  { label: "Professionals", href: "/professionals", description: "Profiles and leads for energy specialists." },
-  { label: "Calculators", href: "/calculators", description: "Engineering calculation tools." },
-];
-
-export const primaryNavItems = siteNavItems.slice(1, 6);
-export const moreNavItems = siteNavItems.slice(6);
-export const marketplaceNavItems: SiteNavItem[] = [
-  { label: "Marketplace overview", href: "/marketplace", description: "Calculate, compare and choose." },
-  { label: "Solar", href: "/marketplace/category/solar-panels", description: "Solar panels and kits." },
-  { label: "Batteries", href: "/marketplace/category/lithium-batteries", description: "Lithium storage." },
-  { label: "Inverters", href: "/marketplace/category/inverters", description: "DC-to-AC conversion." },
-  { label: "Backup Power", href: "/marketplace/category/backup-power", description: "Essential-load systems." },
-  { label: "Charge Controllers", href: "/marketplace/category/charge-controllers", description: "Solar charging." },
-  { label: "Electrical Components", href: "/marketplace/category/electrical-accessories", description: "Wiring and protection." },
-  { label: "Industrial Parts", href: "/marketplace/category/industrial-electrical", description: "Professional electrical parts." },
-  { label: "Marine Electrical", href: "/marketplace/category/marine-electrical", description: "Vessel DC power planning." },
-];
-
+import { navigation } from '@/lib/marketplace/navigation';
+export type SiteNavItem = { description: string; href: string; label: string };
+export type FooterNavGroup = { items: SiteNavItem[]; title: string };
+export type CalculatorItem = SiteNavItem & { status: 'available' };
+export const siteNavItems: SiteNavItem[] = navigation('en').map(g=>({label:g.label,href:g.href,description:'Equipment discovery and planning for Romania / EU.'}));
+export const primaryNavItems=siteNavItems;
+export const moreNavItems:SiteNavItem[]=[{label:'About',href:'/about',description:'Independent energy equipment discovery.'}];
+export const marketplaceNavItems:SiteNavItem[]=navigation('en')[0].children.map(g=>({label:g.label,href:g.href,description:'Explore requirements and equipment.'}));
 export const calculatorItems: CalculatorItem[] = [
+  {label:"Solar sizing",href:"/calculators/solar",description:"Size PV from daily energy and seasonal yield.",status:"available"},
   {
     label: "Cable sizing",
     href: "/calculators/cable-sizing",
@@ -100,32 +58,4 @@ export const calculatorItems: CalculatorItem[] = [
   },
 ];
 
-export const footerNavGroups: FooterNavGroup[] = [
-  {
-    title: "Platform",
-    items: [
-      { label: "AI Assistant", href: "/assistant", description: "AI assistance for electrical reasoning." },
-      { label: "Diagnostics", href: "/diagnostics", description: "Structured troubleshooting workflows." },
-      { label: "Documents AI", href: "/documents", description: "Manual, PDF, and schematic analysis." },
-      { label: "Calculators", href: "/calculators", description: "Deterministic engineering tools." },
-    ],
-  },
-  {
-    title: "Marketplace",
-    items: [
-      { label: "Marketplace", href: "/marketplace", description: "Protected services and verified parts." },
-      { label: "Experts", href: "/experts", description: "Verified expert profiles and specializations." },
-      { label: "Knowledge Base", href: "/knowledge-base", description: "Articles and operating guidance." },
-      { label: "Contact", href: "/contact", description: "Commercial, pilot, and support contact." },
-    ],
-  },
-  {
-    title: "Company",
-    items: [
-      { label: "About", href: "/about", description: "Positioning, focus, and product direction." },
-      { label: "Privacy Policy", href: "/privacy", description: "Privacy and data handling." },
-      { label: "Terms", href: "/terms", description: "Terms of use and marketplace rules." },
-      { label: "Sign In", href: "/sign-in", description: "Access architecture and future auth flows." },
-    ],
-  },
-];
+export const footerNavGroups:FooterNavGroup[]=navigation('en').slice(0,4).map(g=>({title:g.label,items:g.children.map(i=>({label:i.label,href:i.href,description:''}))}));

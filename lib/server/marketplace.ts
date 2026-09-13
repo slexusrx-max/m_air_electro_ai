@@ -1,3 +1,4 @@
+/** Reserved service-transaction architecture; not the active affiliate discovery marketplace. */
 import "server-only";
 
 import { getPaymentRuntimeStatus } from "@/lib/server/payments";
@@ -49,7 +50,7 @@ export function getMarketplaceRuntimeStatus() {
       "marine-electrical",
       "industrial-electrical",
     ] as MarketplaceVertical[],
-    protectionFlowReady: true,
+    protectionFlowReady: false,
     paymentProviderConfigured: payment.configured,
     verificationPolicies,
   };

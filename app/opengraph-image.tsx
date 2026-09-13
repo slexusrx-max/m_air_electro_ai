@@ -58,10 +58,10 @@ export default function OpenGraphImage() {
         </div>
         <div style={{ maxWidth: 920, display: "flex", flexDirection: "column", gap: 22 }}>
           <div style={{ color: "#dff8a5", fontSize: 18, letterSpacing: "0.34em", textTransform: "uppercase" }}>
-            Electrical diagnostics - calculators - experts - protected marketplace
+            Energy marketplace · Solar · Batteries · Inverters
           </div>
           <div style={{ fontSize: 72, lineHeight: 1.05, fontWeight: 700 }}>
-            The premium operating layer for electrical trust.
+            Calculate. Compare. Choose.
           </div>
         </div>
       </div>

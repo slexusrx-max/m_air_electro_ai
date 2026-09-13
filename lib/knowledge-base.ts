@@ -115,7 +115,7 @@ export const knowledgeArticles: KnowledgeArticle[] = [
       {
         title: "Use the calculator correctly",
         body: [
-          "Treat MVP calculator outputs as preliminary engineering guidance. Final design still needs code-specific checks, installation corrections, fault duty review, and documented assumptions.",
+          "Treat preliminary calculator outputs as preliminary engineering guidance. Final design still needs code-specific checks, installation corrections, fault duty review, and documented assumptions.",
         ],
       },
     ],

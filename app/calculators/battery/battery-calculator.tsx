@@ -1,5 +1,6 @@
 "use client";
 
+import { calculatorRomanian } from "@/lib/i18n/calculator-copy";
 import { useState } from "react";
 
 import {
@@ -58,7 +59,8 @@ function resolveBattery(formState: FormState): CalculationResult {
   });
 }
 
-export default function BatteryCalculator() {
+export default function BatteryCalculator({ro=false}:{ro?:boolean}) {
+  const l=(text:string)=>ro?(calculatorRomanian[text]??text):text;
   const [formState, setFormState] = useState<FormState>(defaultFormState);
   const result = resolveBattery(formState);
 
@@ -70,56 +72,56 @@ export default function BatteryCalculator() {
     <CalculatorLayout>
       <CalculatorFormPanel>
         <CalculatorGrid>
-          <CalculatorField label="Load power (W)">
+          <CalculatorField label={l("Load power (W)")} >
             <CalculatorNumberInput min="1" step="1" value={formState.loadPowerWatts} onChange={(event) => updateField("loadPowerWatts", event.target.value)} />
           </CalculatorField>
-          <CalculatorField label="Backup time (hours)">
+          <CalculatorField label={l("Backup time (hours)")} >
             <CalculatorNumberInput min="0.1" step="0.1" value={formState.backupHours} onChange={(event) => updateField("backupHours", event.target.value)} />
           </CalculatorField>
-          <CalculatorField label="Battery system voltage (V)">
+          <CalculatorField label={l("Battery system voltage (V)")} >
             <CalculatorNumberInput min="1" step="0.1" value={formState.systemVoltage} onChange={(event) => updateField("systemVoltage", event.target.value)} />
           </CalculatorField>
-          <CalculatorField label="Maximum depth of discharge (%)">
+          <CalculatorField label={l("Maximum depth of discharge (%)")} >
             <CalculatorNumberInput min="1" max="99" step="0.1" value={formState.maxDepthOfDischargePercent} onChange={(event) => updateField("maxDepthOfDischargePercent", event.target.value)} />
           </CalculatorField>
-          <CalculatorField label="Inverter efficiency (%)">
+          <CalculatorField label={l("Inverter efficiency (%)")} >
             <CalculatorNumberInput min="1" max="100" step="0.1" value={formState.inverterEfficiencyPercent} onChange={(event) => updateField("inverterEfficiencyPercent", event.target.value)} />
           </CalculatorField>
         </CalculatorGrid>
 
-        <CalculatorAssumptions>
+        <CalculatorAssumptions title={l("Assumptions used by this preliminary calculator")}>
           <ul className="list-disc space-y-2 pl-5">
-            <li>Load energy is converted to required nominal battery energy using inverter efficiency and maximum depth of discharge.</li>
-            <li>The recommended Ah value is rounded up to a common battery-bank capacity step for quick planning.</li>
-            <li>Final battery design still requires chemistry, discharge-rate, temperature, charging, and lifecycle review.</li>
+            <li>{l("Load energy is converted to required nominal battery energy using inverter efficiency and maximum depth of discharge.")}</li>
+            <li>{l("The recommended Ah value is rounded up to a common battery-bank capacity step for quick planning.")}</li>
+            <li>{l("Final battery design still requires chemistry, discharge-rate, temperature, charging, and lifecycle review.")}</li>
           </ul>
         </CalculatorAssumptions>
       </CalculatorFormPanel>
 
       <CalculatorResultsPanel>
         {"error" in result ? (
-          <CalculatorValidationCard message={result.error} />
+          <CalculatorValidationCard message={l(result.error)} />
         ) : (
           <>
             <CalculatorResultCard
-              label="Required load energy"
+              label={l("Required load energy")} 
               value={`${formatElectricalNumber(result.requiredLoadEnergyWh)} Wh`}
-              detail="Energy demanded by the connected load over the configured backup window."
+              detail={l("Energy demanded by the connected load over the configured backup window.")} 
             />
             <CalculatorResultCard
-              label="Minimum nominal energy"
+              label={l("Minimum nominal energy")} 
               value={`${formatElectricalNumber(result.minimumNominalWh)} Wh`}
-              detail="Nominal battery energy required after accounting for efficiency and usable depth of discharge."
+              detail={l("Nominal battery energy required after accounting for efficiency and usable depth of discharge.")} 
             />
             <CalculatorResultCard
-              label="Minimum nominal capacity"
+              label={l("Minimum nominal capacity")} 
               value={`${formatElectricalNumber(result.minimumNominalAh)} Ah`}
-              detail="Calculated minimum battery-bank ampere-hour requirement."
+              detail={l("Calculated minimum battery-bank ampere-hour requirement.")} 
             />
             <CalculatorResultCard
-              label="Recommended battery bank"
+              label={l("Recommended battery bank")} 
               value={`${formatElectricalNumber(result.recommendedBatteryAh)} Ah`}
-              detail="Rounded planning value based on common battery-bank capacity steps."
+              detail={l("Rounded planning value based on common battery-bank capacity steps.")} 
             />
             <CalculatorRecommendation title="Review battery system categories" copy="Use the calculated capacity as a starting point for selecting a battery bank, inverter and charging components." category="lithium-batteries" />
           </>

@@ -169,7 +169,7 @@ export default function CableSizingCalculator() {
         </div>
 
         <div className="mt-6 rounded-[1.5rem] border border-lime-100/16 bg-lime-100/[0.06] p-4 text-sm leading-7 text-white/78">
-          <p className="font-semibold text-lime-50">Assumptions used by this MVP calculator</p>
+          <p className="font-semibold text-lime-50">Assumptions used by this preliminary calculator</p>
           <ul className="mt-3 list-disc space-y-2 pl-5">
             <li>Preliminary sizing only, based on ampacity lookup and resistive voltage-drop estimate.</li>
             <li>Length is one-way route length. Single-phase and DC use the round-trip factor automatically.</li>

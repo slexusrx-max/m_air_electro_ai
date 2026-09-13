@@ -1,3 +1,3 @@
-import type { AffiliateProvider } from "@/lib/affiliate/types";
-import { appendTrackingParameter } from "@/lib/affiliate/tracking";
-export const renogyEu: AffiliateProvider = { id: "renogy", region: "EU", baseUrl: "https://eu.renogy.com", trackingEnvironmentVariable: "RENOGY_AFFILIATE_ID", buildAffiliateUrl: (productUrl) => appendTrackingParameter(productUrl, "ref", process.env.RENOGY_AFFILIATE_ID), disclosure: "Purchase is completed on the partner’s website. M Air Electro AI may earn a commission from qualifying purchases." };
+import type { AffiliateProvider } from '@/lib/affiliate/types';
+/** Activate only after written approval, using the exact Impact deep-link template. */
+export const renogyEu: AffiliateProvider = {id:'renogy',region:'EU',baseUrl:'https://eu.renogy.com',trackingEnvironmentVariable:'RENOGY_IMPACT_URL_TEMPLATE',buildAffiliateUrl(productUrl){const template=process.env.RENOGY_IMPACT_URL_TEMPLATE;if(process.env.RENOGY_AFFILIATE_APPROVED!=='true'||!template?.includes('{url}'))return productUrl;try{const url=new URL(template.replace('{url}',encodeURIComponent(productUrl)));return url.protocol==='https:'?url.toString():productUrl;}catch{return productUrl;}},disclosure:'Renogy EU is an intended affiliate supplier. Until approval and tracking configuration are in place, links are ordinary supplier links.'};

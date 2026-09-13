@@ -11,7 +11,7 @@ export class NominatimAddressProvider implements AddressProvider {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8_000);
     try {
-      const response = await fetch(`https://nominatim.openstreetmap.org/search?${query}`, { cache: "no-store", signal: controller.signal, headers: { Accept: "application/json", "User-Agent": "Electro-AI address lookup (+https://m-air-electro-ai.vercel.app)" } });
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?${query}`, { cache: "no-store", signal: controller.signal, headers: { Accept: "application/json", "User-Agent": "M Air Electro AI address lookup (+https://m-air-electro-ai.vercel.app)" } });
       if (!response.ok) throw new AddressProviderError(response.status === 401 || response.status === 403 ? "upstream_rejected" : "upstream_unavailable", "Address fallback request failed", response.status);
       const data: unknown = await response.json().catch(() => null);
       if (!Array.isArray(data)) throw new AddressProviderError("invalid_response", "Address fallback returned an invalid response");

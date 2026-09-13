@@ -1,4 +1,10 @@
-import Link from "next/link";
-import type { CatalogProduct } from "@/lib/affiliate/types";
-import type { Dictionary } from "@/lib/i18n/types";
-export function ProductCard({ product, dictionary: t }: { product: CatalogProduct; dictionary: Dictionary }) { return <article className="brand-glass-card flex min-h-72 flex-col rounded-3xl p-5"><div className="flex h-28 items-center justify-center rounded-2xl border border-white/15 bg-slate-950/20 text-5xl text-lime-200" aria-label={t["marketplace.card.placeholder"]}>⌁</div><p className="mt-4 text-xs font-semibold uppercase tracking-[.18em] text-lime-100/75">{product.category.replaceAll("-", " ")}</p><h3 className="mt-2 text-lg font-semibold text-white">{product.name}</h3><p className="mt-2 text-sm leading-6 text-white/70">{product.description}</p><div className="mt-auto flex items-center justify-between pt-5"><span className="text-xs text-white/55">{t["marketplace.card.price"]}</span><Link className="text-sm font-semibold text-lime-100" href={`/marketplace/products/${product.slug}`}>{t["marketplace.card.review"]}</Link></div></article>; }
+import Link from 'next/link';
+import { CompareControl } from './compare-control';
+import { EquipmentVisual } from './equipment-visual';
+import type { CatalogProduct } from '@/lib/affiliate/types';
+import type { Dictionary } from '@/lib/i18n/types';
+import type { Equipment } from '@/lib/marketplace/catalog-data';
+export function ProductCard({ product, dictionary: t }: { product: CatalogProduct; dictionary: Dictionary }) {
+ const p = product as Equipment; const ro = t['locale.code'] === 'ro';
+ return <article className="equipment-card"><Link href={`/marketplace/products/${p.slug}`} tabIndex={-1} aria-hidden="true"><EquipmentVisual category={p.category}/></Link><p className="eyebrow">{p.kind === 'product' ? p.brand : ro ? 'Clasă de echipament' : 'Equipment class'}</p><h3><Link href={`/marketplace/products/${p.slug}`}>{ro ? p.title?.ro ?? p.name : p.name}</Link></h3><p>{ro ? p.summary?.ro ?? p.description : p.description}</p><dl>{Object.entries(p.technicalSpecs).slice(0,3).map(([k,v])=><div key={k}><dt>{k}</dt><dd>{v}</dd></div>)}</dl><Link className="text-link" href={`/marketplace/products/${p.slug}`}>{ro ? 'Detalii și compatibilitate' : 'Details & compatibility'} →</Link><CompareControl id={p.id} ro={ro}/></article>;
+}

@@ -1,4 +1,8 @@
-import { mockRegions } from "@/data/mock-regions";
-import { GridStatusBadge, StabilityScore } from "@/components/power/power-badges";
-import { SimplePowerPage, DemoModeNote } from "@/components/power/simple-pages";
-export default function ComparePage() { return <SimplePowerPage eyebrow="Compare" title="Compare locations with context."><div className="grid gap-4 md:grid-cols-3">{mockRegions.map((region) => <article key={region.id} className="info-card"><div className="flex items-center justify-between"><h2>{region.name}</h2><StabilityScore score={region.stabilityScore}/></div><div className="mt-4"><GridStatusBadge status={region.gridStatus}/></div><dl className="mt-5 space-y-2 text-sm"><div className="flex justify-between"><dt>Installed generation</dt><dd>{region.installedCapacityMw?.toLocaleString()} MW</dd></div><div className="flex justify-between"><dt>Renewable share</dt><dd>{region.renewableShare}%</dd></div><div className="flex justify-between"><dt>Confidence</dt><dd className="capitalize">{region.confidence}</dd></div></dl></article>)}</div><DemoModeNote/></SimplePowerPage>; }
+import { cleanQuery } from '@/lib/marketplace/query';
+import { PlatformShell } from '@/components/platform-shell';
+import { Intro } from '@/components/marketplace/shared';
+import { Comparison } from '@/components/marketplace/compare-page';
+import { getRequestLocale } from '@/lib/i18n/request';
+import { buildMetadata } from '@/lib/metadata';
+export const metadata={...buildMetadata({title:'Compară echipamente / Compare equipment',description:'Compare 2–4 curated products or equipment classes using documented fields and explicit limitations.',path:'/compare'}),robots:{index:false,follow:true}};
+export default async function Page({searchParams}:{searchParams:Promise<Record<string,string|undefined>>}){const q=cleanQuery(await searchParams);const ids=q.ids??[q.item1,q.item2,q.item3,q.item4].filter(Boolean).join(',');const ro=await getRequestLocale()==='ro';return <PlatformShell><main className="commerce-page"><Intro title={ro?'Compară înainte să alegi.':'Compare before choosing.'} description={ro?'Putere, capacitate, utilizare și limite — numai din datele disponibile.':'Power, capacity, use and limitations — only from the available data.'}/><Comparison ids={ids} ro={ro}/></main></PlatformShell>;}

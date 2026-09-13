@@ -1,0 +1,6 @@
+import { categories } from "./content";
+import { solutions } from "./solutions";
+import { guides, learnHubs } from "./guides";
+import { equipment } from "./catalog-data";
+export const publicRoutes=["/","/marketplace","/marketplace/find-my-solution","/solutions","/learn","/faq","/about","/business","/experts","/contact","/privacy","/terms","/affiliate-disclosure","/methodology","/calculators","/backup-calculator",...categories.map(c=>`/marketplace/${c.path}`),...solutions.map(s=>`/solutions/${s.slug}`),...guides.map(g=>`/learn/${g.slug}`),...learnHubs.map(h=>`/learn/${h.slug}`),...equipment.map(p=>`/marketplace/products/${p.slug}`),...["battery","solar","cable-sizing","voltage-drop","generator","motor-current","breaker-selection","fuse-selection","transformer"].map(s=>`/calculators/${s}`)];
+export const legacyRedirects: Record<string,string>={"/knowledge-base":"/learn","/knowledge-base/breaker-trips-under-load":"/learn/cable-and-protection-basics","/knowledge-base/4-20ma-loop-troubleshooting":"/learn/industrial-motor-planning","/knowledge-base/cable-sizing-for-ev-and-generator-loads":"/learn/cable-and-protection-basics","/professionals":"/experts","/installers":"/experts","/buildings":"/solutions/home-backup","/pro":"/business","/pricing":"/business","/map":"/solutions","/energy-map":"/solutions","/alerts":"/solutions/home-backup","/saved":"/compare"};

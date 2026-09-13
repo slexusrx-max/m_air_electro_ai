@@ -2,25 +2,25 @@ export const siteConfig = {
   name: "M Air Electro AI",
   shortName: "M Air Electro AI",
   description:
-    "AI-first electrical engineering platform for diagnostics, calculators, technical document analysis, verified experts, and protected electrical marketplace workflows.",
-  tagline: "Intelligence. Energy. Future.",
+    "Marketplace-first energy and electrical equipment discovery, system sizing, product comparison and buying guides for Romania and the EU.",
+  tagline: "Calculate. Compare. Choose.",
   domainFocus:
     "Electrical engineering only. No general handyman services, no generic classifieds, no low-trust service sprawl.",
   contactEmail: process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "contact@mairelectro.ai",
-  defaultLocale: "en-US",
-  primaryMarket: "United States",
+  defaultLocale: "ro-RO",
+  primaryMarket: "Romania / EU",
   launchMarkets: [
-    "United States home electrical",
+    "Romania / EU energy equipment",
     "Industrial electrical and automation",
     "Marine and offshore electrical systems",
-    "Verified electrical parts and remote diagnostics",
+    "Independent product discovery and system sizing",
   ],
   keywords: [
-    "electrical diagnostics",
+    "energy marketplace", "solar equipment", "inverters", "Romania", "EU", "product comparison",
     "electrical calculators",
     "marine electrical",
     "offshore electrical",
-    "verified electrical experts",
+    "technical buying guides",
     "electrical marketplace",
     "voltage drop calculator",
     "cable sizing calculator",
@@ -34,7 +34,7 @@ export const siteConfig = {
 
 export function getSiteUrl() {
   const value = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  return value ? value.replace(/\/+$/, "") : "http://localhost:3000";
+  return value ? value.replace(/\/+$/, "") : "https://m-air-electro-ai.vercel.app";
 }
 
 export function absoluteUrl(path = "/") {

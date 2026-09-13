@@ -1,34 +1,35 @@
-# Production environment configuration
+# Production environment — M Air Electro AI
 
-Set these values in Vercel for the Production environment. Never commit real credentials.
+The official product is marketplace-first equipment discovery for Romania/EU. Public browsing, search, comparison and deterministic tools work without third-party account credentials.
 
-| Variable | Required | Used by | Where to obtain it | Missing behavior |
-| --- | --- | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Yes | Canonical URLs, metadata | Production domain, e.g. `https://m-air-electro-ai.vercel.app` | Canonicals fall back to localhost. |
-| `NEXT_PUBLIC_CONTACT_EMAIL` | Optional | Contact links | Project mailbox | Falls back to the project default. |
-| `UKRPOSHTA_ADDRESS_API_TOKEN` | Required for verified Ukrainian lookup | `/api/address` | Ukrposhta Address Classifier API access | Address UI reports lookup unavailable and allows no verified address claim. `/api/address?mode=status` reports `configured:false`. |
-| `OPENAI_API_KEY` | Required for AI assistant | `/api/ai` | OpenAI project API key | Assistant returns configuration error. |
-| `OPENAI_MODEL` | Required with OpenAI | `/api/ai` | Supported Responses API model name | AI request cannot be completed. |
-| `AI_PROVIDER` | Optional | AI routing | Set `openai` for current integration | Defaults to application routing behavior. |
-| `NEXT_PUBLIC_SUPABASE_URL` | Required for auth/documents | Supabase clients | Supabase project settings | Auth and document storage are unavailable. |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Required for auth/documents | Browser Supabase client | Supabase project settings | Auth and document storage are unavailable. |
-| `SUPABASE_SECRET_KEY` | Server-only, optional by feature | Administrative operations | Supabase project settings | Server admin capabilities unavailable. |
-| `SUPABASE_SERVICE_ROLE_KEY` | Server-only, optional legacy path | Administrative operations | Supabase project settings | Server admin capabilities unavailable. |
-| `AUTH_SECRET` | Required for production auth | Session security | Generate a high-entropy secret | Authentication is unsafe or unavailable. |
-| `DATABASE_URL` | Required if database-backed auth is enabled | Server database | Supabase/Postgres connection settings | Database-backed operations unavailable. |
-| `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` / `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` | Required only when payments launch | Payments | Stripe dashboard | Payments must remain disabled. |
-| `RENOGY_AFFILIATE_ID` | Optional until approved | Renogy tracking links | Renogy affiliate approval | Partner URLs work without attribution. |
-| `AMAZON_ASSOCIATE_ID` | Optional until approved | Amazon tracking links | Amazon Associates | Provider remains untracked. |
-| `EBAY_CAMPAIGN_ID` | Optional until approved | eBay tracking links | eBay Partner Network | Provider remains untracked. |
+| Variable | Purpose | Missing behavior |
+| --- | --- | --- |
+| NEXT_PUBLIC_SITE_URL | Canonical production origin | Falls back to https://m-air-electro-ai.vercel.app |
+| NEXT_PUBLIC_CONTACT_EMAIL | Owner-provided working mailbox | Contact uses existing public GitHub issues |
+| RENOGY_AFFILIATE_APPROVED | Explicit written approval; must be true to activate tracking | Ordinary supplier links |
+| RENOGY_IMPACT_URL_TEMPLATE | Actual Impact-issued HTTPS deep-link template containing {url} | Ordinary supplier links |
+| NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY | Optional account/session/document services | Public marketplace remains usable; account features unavailable |
+| SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY | Optional server administration | No privileged account operations |
+| AI_PROVIDER / OPENAI_API_KEY / OPENAI_MODEL | Optional real AI assistance | Explicit unavailable state; no simulated AI answer |
+| UKRPOSHTA_ADDRESS_API_TOKEN | Retained specialized Ukrainian address lookup | No verified-address claim |
+| NEXT_PUBLIC_MAP_STYLE_URL | Retained specialized map rendering | Controlled fallback |
+| Payment provider variables | Reserved integration boundaries | No product checkout or active fulfilment service |
 
-## Address lookup verification
+Never commit credentials. No tracking identifier, Impact account, site-verification tag or submitted application is evidence of affiliate approval. The prior RENOGY_AFFILIATE_ID ref-parameter convention is obsolete and is not used. Update public disclosure and test the actual approved tracking link when activating the program.
 
-After deployment, open `/api/address?mode=status`. It must return `{"configured":true,"provider":"ukrposhta"}` before city, street and house lookups can be considered operational. If lookup requests return `upstream_rejected`, reissue or correct the Ukrposhta token; `upstream_unavailable` indicates a remote response, network or timeout failure. Error logs deliberately record the status and endpoint type without logging the token.
+## Deployment and verification
 
-## Deployment checklist
+1. Use npm ci and the committed lockfile. Run unit, i18n, lint, typecheck, build and audit checks.
+2. Start the built site, run Playwright and the homepage-started crawler; inspect screenshots at all required widths.
+3. Commit and push to main. Confirm Vercel deploys that commit and wait for ready status.
+4. Set TEST_BASE_URL=https://m-air-electro-ai.vercel.app and rerun browser tests and crawl.
+5. Check default Romanian, English switching, suppliers/disclosure, canonical origin, sitemap, legacy redirects, 404 and absence of overflow/runtime errors.
+6. Record actual deployment commit and results in the delivery report. Do not infer production success from local checks.
 
-1. Add the required values in Vercel → Project → Settings → Environment Variables.
-2. Redeploy production after changing any server-side variable.
-3. Verify `/api/address?mode=status`, then test Ukrainian city → street → house selection.
-4. Confirm `NEXT_PUBLIC_SITE_URL` contains the deployed HTTPS domain.
-5. Keep payment and affiliate variables blank until the corresponding commercial approval is live.
+## Specialized retained modules
+
+Ukrainian energy/address adapters, map datasets and optional AI/document/account features remain outside the commercial navigation. To test the address integration separately, /api/address?mode=status reports whether credentials are configured. That endpoint is not a commercial launch prerequisite. Demonstration energy datasets must never be represented as live operational status.
+
+## External dependencies
+
+Written affiliate approval and provider-issued attribution, optional feed/asset permissions, real expert verification, owner/legal-entity details, confirmed contact channel, provider retention policies and production legal review remain external responsibilities. Vercel environment values should be changed only within their intended feature scope.

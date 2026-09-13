@@ -5,6 +5,7 @@ import { PageBackground } from "@/components/page-background";
 import { buildMetadata } from "@/lib/metadata";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 import "./globals.css";
+import { getRequestLocale } from "@/lib/i18n/request";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -55,19 +56,28 @@ export const viewport = {
   themeColor: "#08121f",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
     <html
-      lang="en"
+      lang={await getRequestLocale()}
       data-scroll-behavior="smooth"
       className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* Impact requires its custom value attribute in addition to content. */}
+        <meta
+          name="impact-site-verification"
+          content="0c0c0a69-4b9a-4b7d-837d-fc89a9040abe"
+          {...{ value: "0c0c0a69-4b9a-4b7d-837d-fc89a9040abe" }}
+        />
+      </head>
       <body className="relative isolate flex min-h-full flex-col">
         <PageBackground />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({"@context":"https://schema.org","@graph":[{"@type":"Organization",name:siteConfig.name,url:absoluteUrl()},{"@type":"WebSite",name:siteConfig.name,url:absoluteUrl(),description:siteConfig.description}]}).replace(/</g,"\\u003c")}} />
         <div className="relative z-10 flex min-h-full flex-1 flex-col">{children}</div>
       </body>
     </html>

@@ -1,140 +1,68 @@
-# MR Electro AI — Global Power Resilience Map
+# M Air Electro AI
 
-MR Electro AI helps people explore power infrastructure, understand regional electricity resilience and monitor available changes in power conditions. The application uses a typed demonstration dataset; it does not present plant status as live operational data.
+M Air Electro AI is a marketplace-first energy and electrical equipment discovery, calculation, comparison and recommendation platform for Romania and the EU. Romanian is the default commercial language; English is supported.
 
-## Stack
+Production: https://m-air-electro-ai.vercel.app
 
-Next.js App Router, React, TypeScript, Tailwind CSS, Supabase SSR and ESLint.
+**Need → Calculate → Understand → Discover → Compare → Choose → Visit supplier.** We support independent equipment selection. We do not sell equipment, hold inventory or operate product checkout. AI assistance and future experts support the buying decision.
 
-## Run locally
+## Product modules
 
-Use npm: `npm install`, then `npm run dev`. Quality checks are `npm run lint`, `npm run typecheck`, and `npm run build`.
+- Marketplace: ten main families and 22 category/subcategory routes with buying advice, technical checks and working filters.
+- Catalog: five sourced Renogy EU models and ten explicitly labelled equipment classes; no invented prices, stock, reviews or ratings.
+- Solutions: apartment, home, solar + battery, RV/caravan, marine, off-grid cabin, workshop and business continuity.
+- Learn: 18 independent guides, twelve topic/reading-level hubs and grouped FAQ.
+- Search: names, brands, specifications, voltage, power, capacity, applications and tags; intersecting known-value filters.
+- Compare: 2–4 records, shareable URLs and local card selection; missing values stay unknown.
+- Tools: system finder, backup, battery, solar, cable, voltage drop, generator, motor, transformer, breaker and fuse calculations.
+- Business and Experts: truthful information/contact paths; professional booking and procurement fulfilment are not active services.
 
-## Configuration
+## Taxonomy
 
-Copy `.env.example` and configure Supabase when authentication is required. `NEXT_PUBLIC_MAP_STYLE_URL` enables a production map style. Without it, `/map` intentionally displays a controlled fallback and accessible demonstration-facility list. Paddle keys remain server-only and billing buttons never create a subscription until an integration is configured.
+Solar (panels: rigid/portable/flexible; kits; controllers), Batteries (LiFePO4, 12 V, 100 Ah), Inverters (pure sine, 2000 W), Battery Charging (DC-DC), Backup Power, Generators, EV Charging, Electrical Components, Industrial Electrical and Marine Electrical.
 
-## Data and limitations
+Additional sizes/features remain facets or procurement topics until catalog evidence and original content justify dedicated routes. [PROJECT_BLUEPRINT.md](PROJECT_BLUEPRINT.md) is authoritative.
 
-Current power plant statuses in the demo dataset are demonstration values and must not be treated as live operational data. Real datasets, verified refresh jobs, Supabase import, Paddle checkout/webhooks, email delivery and production legal review remain backend work. Legal text requires professional legal review before production launch.
+## Stack and architecture
 
-## Screenshots
+Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4, Supabase SSR for optional accounts, Playwright and Node tests. Read the installed Next.js documentation before changing framework code.
 
-Placeholder — add verified product screenshots before release.
+`lib/marketplace/content.ts` owns bilingual taxonomy; `catalog-data.ts` owns models/classes; `solutions.ts`, `guides.ts` and `information.ts` own editorial content. `query.ts` and `recommendation.ts` provide deterministic logic. `routes.ts` provides the public inventory. Existing `lib/affiliate/catalog.ts` exports remain compatible; supplier tracking stays in `lib/affiliate/providers`.
 
-Production-ready MVP repository for an AI-first electrical engineering platform focused on:
+Reusable server templates are `app/marketplace/[...path]`, `app/solutions/[slug]` and `app/learn/[slug]`. Small client components handle navigation, comparison selection and calculation inputs. Long-form content is not sent as menu client state.
 
-- AI electrical diagnostics
-- Electrical calculators
-- Technical document analysis
-- Verified electrical experts
-- Protected marketplace workflows for electrical services and parts
-- Marine and industrial premium support paths
+## Development and verification
 
-The product is intentionally **not** a general handyman marketplace. Electrical engineering is the focus across UX, content, and architecture.
-
-## Stack
-
-- Next.js 16
-- React 19
-- TypeScript
-- Tailwind CSS 4
-- App Router
-
-## MVP Surface
-
-- Landing page
-- AI Assistant page
-- Electrical calculators
-- Marketplace page
-- Expert Profiles
-- Knowledge Base
-- About
-- Contact
-- Privacy Policy
-- Terms
-
-## Calculators Included
-
-- Cable sizing
-- Voltage drop
-- Motor current
-- Transformer
-- Battery
-- Generator
-- Breaker selection
-- Fuse selection
-
-All calculator outputs are framed as **preliminary engineering guidance** and intentionally include safety and design caveats.
-
-## Architecture Prepared
-
-- AI provider abstraction for OpenAI, Anthropic, Google, and Azure OpenAI
-- Authentication architecture with role model and runtime status checks
-- Database abstraction and deployment readiness checks
-- Marketplace payment abstraction centered on Stripe Connect-style flows
-- Marketplace workflow model with deposit, completion confirmation, and dispute window concepts
-- PWA-ready metadata structure
-- Security headers, robots, sitemap, OG image routes, icons, and manifest
-
-## Local Development
-
-```powershell
-npm.cmd run dev
+```sh
+npm ci
+npm run dev
+npm test
+npm run i18n:check
+npm run lint
+npm run typecheck
+npm run build
+npm audit
+npx playwright install chromium
+npm run start -- -p 3100
+# In a second terminal:
+npm run test:e2e
+npm run test:crawl
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Use the lockfile. On Windows, use `npm.cmd` if PowerShell blocks `npm.ps1`. If Node cannot see an installed trusted system CA, set `NODE_USE_SYSTEM_CA=1`; do not disable TLS verification.
 
-## Verification
+`TEST_BASE_URL` selects a different local/public target. Browser tests include 1440/1366/768/390 screenshots and 430 mobile navigation. The crawler starts at the homepage, follows internal links, checks errors, redirects, malformed/dead links and local anchors, and reports orphan public routes. Generated evidence is in ignored `test-results/` and `playwright-report/`.
 
-```powershell
-npm.cmd run lint
-npm.cmd run build
-```
+## Environment and affiliate state
 
-## Environment Variables
+See [docs/production-environment.md](docs/production-environment.md) and `.env.example`. Public discovery and calculation do not require auth, AI or payment credentials. Contact uses the configured mailbox, otherwise the repository's existing public issue channel.
 
-Create a local `.env.local` from `.env.example` and configure:
-
-- `NEXT_PUBLIC_SITE_URL`
-- `NEXT_PUBLIC_CONTACT_EMAIL`
-- `AI_PROVIDER`
-- Provider-specific AI credentials
-- `AUTH_SECRET`
-- `DATABASE_URL`
-- OAuth provider credentials if used
-- Stripe / marketplace payment credentials
+**Renogy / Impact approval is not confirmed.** Current links are ordinary supplier links. Activation requires `RENOGY_AFFILIATE_APPROVED=true` and the actual Impact-issued HTTPS `RENOGY_IMPACT_URL_TEMPLATE` containing `{url}`. Do not invent referral parameters. Update disclosure at activation. Merchant model details, Romanian delivery and warranties remain external checks.
 
 ## Deployment
 
-The repository is ready to deploy to Vercel.
+Run all checks, commit implementation and alignment, push the reviewed commit to `main`, and confirm the connected Vercel deployment is for that commit. Then rerun browser tests and the crawler with `TEST_BASE_URL=https://m-air-electro-ai.vercel.app`. A local build alone is not completion.
 
-Before production launch, confirm:
+Optional account, document, AI and saved home-profile flows remain. Ukrainian energy/address adapters and demonstration datasets are retained as specialized supporting modules, outside primary navigation and the commercial sitemap. Obsolete map/tariff/directory routes redirect to active sections.
 
-1. `NEXT_PUBLIC_SITE_URL` points at the real public domain.
-2. Contact email is replaced with a monitored inbox.
-3. AI provider credentials are configured for the chosen provider.
-4. Authentication and database credentials are configured.
-5. Stripe Connect or another marketplace payment provider is configured.
-6. Legal review is completed for Privacy Policy and Terms.
-
-## Notes
-
-- The marketplace architecture does **not** implement escrow.
-- Payment flows are designed around marketplace payment providers.
-- AI and marketplace abstractions are prepared without pretending external services already exist.
-- `PROJECT_BLUEPRINT.md` remains the main product and architecture brief.
-# M Air Electro AI
-
-## Supabase authentication setup
-
-1. Create a Supabase project and apply [20260721000000_auth_profiles.sql](./supabase/migrations/20260721000000_auth_profiles.sql) using the Supabase CLI or SQL Editor.
-2. In Supabase Authentication, enable **Email** and turn on **Confirm email**. Keep Google, GitHub, and Microsoft disabled until their provider credentials and redirect settings are ready.
-3. Add `http://localhost:3000/auth/callback` and `https://your-domain.com/auth/callback` to Supabase Authentication URL Configuration → Redirect URLs.
-4. Copy `.env.example` to `.env.local` and provide `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`. The publishable key is safe for browser use; security is enforced with Supabase Auth and the profile RLS policies.
-
-The App Router uses `proxy.ts` for optimistic protected-route checks and validates the authenticated user again in every protected Server Component and Server Action. OAuth provider plumbing remains intentionally unconfigured.
-
-### First administrator
-
-Register and verify your own account first. Then, in the Supabase SQL Editor, run the commented promotion query in [20260721000001_add_admin_role.sql](./supabase/migrations/20260721000001_add_admin_role.sql), replacing the email address with yours. Sign in again and you will be routed to `/admin`. There is deliberately no public “administrator” registration option.
+External dependencies include affiliate approval, approved feeds/assets, real professional onboarding, legal operator details and legal review. Do not describe these integrations as complete.

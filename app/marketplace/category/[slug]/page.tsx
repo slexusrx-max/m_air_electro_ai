@@ -1,9 +1,3 @@
-import { notFound } from "next/navigation";
-import { PlatformShell } from "@/components/platform-shell";
-import { ProductCard } from "@/components/marketplace/product-card";
-import { BreadcrumbStructuredData, ItemListStructuredData } from "@/components/marketplace/structured-data";
-import { marketplaceCategories, productsForCategory } from "@/lib/affiliate/catalog";
-import { buildMetadata } from "@/lib/metadata";
-import { getRequestDictionary } from "@/lib/i18n/request";
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) { const { slug } = await params; const category = marketplaceCategories.find((entry) => entry.slug === slug); return buildMetadata({ title: category?.name ?? "Marketplace category", description: category?.summary, path: `/marketplace/category/${category?.slug ?? ""}` }); }
-export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) { const slug = (await params).slug; const category = marketplaceCategories.find((entry) => entry.slug === slug); if (!category) notFound(); const products = productsForCategory(slug); const t = await getRequestDictionary(); return <PlatformShell><main className="mx-auto w-full max-w-6xl"><BreadcrumbStructuredData items={[{ name: "Marketplace", path: "/marketplace" }, { name: category.name, path: `/marketplace/category/${category.slug}` }]}/><ItemListStructuredData name={category.name} products={products}/><section className="brand-glass-card rounded-[2rem] p-7 sm:p-10"><p className="eyebrow">{t["marketplace.category.eyebrow"]}</p><h1 className="mt-3 text-4xl font-bold text-white">{category.name}</h1><p className="mt-4 max-w-2xl text-lg text-white/72">{category.summary} {t["marketplace.category.description"]}</p></section><div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{products.length ? products.map((product) => <ProductCard key={product.id} product={product} dictionary={t}/>) : <p className="rounded-2xl border border-white/15 p-6 text-white/70">{t["marketplace.category.empty"]}</p>}</div></main></PlatformShell>; }
+import { notFound, permanentRedirect } from 'next/navigation';
+import { legacyCategories } from '@/lib/marketplace/content';
+export default async function Page({params}:{params:Promise<{slug:string}>}){const path=legacyCategories[(await params).slug];if(!path)notFound();permanentRedirect(`/marketplace/${path}`);}

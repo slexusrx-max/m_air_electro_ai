@@ -1,7 +1,3 @@
-import type { Metadata } from "next";
-import { DataDisclaimer, SimplePowerPage } from "@/components/power/simple-pages";
-import { buildMetadata } from "@/lib/metadata";
-import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
-
-export async function generateMetadata(): Promise<Metadata> { const t = await getRequestDictionary(); return buildMetadata({ title: `${t["methodology.eyebrow"]} | Electro-AI`, description: t["methodology.metadataDescription"], path: "/methodology" }); }
-export default async function MethodologyPage() { const [t, locale] = await Promise.all([getRequestDictionary(), getRequestLocale()]); if (process.env.NODE_ENV === "development") { const keys = ["methodology.eyebrow", "methodology.title", "methodology.powerStability", "methodology.plantGridStatus", "methodology.dataConfidence", "methodology.nearbyGeneration", "methodology.disclaimerTitle", "methodology.disclaimerText"]; for (const key of keys) if (!t[key]) console.warn(`Missing ${locale} translation: ${key}`); } return <SimplePowerPage eyebrow={t["methodology.eyebrow"]} title={t["methodology.title"]}><div className="info-card space-y-5 text-slate-700"><p>{t["methodology.powerStability"]}</p><p>{t["methodology.plantGridStatus"]}</p><p>{t["methodology.dataConfidence"]}</p><p>{t["methodology.nearbyGeneration"]}</p></div><div className="mt-6"><DataDisclaimer title={t["methodology.disclaimerTitle"]} text={t["methodology.disclaimerText"]}/></div></SimplePowerPage>; }
+import { InformationPage, informationMetadata } from '@/components/marketplace/information-page';
+export async function generateMetadata() { return informationMetadata('methodology'); }
+export default function Page() { return <InformationPage slug="methodology"/>; }
