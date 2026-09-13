@@ -4,6 +4,8 @@ M Air Electro AI is a marketplace-first energy and electrical equipment discover
 
 Production: https://m-air-electro-ai.vercel.app
 
+Architecture, route inventory, repository audit and public deployment results: [marketplace expansion report](docs/marketplace-expansion-report.md).
+
 **Need → Calculate → Understand → Discover → Compare → Choose → Visit supplier.** We support independent equipment selection. We do not sell equipment, hold inventory or operate product checkout. AI assistance and future experts support the buying decision.
 
 ## Product modules
