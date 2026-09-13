@@ -53,9 +53,6 @@ export const metadata: Metadata = {
     icon: "/icon",
     apple: "/apple-icon",
   },
-  other: {
-    "impact-site-verification": "0c0c0a69-4b9a-4b7d-837d-fc89a9040abe",
-  },
 };
 
 export const viewport = {
@@ -74,6 +71,14 @@ export default async function RootLayout({
       data-scroll-behavior="smooth"
       className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
+      <head>
+        {/* Impact requires its custom value attribute in addition to content. */}
+        <meta
+          name="impact-site-verification"
+          content="0c0c0a69-4b9a-4b7d-837d-fc89a9040abe"
+          {...{ value: "0c0c0a69-4b9a-4b7d-837d-fc89a9040abe" }}
+        />
+      </head>
       <body className="relative isolate flex min-h-full flex-col">
         <PageBackground />
         <div className="relative z-10 flex min-h-full flex-1 flex-col">
