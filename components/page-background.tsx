@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 /**
- * The original M Air Electro AI wallpaper. It deliberately sits below every
+ * The selected green-energy wallpaper. It deliberately sits below every
  * route, while page content is rendered in the stacking context above it.
  */
 export function PageBackground() {
@@ -11,10 +11,10 @@ export function PageBackground() {
       className="marketing-page-background pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#f3fbfb]"
     >
       <Image
-        src="/hero.png"
+        src="/green-energy-hero.png"
         alt=""
         fill
-        priority
+        preload
         sizes="100vw"
         className="object-cover saturate-110"
       />

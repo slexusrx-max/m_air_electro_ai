@@ -53,6 +53,9 @@ export const metadata: Metadata = {
     icon: "/icon",
     apple: "/apple-icon",
   },
+  other: {
+    "impact-site-verification": "0c0c0a69-4b9a-4b7d-837d-fc89a9040abe",
+  },
 };
 
 export const viewport = {
