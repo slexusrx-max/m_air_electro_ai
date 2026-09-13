@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "i18n:check": "node scripts/check-i18n.mjs",
     "smoke": "node scripts/smoke-test.mjs",
-    "test": "tsx --test tests/*.test.ts",
+    "test": "tsx --test tests/*.test.ts tests/*.test.mjs",
     "test:e2e": "playwright test",
     "test:crawl": "tsx scripts/crawl.ts"
   },
@@ -32,7 +32,8 @@
     "eslint-config-next": "^16.3.5",
     "tailwindcss": "^4",
     "tsx": "^4.23.13",
-    "typescript": "^5"
+    "typescript": "^5",
+    "@electric-sql/pglite": "^0.5.8"
   },
   "description": "M Air Electro AI — Energy marketplace, system sizing, product comparison and electrical engineering tools."
 }

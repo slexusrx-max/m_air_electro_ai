@@ -9,7 +9,7 @@ Production: https://m-air-electro-ai.vercel.app
 ## Product modules
 
 - Marketplace: ten main families and 22 category/subcategory routes with buying advice, technical checks and working filters.
-- Catalog: five sourced Renogy EU models and ten explicitly labelled equipment classes; no invented prices, stock, reviews or ratings.
+- Catalog: seven sourced Renogy EU models and eleven explicitly labelled equipment classes; no invented prices, stock, reviews or ratings. Existing production models are preserved.
 - Solutions: apartment, home, solar + battery, RV/caravan, marine, off-grid cabin, workshop and business continuity.
 - Learn: 18 independent guides, twelve topic/reading-level hubs and grouped FAQ.
 - Search: names, brands, specifications, voltage, power, capacity, applications and tags; intersecting known-value filters.
@@ -57,12 +57,12 @@ Use the lockfile. On Windows, use `npm.cmd` if PowerShell blocks `npm.ps1`. If N
 
 See [docs/production-environment.md](docs/production-environment.md) and `.env.example`. Public discovery and calculation do not require auth, AI or payment credentials. Contact uses the configured mailbox, otherwise the repository's existing public issue channel.
 
-**Renogy / Impact approval is not confirmed.** Current links are ordinary supplier links. Activation requires `RENOGY_AFFILIATE_APPROVED=true` and the actual Impact-issued HTTPS `RENOGY_IMPACT_URL_TEMPLATE` containing `{url}`. Do not invent referral parameters. Update disclosure at activation. Merchant model details, Romanian delivery and warranties remain external checks.
+**Renogy / Impact approval is not confirmed.** Current links are ordinary supplier links. Activation requires both `RENOGY_AFFILIATE_APPROVED=true` and `AFFILIATE_TRACKING_ENABLED=true`, with exact Impact-issued HTTPS links mapped by supplier URL in `RENOGY_IMPACT_LINKS_JSON`. The existing provider validates links and disclosure follows actual activation. Merchant model details, Romanian delivery and warranties remain external checks.
 
 ## Deployment
 
 Run all checks, commit implementation and alignment, push the reviewed commit to `main`, and confirm the connected Vercel deployment is for that commit. Then rerun browser tests and the crawler with `TEST_BASE_URL=https://m-air-electro-ai.vercel.app`. A local build alone is not completion.
 
-Optional account, document, AI and saved home-profile flows remain. Ukrainian energy/address adapters and demonstration datasets are retained as specialized supporting modules, outside primary navigation and the commercial sitemap. Obsolete map/tariff/directory routes redirect to active sections.
+Optional account, document, AI and saved home-profile flows remain. Ukrainian energy adapters and demonstration datasets are retained as specialized supporting modules, outside primary navigation and the commercial sitemap. Obsolete map/tariff/directory routes redirect to active sections.
 
 External dependencies include affiliate approval, approved feeds/assets, real professional onboarding, legal operator details and legal review. Do not describe these integrations as complete.

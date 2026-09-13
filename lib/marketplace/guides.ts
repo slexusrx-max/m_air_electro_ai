@@ -1,60 +1,590 @@
 import { bilingual as b, type LocalText } from "./content";
-export type Guide = { slug: string; title: LocalText; hub: string; level: "getting-started" | "buying-guides" | "technical-guides"; intro: LocalText; sections: { title: LocalText; body: LocalText }[]; category: string; solution: string; calculator: string; sources: string[] };
-const wiring = "https://www.victronenergy.com/support-and-downloads/technical-information";
-const pvgis = "https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis_en";
-const section = (en: string, ro: string, body: string, translated: string) => ({ title: b(en, ro), body: b(body, translated) });
+import { guideExamples } from "./guide-examples";
+export type Guide = {
+  slug: string;
+  title: LocalText;
+  hub: string;
+  level: "getting-started" | "buying-guides" | "technical-guides";
+  intro: LocalText;
+  sections: { title: LocalText; body: LocalText }[];
+  category: string;
+  solution: string;
+  calculator: string;
+  sources: string[];
+};
+const wiring =
+  "https://www.victronenergy.com/media/pg/The_Wiring_Unlimited_book/en/index-en.html";
+const pvgis =
+  "https://joint-research-centre.ec.europa.eu/photovoltaic-geographical-information-system-pvgis_en";
+const section = (en: string, ro: string, body: string, translated: string) => ({
+  title: b(en, ro),
+  body: b(body, translated),
+});
 export const guides: Guide[] = [
- { slug: "how-to-size-backup-battery", title: b("How to size a backup battery", "Cum dimensionezi bateria de rezervă"), hub: "batteries", level: "buying-guides", intro: b("Battery capacity starts with an energy budget. A large Ah number is not enough to tell you what will run, for how long, or whether the battery can start the load.", "Capacitatea bateriei începe cu un buget energetic. Un număr mare de Ah nu spune ce funcționează, cât timp sau dacă bateria poate porni sarcina."), sections: [
- section("Build the energy budget", "Construiește bugetul energetic", "For each essential appliance, multiply measured running watts by operating hours during the outage. Add the results in Wh. A router at 15 W for 8 hours needs 120 Wh; a 60 W laptop for 4 hours needs 240 Wh. A refrigerator requires measured daily consumption or a justified duty cycle, not its starting power multiplied by every hour. Keep the startup event in a separate power column.", "Pentru fiecare aparat esențial, înmulțește puterea măsurată cu orele de funcționare. Adună rezultatele în Wh. Un router de 15 W pentru 8 ore cere 120 Wh; un laptop de 60 W pentru 4 ore cere 240 Wh. Frigiderul necesită consum zilnic măsurat sau ciclu justificat, nu puterea de pornire înmulțită cu toate orele. Păstrează pornirea într-o coloană separată de putere."),
- section("Convert delivered energy into storage", "Transformă energia livrată în stocare", "Nominal storage Wh = required AC Wh / usable discharge fraction / inverter efficiency. For 1000 Wh, an illustrative 0.80 usable fraction and 0.92 conversion efficiency give 1359 Wh. These factors are inputs, not universal promises. Add standby consumption and a justified reserve for temperature and ageing. If you add future loads, show them explicitly so reserve is not counted twice.", "Stocare nominală Wh = Wh AC necesari / fracția utilizabilă / randamentul invertorului. Pentru 1000 Wh, fracția orientativă 0,80 și randamentul 0,92 dau 1359 Wh. Factorii sunt ipoteze, nu promisiuni universale. Adaugă consumul în gol și rezerva justificată pentru temperatură și îmbătrânire. Arată separat consumatorii viitori ca să nu dublezi rezerva."),
- section("Check the second constraint: current", "Verifică a doua limită: curentul", "At 1000 W AC and 12.8 V nominal DC, 92% efficiency implies about 85 A. Current rises as battery voltage falls. A bank that stores enough energy may still trip its BMS on a compressor start. Compare continuous and time-limited discharge ratings, then coordinate the cable, fuse and terminals. Only use series or parallel grouping explicitly permitted for the model.", "La 1000 W AC și 12,8 V DC nominal, randamentul 92% implică aproximativ 85 A. Curentul crește când tensiunea scade. Un banc cu energie suficientă poate declanșa BMS la pornirea compresorului. Compară curentul continuu și temporar, apoi coordonează cablul, siguranța și bornele. Folosește grupare serie/paralel numai dacă modelul o permite.")], category: "batteries", solution: "home-backup", calculator: "/calculators/battery", sources: [wiring] },
- { slug: "how-to-choose-inverter", title: b("How to choose an inverter", "Cum alegi invertorul"), hub: "inverters", level: "buying-guides", intro: b("An inverter has to satisfy the appliance, battery and installation at the same time. Continuous watts are only the first screening criterion.", "Invertorul trebuie să corespundă simultan aparatului, bateriei și instalației. Puterea continuă este doar primul criteriu."), sections: [
- section("Continuous load and starting behaviour", "Consum continuu și pornire", "List appliances that may run simultaneously. Compare that load against the inverter's continuous output at the expected ambient temperature, not only the headline maximum. Motors and compressors need a separate startup assessment. A surge claim without duration is incomplete: a few milliseconds of output is not equivalent to several seconds. Record whether overload recovery is automatic and what happens to connected electronics.", "Listează aparatele care pot funcționa simultan. Compară sarcina cu ieșirea continuă la temperatura estimată, nu doar cu maximul din reclamă. Motoarele și compresoarele cer verificarea pornirii. Un vârf fără durată este incomplet: milisecundele nu sunt echivalente cu secundele. Notează revenirea după suprasarcină și efectul asupra electronicii."),
- section("Choose the DC architecture", "Alege arhitectura DC", "At 2000 W and 92% efficiency, nominal current is about 181 A at 12 V, 91 A at 24 V or 45 A at 48 V. These are illustrative values; use minimum operating voltage for the design check. Higher voltage can reduce current but requires compatible storage, charging and DC-rated protection. Never change bank voltage without checking every connected DC device.", "La 2000 W și 92%, curentul nominal este circa 181 A la 12 V, 91 A la 24 V sau 45 A la 48 V. Valorile sunt orientative; verificarea proiectului folosește tensiunea minimă. Tensiunea mai mare reduce curentul, dar cere stocare, încărcare și protecție DC compatibile. Nu schimba tensiunea bancului fără verificarea fiecărui aparat DC."),
- section("Read the functions separately", "Citește funcțiile separat", "Pure sine describes the output waveform. Inverter charger describes bidirectional roles; transfer or UPS describes source switching. One label does not imply all three. Check AC voltage and frequency, charger current, neutral-earth instructions, transfer delay and no-load draw. A larger inverter can waste more standby energy in a small system, so compare operating behaviour alongside power.", "Sinus pur descrie forma de undă. Invertor cu încărcător descrie rolurile, iar transfer/UPS comutarea surselor. O etichetă nu le implică pe toate. Verifică tensiunea și frecvența AC, curentul încărcătorului, instrucțiunile neutru-pământ, întârzierea și consumul în gol. Un invertor mai mare poate consuma mai mult în așteptare într-un sistem mic.")], category: "inverters", solution: "home-backup", calculator: "/backup-calculator", sources: [wiring] },
- { slug: "lifepo4-vs-lead-acid", title: b("LiFePO4 versus lead-acid", "LiFePO4 sau plumb-acid"), hub: "batteries", level: "buying-guides", intro: b("Compare the energy you can repeatedly use, charging constraints and system changes—not just two Ah labels.", "Compară energia utilizabilă repetat, limitele încărcării și modificările sistemului, nu doar două valori Ah."), sections: [
- section("Usable energy and discharge rate", "Energie utilă și ritm de descărcare", "A 100 Ah lead-acid battery and a 100 Ah lithium battery may have different nominal voltages, recommended discharge depths and capacity test rates. Lead-acid available capacity falls at high discharge rates; a lithium bank is constrained by its BMS as well as cells. Use the manufacturer's discharge curves and recommended operating window for the intended duty. Do not assume the entire nameplate capacity is routinely available.", "O baterie de 100 Ah plumb-acid și una litiu pot avea tensiuni, adâncimi de descărcare și rate de test diferite. Capacitatea disponibilă plumb-acid scade la descărcare rapidă; litiul este limitat și de BMS. Folosește curbele producătorului și fereastra recomandată pentru regimul dorit. Nu presupune că întreaga capacitate nominală este disponibilă în mod repetat."),
- section("Charging and temperature", "Încărcare și temperatură", "A charger designed for one chemistry is not automatically suitable for another. Lead-acid equalisation settings can be inappropriate for lithium. Some LiFePO4 batteries block charging at low cell temperature; self-heating models have specific activation conditions and draw energy to warm themselves. Verify the actual battery manual and all charge sources, including alternator, solar and mains, before a chemistry change.", "Un încărcător pentru o chimie nu este automat potrivit pentru alta. Egalizarea pentru plumb poate fi nepotrivită la litiu. Unele LiFePO4 blochează încărcarea la temperaturi joase; autoîncălzirea are condiții specifice și consumă energie. Verifică manualul și toate sursele — alternator, solar și rețea — înainte de schimbare."),
- section("Compare total installed cost", "Compară costul instalat", "Include mounting, compatible charging, current protection and monitoring, not only the battery purchase. A lighter battery may matter for an RV, while service access or predictable replacement matters at a fixed site. Cycle-life claims depend on temperature, discharge depth and end-of-life definition. Compare those test conditions and the written warranty rather than ranking batteries by a single cycle number.", "Include montajul, încărcarea compatibilă, protecția și monitorizarea, nu doar bateria. Masa redusă contează la rulotă; accesul de service poate conta la locație fixă. Durata în cicluri depinde de temperatură, descărcare și definiția sfârșitului de viață. Compară condițiile testului și garanția scrisă, nu doar numărul ciclurilor.")], category: "batteries/lifepo4", solution: "rv-caravan", calculator: "/calculators/battery", sources: [wiring] },
- { slug: "12v-vs-24v-vs-48v", title: b("12 V, 24 V or 48 V?", "12 V, 24 V sau 48 V?"), hub: "batteries", level: "technical-guides", intro: b("System voltage changes current, cabling and compatibility. Choose it before buying the inverter and battery bank.", "Tensiunea sistemului schimbă curentul, cablarea și compatibilitatea. Alege-o înainte de invertor și banc."), sections: [
- section("The same watts, different current", "Aceeași putere, alt curent", "Using I = P / (V × efficiency), a 2 kW AC load at 92% conversion draws about 181 A from 12 V, 91 A from 24 V and 45 A from 48 V. Cable heating follows I²R, so current reduction has a strong effect. Actual design current uses minimum battery voltage and inverter requirements. These calculations do not replace cable ampacity tables or fuse coordination.", "Cu I = P / (V × randament), 2 kW AC la 92% cer circa 181 A din 12 V, 91 A din 24 V și 45 A din 48 V. Încălzirea cablului urmează I²R, deci reducerea curentului contează mult. Proiectul folosește tensiunea minimă și cerințele invertorului. Calculul nu înlocuiește tabelele de curent admisibil sau coordonarea siguranțelor."),
- section("Energy is not Ah alone", "Energia nu înseamnă doar Ah", "At nominal values, 12 V × 200 Ah, 24 V × 100 Ah and 48 V × 50 Ah all equal 2400 Wh. Series connection raises voltage; parallel raises Ah. Neither creates extra energy beyond the sum of the batteries. Many drop-in batteries have restrictions on grouping, balancing and mixed ages. Use the manufacturer's allowed arrangement rather than assuming any four batteries make a 48 V bank.", "Nominal, 12 V × 200 Ah, 24 V × 100 Ah și 48 V × 50 Ah înseamnă 2400 Wh. Seria crește tensiunea; paralelul crește Ah. Niciuna nu creează energie peste suma bateriilor. Multe baterii au restricții de grupare, echilibrare și vârstă. Folosește configurația permisă; nu presupune că orice patru baterii formează un banc de 48 V."),
- section("Preserve every interface", "Păstrează compatibilitatea", "A 12 V appliance cannot connect directly to a 24 V or 48 V bank. A suitably rated DC converter may be needed, and its losses belong in the energy budget. Chargers, solar controllers, monitoring and disconnects must all support the chosen range. Higher voltage is a system choice, not a universal upgrade, especially when a vehicle already has a substantial 12 V installation.", "Un aparat de 12 V nu se conectează direct la 24 V sau 48 V. Poate necesita convertizor DC adecvat, cu pierderi incluse în buget. Încărcătoarele, regulatoarele, monitorizarea și separatoarele trebuie să accepte intervalul. Tensiunea mai mare este o alegere de sistem, nu o îmbunătățire universală, mai ales la vehicule cu instalație extinsă de 12 V.")], category: "batteries", solution: "marine", calculator: "/calculators/cable-sizing", sources: [wiring] },
- { slug: "how-many-kwh-do-i-need", title: b("How many kWh do I need?", "De câți kWh am nevoie?"), hub: "backup-power", level: "getting-started", intro: b("Power tells you what can run together; energy tells you how long it can run. Keep both columns in your planning sheet.", "Puterea arată ce funcționează simultan; energia arată cât timp. Păstrează ambele coloane în plan."), sections: [
- section("W, Wh and kWh", "W, Wh și kWh", "Watts measure instantaneous power. Watt-hours measure power integrated over time. A constant 200 W load for five hours uses 1000 Wh, or 1 kWh. A 2 kW kettle running for six minutes uses 0.2 kWh, yet still requires an inverter able to deliver its 2 kW demand. Do not confuse a high-energy low-power load with a short high-power event.", "Wații măsoară puterea instantanee. Wații-oră măsoară energia în timp. 200 W constanți timp de cinci ore consumă 1000 Wh, adică 1 kWh. Fierbătorul de 2 kW timp de șase minute consumă 0,2 kWh, dar cere invertor de cel puțin puterea sa. Nu confunda consumul lung redus cu un eveniment scurt de putere mare."),
- section("Measure the right interval", "Măsoară intervalul corect", "A plug-in energy meter over a full day captures refrigerator cycling more accurately than one instantaneous reading. Record ambient temperature, appliance mode and whether the day is representative. For fixed wiring, ask a qualified person for appropriate measurement. A monthly utility bill includes loads you may not back up and does not reveal their simultaneous peaks.", "Un contor de energie pe o zi surprinde ciclurile frigiderului mai bine decât o citire instantanee. Notează temperatura, modul și caracterul reprezentativ al zilei. Pentru circuite fixe, solicită măsurare adecvată de către un profesionist. Factura lunară include sarcini pe care poate nu le alimentezi în rezervă și nu arată vârfurile simultane."),
- section("Turn the budget into a decision", "Transformă bugetul în decizie", "Mark each load essential, deferrable or excluded. Multiply each essential load by its outage operating time, then add conversion and standby losses. If the resulting battery is too large, shorten runtime or defer loads before shopping. Save the assumptions so you can compare products against the same requirement and explain to an installer why a particular capacity was selected.", "Marchează sarcinile esențiale, amânabile sau excluse. Înmulțește consumul cu timpul în rezervă, apoi adaugă pierderile și consumul în gol. Dacă bateria rezultată este prea mare, redu autonomia sau amână sarcini înainte de cumpărare. Salvează ipotezele pentru a compara produsele cu aceleași cerințe și a explica instalatorului alegerea capacității.")], category: "backup-power", solution: "business-backup", calculator: "/backup-calculator", sources: [wiring] },
- { slug: "solar-panel-sizing", title: b("Solar panel sizing", "Dimensionarea panourilor solare"), hub: "solar", level: "technical-guides", intro: b("Size solar from daily energy and location-specific seasonal yield. Panel wattage is a test rating, not a daily energy forecast.", "Dimensionează solarul după energia zilnică și producția sezonieră locală. Puterea panoului este valoare de test, nu prognoză zilnică."), sections: [
- section("Use explicit yield assumptions", "Folosește ipoteze explicite", "A first estimate is array W = daily Wh / peak-sun-hours / system yield factor. For 3000 Wh, 3.5 equivalent full-sun hours and 0.75 yield factor, the result is 1143 W. The factor represents chosen losses; do not subtract the same loss twice if using a forecast that already includes it. Peak-sun-hours are energy equivalents, not hours between sunrise and sunset.", "Estimarea inițială este W panouri = Wh zilnici / ore solare echivalente / factor de producție. Pentru 3000 Wh, 3,5 ore și 0,75 rezultă 1143 W. Factorul reprezintă pierderile alese; nu scădea aceeași pierdere de două ori dacă prognoza o include. Orele solare echivalente nu sunt durata dintre răsărit și apus."),
- section("Design for the month you use it", "Proiectează pentru luna utilizării", "PVGIS provides location and configuration-based production information. Review monthly output for the actual tilt, orientation and intended occupied season. A summer camping array may not meet a winter cabin's demand. Nearby trees, chimneys and parked vehicles add local shading not necessarily represented in regional data. Record your design month and recovery strategy for several poor days.", "PVGIS oferă informații de producție după locație și configurație. Verifică lunile pentru înclinarea, orientarea și sezonul de utilizare. Panourile pentru camping vara pot fi insuficiente iarna la cabană. Copacii, coșurile și vehiculele produc umbre locale care pot lipsi din datele regionale. Notează luna de proiect și strategia după zile slabe."),
- section("Check voltage before buying", "Verifică tensiunea înainte de cumpărare", "Series panel voltages add and cold cells can increase open-circuit voltage. Parallel strings add current. Check the controller's maximum PV voltage, input current and battery-side charge rating independently. A 400 W array is not automatically compatible with a charger labelled for 400 W. Use the exact panel temperature coefficient and the controller manual to validate the final arrangement.", "În serie se adună tensiunile și frigul poate crește tensiunea în gol. În paralel se adună curenții. Verifică separat tensiunea PV maximă, curentul de intrare și încărcarea pe baterie. Un ansamblu de 400 W nu este automat compatibil cu un încărcător etichetat 400 W. Folosește coeficientul de temperatură și manualul pentru configurația finală.")], category: "solar/panels", solution: "solar-battery", calculator: "/calculators/solar", sources: [pvgis, wiring] },
- { slug: "mppt-vs-pwm", title: b("MPPT versus PWM controllers", "Regulatoare MPPT sau PWM"), hub: "solar", level: "buying-guides", intro: b("The controller connects two different operating ranges: the PV array and the battery. Select the interface, not just the acronym.", "Regulatorul leagă două intervale de funcționare: panourile și bateria. Alege interfața, nu doar acronimul."), sections: [
- section("What changes electrically", "Ce se schimbă electric", "PWM control generally operates the panel near battery charging voltage when connected. MPPT uses conversion to operate the panel near a suitable power point while delivering a different battery-side voltage and current. This can make better use of higher-voltage arrays, but the benefit depends on panel characteristics and conditions. Neither type removes the need to match battery chemistry and charging voltage.", "PWM operează în general panoul aproape de tensiunea de încărcare a bateriei când este conectat. MPPT convertește energia pentru a opera panoul aproape de punctul potrivit, livrând altă tensiune și curent pe baterie. Poate utiliza mai bine panouri cu tensiune mai mare, dar avantajul depinde de condiții. Ambele cer chimie și tensiune de încărcare compatibile."),
- section("Three ratings to check", "Trei limite de verificat", "Check maximum PV open-circuit voltage, permitted PV input current and maximum battery charge current. They refer to different sides of the converter. A 30 A output label says nothing by itself about the allowed series-string voltage. Account for cold weather on Voc, manufacturer limits on array oversizing and supported battery voltages. Do not use a voltage limit as a target operating value.", "Verifică tensiunea PV în gol maximă, curentul PV permis și curentul maxim către baterie. Se referă la părți diferite ale convertorului. O ieșire de 30 A nu indică singură tensiunea permisă șirului. Include frigul în Voc, limitele supradimensionării panourilor și tensiunile bateriei acceptate. Limita de tensiune nu este țintă de operare."),
- section("Installation and expansion", "Instalare și extindere", "Follow the controller's connection and disconnection sequence, protection requirements and ventilation instructions. If you may add panels later, document the future series/parallel configuration now; a controller with spare charge current can still lack voltage headroom. For a small matched system, compare total installed cost and useful energy rather than assuming a more elaborate controller always solves shading or insufficient panel area.", "Urmează ordinea de conectare/deconectare, protecțiile și ventilația din manual. Dacă adaugi panouri ulterior, documentează configurația serie/paralel; un regulator cu rezervă de curent poate să nu aibă rezervă de tensiune. Pentru un sistem mic, compară costul instalat și energia utilă; regulatorul mai complex nu rezolvă automat umbra sau suprafața insuficientă.")], category: "solar/controllers", solution: "solar-battery", calculator: "/calculators/solar", sources: [wiring] },
- { slug: "inverter-surge-power", title: b("Understanding inverter surge power", "Puterea de vârf a invertorului"), hub: "inverters", level: "technical-guides", intro: b("A compressor can fail to start even when average power is well below the inverter rating. The complete DC-to-AC path must support the event.", "Un compresor poate să nu pornească deși media este sub puterea invertorului. Întregul circuit DC–AC trebuie să susțină evenimentul."), sections: [
- section("Duration matters", "Durata contează", "Compare required starting current and duration with the inverter overload curve. A peak number with no time basis is insufficient. The same inverter may handle a short electronic inrush and fail a motor requiring several seconds to accelerate. Avoid a universal multiplier for every appliance: use measured starts or documented load information, especially for compressors, pumps and transformers.", "Compară curentul și durata pornirii cu curba de suprasarcină. Un număr de vârf fără durată nu ajunge. Același invertor poate suporta un impuls electronic scurt și poate eșua la motorul ce accelerează câteva secunde. Evită multiplicatorul universal; folosește măsurători sau documentație pentru compresoare, pompe și transformatoare."),
- section("The battery can be the limit", "Bateria poate fi limita", "An inverter cannot deliver power its battery cannot supply. Voltage sag in the cells, cables and terminals can trigger undervoltage shutdown before the inverter's own surge limit is reached. A BMS may also disconnect on its current timer. Check the weakest element in the path and evaluate at low state of charge, where voltage margin is smaller.", "Invertorul nu livrează putere pe care bateria nu o poate furniza. Scăderea tensiunii în celule, cabluri și borne poate declanșa oprirea înainte de limita invertorului. BMS poate deconecta după temporizarea sa de curent. Verifică elementul cel mai slab și evaluează la stare de încărcare redusă, când rezerva de tensiune este mică."),
- section("Manage simultaneous starts", "Gestionează pornirile simultane", "Sequence loads where the application permits it. Starting a pump after a refrigerator has settled can reduce the worst event without changing daily energy. A suitable soft starter or drive may help a particular motor, but compatibility and machine safety must be reviewed. Do not solve nuisance trips by simply fitting a larger fuse; that can leave the conductor unprotected.", "Secvențiază sarcinile unde aplicația permite. Pornirea pompei după stabilizarea frigiderului poate reduce evenimentul maxim fără schimbarea energiei zilnice. Un soft starter sau convertizor potrivit poate ajuta motorul, dar cere verificare de compatibilitate și siguranță. Nu rezolva declanșările doar cu siguranță mai mare; conductorul poate rămâne neprotejat.")], category: "inverters", solution: "workshop", calculator: "/calculators/generator", sources: [wiring] },
- { slug: "battery-runtime-calculation", title: b("Calculate battery runtime", "Calculează autonomia bateriei"), hub: "batteries", level: "getting-started", intro: b("Runtime is an estimate based on usable energy and real load. Explain the assumptions before treating the result as a purchasing requirement.", "Autonomia este estimată din energia utilă și consumul real. Explică ipotezele înainte să folosești rezultatul la achiziție."), sections: [
- section("A transparent equation", "O ecuație transparentă", "Runtime hours = nominal Wh × usable fraction × conversion efficiency / average AC watts. A 1280 Wh battery at 80% usable depth and 92% conversion supplies about 942 Wh AC. At 200 W, the simple result is 4.71 hours. This excludes additional inverter idle draw, ageing and temperature effects. State whether those losses are already included in the efficiency you selected.", "Ore autonomie = Wh nominali × fracția utilă × randament / W medii AC. O baterie de 1280 Wh la 80% și 92% furnizează circa 942 Wh AC. La 200 W, rezultatul simplu este 4,71 ore. Exclude consumul suplimentar în gol, îmbătrânirea și temperatura. Precizează dacă pierderile sunt deja incluse în randament."),
- section("Variable loads need energy measurement", "Sarcinile variabile cer măsurare", "A refrigerator label is not a constant load. Measure Wh over a representative interval and divide by hours to estimate average watts. A laptop may charge at high power then settle to a lower demand. If devices operate only part of the outage, use a timed load schedule instead of a single average. Keep essential start events in the separate inverter check.", "Eticheta frigiderului nu descrie consum constant. Măsoară Wh într-un interval reprezentativ și împarte la ore pentru W medii. Laptopul poate încărca la putere mare, apoi reduce consumul. Dacă aparatele funcționează doar parțial, folosește un program al sarcinilor. Păstrează pornirile într-o verificare separată a invertorului."),
- section("Validate without over-discharging", "Validează fără descărcare excesivă", "After installation, test the intended load with monitoring and a conservative stop threshold. Compare measured delivered energy with the plan and investigate differences such as standby draw or unexpected loads. Respect the battery's discharge limits; a BMS emergency cutoff is not a target operating point. Revisit autonomy as batteries age or the essential-load list changes.", "După instalare, testează sarcina cu monitorizare și prag conservator de oprire. Compară energia livrată cu planul și investighează consumul în gol sau aparatele neașteptate. Respectă limitele; oprirea de urgență BMS nu este țintă normală. Reevaluează autonomia la îmbătrânire sau modificarea consumatorilor.")], category: "batteries", solution: "apartment-backup", calculator: "/calculators/battery", sources: [wiring] },
+  {
+    slug: "how-to-size-backup-battery",
+    title: b(
+      "How to size a backup battery",
+      "Cum dimensionezi bateria de rezervă",
+    ),
+    hub: "batteries",
+    level: "buying-guides",
+    intro: b(
+      "Battery capacity starts with an energy budget. A large Ah number is not enough to tell you what will run, for how long, or whether the battery can start the load.",
+      "Capacitatea bateriei începe cu un buget energetic. Un număr mare de Ah nu spune ce funcționează, cât timp sau dacă bateria poate porni sarcina.",
+    ),
+    sections: [
+      section(
+        "Build the energy budget",
+        "Construiește bugetul energetic",
+        "For each essential appliance, multiply measured running watts by operating hours during the outage. Add the results in Wh. A router at 15 W for 8 hours needs 120 Wh; a 60 W laptop for 4 hours needs 240 Wh. A refrigerator requires measured daily consumption or a justified duty cycle, not its starting power multiplied by every hour. Keep the startup event in a separate power column.",
+        "Pentru fiecare aparat esențial, înmulțește puterea măsurată cu orele de funcționare. Adună rezultatele în Wh. Un router de 15 W pentru 8 ore cere 120 Wh; un laptop de 60 W pentru 4 ore cere 240 Wh. Frigiderul necesită consum zilnic măsurat sau ciclu justificat, nu puterea de pornire înmulțită cu toate orele. Păstrează pornirea într-o coloană separată de putere.",
+      ),
+      section(
+        "Convert delivered energy into storage",
+        "Transformă energia livrată în stocare",
+        "Nominal storage Wh = required AC Wh / usable discharge fraction / inverter efficiency. For 1000 Wh, an illustrative 0.80 usable fraction and 0.92 conversion efficiency give 1359 Wh. These factors are inputs, not universal promises. Add standby consumption and a justified reserve for temperature and ageing. If you add future loads, show them explicitly so reserve is not counted twice.",
+        "Stocare nominală Wh = Wh AC necesari / fracția utilizabilă / randamentul invertorului. Pentru 1000 Wh, fracția orientativă 0,80 și randamentul 0,92 dau 1359 Wh. Factorii sunt ipoteze, nu promisiuni universale. Adaugă consumul în gol și rezerva justificată pentru temperatură și îmbătrânire. Arată separat consumatorii viitori ca să nu dublezi rezerva.",
+      ),
+      section(
+        "Check the second constraint: current",
+        "Verifică a doua limită: curentul",
+        "At 1000 W AC and 12.8 V nominal DC, 92% efficiency implies about 85 A. Current rises as battery voltage falls. A bank that stores enough energy may still trip its BMS on a compressor start. Compare continuous and time-limited discharge ratings, then coordinate the cable, fuse and terminals. Only use series or parallel grouping explicitly permitted for the model.",
+        "La 1000 W AC și 12,8 V DC nominal, randamentul 92% implică aproximativ 85 A. Curentul crește când tensiunea scade. Un banc cu energie suficientă poate declanșa BMS la pornirea compresorului. Compară curentul continuu și temporar, apoi coordonează cablul, siguranța și bornele. Folosește grupare serie/paralel numai dacă modelul o permite.",
+      ),
+    ],
+    category: "batteries",
+    solution: "home-backup",
+    calculator: "/calculators/battery",
+    sources: [wiring],
+  },
+  {
+    slug: "how-to-choose-inverter",
+    title: b("How to choose an inverter", "Cum alegi invertorul"),
+    hub: "inverters",
+    level: "buying-guides",
+    intro: b(
+      "An inverter has to satisfy the appliance, battery and installation at the same time. Continuous watts are only the first screening criterion.",
+      "Invertorul trebuie să corespundă simultan aparatului, bateriei și instalației. Puterea continuă este doar primul criteriu.",
+    ),
+    sections: [
+      section(
+        "Continuous load and starting behaviour",
+        "Consum continuu și pornire",
+        "List appliances that may run simultaneously. Compare that load against the inverter's continuous output at the expected ambient temperature, not only the headline maximum. Motors and compressors need a separate startup assessment. A surge claim without duration is incomplete: a few milliseconds of output is not equivalent to several seconds. Record whether overload recovery is automatic and what happens to connected electronics.",
+        "Listează aparatele care pot funcționa simultan. Compară sarcina cu ieșirea continuă la temperatura estimată, nu doar cu maximul din reclamă. Motoarele și compresoarele cer verificarea pornirii. Un vârf fără durată este incomplet: milisecundele nu sunt echivalente cu secundele. Notează revenirea după suprasarcină și efectul asupra electronicii.",
+      ),
+      section(
+        "Choose the DC architecture",
+        "Alege arhitectura DC",
+        "At 2000 W and 92% efficiency, nominal current is about 181 A at 12 V, 91 A at 24 V or 45 A at 48 V. These are illustrative values; use minimum operating voltage for the design check. Higher voltage can reduce current but requires compatible storage, charging and DC-rated protection. Never change bank voltage without checking every connected DC device.",
+        "La 2000 W și 92%, curentul nominal este circa 181 A la 12 V, 91 A la 24 V sau 45 A la 48 V. Valorile sunt orientative; verificarea proiectului folosește tensiunea minimă. Tensiunea mai mare reduce curentul, dar cere stocare, încărcare și protecție DC compatibile. Nu schimba tensiunea bancului fără verificarea fiecărui aparat DC.",
+      ),
+      section(
+        "Read the functions separately",
+        "Citește funcțiile separat",
+        "Pure sine describes the output waveform. Inverter charger describes bidirectional roles; transfer or UPS describes source switching. One label does not imply all three. Check AC voltage and frequency, charger current, neutral-earth instructions, transfer delay and no-load draw. A larger inverter can waste more standby energy in a small system, so compare operating behaviour alongside power.",
+        "Sinus pur descrie forma de undă. Invertor cu încărcător descrie rolurile, iar transfer/UPS comutarea surselor. O etichetă nu le implică pe toate. Verifică tensiunea și frecvența AC, curentul încărcătorului, instrucțiunile neutru-pământ, întârzierea și consumul în gol. Un invertor mai mare poate consuma mai mult în așteptare într-un sistem mic.",
+      ),
+    ],
+    category: "inverters",
+    solution: "home-backup",
+    calculator: "/backup-calculator",
+    sources: [wiring],
+  },
+  {
+    slug: "lifepo4-vs-lead-acid",
+    title: b("LiFePO4 versus lead-acid", "LiFePO4 sau plumb-acid"),
+    hub: "batteries",
+    level: "buying-guides",
+    intro: b(
+      "Compare the energy you can repeatedly use, charging constraints and system changes—not just two Ah labels.",
+      "Compară energia utilizabilă repetat, limitele încărcării și modificările sistemului, nu doar două valori Ah.",
+    ),
+    sections: [
+      section(
+        "Usable energy and discharge rate",
+        "Energie utilă și ritm de descărcare",
+        "A 100 Ah lead-acid battery and a 100 Ah lithium battery may have different nominal voltages, recommended discharge depths and capacity test rates. Lead-acid available capacity falls at high discharge rates; a lithium bank is constrained by its BMS as well as cells. Use the manufacturer's discharge curves and recommended operating window for the intended duty. Do not assume the entire nameplate capacity is routinely available.",
+        "O baterie de 100 Ah plumb-acid și una litiu pot avea tensiuni, adâncimi de descărcare și rate de test diferite. Capacitatea disponibilă plumb-acid scade la descărcare rapidă; litiul este limitat și de BMS. Folosește curbele producătorului și fereastra recomandată pentru regimul dorit. Nu presupune că întreaga capacitate nominală este disponibilă în mod repetat.",
+      ),
+      section(
+        "Charging and temperature",
+        "Încărcare și temperatură",
+        "A charger designed for one chemistry is not automatically suitable for another. Lead-acid equalisation settings can be inappropriate for lithium. Some LiFePO4 batteries block charging at low cell temperature; self-heating models have specific activation conditions and draw energy to warm themselves. Verify the actual battery manual and all charge sources, including alternator, solar and mains, before a chemistry change.",
+        "Un încărcător pentru o chimie nu este automat potrivit pentru alta. Egalizarea pentru plumb poate fi nepotrivită la litiu. Unele LiFePO4 blochează încărcarea la temperaturi joase; autoîncălzirea are condiții specifice și consumă energie. Verifică manualul și toate sursele — alternator, solar și rețea — înainte de schimbare.",
+      ),
+      section(
+        "Compare total installed cost",
+        "Compară costul instalat",
+        "Include mounting, compatible charging, current protection and monitoring, not only the battery purchase. A lighter battery may matter for an RV, while service access or predictable replacement matters at a fixed site. Cycle-life claims depend on temperature, discharge depth and end-of-life definition. Compare those test conditions and the written warranty rather than ranking batteries by a single cycle number.",
+        "Include montajul, încărcarea compatibilă, protecția și monitorizarea, nu doar bateria. Masa redusă contează la rulotă; accesul de service poate conta la locație fixă. Durata în cicluri depinde de temperatură, descărcare și definiția sfârșitului de viață. Compară condițiile testului și garanția scrisă, nu doar numărul ciclurilor.",
+      ),
+    ],
+    category: "batteries/lifepo4",
+    solution: "rv-caravan",
+    calculator: "/calculators/battery",
+    sources: [wiring],
+  },
+  {
+    slug: "12v-vs-24v-vs-48v",
+    title: b("12 V, 24 V or 48 V?", "12 V, 24 V sau 48 V?"),
+    hub: "batteries",
+    level: "technical-guides",
+    intro: b(
+      "System voltage changes current, cabling and compatibility. Choose it before buying the inverter and battery bank.",
+      "Tensiunea sistemului schimbă curentul, cablarea și compatibilitatea. Alege-o înainte de invertor și banc.",
+    ),
+    sections: [
+      section(
+        "The same watts, different current",
+        "Aceeași putere, alt curent",
+        "Using I = P / (V × efficiency), a 2 kW AC load at 92% conversion draws about 181 A from 12 V, 91 A from 24 V and 45 A from 48 V. Cable heating follows I²R, so current reduction has a strong effect. Actual design current uses minimum battery voltage and inverter requirements. These calculations do not replace cable ampacity tables or fuse coordination.",
+        "Cu I = P / (V × randament), 2 kW AC la 92% cer circa 181 A din 12 V, 91 A din 24 V și 45 A din 48 V. Încălzirea cablului urmează I²R, deci reducerea curentului contează mult. Proiectul folosește tensiunea minimă și cerințele invertorului. Calculul nu înlocuiește tabelele de curent admisibil sau coordonarea siguranțelor.",
+      ),
+      section(
+        "Energy is not Ah alone",
+        "Energia nu înseamnă doar Ah",
+        "At nominal values, 12 V × 200 Ah, 24 V × 100 Ah and 48 V × 50 Ah all equal 2400 Wh. Series connection raises voltage; parallel raises Ah. Neither creates extra energy beyond the sum of the batteries. Many drop-in batteries have restrictions on grouping, balancing and mixed ages. Use the manufacturer's allowed arrangement rather than assuming any four batteries make a 48 V bank.",
+        "Nominal, 12 V × 200 Ah, 24 V × 100 Ah și 48 V × 50 Ah înseamnă 2400 Wh. Seria crește tensiunea; paralelul crește Ah. Niciuna nu creează energie peste suma bateriilor. Multe baterii au restricții de grupare, echilibrare și vârstă. Folosește configurația permisă; nu presupune că orice patru baterii formează un banc de 48 V.",
+      ),
+      section(
+        "Preserve every interface",
+        "Păstrează compatibilitatea",
+        "A 12 V appliance cannot connect directly to a 24 V or 48 V bank. A suitably rated DC converter may be needed, and its losses belong in the energy budget. Chargers, solar controllers, monitoring and disconnects must all support the chosen range. Higher voltage is a system choice, not a universal upgrade, especially when a vehicle already has a substantial 12 V installation.",
+        "Un aparat de 12 V nu se conectează direct la 24 V sau 48 V. Poate necesita convertizor DC adecvat, cu pierderi incluse în buget. Încărcătoarele, regulatoarele, monitorizarea și separatoarele trebuie să accepte intervalul. Tensiunea mai mare este o alegere de sistem, nu o îmbunătățire universală, mai ales la vehicule cu instalație extinsă de 12 V.",
+      ),
+    ],
+    category: "batteries",
+    solution: "marine",
+    calculator: "/calculators/cable-sizing",
+    sources: [wiring],
+  },
+  {
+    slug: "how-many-kwh-do-i-need",
+    title: b("How many kWh do I need?", "De câți kWh am nevoie?"),
+    hub: "backup-power",
+    level: "getting-started",
+    intro: b(
+      "Power tells you what can run together; energy tells you how long it can run. Keep both columns in your planning sheet.",
+      "Puterea arată ce funcționează simultan; energia arată cât timp. Păstrează ambele coloane în plan.",
+    ),
+    sections: [
+      section(
+        "W, Wh and kWh",
+        "W, Wh și kWh",
+        "Watts measure instantaneous power. Watt-hours measure power integrated over time. A constant 200 W load for five hours uses 1000 Wh, or 1 kWh. A 2 kW kettle running for six minutes uses 0.2 kWh, yet still requires an inverter able to deliver its 2 kW demand. Do not confuse a high-energy low-power load with a short high-power event.",
+        "Wații măsoară puterea instantanee. Wații-oră măsoară energia în timp. 200 W constanți timp de cinci ore consumă 1000 Wh, adică 1 kWh. Fierbătorul de 2 kW timp de șase minute consumă 0,2 kWh, dar cere invertor de cel puțin puterea sa. Nu confunda consumul lung redus cu un eveniment scurt de putere mare.",
+      ),
+      section(
+        "Measure the right interval",
+        "Măsoară intervalul corect",
+        "A plug-in energy meter over a full day captures refrigerator cycling more accurately than one instantaneous reading. Record ambient temperature, appliance mode and whether the day is representative. For fixed wiring, ask a qualified person for appropriate measurement. A monthly utility bill includes loads you may not back up and does not reveal their simultaneous peaks.",
+        "Un contor de energie pe o zi surprinde ciclurile frigiderului mai bine decât o citire instantanee. Notează temperatura, modul și caracterul reprezentativ al zilei. Pentru circuite fixe, solicită măsurare adecvată de către un profesionist. Factura lunară include sarcini pe care poate nu le alimentezi în rezervă și nu arată vârfurile simultane.",
+      ),
+      section(
+        "Turn the budget into a decision",
+        "Transformă bugetul în decizie",
+        "Mark each load essential, deferrable or excluded. Multiply each essential load by its outage operating time, then add conversion and standby losses. If the resulting battery is too large, shorten runtime or defer loads before shopping. Save the assumptions so you can compare products against the same requirement and explain to an installer why a particular capacity was selected.",
+        "Marchează sarcinile esențiale, amânabile sau excluse. Înmulțește consumul cu timpul în rezervă, apoi adaugă pierderile și consumul în gol. Dacă bateria rezultată este prea mare, redu autonomia sau amână sarcini înainte de cumpărare. Salvează ipotezele pentru a compara produsele cu aceleași cerințe și a explica instalatorului alegerea capacității.",
+      ),
+    ],
+    category: "backup-power",
+    solution: "business-backup",
+    calculator: "/backup-calculator",
+    sources: [wiring],
+  },
+  {
+    slug: "solar-panel-sizing",
+    title: b("Solar panel sizing", "Dimensionarea panourilor solare"),
+    hub: "solar",
+    level: "technical-guides",
+    intro: b(
+      "Size solar from daily energy and location-specific seasonal yield. Panel wattage is a test rating, not a daily energy forecast.",
+      "Dimensionează solarul după energia zilnică și producția sezonieră locală. Puterea panoului este valoare de test, nu prognoză zilnică.",
+    ),
+    sections: [
+      section(
+        "Use explicit yield assumptions",
+        "Folosește ipoteze explicite",
+        "A first estimate is array W = daily Wh / peak-sun-hours / system yield factor. For 3000 Wh, 3.5 equivalent full-sun hours and 0.75 yield factor, the result is 1143 W. The factor represents chosen losses; do not subtract the same loss twice if using a forecast that already includes it. Peak-sun-hours are energy equivalents, not hours between sunrise and sunset.",
+        "Estimarea inițială este W panouri = Wh zilnici / ore solare echivalente / factor de producție. Pentru 3000 Wh, 3,5 ore și 0,75 rezultă 1143 W. Factorul reprezintă pierderile alese; nu scădea aceeași pierdere de două ori dacă prognoza o include. Orele solare echivalente nu sunt durata dintre răsărit și apus.",
+      ),
+      section(
+        "Design for the month you use it",
+        "Proiectează pentru luna utilizării",
+        "PVGIS provides location and configuration-based production information. Review monthly output for the actual tilt, orientation and intended occupied season. A summer camping array may not meet a winter cabin's demand. Nearby trees, chimneys and parked vehicles add local shading not necessarily represented in regional data. Record your design month and recovery strategy for several poor days.",
+        "PVGIS oferă informații de producție după locație și configurație. Verifică lunile pentru înclinarea, orientarea și sezonul de utilizare. Panourile pentru camping vara pot fi insuficiente iarna la cabană. Copacii, coșurile și vehiculele produc umbre locale care pot lipsi din datele regionale. Notează luna de proiect și strategia după zile slabe.",
+      ),
+      section(
+        "Check voltage before buying",
+        "Verifică tensiunea înainte de cumpărare",
+        "Series panel voltages add and cold cells can increase open-circuit voltage. Parallel strings add current. Check the controller's maximum PV voltage, input current and battery-side charge rating independently. A 400 W array is not automatically compatible with a charger labelled for 400 W. Use the exact panel temperature coefficient and the controller manual to validate the final arrangement.",
+        "În serie se adună tensiunile și frigul poate crește tensiunea în gol. În paralel se adună curenții. Verifică separat tensiunea PV maximă, curentul de intrare și încărcarea pe baterie. Un ansamblu de 400 W nu este automat compatibil cu un încărcător etichetat 400 W. Folosește coeficientul de temperatură și manualul pentru configurația finală.",
+      ),
+    ],
+    category: "solar/panels",
+    solution: "solar-battery",
+    calculator: "/calculators/solar",
+    sources: [pvgis, wiring],
+  },
+  {
+    slug: "mppt-vs-pwm",
+    title: b("MPPT versus PWM controllers", "Regulatoare MPPT sau PWM"),
+    hub: "solar",
+    level: "buying-guides",
+    intro: b(
+      "The controller connects two different operating ranges: the PV array and the battery. Select the interface, not just the acronym.",
+      "Regulatorul leagă două intervale de funcționare: panourile și bateria. Alege interfața, nu doar acronimul.",
+    ),
+    sections: [
+      section(
+        "What changes electrically",
+        "Ce se schimbă electric",
+        "PWM control generally operates the panel near battery charging voltage when connected. MPPT uses conversion to operate the panel near a suitable power point while delivering a different battery-side voltage and current. This can make better use of higher-voltage arrays, but the benefit depends on panel characteristics and conditions. Neither type removes the need to match battery chemistry and charging voltage.",
+        "PWM operează în general panoul aproape de tensiunea de încărcare a bateriei când este conectat. MPPT convertește energia pentru a opera panoul aproape de punctul potrivit, livrând altă tensiune și curent pe baterie. Poate utiliza mai bine panouri cu tensiune mai mare, dar avantajul depinde de condiții. Ambele cer chimie și tensiune de încărcare compatibile.",
+      ),
+      section(
+        "Three ratings to check",
+        "Trei limite de verificat",
+        "Check maximum PV open-circuit voltage, permitted PV input current and maximum battery charge current. They refer to different sides of the converter. A 30 A output label says nothing by itself about the allowed series-string voltage. Account for cold weather on Voc, manufacturer limits on array oversizing and supported battery voltages. Do not use a voltage limit as a target operating value.",
+        "Verifică tensiunea PV în gol maximă, curentul PV permis și curentul maxim către baterie. Se referă la părți diferite ale convertorului. O ieșire de 30 A nu indică singură tensiunea permisă șirului. Include frigul în Voc, limitele supradimensionării panourilor și tensiunile bateriei acceptate. Limita de tensiune nu este țintă de operare.",
+      ),
+      section(
+        "Installation and expansion",
+        "Instalare și extindere",
+        "Follow the controller's connection and disconnection sequence, protection requirements and ventilation instructions. If you may add panels later, document the future series/parallel configuration now; a controller with spare charge current can still lack voltage headroom. For a small matched system, compare total installed cost and useful energy rather than assuming a more elaborate controller always solves shading or insufficient panel area.",
+        "Urmează ordinea de conectare/deconectare, protecțiile și ventilația din manual. Dacă adaugi panouri ulterior, documentează configurația serie/paralel; un regulator cu rezervă de curent poate să nu aibă rezervă de tensiune. Pentru un sistem mic, compară costul instalat și energia utilă; regulatorul mai complex nu rezolvă automat umbra sau suprafața insuficientă.",
+      ),
+    ],
+    category: "solar/controllers",
+    solution: "solar-battery",
+    calculator: "/calculators/solar",
+    sources: [wiring],
+  },
+  {
+    slug: "inverter-surge-power",
+    title: b(
+      "Understanding inverter surge power",
+      "Puterea de vârf a invertorului",
+    ),
+    hub: "inverters",
+    level: "technical-guides",
+    intro: b(
+      "A compressor can fail to start even when average power is well below the inverter rating. The complete DC-to-AC path must support the event.",
+      "Un compresor poate să nu pornească deși media este sub puterea invertorului. Întregul circuit DC–AC trebuie să susțină evenimentul.",
+    ),
+    sections: [
+      section(
+        "Duration matters",
+        "Durata contează",
+        "Compare required starting current and duration with the inverter overload curve. A peak number with no time basis is insufficient. The same inverter may handle a short electronic inrush and fail a motor requiring several seconds to accelerate. Avoid a universal multiplier for every appliance: use measured starts or documented load information, especially for compressors, pumps and transformers.",
+        "Compară curentul și durata pornirii cu curba de suprasarcină. Un număr de vârf fără durată nu ajunge. Același invertor poate suporta un impuls electronic scurt și poate eșua la motorul ce accelerează câteva secunde. Evită multiplicatorul universal; folosește măsurători sau documentație pentru compresoare, pompe și transformatoare.",
+      ),
+      section(
+        "The battery can be the limit",
+        "Bateria poate fi limita",
+        "An inverter cannot deliver power its battery cannot supply. Voltage sag in the cells, cables and terminals can trigger undervoltage shutdown before the inverter's own surge limit is reached. A BMS may also disconnect on its current timer. Check the weakest element in the path and evaluate at low state of charge, where voltage margin is smaller.",
+        "Invertorul nu livrează putere pe care bateria nu o poate furniza. Scăderea tensiunii în celule, cabluri și borne poate declanșa oprirea înainte de limita invertorului. BMS poate deconecta după temporizarea sa de curent. Verifică elementul cel mai slab și evaluează la stare de încărcare redusă, când rezerva de tensiune este mică.",
+      ),
+      section(
+        "Manage simultaneous starts",
+        "Gestionează pornirile simultane",
+        "Sequence loads where the application permits it. Starting a pump after a refrigerator has settled can reduce the worst event without changing daily energy. A suitable soft starter or drive may help a particular motor, but compatibility and machine safety must be reviewed. Do not solve nuisance trips by simply fitting a larger fuse; that can leave the conductor unprotected.",
+        "Secvențiază sarcinile unde aplicația permite. Pornirea pompei după stabilizarea frigiderului poate reduce evenimentul maxim fără schimbarea energiei zilnice. Un soft starter sau convertizor potrivit poate ajuta motorul, dar cere verificare de compatibilitate și siguranță. Nu rezolva declanșările doar cu siguranță mai mare; conductorul poate rămâne neprotejat.",
+      ),
+    ],
+    category: "inverters",
+    solution: "workshop",
+    calculator: "/calculators/generator",
+    sources: [wiring],
+  },
+  {
+    slug: "battery-runtime-calculation",
+    title: b("Calculate battery runtime", "Calculează autonomia bateriei"),
+    hub: "batteries",
+    level: "getting-started",
+    intro: b(
+      "Runtime is an estimate based on usable energy and real load. Explain the assumptions before treating the result as a purchasing requirement.",
+      "Autonomia este estimată din energia utilă și consumul real. Explică ipotezele înainte să folosești rezultatul la achiziție.",
+    ),
+    sections: [
+      section(
+        "A transparent equation",
+        "O ecuație transparentă",
+        "Runtime hours = nominal Wh × usable fraction × conversion efficiency / average AC watts. A 1280 Wh battery at 80% usable depth and 92% conversion supplies about 942 Wh AC. At 200 W, the simple result is 4.71 hours. This excludes additional inverter idle draw, ageing and temperature effects. State whether those losses are already included in the efficiency you selected.",
+        "Ore autonomie = Wh nominali × fracția utilă × randament / W medii AC. O baterie de 1280 Wh la 80% și 92% furnizează circa 942 Wh AC. La 200 W, rezultatul simplu este 4,71 ore. Exclude consumul suplimentar în gol, îmbătrânirea și temperatura. Precizează dacă pierderile sunt deja incluse în randament.",
+      ),
+      section(
+        "Variable loads need energy measurement",
+        "Sarcinile variabile cer măsurare",
+        "A refrigerator label is not a constant load. Measure Wh over a representative interval and divide by hours to estimate average watts. A laptop may charge at high power then settle to a lower demand. If devices operate only part of the outage, use a timed load schedule instead of a single average. Keep essential start events in the separate inverter check.",
+        "Eticheta frigiderului nu descrie consum constant. Măsoară Wh într-un interval reprezentativ și împarte la ore pentru W medii. Laptopul poate încărca la putere mare, apoi reduce consumul. Dacă aparatele funcționează doar parțial, folosește un program al sarcinilor. Păstrează pornirile într-o verificare separată a invertorului.",
+      ),
+      section(
+        "Validate without over-discharging",
+        "Validează fără descărcare excesivă",
+        "After installation, test the intended load with monitoring and a conservative stop threshold. Compare measured delivered energy with the plan and investigate differences such as standby draw or unexpected loads. Respect the battery's discharge limits; a BMS emergency cutoff is not a target operating point. Revisit autonomy as batteries age or the essential-load list changes.",
+        "După instalare, testează sarcina cu monitorizare și prag conservator de oprire. Compară energia livrată cu planul și investighează consumul în gol sau aparatele neașteptate. Respectă limitele; oprirea de urgență BMS nu este țintă normală. Reevaluează autonomia la îmbătrânire sau modificarea consumatorilor.",
+      ),
+    ],
+    category: "batteries",
+    solution: "apartment-backup",
+    calculator: "/calculators/battery",
+    sources: [wiring],
+  },
 ];
 
 // Application guides add distinct engineering decisions to the calculation guides.
-const applications: [string, LocalText, string, string, string, LocalText, LocalText, LocalText][] = [
- ["apartment-backup-system", b("Plan an apartment backup system", "Planifică rezerva apartamentului"), "backup-power", "backup-power", "apartment-backup", b("Start with a list of individual appliances you can safely plug into a portable backup source. Router, laptop and LED lighting often give more useful continuity per kWh than heating appliances. Record the fridge's measured daily energy and starting behaviour if it is included. A system serving individual plugs has a different installation scope from one energising fixed household circuits.", "Începe cu aparate individuale alimentate sigur din rezervă portabilă. Routerul, laptopul și LED oferă adesea mai multă utilitate pe kWh decât încălzirea. Dacă incluzi frigiderul, măsoară energia și pornirea. Alimentarea aparatelor individuale are alt scop de instalare decât alimentarea circuitelor fixe."), b("For a 250 W average essential load over four hours, plan 1 kWh AC. At the illustrative 80% usable fraction and 92% conversion, nominal storage is about 1.36 kWh. Check sockets, output limits and transfer behaviour on the actual unit. If uninterrupted networking matters, check both the router and optical terminal; keeping only one powered may not maintain connectivity.", "Pentru 250 W medii timp de patru ore, planifică 1 kWh AC. La 80% utilizare și 92% conversie, stocarea nominală este circa 1,36 kWh. Verifică prizele, limitele și transferul unității. Pentru internet continuu, verifică routerul și terminalul optic; alimentarea unuia singur poate să nu păstreze conexiunea."), b("Choose a dry, ventilated position that preserves escape routes and manufacturer clearances. Do not connect an inverter output to a wall socket to energise the apartment. Fixed-circuit backup needs professional isolation and transfer design. Combustion generators are unsuitable indoors, in garages or on enclosed balconies. Roof or balcony PV needs permission, structural mounting and a realistic shade assessment before it enters the energy budget.", "Alege loc uscat, ventilat, cu căi de evacuare și distanțe păstrate. Nu conecta ieșirea invertorului la priza de perete. Circuitele fixe cer separare și transfer proiectate. Generatoarele cu ardere nu se folosesc în interior, garaj sau balcon închis. PV pe acoperiș/balcon cere permisiuni, fixare structurală și evaluarea umbrei.")],
- ["home-backup-system", b("Plan a home backup system", "Planifică rezerva casei"), "backup-power", "backup-power", "home-backup", b("Walk through the house and identify essential circuits before choosing equipment. Heating controls, a circulation pump, refrigeration and communications may be priorities, while electric water heating and cooking can remain off. Record phase allocation and starting loads. The largest normal household demand is not necessarily the demand you should maintain during an outage.", "Identifică circuitele esențiale înaintea echipamentelor. Comenzile încălzirii, pompa, frigiderul și comunicațiile pot fi prioritare; boilerul și gătitul pot rămâne oprite. Notează fazele și pornirile. Consumul maxim normal al casei nu este neapărat consumul de menținut în rezervă."), b("For 1 kW average load over four hours, delivered energy is 4 kWh. The example 80% usable fraction and 92% conversion imply 5.43 kWh of storage before extra reserve. An inverter must separately support the simultaneous load and starting event. Ask the installer to document which circuits remain live and how users know the system is in backup mode.", "Pentru 1 kW mediu timp de patru ore, energia livrată este 4 kWh. Factorii 80% și 92% implică 5,43 kWh de stocare înainte de rezervă. Invertorul trebuie să susțină separat sarcina simultană și pornirea. Cere documentarea circuitelor alimentate și a indicării modului rezervă."), b("A grid-tied solar installation often stops during an outage unless it has a supported backup arrangement. Review anti-islanding, neutral and earthing behaviour, protective devices and return-to-grid sequencing with the installer. If a generator is added, coordinate the charger input and transfer arrangement. Test realistic loads and planned shutdown before relying on the system for a long outage.", "Solarul conectat la rețea se oprește adesea la întrerupere fără mod rezervă compatibil. Verifică anti-insularizarea, neutrul, împământarea, protecțiile și revenirea la rețea cu instalatorul. Dacă adaugi generator, coordonează intrarea încărcătorului și transferul. Testează sarcini reale și oprirea planificată înainte de utilizare îndelungată.")],
- ["rv-solar-basics", b("RV solar basics", "Bazele solarului pentru rulotă"), "solar", "solar/kits", "rv-caravan", b("A travel energy budget begins with how you camp. A vehicle moving daily can use alternator charging; a vehicle parked for several days needs solar, shore power or larger usable storage. Count refrigeration, ventilation, lights, pumps and device charging over a full day. Record which loads use DC directly and which require an inverter so conversion losses are assigned correctly.", "Bugetul depinde de călătorie. Vehiculul care circulă zilnic poate încărca din alternator; cel parcat mai multe zile necesită solar, camping sau stocare mai mare. Calculează frigiderul, ventilația, luminile, pompele și dispozitivele pe zi. Separă DC direct de sarcinile cu invertor pentru pierderi corecte."), b("Measure usable roof area after vents, aerials and mounting clearances. A panel that fits geometrically may still sit under frequent shade. Portable panels can be placed in sun while the vehicle stays cool, but need handling, secure connectors and daily setup. Size the array from your travel-season yield and daily Wh, then verify cold-weather PV voltage against the controller.", "Măsoară plafonul util după trape, antene și distanțe. Un panou care încape poate fi umbrit frecvent. Portabilele pot sta la soare iar vehiculul la răcoare, dar cer manipulare, conectori siguri și instalare zilnică. Dimensionează după sezon și Wh zilnici, apoi verifică tensiunea PV la rece."), b("Keep starting and house-battery functions distinct. Verify alternator compatibility and charging profiles when changing battery chemistry. Total charging from simultaneous sources must remain within battery limits. Secure battery mass, protect cables at penetrations and provide accessible isolation. Monitor one complete travel day and compare the measured deficit with the design before expanding the array or battery.", "Separă pornirea de bateria de servicii. Verifică alternatorul și profilurile când schimbi chimia. Încărcarea totală din surse simultane trebuie să respecte bateria. Fixează masa, protejează cablurile la treceri și asigură separare accesibilă. Monitorizează o zi completă și compară deficitul măsurat înainte de extindere.")],
- ["marine-battery-system", b("Marine battery system planning", "Planificarea bateriilor la bord"), "marine", "marine", "marine", b("Create separate passage and anchorage energy budgets. Navigation, communications and safety-related equipment have different priorities from refrigeration and entertainment. Preserve engine starting capability independently of house-bank use. A shopping list cannot determine the redundancy required for a particular voyage; discuss critical loads and failure cases with a qualified marine electrical specialist.", "Creează bugete separate în mers și la ancoră. Navigația, comunicațiile și siguranța au alte priorități decât frigiderul și divertismentul. Păstrează pornirea motorului independentă de consumul de servicii. Lista de cumpărături nu determină redundanța pentru voiaj; discută sarcinile critice și defectele cu specialist naval."), b("A 2 kWh daily DC budget at 80% usable storage requires 2.5 kWh nominal before extra losses and reserve. AC appliances add inverter conversion. Alternator charging must consider thermal limits and the battery's acceptance profile; a lithium conversion can change alternator duty significantly. Solar yield is affected by rigging shadows, orientation and deck space, so validate it in actual operating conditions.", "2 kWh DC pe zi la 80% utilizare cer 2,5 kWh nominali înainte de pierderi și rezervă. AC adaugă conversia invertorului. Încărcarea din alternator cere limite termice și profil compatibil; conversia la litiu poate modifica regimul alternatorului. Solarul depinde de greement, orientare și punte, deci validează în condiții reale."), b("Salt, water, vibration and shore-power interfaces require marine-specific selection. Check conductor termination, enclosure suitability, overcurrent interruption and battery restraint. Bonding and galvanic corrosion need vessel-level assessment rather than generic domestic assumptions. Label isolation points and document what remains energised after each switch is opened; maintain access for inspection and emergency response.", "Sarea, apa, vibrațiile și alimentarea de la cheu cer selecție navală. Verifică terminațiile, carcasele, ruperea curentului și fixarea bateriei. Legăturile de protecție și coroziunea galvanică necesită evaluarea navei, nu ipoteze casnice. Etichetează separatoarele și ce rămâne alimentat; păstrează accesul pentru inspecție și urgențe.")],
- ["dc-dc-charger-guide", b("How to choose a DC-DC charger", "Cum alegi încărcătorul DC-DC"), "batteries", "chargers/dc-dc", "rv-caravan", b("A DC-DC charger controls energy transfer from a source such as an alternator into a house battery. It can limit charging current and provide a chemistry-specific profile. This role differs from a simple battery combiner and from an AC mains charger. Establish the source-voltage range, destination battery and whether galvanic isolation is required before comparing current ratings.", "Încărcătorul DC-DC controlează transferul de la o sursă precum alternatorul la bateria de servicii. Poate limita curentul și oferi profil chimic. Diferă de un separator simplu și de încărcătorul AC. Stabilește intervalul sursei, bateria și necesitatea izolării galvanice înainte de compararea curenților."), b("Choose output current from battery acceptance, alternator capacity after vehicle loads and available wiring. Input current can exceed output current when the source voltage is lower and losses are included. Smart alternators may need ignition signalling or a supported activation method. Check source and destination cable lengths independently, with protection appropriate to each energised end.", "Alege curentul după acceptarea bateriei, capacitatea alternatorului rămasă și cabluri. Curentul de intrare poate depăși ieșirea când tensiunea sursei este mai mică și există pierderi. Alternatoarele inteligente pot cere semnal de contact. Verifică separat lungimile și protecțiile fiecărui capăt alimentat."), b("For DC-DC plus MPPT devices, review maximum PV Voc and how solar and alternator share output. A combined label does not mean the full rating is available from both sources simultaneously. Match cold-corrected panel voltage, temperature sensing and battery profile. Monitor alternator and charger temperature on a representative drive rather than assuming a short bench test proves continuous suitability.", "La DC-DC cu MPPT, verifică Voc PV maxim și împărțirea ieșirii între solar și alternator. Eticheta combinată nu înseamnă putere maximă simultană din ambele. Corelează tensiunea la rece, senzorii și profilul bateriei. Monitorizează temperaturile într-o deplasare reprezentativă; testul scurt nu dovedește regim continuu.")],
- ["generator-vs-battery-backup", b("Generator or battery backup?", "Generator sau baterie de rezervă?"), "generators", "generators", "off-grid-cabin", b("Battery backup stores a finite amount of energy and can operate without combustion exhaust. A generator produces energy while fuel and operating conditions permit. Compare outage duration, acceptable noise, transfer time, safe placement and maintenance access. A battery can serve short quiet intervals; a generator can replenish storage during longer interruptions. Neither guarantees continuity without an appropriately tested system.", "Bateria stochează energie finită și funcționează fără gaze de ardere. Generatorul produce cât permit combustibilul și condițiile. Compară durata întreruperii, zgomotul, transferul, amplasarea și mentenanța. Bateria servește intervale liniștite; generatorul o poate reîncărca la întreruperi lungi. Niciuna nu garantează continuitatea fără sistem testat."), b("For a hybrid design, the generator must support the charger plus any loads supplied directly at the same time. Charger input quality and current limits matter. Calculate the energy deficit and desired recharge time, then check actual battery charge acceptance. A nominally large generator may operate poorly at very light load; follow its operating guidance rather than choosing solely by peak kW.", "În hibrid, generatorul susține încărcătorul și sarcinile directe simultane. Contează calitatea intrării și curentul. Calculează deficitul și timpul de reîncărcare, apoi verifică acceptarea bateriei. Generatorul mare poate funcționa nepotrivit la sarcină foarte mică; urmează ghidul său, nu doar kW maximi."), b("Combustion generators must be used outdoors away from windows, doors and vents, never inside a home or garage. Follow the manufacturer and local safety guidance for placement. Prevent backfeeding the grid through a designed transfer arrangement; never improvise a plug-to-plug feed. Plan fuel handling, weather protection that preserves ventilation, periodic exercising and a safe shutdown procedure.", "Generatoarele cu ardere se folosesc afară, departe de ferestre, uși și ventilații, niciodată în casă sau garaj. Urmează producătorul și regulile locale de amplasare. Previne alimentarea inversă prin transfer proiectat; nu improviza cablu cu două ștechere. Planifică combustibilul, protecția meteo ventilată, testele și oprirea sigură.")],
- ["ev-charging-basics", b("Home EV charging basics", "Bazele încărcării auto acasă"), "ev-charging", "ev-charging", "home-backup", b("Start with daily driving energy and the hours available to charge. The car's onboard AC charger limits accepted power, so a higher-rated wallbox may not shorten charging. Check whether the property has single- or three-phase supply and what capacity remains after other household loads. A dedicated assessment can be more useful than choosing the highest power in a catalog.", "Începe cu energia deplasărilor zilnice și orele disponibile. Încărcătorul AC al mașinii limitează puterea, deci stația mai mare poate să nu scurteze încărcarea. Verifică alimentarea mono/trifazată și capacitatea rămasă după casă. Evaluarea instalației poate conta mai mult decât puterea maximă din catalog."), b("If a vehicle needs 12 kWh overnight, an ideal 3 kW input would take four hours before charging losses and any power reduction. Actual charging follows the vehicle and site limits. Load management can reduce charger demand when cooking or heating loads rise. Specify connector, cable reach, weather exposure and user access before comparing features such as scheduling or app control.", "Dacă vehiculul cere 12 kWh noaptea, ideal 3 kW ar necesita patru ore înainte de pierderi și reduceri. Încărcarea reală urmează limitele mașinii și instalației. Managementul sarcinii reduce cererea când cresc gătitul sau încălzirea. Specifică conectorul, lungimea, intemperiile și accesul înainte de aplicații sau programare."), b("Have an installer verify conductor sizing, protective devices, earthing and residual-current protection for the chosen EVSE and local installation requirements. Portable charging does not make an unsuitable socket safe for sustained load. Battery backup for essential household circuits usually excludes EV charging because its energy demand can exhaust storage quickly; include it only as an explicit designed load.", "Instalatorul verifică conductoarele, protecțiile, împământarea și protecția diferențială pentru EVSE și cerințele locale. Încărcarea portabilă nu face sigură o priză nepotrivită pentru sarcină continuă. Rezerva pentru circuite esențiale exclude de regulă automobilul deoarece golește rapid stocarea; include-l doar ca sarcină proiectată explicit.")],
- ["cable-and-protection-basics", b("Cable and protection basics", "Bazele cablării și protecției"), "electrical-basics", "electrical-components", "workshop", b("A cable has both a thermal limit and a voltage-drop consequence. Its allowable current depends on conductor material, insulation, ambient temperature, grouping and installation method. A calculation using length and current alone cannot establish final ampacity. Start with a route drawing, one-way length and the actual circuit arrangement; DC return conductors contribute to the loop resistance.", "Cablul are limită termică și produce cădere de tensiune. Curentul admis depinde de material, izolație, temperatură, grupare și montaj. Calculul din lungime și curent nu stabilește curentul final admis. Începe cu traseul, lungimea pe un sens și circuitul real; returul DC contribuie la rezistența buclei."), b("For a simple two-wire DC circuit, voltage drop is current times total loop resistance. A one-way 5 m cable route has 10 m of conductor in the current loop. Low-voltage battery systems can suffer meaningful power loss from a small absolute voltage drop. Check terminal and connector resistance too, especially under high inverter current or after vibration and corrosion exposure.", "Pentru DC cu două fire, căderea este curentul înmulțit cu rezistența buclei. Traseul de 5 m pe sens are 10 m conductor în buclă. Sistemele cu tensiune mică pierd semnificativ chiar la cădere absolută mică. Verifică și rezistența bornelor, mai ales la curenți mari sau după vibrații și coroziune."), b("Protect the conductor against overcurrent using a device suitable for the circuit voltage, AC or DC operation and prospective fault current. A current rating printed on a fuse does not state all those properties. Place and coordinate protection according to the system design and manufacturer requirements. Never increase a protective rating merely to stop repeated trips without finding the cause.", "Protejează conductorul cu dispozitiv adecvat tensiunii, funcționării AC/DC și curentului de defect. Curentul inscripționat pe siguranță nu descrie toate proprietățile. Amplasează și coordonează protecția după proiect și producător. Nu crește calibrul doar pentru a opri declanșări repetate fără găsirea cauzei.")],
- ["industrial-motor-planning", b("Industrial motor and VFD planning", "Planificarea motoarelor și VFD"), "industrial", "industrial", "workshop", b("Record the motor nameplate, supply phases, rated current, speed, duty and driven load before considering a replacement or VFD. Motor output kW is mechanical output; electrical input also depends on efficiency and power factor. Starting a loaded compressor is a different duty from accelerating a fan. The process requirement determines the necessary torque and control behaviour.", "Notează plăcuța, fazele, curentul, viteza, regimul și sarcina înainte de înlocuire sau VFD. kW motor reprezintă ieșire mecanică; intrarea electrică depinde de randament și factorul de putere. Compresorul încărcat diferă de ventilator. Procesul determină cuplul și comanda necesare."), b("For three-phase planning, current is approximately input watts divided by square root of three, line voltage and power factor. If starting from mechanical output, divide by motor efficiency as well. Use the nameplate and drive duty rating for selection, not the estimate alone. VFD input phases, overload capability, braking and low-speed motor cooling can constrain an otherwise plausible kW match.", "Pentru trifazat, curentul este aproximativ W de intrare împărțiți la radical din trei, tensiunea de linie și factorul de putere. Din putere mecanică împarte și la randament. Selectează după plăcuță și regimul convertizorului, nu doar estimare. Fazele intrării, suprasarcina, frânarea și răcirea la viteză mică pot limita potrivirea."), b("Document EMC measures, cable routing, shielding, earthing, enclosure conditions and protection coordination. A drive's stop command is not automatically a safety function. Emergency stop, safe torque off and restart behaviour require a machine-level safety assessment by competent professionals. For backup power, decide whether the goal is continued production or an orderly controlled stop; the two lead to different equipment requirements.", "Documentează EMC, traseele, ecranarea, împământarea, carcasa și protecțiile. Comanda stop a convertizorului nu este automat funcție de siguranță. Oprirea de urgență, safe torque off și repornirea cer evaluare a utilajului. Pentru rezervă, decide între producție continuă și oprire controlată; cerințele echipamentelor diferă.")],
+const applications: [
+  string,
+  LocalText,
+  string,
+  string,
+  string,
+  LocalText,
+  LocalText,
+  LocalText,
+][] = [
+  [
+    "apartment-backup-system",
+    b("Plan an apartment backup system", "Planifică rezerva apartamentului"),
+    "backup-power",
+    "backup-power",
+    "apartment-backup",
+    b(
+      "Start with a list of individual appliances you can safely plug into a portable backup source. Router, laptop and LED lighting often give more useful continuity per kWh than heating appliances. Record the fridge's measured daily energy and starting behaviour if it is included. A system serving individual plugs has a different installation scope from one energising fixed household circuits.",
+      "Începe cu aparate individuale alimentate sigur din rezervă portabilă. Routerul, laptopul și LED oferă adesea mai multă utilitate pe kWh decât încălzirea. Dacă incluzi frigiderul, măsoară energia și pornirea. Alimentarea aparatelor individuale are alt scop de instalare decât alimentarea circuitelor fixe.",
+    ),
+    b(
+      "For a 250 W average essential load over four hours, plan 1 kWh AC. At the illustrative 80% usable fraction and 92% conversion, nominal storage is about 1.36 kWh. Check sockets, output limits and transfer behaviour on the actual unit. If uninterrupted networking matters, check both the router and optical terminal; keeping only one powered may not maintain connectivity.",
+      "Pentru 250 W medii timp de patru ore, planifică 1 kWh AC. La 80% utilizare și 92% conversie, stocarea nominală este circa 1,36 kWh. Verifică prizele, limitele și transferul unității. Pentru internet continuu, verifică routerul și terminalul optic; alimentarea unuia singur poate să nu păstreze conexiunea.",
+    ),
+    b(
+      "Choose a dry, ventilated position that preserves escape routes and manufacturer clearances. Do not connect an inverter output to a wall socket to energise the apartment. Fixed-circuit backup needs professional isolation and transfer design. Combustion generators are unsuitable indoors, in garages or on enclosed balconies. Roof or balcony PV needs permission, structural mounting and a realistic shade assessment before it enters the energy budget.",
+      "Alege loc uscat, ventilat, cu căi de evacuare și distanțe păstrate. Nu conecta ieșirea invertorului la priza de perete. Circuitele fixe cer separare și transfer proiectate. Generatoarele cu ardere nu se folosesc în interior, garaj sau balcon închis. PV pe acoperiș/balcon cere permisiuni, fixare structurală și evaluarea umbrei.",
+    ),
+  ],
+  [
+    "home-backup-system",
+    b("Plan a home backup system", "Planifică rezerva casei"),
+    "backup-power",
+    "backup-power",
+    "home-backup",
+    b(
+      "Walk through the house and identify essential circuits before choosing equipment. Heating controls, a circulation pump, refrigeration and communications may be priorities, while electric water heating and cooking can remain off. Record phase allocation and starting loads. The largest normal household demand is not necessarily the demand you should maintain during an outage.",
+      "Identifică circuitele esențiale înaintea echipamentelor. Comenzile încălzirii, pompa, frigiderul și comunicațiile pot fi prioritare; boilerul și gătitul pot rămâne oprite. Notează fazele și pornirile. Consumul maxim normal al casei nu este neapărat consumul de menținut în rezervă.",
+    ),
+    b(
+      "For 1 kW average load over four hours, delivered energy is 4 kWh. The example 80% usable fraction and 92% conversion imply 5.43 kWh of storage before extra reserve. An inverter must separately support the simultaneous load and starting event. Ask the installer to document which circuits remain live and how users know the system is in backup mode.",
+      "Pentru 1 kW mediu timp de patru ore, energia livrată este 4 kWh. Factorii 80% și 92% implică 5,43 kWh de stocare înainte de rezervă. Invertorul trebuie să susțină separat sarcina simultană și pornirea. Cere documentarea circuitelor alimentate și a indicării modului rezervă.",
+    ),
+    b(
+      "A grid-tied solar installation often stops during an outage unless it has a supported backup arrangement. Review anti-islanding, neutral and earthing behaviour, protective devices and return-to-grid sequencing with the installer. If a generator is added, coordinate the charger input and transfer arrangement. Test realistic loads and planned shutdown before relying on the system for a long outage.",
+      "Solarul conectat la rețea se oprește adesea la întrerupere fără mod rezervă compatibil. Verifică anti-insularizarea, neutrul, împământarea, protecțiile și revenirea la rețea cu instalatorul. Dacă adaugi generator, coordonează intrarea încărcătorului și transferul. Testează sarcini reale și oprirea planificată înainte de utilizare îndelungată.",
+    ),
+  ],
+  [
+    "rv-solar-basics",
+    b("RV solar basics", "Bazele solarului pentru rulotă"),
+    "solar",
+    "solar/kits",
+    "rv-caravan",
+    b(
+      "A travel energy budget begins with how you camp. A vehicle moving daily can use alternator charging; a vehicle parked for several days needs solar, shore power or larger usable storage. Count refrigeration, ventilation, lights, pumps and device charging over a full day. Record which loads use DC directly and which require an inverter so conversion losses are assigned correctly.",
+      "Bugetul depinde de călătorie. Vehiculul care circulă zilnic poate încărca din alternator; cel parcat mai multe zile necesită solar, camping sau stocare mai mare. Calculează frigiderul, ventilația, luminile, pompele și dispozitivele pe zi. Separă DC direct de sarcinile cu invertor pentru pierderi corecte.",
+    ),
+    b(
+      "Measure usable roof area after vents, aerials and mounting clearances. A panel that fits geometrically may still sit under frequent shade. Portable panels can be placed in sun while the vehicle stays cool, but need handling, secure connectors and daily setup. Size the array from your travel-season yield and daily Wh, then verify cold-weather PV voltage against the controller.",
+      "Măsoară plafonul util după trape, antene și distanțe. Un panou care încape poate fi umbrit frecvent. Portabilele pot sta la soare iar vehiculul la răcoare, dar cer manipulare, conectori siguri și instalare zilnică. Dimensionează după sezon și Wh zilnici, apoi verifică tensiunea PV la rece.",
+    ),
+    b(
+      "Keep starting and house-battery functions distinct. Verify alternator compatibility and charging profiles when changing battery chemistry. Total charging from simultaneous sources must remain within battery limits. Secure battery mass, protect cables at penetrations and provide accessible isolation. Monitor one complete travel day and compare the measured deficit with the design before expanding the array or battery.",
+      "Separă pornirea de bateria de servicii. Verifică alternatorul și profilurile când schimbi chimia. Încărcarea totală din surse simultane trebuie să respecte bateria. Fixează masa, protejează cablurile la treceri și asigură separare accesibilă. Monitorizează o zi completă și compară deficitul măsurat înainte de extindere.",
+    ),
+  ],
+  [
+    "marine-battery-system",
+    b("Marine battery system planning", "Planificarea bateriilor la bord"),
+    "marine",
+    "marine",
+    "marine",
+    b(
+      "Create separate passage and anchorage energy budgets. Navigation, communications and safety-related equipment have different priorities from refrigeration and entertainment. Preserve engine starting capability independently of house-bank use. A shopping list cannot determine the redundancy required for a particular voyage; discuss critical loads and failure cases with a qualified marine electrical specialist.",
+      "Creează bugete separate în mers și la ancoră. Navigația, comunicațiile și siguranța au alte priorități decât frigiderul și divertismentul. Păstrează pornirea motorului independentă de consumul de servicii. Lista de cumpărături nu determină redundanța pentru voiaj; discută sarcinile critice și defectele cu specialist naval.",
+    ),
+    b(
+      "A 2 kWh daily DC budget at 80% usable storage requires 2.5 kWh nominal before extra losses and reserve. AC appliances add inverter conversion. Alternator charging must consider thermal limits and the battery's acceptance profile; a lithium conversion can change alternator duty significantly. Solar yield is affected by rigging shadows, orientation and deck space, so validate it in actual operating conditions.",
+      "2 kWh DC pe zi la 80% utilizare cer 2,5 kWh nominali înainte de pierderi și rezervă. AC adaugă conversia invertorului. Încărcarea din alternator cere limite termice și profil compatibil; conversia la litiu poate modifica regimul alternatorului. Solarul depinde de greement, orientare și punte, deci validează în condiții reale.",
+    ),
+    b(
+      "Salt, water, vibration and shore-power interfaces require marine-specific selection. Check conductor termination, enclosure suitability, overcurrent interruption and battery restraint. Bonding and galvanic corrosion need vessel-level assessment rather than generic domestic assumptions. Label isolation points and document what remains energised after each switch is opened; maintain access for inspection and emergency response.",
+      "Sarea, apa, vibrațiile și alimentarea de la cheu cer selecție navală. Verifică terminațiile, carcasele, ruperea curentului și fixarea bateriei. Legăturile de protecție și coroziunea galvanică necesită evaluarea navei, nu ipoteze casnice. Etichetează separatoarele și ce rămâne alimentat; păstrează accesul pentru inspecție și urgențe.",
+    ),
+  ],
+  [
+    "dc-dc-charger-guide",
+    b("How to choose a DC-DC charger", "Cum alegi încărcătorul DC-DC"),
+    "batteries",
+    "chargers/dc-dc",
+    "rv-caravan",
+    b(
+      "A DC-DC charger controls energy transfer from a source such as an alternator into a house battery. It can limit charging current and provide a chemistry-specific profile. This role differs from a simple battery combiner and from an AC mains charger. Establish the source-voltage range, destination battery and whether galvanic isolation is required before comparing current ratings.",
+      "Încărcătorul DC-DC controlează transferul de la o sursă precum alternatorul la bateria de servicii. Poate limita curentul și oferi profil chimic. Diferă de un separator simplu și de încărcătorul AC. Stabilește intervalul sursei, bateria și necesitatea izolării galvanice înainte de compararea curenților.",
+    ),
+    b(
+      "Choose output current from battery acceptance, alternator capacity after vehicle loads and available wiring. Input current can exceed output current when the source voltage is lower and losses are included. Smart alternators may need ignition signalling or a supported activation method. Check source and destination cable lengths independently, with protection appropriate to each energised end.",
+      "Alege curentul după acceptarea bateriei, capacitatea alternatorului rămasă și cabluri. Curentul de intrare poate depăși ieșirea când tensiunea sursei este mai mică și există pierderi. Alternatoarele inteligente pot cere semnal de contact. Verifică separat lungimile și protecțiile fiecărui capăt alimentat.",
+    ),
+    b(
+      "For DC-DC plus MPPT devices, review maximum PV Voc and how solar and alternator share output. A combined label does not mean the full rating is available from both sources simultaneously. Match cold-corrected panel voltage, temperature sensing and battery profile. Monitor alternator and charger temperature on a representative drive rather than assuming a short bench test proves continuous suitability.",
+      "La DC-DC cu MPPT, verifică Voc PV maxim și împărțirea ieșirii între solar și alternator. Eticheta combinată nu înseamnă putere maximă simultană din ambele. Corelează tensiunea la rece, senzorii și profilul bateriei. Monitorizează temperaturile într-o deplasare reprezentativă; testul scurt nu dovedește regim continuu.",
+    ),
+  ],
+  [
+    "generator-vs-battery-backup",
+    b("Generator or battery backup?", "Generator sau baterie de rezervă?"),
+    "generators",
+    "generators",
+    "off-grid-cabin",
+    b(
+      "Battery backup stores a finite amount of energy and can operate without combustion exhaust. A generator produces energy while fuel and operating conditions permit. Compare outage duration, acceptable noise, transfer time, safe placement and maintenance access. A battery can serve short quiet intervals; a generator can replenish storage during longer interruptions. Neither guarantees continuity without an appropriately tested system.",
+      "Bateria stochează energie finită și funcționează fără gaze de ardere. Generatorul produce cât permit combustibilul și condițiile. Compară durata întreruperii, zgomotul, transferul, amplasarea și mentenanța. Bateria servește intervale liniștite; generatorul o poate reîncărca la întreruperi lungi. Niciuna nu garantează continuitatea fără sistem testat.",
+    ),
+    b(
+      "For a hybrid design, the generator must support the charger plus any loads supplied directly at the same time. Charger input quality and current limits matter. Calculate the energy deficit and desired recharge time, then check actual battery charge acceptance. A nominally large generator may operate poorly at very light load; follow its operating guidance rather than choosing solely by peak kW.",
+      "În hibrid, generatorul susține încărcătorul și sarcinile directe simultane. Contează calitatea intrării și curentul. Calculează deficitul și timpul de reîncărcare, apoi verifică acceptarea bateriei. Generatorul mare poate funcționa nepotrivit la sarcină foarte mică; urmează ghidul său, nu doar kW maximi.",
+    ),
+    b(
+      "Combustion generators must be used outdoors away from windows, doors and vents, never inside a home or garage. Follow the manufacturer and local safety guidance for placement. Prevent backfeeding the grid through a designed transfer arrangement; never improvise a plug-to-plug feed. Plan fuel handling, weather protection that preserves ventilation, periodic exercising and a safe shutdown procedure.",
+      "Generatoarele cu ardere se folosesc afară, departe de ferestre, uși și ventilații, niciodată în casă sau garaj. Urmează producătorul și regulile locale de amplasare. Previne alimentarea inversă prin transfer proiectat; nu improviza cablu cu două ștechere. Planifică combustibilul, protecția meteo ventilată, testele și oprirea sigură.",
+    ),
+  ],
+  [
+    "ev-charging-basics",
+    b("Home EV charging basics", "Bazele încărcării auto acasă"),
+    "ev-charging",
+    "ev-charging",
+    "home-backup",
+    b(
+      "Start with daily driving energy and the hours available to charge. The car's onboard AC charger limits accepted power, so a higher-rated wallbox may not shorten charging. Check whether the property has single- or three-phase supply and what capacity remains after other household loads. A dedicated assessment can be more useful than choosing the highest power in a catalog.",
+      "Începe cu energia deplasărilor zilnice și orele disponibile. Încărcătorul AC al mașinii limitează puterea, deci stația mai mare poate să nu scurteze încărcarea. Verifică alimentarea mono/trifazată și capacitatea rămasă după casă. Evaluarea instalației poate conta mai mult decât puterea maximă din catalog.",
+    ),
+    b(
+      "If a vehicle needs 12 kWh overnight, an ideal 3 kW input would take four hours before charging losses and any power reduction. Actual charging follows the vehicle and site limits. Load management can reduce charger demand when cooking or heating loads rise. Specify connector, cable reach, weather exposure and user access before comparing features such as scheduling or app control.",
+      "Dacă vehiculul cere 12 kWh noaptea, ideal 3 kW ar necesita patru ore înainte de pierderi și reduceri. Încărcarea reală urmează limitele mașinii și instalației. Managementul sarcinii reduce cererea când cresc gătitul sau încălzirea. Specifică conectorul, lungimea, intemperiile și accesul înainte de aplicații sau programare.",
+    ),
+    b(
+      "Have an installer verify conductor sizing, protective devices, earthing and residual-current protection for the chosen EVSE and local installation requirements. Portable charging does not make an unsuitable socket safe for sustained load. Battery backup for essential household circuits usually excludes EV charging because its energy demand can exhaust storage quickly; include it only as an explicit designed load.",
+      "Instalatorul verifică conductoarele, protecțiile, împământarea și protecția diferențială pentru EVSE și cerințele locale. Încărcarea portabilă nu face sigură o priză nepotrivită pentru sarcină continuă. Rezerva pentru circuite esențiale exclude de regulă automobilul deoarece golește rapid stocarea; include-l doar ca sarcină proiectată explicit.",
+    ),
+  ],
+  [
+    "cable-and-protection-basics",
+    b("Cable and protection basics", "Bazele cablării și protecției"),
+    "electrical-basics",
+    "electrical-components",
+    "workshop",
+    b(
+      "A cable has both a thermal limit and a voltage-drop consequence. Its allowable current depends on conductor material, insulation, ambient temperature, grouping and installation method. A calculation using length and current alone cannot establish final ampacity. Start with a route drawing, one-way length and the actual circuit arrangement; DC return conductors contribute to the loop resistance.",
+      "Cablul are limită termică și produce cădere de tensiune. Curentul admis depinde de material, izolație, temperatură, grupare și montaj. Calculul din lungime și curent nu stabilește curentul final admis. Începe cu traseul, lungimea pe un sens și circuitul real; returul DC contribuie la rezistența buclei.",
+    ),
+    b(
+      "For a simple two-wire DC circuit, voltage drop is current times total loop resistance. A one-way 5 m cable route has 10 m of conductor in the current loop. Low-voltage battery systems can suffer meaningful power loss from a small absolute voltage drop. Check terminal and connector resistance too, especially under high inverter current or after vibration and corrosion exposure.",
+      "Pentru DC cu două fire, căderea este curentul înmulțit cu rezistența buclei. Traseul de 5 m pe sens are 10 m conductor în buclă. Sistemele cu tensiune mică pierd semnificativ chiar la cădere absolută mică. Verifică și rezistența bornelor, mai ales la curenți mari sau după vibrații și coroziune.",
+    ),
+    b(
+      "Protect the conductor against overcurrent using a device suitable for the circuit voltage, AC or DC operation and prospective fault current. A current rating printed on a fuse does not state all those properties. Place and coordinate protection according to the system design and manufacturer requirements. Never increase a protective rating merely to stop repeated trips without finding the cause.",
+      "Protejează conductorul cu dispozitiv adecvat tensiunii, funcționării AC/DC și curentului de defect. Curentul inscripționat pe siguranță nu descrie toate proprietățile. Amplasează și coordonează protecția după proiect și producător. Nu crește calibrul doar pentru a opri declanșări repetate fără găsirea cauzei.",
+    ),
+  ],
+  [
+    "industrial-motor-planning",
+    b("Industrial motor and VFD planning", "Planificarea motoarelor și VFD"),
+    "industrial",
+    "industrial",
+    "workshop",
+    b(
+      "Record the motor nameplate, supply phases, rated current, speed, duty and driven load before considering a replacement or VFD. Motor output kW is mechanical output; electrical input also depends on efficiency and power factor. Starting a loaded compressor is a different duty from accelerating a fan. The process requirement determines the necessary torque and control behaviour.",
+      "Notează plăcuța, fazele, curentul, viteza, regimul și sarcina înainte de înlocuire sau VFD. kW motor reprezintă ieșire mecanică; intrarea electrică depinde de randament și factorul de putere. Compresorul încărcat diferă de ventilator. Procesul determină cuplul și comanda necesare.",
+    ),
+    b(
+      "For three-phase planning, current is approximately input watts divided by square root of three, line voltage and power factor. If starting from mechanical output, divide by motor efficiency as well. Use the nameplate and drive duty rating for selection, not the estimate alone. VFD input phases, overload capability, braking and low-speed motor cooling can constrain an otherwise plausible kW match.",
+      "Pentru trifazat, curentul este aproximativ W de intrare împărțiți la radical din trei, tensiunea de linie și factorul de putere. Din putere mecanică împarte și la randament. Selectează după plăcuță și regimul convertizorului, nu doar estimare. Fazele intrării, suprasarcina, frânarea și răcirea la viteză mică pot limita potrivirea.",
+    ),
+    b(
+      "Document EMC measures, cable routing, shielding, earthing, enclosure conditions and protection coordination. A drive's stop command is not automatically a safety function. Emergency stop, safe torque off and restart behaviour require a machine-level safety assessment by competent professionals. For backup power, decide whether the goal is continued production or an orderly controlled stop; the two lead to different equipment requirements.",
+      "Documentează EMC, traseele, ecranarea, împământarea, carcasa și protecțiile. Comanda stop a convertizorului nu este automat funcție de siguranță. Oprirea de urgență, safe torque off și repornirea cer evaluare a utilajului. Pentru rezervă, decide între producție continuă și oprire controlată; cerințele echipamentelor diferă.",
+    ),
+  ],
 ];
-for (const [slug, title, hub, category, solution, first, second, third] of applications) guides.push({ slug, title, hub, category, solution, level: "buying-guides", intro: b("A practical planning guide: define the job, work through the energy and compatibility constraints, then prepare a supplier brief.", "Ghid practic: definește scopul, verifică energia și compatibilitatea, apoi pregătește cerințele pentru furnizor."), sections: [{ title: b("Define the requirement", "Definește cerința"), body: first }, { title: b("Work through the system", "Analizează sistemul"), body: second }, { title: b("Before selecting equipment", "Înainte de alegerea echipamentului"), body: third }], calculator: category === "solar/kits" ? "/calculators/solar" : category === "industrial" ? "/calculators/motor-current" : category === "electrical-components" || category === "ev-charging" ? "/calculators/cable-sizing" : category === "generators" ? "/calculators/generator" : "/backup-calculator", sources: hub === "solar" ? [pvgis, wiring] : [wiring] });
+for (const [
+  slug,
+  title,
+  hub,
+  category,
+  solution,
+  first,
+  second,
+  third,
+] of applications)
+  guides.push({
+    slug,
+    title,
+    hub,
+    category,
+    solution,
+    level: "buying-guides",
+    intro: b(
+      "A practical planning guide: define the job, work through the energy and compatibility constraints, then prepare a supplier brief.",
+      "Ghid practic: definește scopul, verifică energia și compatibilitatea, apoi pregătește cerințele pentru furnizor.",
+    ),
+    sections: [
+      { title: b("Define the requirement", "Definește cerința"), body: first },
+      {
+        title: b("Work through the system", "Analizează sistemul"),
+        body: second,
+      },
+      {
+        title: b(
+          "Before selecting equipment",
+          "Înainte de alegerea echipamentului",
+        ),
+        body: third,
+      },
+    ],
+    calculator:
+      category === "solar/kits"
+        ? "/calculators/solar"
+        : category === "industrial"
+          ? "/calculators/motor-current"
+          : category === "electrical-components" || category === "ev-charging"
+            ? "/calculators/cable-sizing"
+            : category === "generators"
+              ? "/calculators/generator"
+              : "/backup-calculator",
+    sources: hub === "solar" ? [pvgis, wiring] : [wiring],
+  });
+for (const guide of guides) {
+  guide.sections.push({
+    title: b("Worked case and decision", "Exemplu de calcul și decizie"),
+    body: guideExamples[guide.slug],
+  });
+  if (guide.hub === "generators" || guide.slug === "apartment-backup-system") {
+    guide.sources.push("https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Carbon-Monoxide-Information-Center");
+  }
+}
 export const learnHubs = [
- ["getting-started", "Getting started", "Primii pași"], ["buying-guides", "Buying guides", "Ghiduri de cumpărare"], ["technical-guides", "Technical guides", "Ghiduri tehnice"], ["backup-power", "Backup power", "Energie de rezervă"], ["batteries", "Batteries", "Acumulatoare"], ["solar", "Solar", "Solar"], ["inverters", "Inverters", "Invertoare"], ["generators", "Generators", "Generatoare"], ["ev-charging", "EV charging", "Încărcare auto"], ["electrical-basics", "Electrical basics", "Bazele electricității"], ["marine", "Marine", "Naval"], ["industrial", "Industrial", "Industrial"],
+  ["getting-started", "Getting started", "Primii pași"],
+  ["buying-guides", "Buying guides", "Ghiduri de cumpărare"],
+  ["technical-guides", "Technical guides", "Ghiduri tehnice"],
+  ["backup-power", "Backup power", "Energie de rezervă"],
+  ["batteries", "Batteries", "Acumulatoare"],
+  ["solar", "Solar", "Solar"],
+  ["inverters", "Inverters", "Invertoare"],
+  ["generators", "Generators", "Generatoare"],
+  ["ev-charging", "EV charging", "Încărcare auto"],
+  ["electrical-basics", "Electrical basics", "Bazele electricității"],
+  ["marine", "Marine", "Naval"],
+  ["industrial", "Industrial", "Industrial"],
 ].map(([slug, en, ro]) => ({ slug, title: b(en, ro) }));

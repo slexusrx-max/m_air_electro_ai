@@ -1,7 +1,82 @@
-import Link from 'next/link';
-import { PlatformShell } from '@/components/platform-shell';
-import { Intro } from '@/components/marketplace/shared';
-import { getRequestLocale } from '@/lib/i18n/request';
-import { buildMetadata } from '@/lib/metadata';
-export const metadata=buildMetadata({title:'Contact — M Air Electro AI',description:'Contact the project about product corrections, supplier interest and future professional onboarding.',path:'/contact'});
-export default async function Page(){const ro=await getRequestLocale()==='ro';const email=process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim();return <PlatformShell><main className="commerce-page"><Intro title={ro?'Contact și corecții':'Contact and corrections'} description={ro?'Corecții de catalog, interes din partea furnizorilor și înscriere profesională viitoare.':'Catalog corrections, supplier interest and future professional onboarding.'}/><section className="content-panel"><h2>{ro?'Contactează proiectul':'Contact the project'}</h2><p>{ro?'Include adresa paginii, modelul echipamentului și sursa oficială relevantă. Pentru comenzi, plăți, livrare și retururi, contactează direct comerciantul extern.':'Include the page URL, equipment model and relevant official source. For orders, payments, delivery and returns, contact the external merchant directly.'}</p>{email?<a href={`mailto:${email}`} className="button-primary">{email}</a>:<a href="https://github.com/slexusrx-max/m_air_electro_ai/issues" target="_blank" rel="noreferrer" className="button-primary">{ro?'Contact prin proiectul GitHub':'Contact through the GitHub project'} ↗</a>}<p className="small-copy">{ro?'Sesizările GitHub sunt publice. Nu include date personale, documente confidențiale sau credențiale. Nu promitem timp de răspuns sau servicii de instalare.':'GitHub issues are public. Do not include personal data, confidential documents or credentials. We do not promise response times or installation services.'}</p></section><div className="two-columns"><section className="content-panel"><h2>{ro?'Furnizori':'Suppliers'}</h2><p>{ro?'Prezintă familiile de produse, sursele oficiale și regiunile de livrare. Includerea sau afilierea necesită verificare separată.':'Describe product families, official sources and delivery regions. Inclusion or affiliation requires a separate review.'}</p><Link href="/business">{ro?'Pentru afaceri':'For business'} →</Link></section><section className="content-panel"><h2>{ro?'Profesioniști':'Professionals'}</h2><p>{ro?'Rețeaua de experți nu este încă un serviciu de rezervare. Poți exprima interesul pentru viitoarea înscriere.':'The expert network is not yet a booking service. You may express interest in future onboarding.'}</p><Link href="/experts">{ro?'Ajutor profesional':'Professional help'} →</Link></section></div></main></PlatformShell>;}
+import { PlatformShell } from "@/components/platform-shell";
+import { getRequestDictionary } from "@/lib/i18n/request";
+import { commercialCopy } from "@/lib/marketplace/copy";
+import { siteConfig } from "@/lib/site";
+import { buildMetadata } from "@/lib/metadata";
+export const metadata = buildMetadata({
+  title: "Contact M Air Electro AI",
+  description:
+    "Întrebări despre calcule, conținut editorial și selecția echipamentelor pentru România.",
+  path: "/contact",
+});
+export default async function ContactPage() {
+  const t = await getRequestDictionary(),
+    c = commercialCopy(t),
+    mailto = siteConfig.contactEmail
+      ? `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent("M Air Electro AI enquiry")}`
+      : siteConfig.publicContactUrl;
+  return (
+    <PlatformShell>
+      <main className="mx-auto max-w-4xl space-y-7">
+        <section className="brand-glass-card rounded-3xl p-7">
+          <p className="eyebrow">M Air Electro AI</p>
+          <h1 className="mt-3 text-4xl font-bold">
+            {c.ro
+              ? "Ai o întrebare despre planul tău energetic?"
+              : "A question about your energy plan?"}
+          </h1>
+          <p className="mt-5 text-lg leading-8">
+            {c.ro
+              ? "Scrie pentru clarificări despre formule, corecturi ale ghidurilor sau informații despre legăturile către furnizori."
+              : "Write for clarification about formulas, corrections to guides or information about supplier links."}
+          </p>
+        </section>
+        <section className="info-card">
+          <h2>{c.ro ? "Contact direct" : "Direct contact"}</h2>
+          <a
+            className="mt-4 inline-block break-all text-xl font-bold text-teal-800 underline"
+            href={mailto}
+          >
+            {siteConfig.contactEmail ??
+              (c.ro
+                ? "Contactează proiectul pe GitHub"
+                : "Contact the project on GitHub")}
+          </a>
+          <p>
+            {siteConfig.contactEmail
+              ? c.ro
+                ? "Butonul deschide aplicația ta de email. Mesajul este trimis numai după ce îl trimiți din acea aplicație."
+                : "The button opens your email application. Your message is sent only when you submit it there."
+              : c.ro
+                ? "Poți trimite întrebări și corecturi prin pagina publică a proiectului. Ai nevoie de un cont GitHub; mesajul va fi public. Nu include date personale, parole sau documente."
+                : "Send questions and corrections through the public project page. A GitHub account is required and your message will be public. Do not include personal data, passwords or documents."}
+          </p>
+          <a href={mailto} className="button-primary mt-5">
+            {siteConfig.contactEmail
+              ? c.ro
+                ? "Scrie un email"
+                : "Write an email"
+              : c.ro
+                ? "Deschide pagina de contact"
+                : "Open contact page"}
+          </a>
+        </section>
+        <section className="info-card">
+          <h2>
+            {c.ro
+              ? "Întrebări despre o comandă?"
+              : "A question about an order?"}
+          </h2>
+          <p>
+            {c.ro
+              ? "Pentru plată, livrare, garanție sau retur, contactează comerciantul de la care ai cumpărat. M Air Electro AI nu primește comenzile și nu are acces la contul tău de client la furnizor."
+              : "For payment, delivery, warranty or returns, contact the merchant you bought from. M Air does not receive orders or access your supplier customer account."}
+          </p>
+        </section>
+        <p className="rounded-2xl bg-amber-50 p-5 text-sm leading-7">
+          {c.safety}
+        </p>
+      </main>
+    </PlatformShell>
+  );
+}

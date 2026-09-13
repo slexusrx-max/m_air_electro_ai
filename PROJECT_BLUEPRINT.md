@@ -50,7 +50,7 @@ Battery storage equals required delivered Wh divided by usable fraction and effi
 
 ## Affiliate Architecture
 
-Renogy EU is the first intended affiliate supplier, **not an approved partner or dealer**. Ordinary URLs live in editorial records. The existing provider abstraction resolves supplier CTAs. Activation requires explicit approval and a real Impact-issued HTTPS template containing `{url}`. Invalid/missing configuration returns the ordinary URL. Update disclosures at actual activation. Site-verification metadata alone is not affiliate approval.
+Renogy EU is the first intended affiliate supplier, **not an approved partner or dealer**. Ordinary URLs live in editorial records. The existing provider abstraction resolves supplier CTAs. Activation requires explicit approval and a real Impact-issued HTTPS mapping from exact supplier URLs to approved HTTPS links. Invalid/missing configuration returns the ordinary URL. Update disclosures at actual activation. Site-verification metadata alone is not affiliate approval.
 
 ## Supplier Architecture
 
@@ -70,7 +70,7 @@ Unique title, description, canonical and H1 for commercial pages. A real route i
 
 ## Localization
 
-Switching preserves full path and query. `mr-electro-locale` preserves stored preferences; Romanian is the default. Typed `{ro,en}` records allow later de/fr/it/es without duplicated route components. Ukrainian remains accepted for retained specialist tools. Translate editorial copy while keeping model names/units intact. Do not claim complete Romanian coverage for untranslated legacy supporting interfaces.
+Switching preserves full path and query. `mr-electro-locale` preserves stored preferences; Romanian is the default. Typed `{ro,en}` records allow later de/fr/it/es without duplicated route components. Ukrainian dictionary data remains for legacy code; the active request locale and switcher accept Romanian and English. Translate editorial copy while keeping model names/units intact. Do not claim complete Romanian coverage for untranslated legacy supporting interfaces.
 
 ## Data Architecture
 
@@ -102,7 +102,7 @@ State independent discovery, preliminary calculations, external seller responsib
 
 ## Development Roadmap
 
-1. Current phase: deep discovery, 22 categories, eight solutions, 18 guides, 15 records, search, compare, tools and official repository alignment.
+1. Current phase: deep discovery, 22 categories, eight solutions, 18 guides, 18 records, search, compare, tools and official repository alignment. The catalog retains existing production models alongside the new records.
 2. After approval: actual Impact activation, disclosure update and approved attribution testing.
 3. Curate more verified EU models/suppliers and promote justified facets to categories.
 4. Real expert onboarding, optional saved projects and separately scoped database/feed/AI work.

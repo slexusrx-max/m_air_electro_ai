@@ -29,7 +29,7 @@ export function buildMetadata({
       description,
       url,
       siteName: siteConfig.name,
-      locale: siteConfig.defaultLocale,
+      locale: siteConfig.defaultLocale.replace("-", "_"),
       type: "website",
       images: [
         {

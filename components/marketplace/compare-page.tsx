@@ -1,4 +1,144 @@
 import Link from "next/link";
+import { specificationLabel } from "@/lib/marketplace/specifications";
 import { catalog } from "@/lib/affiliate/catalog";
 import { parseComparison } from "@/lib/marketplace/query";
-export function Comparison({ids,ro}:{ids:string;ro:boolean}){const selected=parseComparison(ids,catalog);const fields=[...new Set(selected.flatMap(p=>Object.keys(p.technicalSpecs)))];return <><form action="/compare" className="content-panel"><p>{ro?"Selectează 2–4 înregistrări. Compară preferabil aceeași categorie; clasele de echipamente nu sunt modele comerciale.":"Select 2–4 records. Prefer the same category; equipment classes are not purchasable models."}</p><div className="compare-selectors">{[0,1,2,3].map(i=><label key={i}>{ro?"Echipament":"Equipment"} {i+1}<select name={`item${i+1}`} defaultValue={selected[i]?.id??""}><option value="">{ro?"Selectează":"Select"}</option>{catalog.map(p=><option key={p.id} value={p.id}>{ro?p.title.ro:p.name}</option>)}</select></label>)}</div><div className="action-row"><button type="submit" className="button-primary">{ro?"Compară selecția":"Compare selection"}</button><Link href="/compare">{ro?"Resetează":"Reset"}</Link></div></form>{selected.length<2?<p className="content-panel" role="status">{ro?"Alege cel puțin două echipamente pentru tabelul comparativ.":"Choose at least two items to display the comparison table."}</p>:<><p className="small-copy">{ro?"Câmpurile fără date sunt marcate «Nedocumentat». Nicio valoare nu este dedusă din preț sau din produse asemănătoare.":"Missing fields are marked “Not documented”. No value is inferred from price or similar products."}</p><div className="comparison-scroll" tabIndex={0} role="region" aria-label={ro?"Tabel comparativ, derulare orizontală":"Comparison table, scroll horizontally"}><table><caption>{ro?"Comparație factuală":"Factual comparison"}</caption><thead><tr><th scope="col">{ro?"Criteriu":"Criterion"}</th>{selected.map(p=><th scope="col" key={p.id}><Link href={`/marketplace/products/${p.slug}`}>{ro?p.title.ro:p.name}</Link><Link className="remove-compare" href={`/compare?ids=${encodeURIComponent(selected.filter(n=>n.id!==p.id).map(n=>n.id).join(","))}`}>{ro?"Elimină":"Remove"}</Link></th>)}</tr></thead><tbody><tr><th scope="row">{ro?"Tip":"Type"}</th>{selected.map(p=><td key={p.id}>{p.kind==="product"?"Renogy":ro?"Clasă de echipament":"Equipment class"}</td>)}</tr>{fields.map(field=><tr key={field}><th scope="row">{field}</th>{selected.map(p=><td key={p.id}>{p.technicalSpecs[field]??(ro?"Nedocumentat":"Not documented")}</td>)}</tr>)}<tr><th scope="row">{ro?"Utilizare":"Intended use"}</th>{selected.map(p=><td key={p.id}>{ro?p.bestFor.ro:p.bestFor.en}</td>)}</tr><tr><th scope="row">{ro?"Limitări":"Limitations"}</th>{selected.map(p=><td key={p.id}>{ro?p.limitations.ro:p.limitations.en}</td>)}</tr><tr><th scope="row">{ro?"Revizuit":"Reviewed"}</th>{selected.map(p=><td key={p.id}>{p.lastUpdated}</td>)}</tr></tbody></table></div></>}</>;}
+export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
+  const selected = parseComparison(ids, catalog);
+  const fields = [
+    ...new Set(selected.flatMap((p) => Object.keys(p.technicalSpecs))),
+  ];
+  return (
+    <>
+      <form action="/compare" className="content-panel">
+        <p>
+          {ro
+            ? "Selectează 2–4 înregistrări. Compară preferabil aceeași categorie; clasele de echipamente nu sunt modele comerciale."
+            : "Select 2–4 records. Prefer the same category; equipment classes are not purchasable models."}
+        </p>
+        <div className="compare-selectors">
+          {[0, 1, 2, 3].map((i) => (
+            <label key={i}>
+              {ro ? "Echipament" : "Equipment"} {i + 1}
+              <select
+                name={`item${i + 1}`}
+                defaultValue={selected[i]?.id ?? ""}
+              >
+                <option value="">{ro ? "Selectează" : "Select"}</option>
+                {catalog.map((p) => (
+                  <option key={p.id} value={p.id}>
+                    {ro ? p.title.ro : p.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ))}
+        </div>
+        <div className="action-row">
+          <button type="submit" className="button-primary">
+            {ro ? "Compară selecția" : "Compare selection"}
+          </button>
+          <Link href="/compare">{ro ? "Resetează" : "Reset"}</Link>
+        </div>
+      </form>
+      {selected.length < 2 ? (
+        <p className="content-panel" role="status">
+          {ro
+            ? "Alege cel puțin două echipamente pentru tabelul comparativ."
+            : "Choose at least two items to display the comparison table."}
+        </p>
+      ) : (
+        <>
+          <p className="small-copy">
+            {ro
+              ? "Câmpurile fără date sunt marcate «Nedocumentat». Nicio valoare nu este dedusă din preț sau din produse asemănătoare."
+              : "Missing fields are marked “Not documented”. No value is inferred from price or similar products."}
+          </p>
+          <div
+            className="comparison-scroll"
+            tabIndex={0}
+            role="region"
+            aria-label={
+              ro
+                ? "Tabel comparativ, derulare orizontală"
+                : "Comparison table, scroll horizontally"
+            }
+          >
+            <table>
+              <caption>
+                {ro ? "Comparație factuală" : "Factual comparison"}
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">{ro ? "Criteriu" : "Criterion"}</th>
+                  {selected.map((p) => (
+                    <th scope="col" key={p.id}>
+                      <Link href={`/marketplace/products/${p.slug}`}>
+                        {ro ? p.title.ro : p.name}
+                      </Link>
+                      <Link
+                        className="remove-compare"
+                        href={`/compare?ids=${encodeURIComponent(
+                          selected
+                            .filter((n) => n.id !== p.id)
+                            .map((n) => n.id)
+                            .join(","),
+                        )}`}
+                      >
+                        {ro ? "Elimină" : "Remove"}
+                      </Link>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">{ro ? "Tip" : "Type"}</th>
+                  {selected.map((p) => (
+                    <td key={p.id}>
+                      {p.kind === "product"
+                        ? "Renogy"
+                        : ro
+                          ? "Clasă de echipament"
+                          : "Equipment class"}
+                    </td>
+                  ))}
+                </tr>
+                {fields.map((field) => (
+                  <tr key={field}>
+                    <th scope="row">{specificationLabel(field, ro)}</th>
+                    {selected.map((p) => (
+                      <td key={p.id}>
+                        {p.technicalSpecs[field] ??
+                          (ro ? "Nedocumentat" : "Not documented")}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+                <tr>
+                  <th scope="row">{ro ? "Utilizare" : "Intended use"}</th>
+                  {selected.map((p) => (
+                    <td key={p.id}>{ro ? p.bestFor.ro : p.bestFor.en}</td>
+                  ))}
+                </tr>
+                <tr>
+                  <th scope="row">{ro ? "Limitări" : "Limitations"}</th>
+                  {selected.map((p) => (
+                    <td key={p.id}>
+                      {ro ? p.limitations.ro : p.limitations.en}
+                    </td>
+                  ))}
+                </tr>
+                <tr>
+                  <th scope="row">{ro ? "Revizuit" : "Reviewed"}</th>
+                  {selected.map((p) => (
+                    <td key={p.id}>{p.lastUpdated}</td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+    </>
+  );
+}

@@ -221,6 +221,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .commerce-page label { display:flex; flex-direction:column; gap:6px; font-size:.78rem; font-weight:650; }
 .commerce-page input,.commerce-page select { min-width:0; width:100%; padding:10px 11px; background:#fff; color:#183c2f; border:1px solid #bfcdb5; border-radius:8px; }
 .commerce-page .hero-search input { border:0; }
+.commerce-page input[type="checkbox"] { width:1.1rem; height:1.1rem; }
+.commerce-page label:has(input[type="checkbox"]) { flex-direction:row; align-items:center; }
 .catalog-filters>a { font-size:.8rem; }
 .result-count { margin:0 0 14px; font-size:.86rem; font-weight:650; }
 .small-copy { font-size:.73rem!important; line-height:1.65!important; color:#586c58; }

@@ -1,6 +1,6 @@
 # Localization architecture
 
-Romania/EU is the commercial focus. Romanian is the default request locale, English is selectable in the header, and the full pathname/query is preserved when switching. The existing mr-electro-locale cookie name is retained for preference compatibility. Ukrainian preferences remain supported for retained specialist modules.
+Romania/EU is the commercial focus. Romanian is the default request locale, English is selectable in the header, and the full pathname/query is preserved when switching. The existing mr-electro-locale cookie name is retained for preference compatibility. Legacy Ukrainian dictionary data remains, while public requests use Romanian or English.
 
 Marketplace, new solution/learning content, navigation, comparison, search, system finder, solar sizing and public information pages use explicit Romanian/English copy. Manufacturer model names and units remain intact. Existing advanced electrical/AI/document interfaces retain some English or Ukrainian supporting copy; do not claim their translation coverage is complete.
 

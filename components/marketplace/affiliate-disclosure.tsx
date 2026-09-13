@@ -1,3 +1,22 @@
-import Link from 'next/link';
-import type { Dictionary } from '@/lib/i18n/types';
-export function AffiliateDisclosure({dictionary:t}:{dictionary:Dictionary}) {const ro=t['locale.code']==='ro';return <aside className="supplier-disclosure"><strong>{ro?'Furnizori și afiliere':'Suppliers & affiliation'}</strong><p>{ro?'M Air Electro AI este o platformă independentă de descoperire. Nu deținem stoc și nu vindem aceste produse. Renogy EU este primul furnizor vizat pentru afiliere; aprobarea nu este confirmată. În prezent folosim linkuri normale către furnizor. Prețul, stocul, livrarea și retururile se verifică la comerciant.':'M Air Electro AI is an independent discovery platform. We do not hold inventory or sell these products. Renogy EU is the first intended affiliate supplier; approval is not confirmed. We currently use ordinary supplier links. Price, stock, delivery and returns must be checked with the merchant.'}</p><Link href="/affiliate-disclosure">{ro?'Citește politica de transparență':'Read the disclosure policy'} →</Link></aside>;}
+import { commercialCopy } from "@/lib/marketplace/copy";
+import Link from "next/link";
+import type { Dictionary } from "@/lib/i18n/types";
+export function AffiliateDisclosure({
+  dictionary: t,
+}: {
+  dictionary: Dictionary;
+}) {
+  const ro = t["locale.code"] === "ro";
+  return (
+    <aside className="supplier-disclosure">
+      <strong>
+        {ro ? "Furnizori și afiliere" : "Suppliers & affiliation"}
+      </strong>
+      <p>{commercialCopy(t).supplierNote}</p>
+      <Link href="/affiliate-disclosure">
+        {ro ? "Citește politica de transparență" : "Read the disclosure policy"}{" "}
+        →
+      </Link>
+    </aside>
+  );
+}

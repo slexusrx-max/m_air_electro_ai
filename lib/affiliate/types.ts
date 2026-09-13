@@ -1,4 +1,49 @@
-export type MarketplaceRegion = "EU" | "US" | "UK";
-export type ProductCategory = "solar-panels" | "lithium-batteries" | "inverters" | "backup-power" | "solar-kits" | "charge-controllers" | "electrical-accessories" | "industrial-electrical" | "marine-electrical" | "chargers" | "generators" | "ev-charging";
-export type CatalogProduct = { id: string; slug: string; brand: string; name: string; category: ProductCategory; description: string; image: null; price: number | null; currency: "EUR" | "USD" | "GBP"; originalPrice: number | null; availability: "partner-check" | "unavailable"; merchant: string; merchantRegion: MarketplaceRegion; affiliateUrl: string; productUrl: string; technicalSpecs: Record<string, string>; tags: string[]; featured: boolean; lastUpdated: string; recommendedFor: string[]; compatibilityNotes: string; whyRecommended: string; };
-export interface AffiliateProvider { id: "renogy" | "amazon" | "ebay" | "homedepot" | "future_partner"; region: MarketplaceRegion; baseUrl: string; trackingEnvironmentVariable?: string; buildAffiliateUrl(productUrl: string): string; disclosure: string; }
+export type MarketplaceRegion = "RO" | "EU" | "US" | "UK";
+export type ProductCategory =
+  | "solar-panels"
+  | "lithium-batteries"
+  | "inverters"
+  | "backup-power"
+  | "solar-kits"
+  | "charge-controllers"
+  | "electrical-accessories"
+  | "industrial-electrical"
+  | "marine-electrical"
+  | "battery-chargers"
+  | "chargers"
+  | "generators"
+  | "ev-charging";
+export type CatalogProduct = {
+  id: string;
+  slug: string;
+  brand: string;
+  name: string;
+  category: ProductCategory;
+  description: string;
+  image: null;
+  price: number | null;
+  currency: "EUR" | "USD" | "GBP";
+  originalPrice: number | null;
+  availability: "partner-check" | "unavailable";
+  kind: "product" | "equipment-class";
+  provider: "renogy" | "amazon" | "ebay" | "other";
+  merchant: string;
+  merchantRegion: MarketplaceRegion;
+  affiliateUrl: string;
+  productUrl: string;
+  technicalSpecs: Record<string, string>;
+  tags: string[];
+  featured: boolean;
+  lastUpdated: string;
+  recommendedFor: string[];
+  compatibilityNotes: string;
+  whyRecommended: string;
+};
+export interface AffiliateProvider {
+  id: "renogy" | "amazon" | "ebay" | "homedepot" | "future_partner";
+  region: MarketplaceRegion;
+  baseUrl: string;
+  trackingEnvironmentVariable?: string;
+  buildAffiliateUrl(productUrl: string): string;
+  disclosure: string;
+}

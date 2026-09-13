@@ -7,11 +7,13 @@ The official product is marketplace-first equipment discovery for Romania/EU. Pu
 | NEXT_PUBLIC_SITE_URL | Canonical production origin | Falls back to https://m-air-electro-ai.vercel.app |
 | NEXT_PUBLIC_CONTACT_EMAIL | Owner-provided working mailbox | Contact uses existing public GitHub issues |
 | RENOGY_AFFILIATE_APPROVED | Explicit written approval; must be true to activate tracking | Ordinary supplier links |
-| RENOGY_IMPACT_URL_TEMPLATE | Actual Impact-issued HTTPS deep-link template containing {url} | Ordinary supplier links |
+| AFFILIATE_TRACKING_ENABLED | Explicit tracking activation flag, in addition to approval | Ordinary supplier links |
+| CONTACT_EMAIL_VERIFIED | Verify the mailbox before showing it publicly | GitHub contact |
+| NEXT_PUBLIC_OPERATOR_NAME | Owner-supplied publisher identity | Public publisher profile |
+| RENOGY_IMPACT_LINKS_JSON | JSON mapping of exact supplier URLs to approved HTTPS links | Ordinary supplier links |
 | NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY | Optional account/session/document services | Public marketplace remains usable; account features unavailable |
 | SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY | Optional server administration | No privileged account operations |
 | AI_PROVIDER / OPENAI_API_KEY / OPENAI_MODEL | Optional real AI assistance | Explicit unavailable state; no simulated AI answer |
-| UKRPOSHTA_ADDRESS_API_TOKEN | Retained specialized Ukrainian address lookup | No verified-address claim |
 | NEXT_PUBLIC_MAP_STYLE_URL | Retained specialized map rendering | Controlled fallback |
 | Payment provider variables | Reserved integration boundaries | No product checkout or active fulfilment service |
 
@@ -28,7 +30,7 @@ Never commit credentials. No tracking identifier, Impact account, site-verificat
 
 ## Specialized retained modules
 
-Ukrainian energy/address adapters, map datasets and optional AI/document/account features remain outside the commercial navigation. To test the address integration separately, /api/address?mode=status reports whether credentials are configured. That endpoint is not a commercial launch prerequisite. Demonstration energy datasets must never be represented as live operational status.
+Ukrainian energy adapters, map datasets and optional AI/document/account features remain outside the commercial navigation. Address and shipping endpoints were removed; they are not part of the current site. Demonstration energy datasets must never be represented as live operational status.
 
 ## External dependencies
 

@@ -2,6 +2,7 @@
 
 import { calculatorRomanian } from "@/lib/i18n/calculator-copy";
 import { useState } from "react";
+import { resolveCalculation } from "@/lib/electrical-calculations";
 
 import {
   CalculatorAssumptions,
@@ -50,13 +51,13 @@ function resolveBattery(formState: FormState): CalculationResult {
     return { error: "Depth of discharge must stay below 100 and efficiency must stay between 0 and 100." };
   }
 
-  return calculateBattery({
+  return resolveCalculation(() => calculateBattery({
     loadPowerWatts,
     backupHours,
     systemVoltage,
     maxDepthOfDischargePercent,
     inverterEfficiencyPercent,
-  });
+  }));
 }
 
 export default function BatteryCalculator({ro=false}:{ro?:boolean}) {
