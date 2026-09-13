@@ -54,7 +54,7 @@ Renogy EU is the first intended affiliate supplier, **not an approved partner or
 
 ## Supplier Architecture
 
-Real models carry official sources and review dates. Classes describe technical roles, not invented purchasable products. No merchant copy or images are reproduced. Original SVG schematic illustrations are labelled. New suppliers need evidence, regional URL, disclosure and delivery checks. Never label a generic collection URL as a specific model.
+Real models carry official sources and review dates. Classes describe technical roles, not invented purchasable products. No merchant copy or images are reproduced. Original category artwork includes studio-style generated solar panel imagery and schematic illustrations for other families. Category imagery is illustrative, not a photograph of the named model. New suppliers need evidence, regional URL, disclosure and delivery checks. Never label a generic collection URL as a specific model.
 
 ## Search
 

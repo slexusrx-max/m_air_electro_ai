@@ -63,8 +63,8 @@ export default async function Page({ params }: Props) {
             <EquipmentVisual category={p.category} />
             <p className="small-copy">
               {ro
-                ? "Ilustrație originală schematică, nu fotografie a produsului."
-                : "Original schematic illustration, not a product photograph."}
+                ? "Imagine ilustrativă a categoriei; aspectul modelului real poate diferi."
+                : "Illustrative category image; the actual model’s appearance may differ."}
             </p>
           </div>
           <article>

@@ -189,6 +189,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .equipment-card { min-width:0; display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:18px; border:1px solid #dae4d1; background:#fcfef8f2; color:#173d34; }
 .equipment-visual { border-radius:12px; background:radial-gradient(ellipse at center,#dbe9c9,#eef4e7); }
 .equipment-visual svg { display:block; width:100%; height:145px; }
+.equipment-visual-photo { overflow:hidden; background:#e5e5e5; }
+.equipment-visual-photo img { display:block; width:100%; height:auto; }
 .equipment-card>.eyebrow { font-size:.61rem; letter-spacing:.12em; }
 .equipment-card>p:not(.eyebrow) { color:#53695f; font-size:.8rem; line-height:1.65; }
 .equipment-card dl { margin-top:auto; font-size:.7rem; }

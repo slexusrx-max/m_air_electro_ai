@@ -54,7 +54,7 @@ export function commercialCopy(t: Dictionary) {
       ? "Vezi la furnizorul Renogy EU ↗"
       : "Visit Renogy EU supplier ↗",
     illustration: ro
-      ? "Ilustrație tehnică M Air; nu este o fotografie a produsului."
-      : "Original M Air technical illustration; not a product photograph.",
+      ? "Imagine ilustrativă a categoriei; aspectul modelului real poate diferi."
+      : "Illustrative category image; the actual model’s appearance may differ.",
   };
 }
