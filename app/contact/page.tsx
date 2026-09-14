@@ -1,3 +1,6 @@
+import { ContactForm } from "@/components/contact-form";
+import { contactReady } from "@/lib/contact";
+import { PublisherDetails } from "@/components/publisher-details";
 import { PlatformShell } from "@/components/platform-shell";
 import { getRequestDictionary } from "@/lib/i18n/request";
 import { commercialCopy } from "@/lib/marketplace/copy";
@@ -17,7 +20,7 @@ export default async function ContactPage() {
       : siteConfig.publicContactUrl;
   return (
     <PlatformShell>
-      <main className="mx-auto max-w-4xl space-y-7">
+      <main className="commerce-page">
         <section className="brand-glass-card rounded-3xl p-7">
           <p className="eyebrow">M Air Electro AI</p>
           <h1 className="mt-3 text-4xl font-bold">
@@ -31,8 +34,10 @@ export default async function ContactPage() {
               : "Write for clarification about formulas, corrections to guides or information about supplier links."}
           </p>
         </section>
+        <ContactForm ro={c.ro} enabled={contactReady()} siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} />
+        <PublisherDetails ro={c.ro} />
         <section className="info-card">
-          <h2>{c.ro ? "Contact direct" : "Direct contact"}</h2>
+          <h2>{c.ro ? "Email și canal public suplimentar" : "Email and supplementary public channel"}</h2>
           <a
             className="mt-4 inline-block break-all text-xl font-bold text-teal-800 underline"
             href={mailto}

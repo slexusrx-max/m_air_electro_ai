@@ -1,4 +1,5 @@
 "use client";
+import { CalculationAnalytics } from "@/components/calculation-analytics";
 import Link from "next/link";
 import { useState } from "react";
 import type { Dictionary } from "@/lib/i18n/types";
@@ -151,6 +152,7 @@ export function BackupCalculator({
     : [];
   return (
     <section className="space-y-7">
+      <CalculationAnalytics signature={JSON.stringify([loads,hours,dod,efficiency])} valid={Boolean(result)} />
       <div className="grid gap-4">
         {loads.map((load, index) => (
           <fieldset key={load.id} className="info-card" data-testid="appliance">

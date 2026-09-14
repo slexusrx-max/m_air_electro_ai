@@ -304,3 +304,25 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .discovery-card h3 { gap:5px; }
   .energy-background-art { object-position:center bottom; }
 }
+/* Editorial/contact controls retain readable sizing on narrow screens. */
+.publisher-details { display:grid; grid-template-columns:minmax(100px,.3fr) minmax(0,1fr); gap:12px 20px; }
+.publisher-details dt { font-weight:700; }
+.publisher-details dd { margin:0; overflow-wrap:anywhere; }
+.contact-form fieldset { min-width:0; display:grid; gap:18px; }
+.contact-form label { display:grid; gap:8px; font-weight:600; }
+.contact-form input:not([type=checkbox]),.contact-form textarea { width:100%; min-width:0; min-height:44px; padding:12px; border:1px solid #66795a; border-radius:10px; background:#fff; color:#182414; font-size:1rem; }
+.contact-form .consent-label { display:flex; align-items:center; gap:14px; font-size:.9rem; line-height:1.65; }
+.contact-form input[type=checkbox] { width:24px; height:24px; flex-shrink:0; margin:10px; }
+.contact-form fieldset:disabled { opacity:.75; }
+.contact-form textarea { resize:vertical; }
+.editorial-record { font-size:.9rem; }
+.editorial-record h2 { font-size:1.1rem; }
+.solution-banner .eyebrow { color:#245d43; }
+.button-primary { color:#103d32; }
+.analytics-settings { margin:0 24px 24px; color:#182414; }
+.analytics-settings>.button-outline { background:#f1f7ea; min-height:44px; }
+.analytics-settings .content-panel { margin-top:12px; max-width:760px; }
+.deep-footer a,.article-aside a,.commerce-page .action-row>a,.commerce-page .action-row>button { display:inline-flex; align-items:center; min-height:44px; }
+.commerce-page button,.commerce-page summary,.commerce-page select { min-height:44px; }
+:focus-visible { outline:3px solid #315f13; outline-offset:4px; }
+@media(max-width:480px) { .publisher-details { grid-template-columns:1fr; gap:5px; } .publisher-details dd { margin-bottom:12px; } .analytics-settings { margin:0 16px 20px; } }

@@ -1,3 +1,5 @@
+import { EditorialRecord } from "@/components/editorial-record";
+import { AnalyticsEvent } from "@/components/analytics-event";
 import Link from "next/link";
 import { specificationLabel } from "@/lib/marketplace/specifications";
 import { catalog } from "@/lib/affiliate/catalog";
@@ -48,6 +50,8 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
         </p>
       ) : (
         <>
+          <AnalyticsEvent name="comparison_view" eventKey={selected.map(p => p.id).join(",")} />
+          <EditorialRecord path="/compare" title={ro ? "Comparație factuală de echipamente" : "Factual equipment comparison"} ro={ro} sources={[...new Set(selected.flatMap(p => p.sourceUrls))]} />
           <p className="small-copy">
             {ro
               ? "Câmpurile fără date sunt marcate «Nedocumentat». Nicio valoare nu este dedusă din preț sau din produse asemănătoare."
@@ -129,7 +133,7 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
                   ))}
                 </tr>
                 <tr>
-                  <th scope="row">{ro ? "Revizuit" : "Reviewed"}</th>
+                  <th scope="row">{ro ? "Verificare sursă (asistată AI)" : "Source check (AI-assisted)"}</th>
                   {selected.map((p) => (
                     <td key={p.id}>{p.lastUpdated}</td>
                   ))}

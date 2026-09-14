@@ -1,6 +1,6 @@
 # M Air Electro AI
 
-M Air Electro AI is a marketplace-first energy and electrical equipment discovery, calculation, comparison and recommendation platform for Romania and the EU. Romanian is the default commercial language; English is supported.
+M Air Electro AI is a independent product discovery, comparison and sizing platform for Romania and the EU. Romanian is the default commercial language; English is supported.
 
 Production: https://m-air-electro-ai.vercel.app
 
@@ -57,7 +57,7 @@ Use the lockfile. On Windows, use `npm.cmd` if PowerShell blocks `npm.ps1`. If N
 
 ## Environment and affiliate state
 
-See [docs/production-environment.md](docs/production-environment.md) and `.env.example`. Public discovery and calculation do not require auth, AI or payment credentials. Contact uses the configured mailbox, otherwise the repository's existing public issue channel.
+See [docs/production-environment.md](docs/production-environment.md) and `.env.example`. Public discovery and calculation do not require auth, AI or payment credentials. Private contact requires verified domain mailboxes and enabled delivery/spam configuration. GitHub is supplementary; without a private channel the affiliate application remains NOT READY.
 
 **Renogy / Impact approval is not confirmed.** Current links are ordinary supplier links. Activation requires both `RENOGY_AFFILIATE_APPROVED=true` and `AFFILIATE_TRACKING_ENABLED=true`, with exact Impact-issued HTTPS links mapped by supplier URL in `RENOGY_IMPACT_LINKS_JSON`. The existing provider validates links and disclosure follows actual activation. Merchant model details, Romanian delivery and warranties remain external checks.
 
@@ -68,3 +68,7 @@ Run all checks, commit implementation and alignment, push the reviewed commit to
 Optional account, document, AI and saved home-profile flows remain. Ukrainian energy adapters and demonstration datasets are retained as specialized supporting modules, outside primary navigation and the commercial sitemap. Obsolete map/tariff/directory routes redirect to active sections.
 
 External dependencies include affiliate approval, approved feeds/assets, real professional onboarding, legal operator details and legal review. Do not describe these integrations as complete.
+
+## Affiliate application readiness
+
+The owner requested independent informational positioning on 14 September 2026. Existing discovery routes and architecture remain; no equipment payments or active marketplace/dealer claims. See [readiness report](AFFILIATE_APPLICATION_READINESS.md) and [domain, publisher, contact and analytics setup](docs/custom-domain-and-publisher.md). Missing real publisher facts must not be invented.

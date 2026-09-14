@@ -1,3 +1,4 @@
+import { EditorialRecord } from "@/components/editorial-record";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PlatformShell } from "@/components/platform-shell";
@@ -43,6 +44,7 @@ export default async function Page({ params }: Props) {
           title={local(solution.title, locale)}
           description={local(solution.summary, locale)}
         />
+        <EditorialRecord path={`/solutions/${slug}`} title={local(solution.title, locale)} ro={ro} sources={[...new Set(guides.filter(g => g.solution === slug).flatMap(g => g.sources))]} />
         <div className="two-columns">
           {[
             [ro ? "Consumatori tipici" : "Typical loads", solution.loads],

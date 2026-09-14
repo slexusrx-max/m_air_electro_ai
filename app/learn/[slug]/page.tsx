@@ -1,3 +1,4 @@
+import { EditorialRecord } from "@/components/editorial-record";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PlatformShell } from "@/components/platform-shell";
@@ -13,7 +14,7 @@ import { categoryByPath, local } from "@/lib/marketplace/content";
 import { catalog } from "@/lib/affiliate/catalog";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { buildMetadata } from "@/lib/metadata";
-import { absoluteUrl } from "@/lib/site";
+
 type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props) {
   const slug = (await params).slug;
@@ -22,9 +23,9 @@ export async function generateMetadata({ params }: Props) {
   if (!g && !hub) notFound();
   const locale = await getRequestLocale();
   return buildMetadata({
-    title: local((g ?? hub)!.title, locale),
+    title: g ? local(g.title, locale) : `${local(hub!.title, locale)} — ${locale === "ro" ? "bibliotecă de ghiduri" : "guide library"}`,
     description: g
-      ? local(g.intro, locale)
+      ? `${local(g.title, locale)}. ${local(g.intro, locale)}`
       : `${local(hub!.title, locale)} — ${locale === "ro" ? "ghiduri, calcule și echipamente pentru alegerea sistemului." : "guides, calculations and equipment for system planning."}`,
     path: `/learn/${slug}`,
   });
@@ -71,25 +72,11 @@ export default async function Page({ params }: Props) {
     );
   if (!g) notFound();
   const category = categoryByPath(g.category)!;
-  const json = {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: local(g.title, locale),
-    description: local(g.intro, locale),
-    dateModified: "2026-09-13",
-    author: { "@type": "Organization", name: "M Air Electro AI" },
-    mainEntityOfPage: absoluteUrl(`/learn/${slug}`),
-    inLanguage: ro ? "ro" : "en",
-  };
+
   return (
     <PlatformShell>
       <main className="commerce-page">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(json).replace(/</g, "\\u003c"),
-          }}
-        />
+
         <Breadcrumbs
           items={[
             { name: ro ? "Ghiduri" : "Learn", path: "/learn" },
@@ -109,9 +96,7 @@ export default async function Page({ params }: Props) {
               title={local(g.title, locale)}
               description={local(g.intro, locale)}
             />
-            <p className="small-copy">
-              M Air Electro AI · {ro ? "Revizuit" : "Reviewed"}: 13.09.2026
-            </p>
+            <EditorialRecord path={`/learn/${slug}`} title={local(g.title, locale)} ro={ro} sources={g.sources} />
             {g.sections.map((s, i) => (
               <section id={`section-${i + 1}`} key={s.title.en}>
                 <h2>{local(s.title, locale)}</h2>
@@ -147,6 +132,7 @@ export default async function Page({ params }: Props) {
                     <a href={url} target="_blank" rel="noreferrer">
                       {url.includes("europa")
                         ? "European Commission · PVGIS"
+                        : url.includes("cpsc.gov") ? "U.S. Consumer Product Safety Commission · Carbon monoxide"
                         : "Victron Energy · Technical information / Wiring Unlimited"}{" "}
                       {i > 0 ? "↗" : "↗"}
                     </a>

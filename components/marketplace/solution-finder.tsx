@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { trackEvent } from "@/lib/analytics";
 import { useState, useRef } from "react";
 import { ProductCard } from "./product-card";
 import { catalog } from "@/lib/affiliate/catalog";
@@ -106,6 +107,7 @@ export function SolutionFinder({
       );
       return;
     }
+    trackEvent("calculator_complete");
     setReady(true);
     setRevision((n) => n + 1);
     setTimeout(() => resultRef.current?.focus(), 0);

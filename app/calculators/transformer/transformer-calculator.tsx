@@ -1,4 +1,5 @@
 "use client";
+import { CalculationAnalytics } from "@/components/calculation-analytics";
 
 import { useState } from "react";
 
@@ -72,6 +73,7 @@ export default function TransformerCalculator() {
 
   return (
     <CalculatorLayout>
+      <CalculationAnalytics signature={JSON.stringify(formState)} valid={!("error" in result)} />
       <CalculatorFormPanel>
         <CalculatorGrid>
           <CalculatorField label="System type">

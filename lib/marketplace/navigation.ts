@@ -12,7 +12,7 @@ export function navigation(locale: Locale): NavigationGroup[] {
   const l = (en: string, ro: string) => local(b(en, ro), locale);
   return [
     {
-      label: "Marketplace",
+      label: l("Equipment", "Echipamente"),
       href: "/marketplace",
       children: rootCategories.map((c) => ({
         label: local(c.title, locale),
@@ -69,7 +69,6 @@ export function navigation(locale: Locale): NavigationGroup[] {
         { label: "FAQ", href: "/faq" },
       ],
     },
-    { label: l("Experts", "Experți"), href: "/experts", children: [] },
     {
       label: l("For business", "Pentru afaceri"),
       href: "/business",

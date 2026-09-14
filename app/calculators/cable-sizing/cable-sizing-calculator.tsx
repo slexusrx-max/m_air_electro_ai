@@ -1,4 +1,5 @@
 "use client";
+import { CalculationAnalytics } from "@/components/calculation-analytics";
 
 import { useState } from "react";
 
@@ -108,6 +109,7 @@ export default function CableSizingCalculator() {
 
   return (
     <div className="grid gap-6 xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)]">
+      <CalculationAnalytics signature={JSON.stringify(formState)} valid={!("error" in result)} />
       <section className={`${glassPanelClassName} p-6 sm:p-8`}>
         <div className="grid gap-5 sm:grid-cols-2">
           <label className="block">

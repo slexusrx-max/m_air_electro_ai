@@ -1,4 +1,5 @@
 "use client";
+import { CalculationAnalytics } from "@/components/calculation-analytics";
 
 import { calculatorRomanian } from "@/lib/i18n/calculator-copy";
 import { useState } from "react";
@@ -71,6 +72,7 @@ export default function BatteryCalculator({ro=false}:{ro?:boolean}) {
 
   return (
     <CalculatorLayout>
+      <CalculationAnalytics signature={JSON.stringify(formState)} valid={!("error" in result)} />
       <CalculatorFormPanel>
         <CalculatorGrid>
           <CalculatorField label={l("Load power (W)")} >

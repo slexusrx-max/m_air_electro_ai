@@ -1,3 +1,4 @@
+import { EditorialRecord } from "@/components/editorial-record";
 import Link from "next/link";
 import { specificationLabel } from "@/lib/marketplace/specifications";
 import { notFound, permanentRedirect } from "next/navigation";
@@ -80,8 +81,9 @@ export default async function Page({ params }: Props) {
               description={local(p.summary, locale)}
             />
             <p className="small-copy">
-              {ro ? "Revizuit" : "Reviewed"}: {p.lastUpdated} · EU
+              {ro ? "Verificare sursă (asistată AI)" : "Source check (AI-assisted)"}: {p.lastUpdated} · EU
             </p>
+            <EditorialRecord path={`/marketplace/products/${slug}`} title={local(p.title, locale)} ro={ro} sources={p.sourceUrls} schema={p.kind !== "product"} />
             <CompareControl id={p.id} ro={ro} />
             <dl className="spec-grid">
               {Object.entries(p.technicalSpecs).map(([k, v]) => (

@@ -1,4 +1,5 @@
 "use client";
+import { CalculationAnalytics } from "@/components/calculation-analytics";
 
 import { useState } from "react";
 import { resolveCalculation } from "@/lib/electrical-calculations";
@@ -73,6 +74,7 @@ export default function BreakerSelectionCalculator() {
 
   return (
     <CalculatorLayout>
+      <CalculationAnalytics signature={JSON.stringify(formState)} valid={!("error" in result)} />
       <CalculatorFormPanel>
         <CalculatorGrid>
           <CalculatorField label="Design current (A)">

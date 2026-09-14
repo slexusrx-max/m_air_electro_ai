@@ -8,7 +8,7 @@ export function commercialCopy(t: Dictionary) {
     marketplace: ro ? "Echipamente" : "Equipment",
     finder: ro ? "Găsește soluția mea" : "Find My Solution",
     backup: ro ? "Calculator de autonomie" : "Backup Calculator",
-    browse: ro ? "Vezi echipamentele" : "Browse Marketplace",
+    browse: ro ? "Vezi echipamentele" : "Browse equipment",
     about: ro ? "Despre proiect" : "About",
     contact: "Contact",
     privacy: ro ? "Confidențialitate" : "Privacy Policy",

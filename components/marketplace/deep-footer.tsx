@@ -13,6 +13,7 @@ export function DeepFooter({ locale }: { locale: Locale }) {
         { label: ro ? "Pentru afaceri" : "For business", href: "/business" },
         { label: ro ? "Experți" : "Experts", href: "/experts" },
         { label: "Contact", href: "/contact" },
+        { label: ro ? "Media kit și parteneriate" : "Media kit & partnerships", href: "/partnerships" },
       ],
     },
     {
@@ -26,6 +27,10 @@ export function DeepFooter({ locale }: { locale: Locale }) {
           href: "/affiliate-disclosure",
         },
         { label: ro ? "Metodologie" : "Methodology", href: "/methodology" },
+        { label: ro ? "Politica editorială" : "Editorial policy", href: "/editorial-policy" },
+        { label: ro ? "Autori" : "Author policy", href: "/author-policy" },
+        { label: ro ? "Corecții" : "Corrections", href: "/corrections-policy" },
+        { label: ro ? "Utilizarea AI" : "AI use", href: "/ai-use-policy" },
         { label: "FAQ", href: "/faq" },
       ],
     },

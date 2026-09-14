@@ -6,8 +6,8 @@ export async function generateMetadata() {
   const ro = (await getRequestLocale()) === "ro";
   return buildMetadata({
     title: ro
-      ? "Marketplace de echipamente energetice"
-      : "Energy equipment marketplace",
+      ? "Descoperă echipamente energetice"
+      : "Independent energy equipment discovery",
     description: ro
       ? "Explorează categorii de baterii, solar, invertoare, încărcătoare, generatoare și componente electrice."
       : "Explore batteries, solar, inverters, charging, generators and electrical components.",

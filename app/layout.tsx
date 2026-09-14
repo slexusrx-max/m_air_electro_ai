@@ -1,3 +1,4 @@
+import { AnalyticsConsent } from "@/components/analytics-consent";
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 
@@ -78,7 +79,7 @@ export default async function RootLayout({
       <body className="relative isolate flex min-h-full flex-col">
         <PageBackground />
         <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify({"@context":"https://schema.org","@graph":[{"@type":"Organization",name:siteConfig.name,url:absoluteUrl()},{"@type":"WebSite",name:siteConfig.name,url:absoluteUrl(),description:siteConfig.description}]}).replace(/</g,"\\u003c")}} />
-        <div className="relative z-10 flex min-h-full flex-1 flex-col">{children}</div>
+        <div className="relative z-10 flex min-h-full flex-1 flex-col">{children}<AnalyticsConsent ro={(await getRequestLocale()) === "ro"} /></div>
       </body>
     </html>
   );

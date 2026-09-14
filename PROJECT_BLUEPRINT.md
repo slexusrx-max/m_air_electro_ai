@@ -6,7 +6,7 @@ This specification supersedes earlier positioning across production, source, met
 
 ## Product Vision
 
-M Air Electro AI is a marketplace-first energy and electrical equipment discovery, calculation, comparison and recommendation platform. Help customers understand a system before choosing equipment.
+M Air Electro AI is a independent product discovery, comparison and sizing platform. Help customers understand a system before choosing equipment.
 
 ## Official Positioning
 
@@ -22,7 +22,7 @@ Independent affiliate-commerce discovery. The merchant controls price, stock, pa
 
 ## Information Architecture
 
-Primary navigation: Marketplace, Solutions, Tools, Learn, Experts, For Business. Search and RO/EN switching stay accessible. Company and Legal are in a deep footer. Desktop mega menus group real destinations; mobile uses nested expandable groups. Every visible control works.
+Primary navigation: Equipment, Solutions, Tools, Learn, For Business. Planned professional help remains in the footer. Search and RO/EN switching stay accessible. Company and Legal are in a deep footer. Desktop mega menus group real destinations; mobile uses nested expandable groups. Every visible control works.
 
 ## Marketplace Taxonomy
 
@@ -116,3 +116,7 @@ Evidence: unit tests, i18n check, lint, typecheck, build, audit, functional brow
 ## Rules for Future Coding Agents
 
 Marketplace-first is authoritative. Do not restore diagnostics or Ukrainian outage/address flows as primary identity/navigation. Never invent commercial approval, inventory, prices, reviews, ratings or professionals. Do not redesign direction without owner instruction. Extend existing architecture; integrate commerce into Marketplace/Solutions/Learn. Every control must work. Keep Romania/EU orientation, honest limitations and user changes. Read AGENTS.md and installed Next.js docs.
+
+## Affiliate application readiness
+
+The owner requested independent informational positioning on 14 September 2026. Existing discovery routes and architecture remain; no equipment payments or active marketplace/dealer claims. See [readiness report](AFFILIATE_APPLICATION_READINESS.md) and [domain, publisher, contact and analytics setup](docs/custom-domain-and-publisher.md). Missing real publisher facts must not be invented.

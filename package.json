@@ -23,6 +23,8 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@electric-sql/pglite": "^0.5.8",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
@@ -32,8 +34,7 @@
     "eslint-config-next": "^16.3.5",
     "tailwindcss": "^4",
     "tsx": "^4.23.13",
-    "typescript": "^5",
-    "@electric-sql/pglite": "^0.5.8"
+    "typescript": "^5"
   },
   "description": "M Air Electro AI — Energy marketplace, system sizing, product comparison and electrical engineering tools."
 }

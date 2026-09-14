@@ -1,3 +1,4 @@
+import { policies } from "./policies";
 import { bilingual as b, type LocalText } from "./content";
 export type InformationPage = {
   title: LocalText;
@@ -9,11 +10,12 @@ const s = (en: string, ro: string, body: string, translated: string) => ({
   body: b(body, translated),
 });
 export const information: Record<string, InformationPage> = {
+  ...policies,
   about: {
     title: b("About M Air Electro AI", "Despre M Air Electro AI"),
     intro: b(
-      "An independent marketplace-first energy and electrical equipment discovery, calculation, comparison and recommendation platform for Romania and the EU.",
-      "Platformă independentă orientată spre marketplace pentru descoperirea, calculul, compararea și recomandarea echipamentelor energetice și electrice în România și UE.",
+      "An independent product discovery, comparison and sizing platform for Romania and the EU.",
+      "Platformă independentă de descoperire, comparație și dimensionare a echipamentelor energetice pentru România și UE.",
     ),
     sections: [
       s(

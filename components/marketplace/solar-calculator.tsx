@@ -1,4 +1,5 @@
 "use client";
+import { CalculationAnalytics } from "@/components/calculation-analytics";
 import { useState } from "react";
 import Link from "next/link";
 import { solarEstimate } from "@/lib/marketplace/query";
@@ -9,6 +10,7 @@ export function SolarCalculator({ ro }: { ro: boolean }) {
   const watts = solarEstimate(Number(daily), Number(sun), Number(factor) / 100);
   return (
     <section className="content-panel">
+      <CalculationAnalytics signature={JSON.stringify([daily,sun,factor])} valid={watts !== null} />
       <div className="compare-selectors">
         <label>
           {ro ? "Consum zilnic (Wh)" : "Daily energy (Wh)"}

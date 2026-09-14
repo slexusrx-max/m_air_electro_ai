@@ -33,8 +33,8 @@ export async function DiscoveryHome({
           </h1>
           <p>
             {ro
-              ? "Panouri solare, baterii, invertoare și rezervă de energie. Înțelege sistemul, explorează opțiunile și alege informat înainte de a vizita furnizorul."
-              : "Solar panels, batteries, inverters and backup power. Understand the system, explore the options and make an informed choice before visiting a supplier."}
+              ? "Platformă independentă de descoperire, comparație și dimensionare. Explorează solarul, bateriile și rezerva înainte de a vizita furnizorul extern. Nu primim comenzi sau plăți pentru echipamente."
+              : "Independent product discovery, comparison and sizing platform. Explore solar, batteries and backup power before visiting an external supplier. We do not accept equipment orders or payments."}
           </p>
           <div className="action-row">
             <Link
