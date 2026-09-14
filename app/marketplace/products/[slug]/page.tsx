@@ -80,9 +80,9 @@ export default async function Page({ params }: Props) {
               title={local(p.title, locale)}
               description={local(p.summary, locale)}
             />
-            <p className="small-copy">
+            {p.kind === "product" && <p className="small-copy">
               {ro ? "Verificare sursă (asistată AI)" : "Source check (AI-assisted)"}: {p.lastUpdated} · EU
-            </p>
+            </p>}
             <EditorialRecord path={`/marketplace/products/${slug}`} title={local(p.title, locale)} ro={ro} sources={p.sourceUrls} schema={p.kind !== "product"} />
             <CompareControl id={p.id} ro={ro} />
             <dl className="spec-grid">

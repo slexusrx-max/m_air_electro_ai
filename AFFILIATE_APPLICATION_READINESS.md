@@ -58,6 +58,10 @@ Local crawl: 113 visited URLs, no failures or orphans. Sitemap SEO audit: 108 ro
 
 Screenshots: ignored `.task-work/readiness-local-complete/` contains 375/1440 full-page and viewport captures of homepage, About, Contact, policies, Media Kit, Privacy, battery guide, comparison and Renogy product. Production browser/crawl outputs are recorded separately in `.task-work/readiness-production/`, `.task-work/readiness-production.log`, and `.task-work/readiness-production-crawl.log` when deployment completes; the final task response states deployed/main commit verification. No live contact delivery or human identity/author verification is claimed.
 
+Production validation at application commit `f13ad4c`: **54/54 browser cases passed** (including nine isolated component/form fixtures), 113 crawled URLs without failures/orphans, 108 sitemap routes with unique titles/descriptions, and no violations in the seven-page automated accessibility scope. GitHub main and the successful Vercel deployment matched. Production screenshots were visually reviewed at 375 and 1440 px and collected in ignored `.task-work/affiliate-review-screenshots/index.html`.
+
+A final narrow correction removes inherited supplier-check dates from equipment classes: only actual sourced models show a supplier-check date. The added regression checks all eleven class pages and mixed comparisons at 375/1440; its local run passed. Post-deployment verification for that correction is recorded in `.task-work/readiness-classes-production.log` and the final task response. No new author/publication/human-review dates were invented.
+
 ## Configuration guide
 
 See [custom domain and publisher setup](docs/custom-domain-and-publisher.md). Evidence belongs in ignored `.task-work/` and `test-results/`; the unrelated `tmp/pdfs/member-deal/` user folder is preserved.

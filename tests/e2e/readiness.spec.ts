@@ -1,6 +1,7 @@
 import AxeBuilder from "@axe-core/playwright";
 import { test, expect } from "@playwright/test";
 import { publicRoutes } from "../../lib/marketplace/routes";
+import { catalog } from "../../lib/affiliate/catalog";
 const paths = ["/", "/about", "/contact", "/editorial-policy", "/author-policy", "/corrections-policy", "/ai-use-policy", "/partnerships", "/privacy", "/learn/how-to-size-backup-battery", "/compare?ids=renogy-mini-100,renogy-mini-200", "/marketplace/products/renogy-core-mini-100ah"];
 for (const width of [320, 360, 375, 390, 414, 768, 1024, 1440]) {
   test(`affiliate readiness layout and metadata at ${width}px`, async ({ page }, info) => {
@@ -69,5 +70,20 @@ test("all sitemap pages have unique titles and descriptions", async ({ request }
     expect(titles.get(title!), `${path} duplicates title`).toBeUndefined();
     expect(descriptions.get(description!), `${path} duplicates description`).toBeUndefined();
     titles.set(title!, path); descriptions.set(description!, path);
+  }
+});
+
+test("equipment classes never claim a dated supplier verification", async ({ page }) => {
+  test.setTimeout(120000);
+  const classes = catalog.filter(p => p.kind === "equipment-class");
+  for (const width of [375, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    for (const item of classes) {
+      await page.goto(`/marketplace/products/${item.slug}`);
+      await expect(page.locator("main")).not.toContainText("Verificare sursă (asistată AI)");
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBeTruthy();
+    }
+    await page.goto(`/compare?ids=renogy-mini-100,${classes[0].id}`);
+    await expect(page.getByRole("cell", { name: "Nu se aplică — clasă de echipament", exact: true })).toBeVisible();
   }
 });

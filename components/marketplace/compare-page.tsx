@@ -135,7 +135,7 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
                 <tr>
                   <th scope="row">{ro ? "Verificare sursă (asistată AI)" : "Source check (AI-assisted)"}</th>
                   {selected.map((p) => (
-                    <td key={p.id}>{p.lastUpdated}</td>
+                    <td key={p.id}>{p.kind === "product" ? p.lastUpdated : (ro ? "Nu se aplică — clasă de echipament" : "Not applicable — equipment class")}</td>
                   ))}
                 </tr>
               </tbody>
