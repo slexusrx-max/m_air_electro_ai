@@ -6,6 +6,7 @@ const labels: Record<string, string> = {
   Capacity: "Capacitate",
   "Stored energy (V × Ah)": "Energie stocată (V × Ah)",
   "Continuous discharge": "Descărcare continuă",
+  "Maximum discharge": "Curent maxim de descărcare",
   Chemistry: "Chimie",
   "Rated power (STC)": "Putere nominală (STC)",
   "Open-circuit voltage (STC)": "Tensiune în gol (STC)",

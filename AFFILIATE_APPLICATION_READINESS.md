@@ -115,6 +115,7 @@ See [custom domain and publisher setup](docs/custom-domain-and-publisher.md). Ev
 - `lib/marketplace/navigation.ts`
 - `lib/marketplace/policies.ts`
 - `lib/marketplace/routes.ts`
+- `lib/marketplace/specifications.ts`
 - `lib/site.ts`
 - `package-lock.json`
 - `package.json`

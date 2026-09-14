@@ -78,8 +78,8 @@ export const equipment: Equipment[] = [
       "batteries/100ah",
     ],
     summary: b(
-      "Compact lithium storage with documented 100 A continuous discharge. Evaluate it for modest DC and AC loads rather than selecting by Ah alone.",
-      "Stocare compactă cu descărcare continuă documentată de 100 A. Potrivită de evaluat pentru consumuri moderate DC și AC, nu doar după Ah.",
+      "Compact lithium storage with documented 100 A maximum discharge rating. Evaluate it for modest DC and AC loads rather than selecting by Ah alone.",
+      "Stocare compactă cu curent maxim de descărcare documentat de 100 A. Potrivită de evaluat pentru consumuri moderate DC și AC, nu doar după Ah.",
     ),
     bestFor: b(
       "RV house loads and modest essential-load backup.",
@@ -101,7 +101,7 @@ export const equipment: Equipment[] = [
       "Nominal voltage": "12.8 V",
       Capacity: "100 Ah",
       "Stored energy (V × Ah)": "1280 Wh",
-      "Continuous discharge": "100 A",
+      "Maximum discharge": "100 A",
       Chemistry: "LiFePO4",
     },
     url: "https://eu.renogy.com/products/core-mini-12-8v-100ah-lithium-iron-phosphate-battery",
