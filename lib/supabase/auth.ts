@@ -45,3 +45,14 @@ export async function requireCompletedProfile() {
   if (profile.account_status === "blocked") redirect("/login?error=account-blocked");
   return profile;
 }
+
+/** Load private role details from the same tables written by the onboarding RPC. */
+export async function getAccountDetails(profile: Profile): Promise<Profile> {
+ const supabase = await createClient();
+ const [client, expert, company] = await Promise.all([
+  supabase.from("client_profiles").select("assistance_type").eq("profile_id", profile.id).maybeSingle(),
+  supabase.from("expert_profiles").select("professional_title,specializations,years_experience,professional_description").eq("profile_id", profile.id).maybeSingle(),
+  supabase.from("company_profiles").select("company_name,description").eq("profile_id", profile.id).maybeSingle(),
+ ]);
+ return { ...profile, ...client.data, ...expert.data, ...(company.data ? { company_name: company.data.company_name, company_description: company.data.description } : {}) };
+}

@@ -270,3 +270,37 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 @media(prefers-reduced-motion:reduce){.discovery-card:hover{transform:none}}
 .finder-title{font-size:clamp(1.8rem,3vw,2.7rem);font-weight:800;line-height:1.2;letter-spacing:-.04em;margin:16px 0}.finder-results{display:flex;flex-direction:column;gap:24px}
 .platform-root { background:rgba(236,246,228,.18); }
+/* Account navigation and intrinsic sizing from narrow phones to desktop. */
+.desktop-account-actions { display:flex; align-items:center; gap:10px; font-size:.8rem; white-space:nowrap; }
+.desktop-account-actions a,.desktop-account-actions button { display:flex; align-items:center; min-height:44px; padding:8px; }
+.register-link { background:#d5ef9f; border-radius:10px; }
+.mobile-account-actions { display:flex; flex-wrap:wrap; gap:8px; border-bottom:1px solid #c1d3be; padding-bottom:12px; }
+.mobile-account-actions a { background:#e2efce; border-radius:10px; }
+.energy-background-art { object-fit:contain; object-position:center bottom; }
+#main-content,.commerce-page,.header-bar>* { min-width:0; }
+.commerce-page { overflow-wrap:anywhere; }
+.form-control { min-width:0; font-size:1rem; }
+.commerce-header button,.search-link { min-height:44px; min-width:44px; }
+.comparison-scroll { min-width:0; }
+.compare-control button,.commerce-page .button-primary,.commerce-page .button-outline,.remove-compare { min-height:44px; }
+.auth-note { max-width:28rem; margin:0 auto 20px; }
+@media(max-width:1300px) {
+  .desktop-nav,.desktop-account-actions { display:none; }
+  .mobile-menu-toggle { display:flex; align-items:center; padding:9px; border:1px solid #becfaf; border-radius:10px; }
+  .mobile-nav { display:grid; gap:8px; padding:0 20px 20px; max-height:65dvh; overflow:auto; overscroll-behavior:contain; }
+  .mobile-nav details { border-bottom:1px solid #d1dec5; }
+  .mobile-nav a,.mobile-nav summary,.mobile-nav button { display:block; padding:12px; min-height:44px; }
+  .mobile-nav details details { margin-left:12px; }
+  .mega-menu { display:none; }
+}
+@media(max-width:480px) {
+  .header-bar { padding:10px; gap:8px; }
+  .header-actions { width:100%; justify-content:space-between; }
+  .language-control button { padding:8px; }
+  .mobile-menu-toggle span { display:inline; }
+  .mobile-nav { max-height:calc(100dvh - 180px); }
+  .catalog-filters { grid-template-columns:minmax(0,1fr); }
+  .commerce-page input,.commerce-page select { font-size:1rem; }
+  .discovery-card h3 { gap:5px; }
+  .energy-background-art { object-position:center bottom; }
+}

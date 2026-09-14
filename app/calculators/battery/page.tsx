@@ -15,8 +15,8 @@ export default async function BatteryPage() { const ro=await getRequestLocale()=
       title={ro?"Calculator baterie":"Battery calculator"}
       description={ro?"Estimează capacitatea nominală din consum, autonomie, tensiune, randament și fracția de descărcare.":"Estimate nominal battery-bank capacity from load power, autonomy time, system voltage, efficiency, and depth-of-discharge limits."}
       actions={[
-        { href: "/calculators", label: "Back to calculators", variant: "secondary" },
-        { href: "/calculators/fuse-selection", label: "Open fuse selection" },
+        { href: "/calculators", label: ro ? "Înapoi la calculatoare" : "Back to calculators", variant: "secondary" },
+        { href: "/calculators/fuse-selection", label: ro ? "Alege siguranța" : "Open fuse selection" },
       ]}
     >
       <BatteryCalculator ro={ro}/>

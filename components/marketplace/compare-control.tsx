@@ -17,6 +17,10 @@ function subscribe(cb: () => void) {
     window.removeEventListener("mair-compare", cb);
   };
 }
+export function SavedComparison({ ro }: { ro: boolean }) {
+  const saved = useSyncExternalStore(subscribe, snapshot, () => "");
+  return <><p>{ro ? "Selecția este păstrată doar în acest browser, pe acest dispozitiv, și poate fi accesată de alți utilizatori ai browserului. Nu este sincronizată cu contul." : "The selection is stored only in this browser on this device and may be accessed by other browser users. It is not synced to your account."}</p>{saved ? <Link className="button-outline" href={`/compare?ids=${encodeURIComponent(saved)}`}>{ro ? "Continuă comparația" : "Continue comparison"} →</Link> : <p>{ro ? "Nu există o selecție de comparat în acest browser." : "There is no comparison selection in this browser."}</p>}</>;
+}
 export function CompareControl({
   id,
   ro = false,

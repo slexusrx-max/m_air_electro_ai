@@ -16,7 +16,7 @@ export function PageBackground() {
         fill
         preload
         sizes="100vw"
-        className="object-cover saturate-110"
+        className="energy-background-art saturate-110"
       />
       <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(236,246,240,.7),rgba(236,246,240,.64),rgba(236,246,240,.76))]" />
     </div>

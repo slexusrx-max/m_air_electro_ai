@@ -134,11 +134,9 @@ export function SiteHeader({
             ⌕
           </Link>
           {languages}
-          {profile && (
-            <Link href={dashboardHref} className="account-link">
-              {ro ? "Cont" : "Account"}
-            </Link>
-          )}
+          <div className="desktop-account-actions">
+            {profile ? <><Link href={dashboardHref}>{ro ? "Cont" : "Account"}</Link><form action={signOut}><button>{ro ? "Deconectare" : "Sign out"}</button></form></> : <><Link href="/login">{ro ? "Autentificare" : "Log in"}</Link><Link className="register-link" href="/register">{ro ? "Creează cont" : "Create account"}</Link></>}
+          </div>
           <button
             className="mobile-menu-toggle"
             aria-label={ro ? "Meniu" : "Menu"}
@@ -199,6 +197,9 @@ export function SiteHeader({
           className="mobile-nav"
           aria-label={ro ? "Navigație mobilă" : "Mobile navigation"}
         >
+          <div className="mobile-account-actions">
+            {profile ? <Link href={dashboardHref} onClick={() => setMobile(false)}>{ro ? "Contul meu" : "My account"}</Link> : <><Link href="/login" onClick={() => setMobile(false)}>{ro ? "Autentificare" : "Log in"}</Link><Link href="/register" onClick={() => setMobile(false)}>{ro ? "Creează cont" : "Create account"}</Link></>}
+          </div>
           {groups.map((g) =>
             g.children.length ? (
               <details key={g.href}>

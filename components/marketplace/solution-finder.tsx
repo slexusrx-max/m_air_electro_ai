@@ -7,6 +7,7 @@ import { estimateSystem } from "@/lib/marketplace/recommendation";
 import {
   loadHomeEnergyProfile,
   calculateHomeEnergy,
+  homeEnergyStorageKey,
 } from "@/lib/home-energy/profile";
 import type { Dictionary } from "@/lib/i18n/types";
 const applications = [
@@ -110,6 +111,16 @@ export function SolutionFinder({
     setTimeout(() => resultRef.current?.focus(), 0);
   }
   function importProfile() {
+    try {
+      const raw = localStorage.getItem(homeEnergyStorageKey);
+      const saved = raw ? JSON.parse(raw) : null;
+      if (!saved || !Array.isArray(saved.appliances) || !Number.isFinite(saved.desiredBackupHours)) throw Error();
+      if (!saved.appliances.every((a: { watts?: number; quantity?: number; hours?: number; surgeMultiplier?: number }) => a && [a.watts,a.quantity,a.hours,a.surgeMultiplier].every(Number.isFinite))) throw Error();
+    } catch {
+      setError(l("No valid saved energy profile was found in this browser. Enter your requirements below.", "Nu există un profil energetic salvat valid în acest browser. Introdu cerințele mai jos."));
+      return;
+    }
+    setError("");
     const profile = loadHomeEnergyProfile();
     const calculation = calculateHomeEnergy(profile);
     setForm((f) => ({

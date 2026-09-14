@@ -31,7 +31,7 @@ test("RO/EN switching preserves the deep route and desktop menu works by keyboar
   await page.keyboard.press("Escape");
   await expect(page.locator("#mega-menu")).toHaveCount(0);
 });
-for (const width of [390, 430, 768])
+for (const width of [320, 360, 390, 430, 768])
   test(`nested mobile navigation at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/");
