@@ -1,4 +1,5 @@
 import { policies } from "./policies";
+import { siteConfig } from "../site";
 import { bilingual as b, type LocalText } from "./content";
 export type InformationPage = {
   title: LocalText;
@@ -14,8 +15,8 @@ export const information: Record<string, InformationPage> = {
   about: {
     title: b("About M Air Electro AI", "Despre M Air Electro AI"),
     intro: b(
-      "An independent product discovery, comparison and sizing platform for Romania and the EU.",
-      "Platformă independentă de descoperire, comparație și dimensionare a echipamentelor energetice pentru România și UE.",
+      `M Air Electro AI is the independent equipment discovery, comparison and sizing platform owned and published by ${siteConfig.operatorName}, an individual publisher operating in Romania for Romania and the European Union.`,
+      `M Air Electro AI este platforma independentă de descoperire, comparație și dimensionare deținută și publicată de ${siteConfig.operatorName}, persoană fizică și editor independent care operează din România pentru România și Uniunea Europeană.`,
     ),
     sections: [
       s(
@@ -111,8 +112,8 @@ export const information: Record<string, InformationPage> = {
       s(
         "After approval",
         "După aprobare",
-        "If an affiliate program is approved and activated, some qualifying purchases may earn M Air Electro AI a commission. Activation requires explicit approval status and the actual provider-issued Impact link configuration. The disclosure must be updated at activation. Editorial descriptions and factual comparisons remain separate from tracking configuration.",
-        "Dacă programul este aprobat și activat, unele achiziții eligibile pot aduce comision platformei. Activarea cere statut explicit de aprobare și configurația Impact emisă de furnizor. Politica trebuie actualizată la activare. Descrierile și comparațiile rămân separate de urmărire.",
+        `If an affiliate program is approved and activated, some qualifying purchases may earn ${siteConfig.operatorName}, the individual publisher of M Air Electro AI, a commission. Activation requires explicit approval status and the actual provider-issued Impact link configuration. The disclosure must be updated at activation. Editorial descriptions and factual comparisons remain separate from tracking configuration.`,
+        `Dacă programul este aprobat și activat, unele achiziții eligibile pot aduce comision lui ${siteConfig.operatorName}, editorul independent al platformei M Air Electro AI. Activarea cere statut explicit de aprobare și configurația Impact emisă de furnizor. Politica trebuie actualizată la activare. Descrierile și comparațiile rămân separate de urmărire.`,
       ),
       s(
         "Buying and verification",
@@ -129,6 +130,12 @@ export const information: Record<string, InformationPage> = {
       "Această informare descrie experiența actuală de descoperire și calcul și serviciile conectate opționale.",
     ),
     sections: [
+      s(
+        "Website operator and publisher",
+        "Operatorul și editorul site-ului",
+        `${siteConfig.operatorName} operates and publishes M Air Electro AI as an individual and independent publisher in Romania. M Air Electro AI is the brand/platform, not an incorporated company. The commercial region is Romania / European Union. Private contact details are published only after mailbox configuration is confirmed; no residential address is published.`,
+        `${siteConfig.operatorName} operează și publică M Air Electro AI ca persoană fizică și editor independent în România. M Air Electro AI este marca/platforma, nu o companie înregistrată. Regiunea comercială este România / Uniunea Europeană. Contactele private sunt publicate numai după confirmarea configurării căsuțelor poștale; nu publicăm adresa de domiciliu.`,
+      ),
       s(
         "Browsing and local preferences",
         "Navigare și preferințe locale",
@@ -152,8 +159,8 @@ export const information: Record<string, InformationPage> = {
   terms: {
     title: b("Terms of use", "Termeni de utilizare"),
     intro: b(
-      "M Air Electro AI supports independent equipment research and preliminary calculations. Purchasing takes place with an external supplier.",
-      "M Air Electro AI susține cercetarea independentă și calculele preliminare. Cumpărarea are loc la furnizorul extern.",
+      `These terms concern M Air Electro AI, the brand/platform owned and published by ${siteConfig.operatorName} as an individual independent publisher in Romania. Equipment purchases take place with an external supplier.`,
+      `Acești termeni privesc M Air Electro AI, marca/platforma deținută și publicată de ${siteConfig.operatorName} ca persoană fizică și editor independent în România. Achizițiile de echipamente au loc la furnizorul extern.`,
     ),
     sections: [
       s(

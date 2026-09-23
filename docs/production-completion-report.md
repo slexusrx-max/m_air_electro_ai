@@ -1,5 +1,7 @@
 # Production completion and affiliate readiness
 
+Subsequent owner identity update: Stanislav Zavizion is now owner-confirmed and configured as individual owner/publisher of the M Air Electro AI brand/platform, operating in Romania for Romania / EU, with no incorporated company. Earlier missing-owner findings in this dated deployment audit are historical. Editor/reviewer credentials, human approvals and verified private contact delivery remain unresolved. See `docs/publisher-identity-update.md` for the exact current fields and public-page coverage.
+
 Audit date: 2026-09-23. Official public origin: https://mairelectroai.com. Post-deployment verification completed on the actual custom domain: 66 browser tests passed in 9.6 minutes; 113-route crawl passed without failures or orphaned sitemap entries.
 This report separates tested software from owner/provider prerequisites. It does not certify legal compliance, affiliate acceptance, live email delivery, or conversion performance.
 
@@ -97,7 +99,7 @@ NOT READY. Technical presentation and product discovery are substantially verifi
 
 ## 19. External dependencies/blockers
 
-- Owner must supply the actual operator identity and responsible editor's name, biography and expertise; attribution cannot be fabricated.
+- Operator/owner identity is now supplied: Stanislav Zavizion, individual / independent publisher. The responsible content reviewer's name, biography and expertise still need separate confirmation; ownership does not establish those facts.
 - Domain mailboxes contact@mairelectroai.com, partnerships@mairelectroai.com and privacy@mairelectroai.com must be created and verified before public availability is asserted.
 - Private contact needs verified Resend sending domain, Turnstile configuration, provider/WAF settings, an authorized delivery/inbox test and the enable flags. No live email was sent in this audit.
 - Real editorial review/author/publication/source evidence must populate `lib/marketplace/editorial-records.json`; it is currently empty. AI implementation work is not human engineering sign-off.

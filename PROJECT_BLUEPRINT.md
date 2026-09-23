@@ -10,6 +10,10 @@ M Air Electro AI is an independent product discovery, comparison and sizing plat
 
 ## Official Positioning
 
+Owner-confirmed identity: **M Air Electro AI** is the brand/platform; **Stanislav Zavizion** is the owner/publisher, an **individual / independent publisher** operating in **Romania**, with commercial region **Romania / European Union**. No incorporated company exists behind the website. Do not invent company forms, registration/VAT/tax identifiers, offices, residential addresses, employees or credentials. Owner identity is not automatic attribution or technical review of every article.
+
+The three official domain emails are prepared in configuration but their operation/delivery is not confirmed. Keep verification and sending gates disabled until explicitly confirmed. Represent the publisher as `Person` and the platform name as `Brand` / `WebSite`, not an incorporated `Organization`.
+
 **Need → Calculate → Understand → Discover → Compare → Choose → Visit supplier.** Marketplace is the primary commercial layer. Calculators, Find My Solution, technical guides, AI and future experts support the decision. The platform is not a direct merchant, warehouse, general handyman service, outage-monitoring product or brochure.
 
 ## Primary Market
@@ -98,7 +102,7 @@ Maintain headers, validated inputs, server-only secrets and escaped JSON-LD. Nev
 
 ## Legal / Disclosure Model
 
-State independent discovery, preliminary calculations, external seller responsibility and current affiliate status consistently. Privacy describes cookies, local storage, optional providers and external navigation. Do not invent operator identity or a functioning mailbox. Use the configured contact channel or existing public repository issues. Operator details, retention specifics and legal review remain owner dependencies before unconditional legal/application readiness.
+State independent discovery, preliminary calculations, external seller responsibility and current affiliate status consistently. Privacy describes cookies, local storage, optional providers and external navigation. Use the confirmed individual publisher identity above; never infer a functioning mailbox. Use the configured contact channel or existing public repository issues without inviting disclosure of private information. Mailbox operation, retention specifics, service-provider arrangements and legal review remain owner dependencies before unconditional legal/application readiness.
 
 ## Development Roadmap
 

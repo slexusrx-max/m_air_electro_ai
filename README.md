@@ -4,6 +4,12 @@ M Air Electro AI is a independent product discovery, comparison and sizing platf
 
 Production: https://mairelectroai.com
 
+## Owner and publisher
+
+M Air Electro AI is the brand/platform. **Stanislav Zavizion** is its owner and publisher, operating in **Romania** as an **individual / independent publisher**, serving **Romania / European Union**. There is no incorporated company behind the website. These owner-confirmed facts are centralized in `lib/site.ts`; no company registration, VAT/tax identifier, office/residential address, employees, licenses or certifications are asserted.
+
+Prepared email addresses: `contact@mairelectroai.com`, `partnerships@mairelectroai.com`, `privacy@mairelectroai.com`. Preparation is not mailbox provisioning or a delivery test. Public mail links still require explicitly configured addresses and `CONTACT_EMAIL_VERIFIED=true`; contact delivery also requires its separate operational configuration. Owner identity does not establish technical reviewer identity, credentials or per-article authorship. See [identity update report](docs/publisher-identity-update.md).
+
 Architecture, route inventory, repository audit and public deployment results: [marketplace expansion report](docs/marketplace-expansion-report.md).
 
 **Need → Calculate → Understand → Discover → Compare → Choose → Visit supplier.** We support independent equipment selection. We do not sell equipment, hold inventory or operate product checkout. AI assistance and future experts support the buying decision.
@@ -73,7 +79,7 @@ Run all checks, commit implementation and alignment, push the reviewed commit to
 
 Optional account, document, AI and saved home-profile flows remain. Ukrainian energy adapters and demonstration datasets are retained as specialized supporting modules, outside primary navigation and the commercial sitemap. Obsolete map/tariff/directory routes redirect to active sections.
 
-External dependencies include affiliate approval, approved feeds/assets, real professional onboarding, legal operator details and legal review. Do not describe these integrations as complete.
+External dependencies include affiliate approval, approved feeds/assets, real professional onboarding, confirmed private contact delivery, editorial review and remaining privacy/legal operational details. The owner/publisher identity above is confirmed; the other integrations are not complete.
 
 ## Affiliate application readiness
 

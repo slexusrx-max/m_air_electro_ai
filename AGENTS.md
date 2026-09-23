@@ -10,6 +10,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # Official product direction
 
+Owner-confirmed identity: M Air Electro AI is a brand/platform, owned and published by Stanislav Zavizion, an individual / independent publisher operating in Romania for Romania / European Union. There is no incorporated company. Do not invent company/registration/tax/address/credential details, or treat ownership as article authorship or human technical approval. Prepared domain mailboxes are not verified delivery channels.
+
 Official public domain: https://mairelectroai.com. Keep canonicals, robots, sitemap and structured data aligned. Preserve the original public/hero.png homepage artwork and the route-family visual system. Primary navigation includes Marketplace, Solutions, Tools, Learn, Experts and For Business. Experts provides planning guidance without inventing a verified directory.
 
 Read PROJECT_BLUEPRINT.md and README.md. M Air Electro AI is a marketplace-first energy and electrical equipment discovery, calculation, comparison and recommendation platform for Romania / EU. Romanian is the primary commercial language; English is supported.

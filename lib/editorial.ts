@@ -7,5 +7,5 @@ export function editorialRecord(path: string): EditorialRecord {
   return (records as Record<string, EditorialRecord>)[path] ?? {};
 }
 export function editorialAuthor(record: EditorialRecord) {
-  return record.author === "owner" ? siteConfig.editorName : record.author;
+  return record.author === "owner" ? siteConfig.operatorName : record.author;
 }

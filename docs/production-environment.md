@@ -9,7 +9,7 @@ The official product is marketplace-first equipment discovery for Romania/EU. Pu
 | RENOGY_AFFILIATE_APPROVED | Explicit written approval; must be true to activate tracking | Ordinary supplier links |
 | AFFILIATE_TRACKING_ENABLED | Explicit tracking activation flag, in addition to approval | Ordinary supplier links |
 | CONTACT_EMAIL_VERIFIED | Verify the mailbox before showing it publicly | GitHub contact |
-| NEXT_PUBLIC_OPERATOR_NAME | Owner-supplied publisher identity | Public publisher profile |
+| Publisher identity in lib/site.ts | Stanislav Zavizion, individual / independent publisher; Romania / EU | Authoritative owner-confirmed repository configuration; no company env override |
 | RENOGY_IMPACT_LINKS_JSON | JSON mapping of exact supplier URLs to approved HTTPS links | Ordinary supplier links |
 | NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY | Optional account/session/document services | Public marketplace remains usable; account features unavailable |
 | SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY | Optional server administration | No privileged account operations |
@@ -18,6 +18,8 @@ The official product is marketplace-first equipment discovery for Romania/EU. Pu
 | Payment provider variables | Reserved integration boundaries | No product checkout or active fulfilment service |
 
 Never commit credentials. No tracking identifier, Impact account, site-verification tag or submitted application is evidence of affiliate approval. The prior RENOGY_AFFILIATE_ID ref-parameter convention is obsolete and is not used. Update public disclosure and test the actual approved tracking link when activating the program.
+
+`NEXT_PUBLIC_OPERATOR_NAME` is no longer read: it must not override the verified individual identity with an old company placeholder. `NEXT_PUBLIC_EDITOR_NAME/BIO/EXPERTISE/PROFILE` remain optional and unset until separately confirmed. Planned mailbox addresses in `lib/site.ts` are distinct from operational `contactEmail/partnershipsEmail/privacyEmail`; the latter stay absent without explicit mailbox environment values and verification. `.env.example` prepares all three official addresses but leaves verification and sending false. No actual Vercel secret, mailbox or email delivery has been configured by editing this example.
 
 ## Deployment and verification
 

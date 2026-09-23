@@ -32,6 +32,8 @@ for (const locale of ["ro", "en"]) test(`every public page has safe internal nav
     const response = await page.goto(path);
     expect(response?.status(), path).toBe(200);
     await expect(page.locator(".commerce-header .brand-name")).toHaveAttribute("href", "/");
+    await expect(page.locator(".deep-footer")).toContainText("Stanislav Zavizion");
+    await expect(page.locator("body")).not.toContainText(/M Air Electro AI\s+(?:SRL|LLC|Ltd)\b|\[(?:company name|registered address|tax ID)\]|Your Company Name/i);
     checked += await auditLinks(page);
   }
   expect(malformedRequests).toEqual([]);

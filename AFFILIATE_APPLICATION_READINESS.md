@@ -1,5 +1,11 @@
 # Renogy EU / Impact application readiness
 
+## Owner-confirmed identity update
+
+The owner/publisher identity requirement is now supplied: **Stanislav Zavizion**, **individual / independent publisher**, operating in **Romania**, commercial region **Romania / European Union**. **M Air Electro AI** is the brand/platform, not an incorporated company. Schema uses `Person` for the publisher and `Brand` / `WebSite` for the platform. No company identifiers, address or credentials are invented. The three domain email addresses are prepared, not delivery-verified.
+
+Status remains **NOT READY**: private mailbox/delivery configuration, responsible content-reviewer identity and evidence, human editorial approvals, remaining privacy/provider details and applicable Renogy/Impact conditions still need confirmation. Genuine audience evidence may be supplied when available/requested; it must not be fabricated. Ownership alone does not resolve those requirements. See [publisher identity report](docs/publisher-identity-update.md). Older missing-owner/domain findings below are historical, not current blockers.
+
 ## September 2026 production completion update
 
 The official domain is now https://mairelectroai.com. The old audit below is historical: its domain-provisioning task and navigation description are superseded. Current navigation includes an Experts preparation guide, not a verified booking directory. See docs/production-completion-report.md for the current five-pass verification and remaining real-world dependencies. No publisher facts, mailbox operation, affiliate approval or human editorial sign-off have been invented.

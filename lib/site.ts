@@ -1,3 +1,9 @@
+export const plannedEmailAddresses = {
+  contact: "contact@mairelectroai.com",
+  partnerships: "partnerships@mairelectroai.com",
+  privacy: "privacy@mairelectroai.com",
+} as const;
+
 export const siteConfig = {
   name: "M Air Electro AI",
   shortName: "M Air Electro AI",
@@ -9,7 +15,12 @@ export const siteConfig = {
   contactEmail: verifiedMailbox(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
   partnershipsEmail: verifiedMailbox(process.env.NEXT_PUBLIC_PARTNERSHIPS_EMAIL),
   privacyEmail: verifiedMailbox(process.env.NEXT_PUBLIC_PRIVACY_EMAIL),
-  operatorName: process.env.NEXT_PUBLIC_OPERATOR_NAME?.trim() || undefined,
+  // Owner-confirmed public identity. It is not a company or an editorial sign-off.
+  operatorName: "Stanislav Zavizion",
+  operatingCountry: "Romania",
+  commercialRegion: "Romania / European Union",
+  publisherStatus: "Individual / independent publisher",
+  plannedEmailAddresses,
   editorName: process.env.NEXT_PUBLIC_EDITOR_NAME?.trim() || undefined,
   editorBio: process.env.NEXT_PUBLIC_EDITOR_BIO?.trim() || undefined,
   editorExpertise: process.env.NEXT_PUBLIC_EDITOR_EXPERTISE?.trim() || undefined,
@@ -33,6 +44,32 @@ export const siteConfig = {
     "echipamente energie",
   ],
 } as const;
+
+export function publisherStructuredData() {
+  return {
+    "@type": "Person",
+    "@id": absoluteUrl("/#publisher"),
+    name: siteConfig.operatorName,
+    url: absoluteUrl("/about"),
+    description: `Independent publisher operating in ${siteConfig.operatingCountry}.`,
+    brand: { "@id": absoluteUrl("/#brand") },
+  };
+}
+
+export function websiteStructuredData() {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      publisherStructuredData(),
+      { "@type": "Brand", "@id": absoluteUrl("/#brand"), name: siteConfig.name, url: absoluteUrl() },
+      {
+        "@type": "WebSite", "@id": absoluteUrl("/#website"), name: siteConfig.name,
+        url: absoluteUrl(), description: siteConfig.description, inLanguage: ["ro", "en"],
+        publisher: { "@id": absoluteUrl("/#publisher") },
+      },
+    ],
+  };
+}
 
 export function getSiteUrl() {
   const value = process.env.NEXT_PUBLIC_SITE_URL?.trim();

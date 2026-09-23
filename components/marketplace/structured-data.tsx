@@ -1,5 +1,5 @@
 import type { CatalogProduct } from "@/lib/affiliate/types";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, publisherStructuredData } from "@/lib/site";
 
 function JsonLd({ data }: { data: Record<string, unknown> }) {
   return (
@@ -27,7 +27,7 @@ export function ProductStructuredData({
           ? { brand: { "@type": "Brand", name: product.brand } }
           : {
               headline: product.name,
-              author: { "@type": "Organization", name: "M Air Electro AI" },
+              publisher: publisherStructuredData(),
             }),
         description: product.description,
         category: product.category.replaceAll("-", " "),

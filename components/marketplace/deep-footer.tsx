@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { navigation } from "@/lib/marketplace/navigation";
 import type { Locale } from "@/lib/i18n/types";
+import { siteConfig } from "@/lib/site";
 export function DeepFooter({ locale }: { locale: Locale }) {
   const ro = locale === "ro";
   const groups = [
     ...navigation(locale).slice(0, 4),
     {
-      label: ro ? "Companie" : "Company",
+      label: ro ? "Despre platformă" : "About the platform",
       href: "/about",
       children: [
         { label: ro ? "Despre noi" : "About", href: "/about" },
@@ -69,6 +70,7 @@ export function DeepFooter({ locale }: { locale: Locale }) {
           : "Romania / EU · Independent equipment discovery. We do not sell or hold inventory. Renogy EU is the first intended supplier; affiliate approval is not in place. Purchases and returns are handled by the external supplier."}
       </p>
       <p className="small-copy">© 2026 M Air Electro AI</p>
+      <p className="small-copy">{ro ? "Proprietar și editor independent" : "Owner and independent publisher"}: {siteConfig.operatorName} · {ro ? "România" : siteConfig.operatingCountry}. <Link href="/about">{ro ? "Despre editor" : "About the publisher"}</Link></p>
     </footer>
   );
 }

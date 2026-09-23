@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { editorialAuthor, editorialRecord } from "@/lib/editorial";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, publisherStructuredData } from "@/lib/site";
 
 export function EditorialRecord({ path, title, ro, sources = [], schema = true }: { path: string; title: string; ro: boolean; sources?: string[]; schema?: boolean }) {
   const record = editorialRecord(path), author = editorialAuthor(record);
@@ -8,7 +8,7 @@ export function EditorialRecord({ path, title, ro, sources = [], schema = true }
   const json = { "@context": "https://schema.org", "@type": "TechArticle", headline: title, mainEntityOfPage: absoluteUrl(path), inLanguage: ro ? "ro" : "en",
     ...(author ? { author: { "@type": "Person", name: author } } : {}),
     ...(record.published ? { datePublished: record.published } : {}), ...(record.reviewed ? { dateModified: record.reviewed } : {}), citation: sources,
-    publisher: { "@type": "Organization", name: "M Air Electro AI", url: absoluteUrl() },
+    publisher: publisherStructuredData(),
   };
   return <section className="editorial-record content-panel" aria-label={ro ? "Fișă editorială" : "Editorial record"}>
     {schema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json).replace(/</g, "\\u003c") }} />}
