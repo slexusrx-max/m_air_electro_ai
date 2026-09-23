@@ -22,6 +22,8 @@ Schema.org supports a [Person as publisher](https://schema.org/publisher) and di
 
 ## 3. Prepared email addresses
 
+Follow-up, 2026-09-23: the owner explicitly supplied `slexusrx@gmail.com` for publication. It is centralized separately as `ownerContactEmail` and appears on the 13 shared publisher pages above. Contact, general policy, partnership and privacy links can use this owner-authorized address without asserting a delivery test. No physical address was supplied. The root structured data remains unchanged; no email delivery, domain provisioning or form readiness is inferred.
+
 `contact@mairelectroai.com`, `partnerships@mairelectroai.com`, `privacy@mairelectroai.com` are explicitly prepared in `lib/site.ts` (`plannedEmailAddresses`) and `.env.example` (`NEXT_PUBLIC_CONTACT_EMAIL`, `NEXT_PUBLIC_PARTNERSHIPS_EMAIL`, `NEXT_PUBLIC_PRIVACY_EMAIL`).
 
 They are not asserted to be provisioned or delivery-tested. Operational `siteConfig.contactEmail/partnershipsEmail/privacyEmail` still require actual environment values plus `CONTACT_EMAIL_VERIFIED=true`. No planned default silently activates a mailbox. The example retains `CONTACT_EMAIL_VERIFIED=false` and `CONTACT_FORM_ENABLED=false`. Form sending also requires Resend/Turnstile and sender-domain configuration. This change does not create mailboxes, change live secrets, send emails or certify inbox delivery.

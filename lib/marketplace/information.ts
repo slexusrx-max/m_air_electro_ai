@@ -133,8 +133,8 @@ export const information: Record<string, InformationPage> = {
       s(
         "Website operator and publisher",
         "Operatorul și editorul site-ului",
-        `${siteConfig.operatorName} operates and publishes M Air Electro AI as an individual and independent publisher in Romania. M Air Electro AI is the brand/platform, not an incorporated company. The commercial region is Romania / European Union. Private contact details are published only after mailbox configuration is confirmed; no residential address is published.`,
-        `${siteConfig.operatorName} operează și publică M Air Electro AI ca persoană fizică și editor independent în România. M Air Electro AI este marca/platforma, nu o companie înregistrată. Regiunea comercială este România / Uniunea Europeană. Contactele private sunt publicate numai după confirmarea configurării căsuțelor poștale; nu publicăm adresa de domiciliu.`,
+        `${siteConfig.operatorName} operates and publishes M Air Electro AI as an individual and independent publisher in Romania. M Air Electro AI is the brand/platform, not an incorporated company. The commercial region is Romania / European Union. Owner-authorized contact: ${siteConfig.ownerContactEmail}. Email delivery has not been tested and domain mailboxes remain unconfirmed; no residential address is published.`,
+        `${siteConfig.operatorName} operează și publică M Air Electro AI ca persoană fizică și editor independent în România. M Air Electro AI este marca/platforma, nu o companie înregistrată. Regiunea comercială este România / Uniunea Europeană. Contact autorizat de proprietar: ${siteConfig.ownerContactEmail}. Livrarea emailurilor nu a fost testată, iar căsuțele domeniului rămân neconfirmate; nu publicăm adresa de domiciliu.`,
       ),
       s(
         "Browsing and local preferences",

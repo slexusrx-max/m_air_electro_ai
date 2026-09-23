@@ -17,6 +17,7 @@ for (const locale of ["ro", "en"]) test(`publisher is an individual, not a compa
     if (identityPages.includes(path)) {
       const identity = page.locator(".publisher-details");
       await expect(identity).toContainText("Stanislav Zavizion");
+      await expect(identity.locator('a[href="mailto:slexusrx@gmail.com"]')).toHaveText("slexusrx@gmail.com");
       await expect(identity).toContainText(locale === "ro" ? "Persoană fizică / editor independent" : "Individual / independent publisher");
       await expect(identity).toContainText(locale === "ro" ? "România / Uniunea Europeană" : "Romania / European Union");
       await expect(page.locator("main")).toContainText(locale === "ro" ? "nu există o companie înregistrată" : "no incorporated company");
@@ -35,6 +36,11 @@ for (const locale of ["ro", "en"]) test(`publisher is an individual, not a compa
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), path).toBe(true);
   }
   await page.goto("/contact");
-  await expect(page.locator('a[href^="mailto:"]')).toHaveCount(0);
-  await expect(page.locator("main")).toContainText(locale === "ro" ? "Mesajele private nu sunt încă disponibile" : "Private messaging is not available yet");
+  await expect(page.getByRole("link", { name: locale === "ro" ? "Scrie un email" : "Write an email", exact: true })).toHaveAttribute("href", "mailto:slexusrx@gmail.com?subject=M%20Air%20Electro%20AI%20enquiry");
+  const emails = await page.locator('a[href^="mailto:"]').evaluateAll(links => links.map(link => link.getAttribute("href")));
+  expect(emails.length).toBeGreaterThan(0);
+  expect(emails.every(href => href?.split("?")[0] === "mailto:slexusrx@gmail.com")).toBe(true);
+  await expect(page.locator("main")).toContainText(locale === "ro" ? "Trimiterea prin acest formular nu este încă disponibilă" : "Sending through this form is not available yet");
+  await expect(page.locator("main")).toContainText(locale === "ro" ? "Livrarea emailurilor nu a fost testată" : "Email delivery has not been tested");
+  await expect(page.locator('.contact-form button[type="submit"]')).toBeDisabled();
 });

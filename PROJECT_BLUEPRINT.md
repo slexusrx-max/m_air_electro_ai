@@ -14,6 +14,8 @@ Owner-confirmed identity: **M Air Electro AI** is the brand/platform; **Stanisla
 
 The three official domain emails are prepared in configuration but their operation/delivery is not confirmed. Keep verification and sending gates disabled until explicitly confirmed. Represent the publisher as `Person` and the platform name as `Brand` / `WebSite`, not an incorporated `Organization`.
 
+Owner-authorized public contact is `slexusrx@gmail.com`, also used for partnership/privacy inquiries until dedicated mailboxes are confirmed. Publication is not delivery verification and does not enable the website contact form. No physical address was provided.
+
 **Need → Calculate → Understand → Discover → Compare → Choose → Visit supplier.** Marketplace is the primary commercial layer. Calculators, Find My Solution, technical guides, AI and future experts support the decision. The platform is not a direct merchant, warehouse, general handyman service, outage-monitoring product or brochure.
 
 ## Primary Market

@@ -4,6 +4,15 @@ import { load } from "./helpers.mjs";
 
 const config = (env = {}) => load("lib/site.ts", {}, { process: { env } });
 
+test("owner-authorized public Gmail does not activate domain delivery or the contact form", () => {
+  const site = config();
+  assert.equal(site.siteConfig.ownerContactEmail, "slexusrx@gmail.com");
+  assert.equal(site.siteConfig.contactEmail, undefined);
+  assert.equal(site.verifiedMailbox(site.siteConfig.ownerContactEmail), undefined);
+  const contact = load("lib/contact.ts", { "./site": site }, { process: { env: { CONTACT_FORM_ENABLED: "true" } } });
+  assert.equal(contact.contactReady(), false);
+});
+
 test("verified individual publisher cannot be replaced by a stale company environment value", () => {
   const site = config({ NEXT_PUBLIC_OPERATOR_NAME: "Old company placeholder" });
   assert.equal(site.siteConfig.operatorName, "Stanislav Zavizion");

@@ -8,6 +8,7 @@ export function PublisherDetails({ ro }: { ro: boolean }) {
     <dl className="publisher-details">
       <dt>{ro ? "Marcă / platformă" : "Brand / platform"}</dt><dd>{siteConfig.name}</dd>
       <dt>{ro ? "Proprietar / editor al platformei" : "Owner / publisher"}</dt><dd>{siteConfig.operatorName}</dd>
+      <dt>{ro ? "Email de contact al proprietarului" : "Owner contact email"}</dt><dd><a className="break-all underline" href={`mailto:${siteConfig.ownerContactEmail}`}>{siteConfig.ownerContactEmail}</a></dd>
       <dt>{ro ? "Țara de operare" : "Operating country"}</dt><dd>{ro ? "România" : siteConfig.operatingCountry}</dd>
       <dt>{ro ? "Regiune comercială" : "Commercial region"}</dt><dd>{ro ? "România / Uniunea Europeană" : siteConfig.commercialRegion}</dd>
       <dt>{ro ? "Statut" : "Status"}</dt><dd>{ro ? "Persoană fizică / editor independent" : siteConfig.publisherStatus}</dd>

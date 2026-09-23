@@ -15,9 +15,8 @@ export const metadata = buildMetadata({
 export default async function ContactPage() {
   const t = await getRequestDictionary(),
     c = commercialCopy(t),
-    mailto = siteConfig.contactEmail
-      ? `mailto:${siteConfig.contactEmail}?subject=${encodeURIComponent("M Air Electro AI enquiry")}`
-      : siteConfig.publicContactUrl;
+    contactEmail = siteConfig.contactEmail ?? siteConfig.ownerContactEmail,
+    mailto = `mailto:${contactEmail}?subject=${encodeURIComponent("M Air Electro AI enquiry")}`;
   return (
     <PlatformShell>
       <main className="commerce-page">
@@ -42,29 +41,18 @@ export default async function ContactPage() {
             className="mt-4 inline-block break-all text-xl font-bold text-teal-800 underline"
             href={mailto}
           >
-            {siteConfig.contactEmail ??
-              (c.ro
-                ? "Contactează proiectul pe GitHub"
-                : "Contact the project on GitHub")}
+            {contactEmail}
           </a>
           <p>
-            {siteConfig.contactEmail
-              ? c.ro
+            {c.ro
                 ? "Butonul deschide aplicația ta de email. Mesajul este trimis numai după ce îl trimiți din acea aplicație."
-                : "The button opens your email application. Your message is sent only when you submit it there."
-              : c.ro
-                ? "Poți trimite întrebări și corecturi prin pagina publică a proiectului. Ai nevoie de un cont GitHub; mesajul va fi public. Nu include date personale, parole sau documente."
-                : "Send questions and corrections through the public project page. A GitHub account is required and your message will be public. Do not include personal data, passwords or documents."}
+                : "The button opens your email application. Your message is sent only when you submit it there."}
           </p>
           <a href={mailto} className="button-primary mt-5">
-            {siteConfig.contactEmail
-              ? c.ro
-                ? "Scrie un email"
-                : "Write an email"
-              : c.ro
-                ? "Deschide pagina de contact"
-                : "Open contact page"}
+            {c.ro ? "Scrie un email" : "Write an email"}
           </a>
+          <p className="mt-5">{c.ro ? "Adresa proprietarului este publicată cu acordul său. Livrarea emailurilor nu a fost testată; adresele domeniului sunt încă în pregătire." : "The owner's address is published with permission. Email delivery has not been tested; domain mailboxes are still being prepared."}</p>
+          <p><a href={siteConfig.publicContactUrl} className="underline">{c.ro ? "Raportează o problemă publică pe GitHub" : "Report a public issue on GitHub"}</a>. {c.ro ? "Nu publica date personale, parole sau documente." : "Do not post personal data, passwords or documents."}</p>
         </section>
         <section className="info-card">
           <h2>

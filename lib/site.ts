@@ -15,6 +15,8 @@ export const siteConfig = {
   contactEmail: verifiedMailbox(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
   partnershipsEmail: verifiedMailbox(process.env.NEXT_PUBLIC_PARTNERSHIPS_EMAIL),
   privacyEmail: verifiedMailbox(process.env.NEXT_PUBLIC_PRIVACY_EMAIL),
+  // Authorized for public contact by the owner; not a delivery-verification flag.
+  ownerContactEmail: "slexusrx@gmail.com",
   // Owner-confirmed public identity. It is not a company or an editorial sign-off.
   operatorName: "Stanislav Zavizion",
   operatingCountry: "Romania",

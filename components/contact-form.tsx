@@ -15,7 +15,7 @@ export function ContactForm({ ro, enabled, siteKey }: { ro: boolean; enabled: bo
   }
   return <section className="content-panel">
     <h2>{l("Send an enquiry", "Trimite o întrebare")}</h2>
-    {!enabled && <p role="status">{l("Private messaging is not available yet. The owner must configure and verify the domain mailbox before this form can send messages.", "Mesajele private nu sunt încă disponibile. Proprietarul trebuie să configureze și să verifice adresa de email a domeniului înainte de activarea formularului.")}</p>}
+    {!enabled && <p role="status">{l("Sending through this form is not available yet. Use the contact email below in your own email application. The form requires separate delivery and anti-spam configuration before activation.", "Trimiterea prin acest formular nu este încă disponibilă. Folosește adresa de contact de mai jos în aplicația ta de email. Formularul necesită configurarea separată a livrării și protecției anti-spam înainte de activare.")}</p>}
     <form className="contact-form" onSubmit={async (event) => {
       event.preventDefault(); if (!enabled || busy) return;
       const form = event.currentTarget, data = new FormData(form);
