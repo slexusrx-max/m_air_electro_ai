@@ -1,6 +1,6 @@
 # Production completion and affiliate readiness
 
-Audit date: 2026-09-23. Official public origin: https://mairelectroai.com.
+Audit date: 2026-09-23. Official public origin: https://mairelectroai.com. Post-deployment verification completed on the actual custom domain: 66 browser tests passed in 9.6 minutes; 113-route crawl passed without failures or orphaned sitemap entries.
 This report separates tested software from owner/provider prerequisites. It does not certify legal compliance, affiliate acceptance, live email delivery, or conversion performance.
 
 ## 1. Defects found
@@ -45,7 +45,7 @@ Routing rules live in `lib/visual-system.ts`; original compact SVG artwork lives
 
 ## 6. Routes tested
 
-Baseline public production crawl visited 113 routes without failures or orphaned sitemap routes. Local post-change crawl also passed 113 routes. Coverage includes homepage, marketplace/categories/subcategories/products, solutions, tools, learning/articles, FAQ, company/legal pages, auth states, redirects and missing routes. Production after-deployment evidence is recorded in the delivery report; local results alone are not a deployment claim.
+Baseline public production crawl visited 113 routes without failures or orphaned sitemap routes. Local post-change and final deployed crawls also passed 113 routes each. Coverage includes homepage, marketplace/categories/subcategories/products, solutions, tools, learning/articles, FAQ, company/legal pages, auth states, redirects and missing routes. The full 66-test browser suite passed against the deployed custom domain as well as locally. Auth/contact fixtures are isolated mocks, not live account creation or message delivery tests.
 
 ## 7. Controls tested
 
@@ -77,11 +77,11 @@ Requested 390, 430, 768, 1366 and 1440px viewports passed responsive checks, wit
 
 ## 14. SEO/domain
 
-Canonical, OpenGraph, sitemap, robots and structured-data origin use https://mairelectroai.com. Old Vercel and www values normalize to the official apex. A host-conditioned permanent redirect preserves deep paths and query parameters. Local tests checked canonical origin across public sitemap routes and unique metadata on 108 public entries. Historical audit documents may retain the old host as historical evidence.
+Canonical, OpenGraph, sitemap, robots and structured-data origin use https://mairelectroai.com. Old Vercel and www values normalize to the official apex. A host-conditioned permanent redirect preserves deep paths and query parameters. Local and deployed tests checked canonical origin across public sitemap routes and unique metadata on 108 public entries. The actual www deep-path/query permanent redirect, robots and manifest tests passed in production. Historical audit documents may retain the old host as historical evidence.
 
 ## 15. Internal crawl
 
-Baseline production and final local crawl: 113 routes, zero failures, zero orphaned sitemap entries. The crawler audits internal routes separately from external merchant availability. Final deployed crawl is a required release verification, not inferred from the build.
+Baseline production, final local and final deployed crawl: 113 routes each, zero failures, zero orphaned sitemap entries. The crawler audits internal routes separately from external merchant availability. Final deployed evidence: local `test-results/crawl-production.json` and `.task-work/crawl-production-final.log`.
 
 ## 16. External suppliers
 
@@ -109,11 +109,11 @@ Exact public/server configuration variables and operational steps are documented
 
 ## 20. Commit
 
-Implementation release commit is the commit introducing this report. The immutable SHA and verified deployment are recorded in the final delivery report after push. Base audited commit: `6c77ec27895493f5d7179a228bf6320214819f78`.
+Fully tested application release commit: `948e7a85f184c92bc9bbe1e4dc3d1b3cdc903ce3`, pushed to `main`. Base audited commit: `6c77ec27895493f5d7179a228bf6320214819f78`. This verification update changes documentation only; application code remains exactly the tested release.
 
 ## 21. Deployment
 
-Target: https://mairelectroai.com, existing Vercel project linked to `slexusrx-max/m_air_electro_ai`, branch `main`. Deployment status must be checked after push, then the actual custom domain retested. A successful localhost build is not a claim that deployment has finished.
+Public production: https://mairelectroai.com. Existing Vercel project linked to `slexusrx-max/m_air_electro_ai`, branch `main`. GitHub deployment `6612647887` reports success at `2026-09-23T11:19:58Z` for the application SHA above. Immutable deployment URL: https://m-air-electro-iewxpehp9-m-air-electro-ai.vercel.app. Dashboard: https://vercel.com/m-air-electro-ai/m-air-electro-ai/3Nh2LHqbVzitf7C4wURHgoUxW3JR. All final browser/crawl checks targeted the actual custom domain, not just this generated alias.
 
 ## 22. Honest final status and five passes
 
@@ -127,4 +127,8 @@ NOT READY for Impact verification until the publisher/contact/editorial dependen
 | 4 | SEO, domain, language, affiliate/legal | Canonical/sitemap/robots/manifest/www tests; 419-key translation check; ordinary EU links; owner-dependent gaps disclosed |
 | 5 | Visual and reviewer perspective | Original artwork and desktop/mobile screenshots inspected; distinct solar/marine atmosphere; no fabricated trust/affiliate claims; NOT READY retained |
 
-Final pre-deployment checks: 38 unit tests pass; 66 Playwright tests pass; lint, typecheck, translation check and production build pass; npm audit reports zero vulnerabilities. Browser evidence and logs are local ignored artifacts, not production assets. After-deployment results must be attached to the delivery report rather than assumed from these checks.
+Final checks: 38 unit tests pass; 66 Playwright tests pass locally and all 66 pass in production; lint, typecheck, translation check and production build pass; npm audit reports zero vulnerabilities. All five verification passes were repeated against production through the browser suite/crawl and screenshot review. The deployed home was visually inspected at 390px and 1440px, and the solar family at 1366px. Automated WCAG checks passed on the seven selected production pages.
+
+Production inspection also independently confirmed missing operator/editor fields on About/Privacy/Partnerships, no verified mailto addresses on Contact, and the explicit private-messaging-unavailable notice. No messages were submitted. These are genuine remaining publisher prerequisites, not hidden by the successful technical results. Original checkout `C:\Users\PC\Documents\GitHub\m_air_electro_ai` was fast-forwarded to the application release without touching the owner's untracked PDF directory.
+
+Browser evidence and logs are local ignored artifacts under `.task-work/production-verified/` and `.task-work/production-verified.log`, not production assets. Supplier evidence is `.task-work/supplier-audit.json`. Screenshots, code checks and provider success statuses do not establish affiliate approval, professional certification or verified audience data. Final status remains **NOT READY** for Impact verification for the dependencies in section 19.
