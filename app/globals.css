@@ -326,3 +326,95 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .commerce-page button,.commerce-page summary,.commerce-page select { min-height:44px; }
 :focus-visible { outline:3px solid #315f13; outline-offset:4px; }
 @media(max-width:480px) { .publisher-details { grid-template-columns:1fr; gap:5px; } .publisher-details dd { margin-bottom:12px; } .analytics-settings { margin:0 16px 20px; } }
+
+/* Liquid glass: readable content above lightweight, page-specific artwork. */
+:root {
+  --glass-surface: linear-gradient(145deg, #fafff9d9, #eaf4e6bd);
+  --glass-border: #ffffffd9;
+  --glass-shadow: 0 16px 45px #174a3610, inset 0 1px 0 #ffffffeb;
+}
+::selection { background: #c8f266; color: #173c34; }
+.platform-root { background: transparent; }
+.glass-panel [class*="text-lime-50"], .glass-panel [class*="text-amber-200"] { color: #315a37 !important; }
+.marketing-page-background { --ambient: #cdeca3; background: radial-gradient(ellipse at 84% 22%, var(--ambient), transparent 65%), linear-gradient(135deg, #f6f9f0, #e3f1ed); }
+.marketing-page-background[data-visual-family="solar"] { --ambient: #f4dea0; }
+.marketing-page-background[data-visual-family="batteries"] { --ambient: #beeca2; }
+.marketing-page-background[data-visual-family="inverters"] { --ambient: #a9e7de; }
+.marketing-page-background[data-visual-family="chargers"] { --ambient: #a9ded2; }
+.marketing-page-background[data-visual-family="backup"] { --ambient: #d9e8b0; }
+.marketing-page-background[data-visual-family="generators"] { --ambient: #d6ddbd; }
+.marketing-page-background[data-visual-family="ev"] { --ambient: #a6e5c0; }
+.marketing-page-background[data-visual-family="marine"] { --ambient: #a4dce4; }
+.marketing-page-background[data-visual-family="industrial"] { --ambient: #b8cfd0; }
+.marketing-page-background[data-visual-family="solutions"] { --ambient: #bce8d1; }
+.marketing-page-background[data-visual-family="tools"] { --ambient: #c3d9db; }
+.marketing-page-background[data-visual-family="learn"] { --ambient: #e7ddba; }
+.marketing-page-background[data-visual-family="experts"] { --ambient: #baded0; }
+.marketing-page-background[data-visual-family="business"] { --ambient: #bed0ba; }
+.brand-background-art { object-fit: cover; opacity: .28; }
+.family-schematic { position: absolute; right: -3%; top: 12%; width: min(65vw, 850px); height: 76vh; color: #21584a; opacity: .17; transform: rotate(-9deg); }
+.background-grid { position: absolute; inset: 0; opacity: .28; background-image: linear-gradient(#37674e16 1px, transparent 1px), linear-gradient(90deg, #37674e16 1px, transparent 1px); background-size: 64px 64px; mask-image: linear-gradient(90deg, transparent, #000); }
+.background-veil { position: absolute; inset: 0; background: linear-gradient(90deg, #f1f7ed66, transparent 70%); }
+.commerce-header, .deep-footer { background: var(--glass-surface); border-color: var(--glass-border); box-shadow: var(--glass-shadow); backdrop-filter: blur(24px) saturate(135%); -webkit-backdrop-filter: blur(24px) saturate(135%); }
+.header-bar { gap: 12px; padding: 13px 18px; }
+.desktop-nav { gap: 8px; font-size: .76rem; }
+.desktop-account-actions { gap: 4px; font-size: .72rem; }
+.brand-mark { background: linear-gradient(135deg, #eaffb0, #a9d864); box-shadow: inset 0 1px 0 #fff, 0 5px 16px #81a54230; }
+.nav-pair>a { transition: color 180ms ease; }
+.nav-pair>a:hover, .nav-pair>a[aria-current="page"] { color: #42651d; text-decoration: underline; text-underline-offset: 8px; }
+.mega-menu { background: linear-gradient(130deg, #f9fff5f7, #e8f6e4f5); backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px); }
+.mega-columns a { min-height: 36px; border-radius: 8px; }
+.mega-columns a:hover, .mobile-nav a:hover { background: #c8e5b46b; }
+.mega-category { display: flex !important; align-items: center; gap: 9px; }
+.category-symbol { width: 36px; height: 36px; flex-shrink: 0; color: #356248; }
+.discovery-hero { background: var(--glass-surface); box-shadow: var(--glass-shadow); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+.brand-hero { grid-template-columns: 1fr 1fr; gap: 30px; padding: 36px; align-items: center; }
+.brand-hero h1 { font-family: var(--font-space-grotesk), sans-serif; font-size: clamp(2.35rem, 3.8vw, 3.8rem); line-height: 1.06; letter-spacing: -.055em; }
+.brand-hero-art { position: relative; min-width: 0; margin: 0; overflow: hidden; border-radius: 25px; box-shadow: 0 20px 50px #2548301a; border: 1px solid #ffffffb3; }
+.brand-hero-art img { display: block; width: 100%; height: auto; }
+.brand-hero-art figcaption { position: absolute; bottom: 8px; left: 8px; right: 8px; padding: 12px 5px; border: 1px solid #ffffffa8; border-radius: 14px; background: #eff8eabd; backdrop-filter: blur(12px); text-align: center; font-size: .57rem; letter-spacing: .15em; font-weight: 700; }
+.hero-search { background: #f8fff49e; border: 1px solid #60865c75; box-shadow: inset 0 2px 5px #173c340a; }
+.commerce-page .hero-search input { background: transparent; }
+.hero-search:focus-within { box-shadow: 0 0 0 4px #93c55833; border-color: #426e32; }
+.commerce-page .button-primary { background: linear-gradient(160deg, #dafb98, #b5df66); border-color: #8bae4d; box-shadow: inset 0 1px #f5ffe4, 0 5px 14px #49692020; }
+.commerce-page .button-primary:hover { background: linear-gradient(160deg, #e5ffaf, #c3ea79); box-shadow: 0 9px 22px #49692035; transform: translateY(-2px); }
+.commerce-page .button-outline { background: #f6fff080; box-shadow: inset 0 1px #fff; backdrop-filter: blur(12px); }
+.commerce-page .button-outline:hover { background: #ecf8dce6; border-color: #5c8438; transform: translateY(-2px); }
+.discovery-card, .equipment-card, .content-panel, .catalog-filters, .supplier-disclosure { background: var(--glass-surface); border-color: var(--glass-border); box-shadow: var(--glass-shadow); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+.discovery-card, .equipment-card { transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease; }
+.discovery-card:hover, .discovery-card:focus-visible, .equipment-card:hover, .equipment-card:focus-within { transform: translateY(-4px); box-shadow: 0 18px 34px #174a3620, inset 0 1px #fff; border-color: #95bc70; }
+.discovery-card .category-symbol { width: 44px; height: 44px; margin-bottom: 15px; padding: 4px; border-radius: 12px; background: #dcf2b599; }
+.section-line h2, .commerce-page>section>h2 { font-family: var(--font-space-grotesk), sans-serif; letter-spacing: -.03em; }
+.solution-banner { background: linear-gradient(110deg, #cee7a5c7, #e2f2d9a3); box-shadow: inset 0 1px #fff; }
+.equipment-visual { background: radial-gradient(ellipse at center, #cfdebcd1, #eef4e787); }
+.equipment-card .product-actions { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: .74rem; }
+.product-actions a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 700; }
+.page-intro { position: relative; padding: 28px 30px; border-left: 3px solid #8cbd4e; border-radius: 0 20px 20px 0; background: linear-gradient(100deg, #f4fbeddb, #f4fbed66); }
+.page-intro:after { content: ""; display: block; width: 58px; height: 3px; background: #8cbd4e; margin-top: 22px; }
+.search-content { display: grid; gap: 18px; }
+.search-content .discovery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.deep-footer { border-top: 2px solid #99ba7066; }
+.footer-columns a:hover { color: #345c20; text-decoration: underline; text-underline-offset: 4px; }
+@keyframes glass-arrival { from { transform: translateY(10px); } to { transform: none; } }
+.discovery-hero, .page-intro { animation: glass-arrival 550ms ease-out both; }
+@media (min-width: 1301px) and (max-width: 1450px) {
+  .commerce-header { margin-inline: 14px; }
+  .brand-name { font-size: 1rem; gap: 7px; }
+  .header-actions { gap: 5px; }
+  .desktop-nav { gap: 8px; font-size: .78rem; }
+  .desktop-account-actions { font-size: .67rem; }
+}
+@media (max-width: 768px) {
+  .brand-hero { grid-template-columns: 1fr; gap: 24px; padding: 26px; }
+  .brand-hero-art { order: -1; max-width: 360px; width: 100%; justify-self: center; }
+  .brand-hero-art figcaption { font-size: .55rem; }
+  .page-intro { padding: 22px; }
+  .family-schematic { width: 90vw; right: -16%; top: 8%; opacity: .12; }
+  .search-content .discovery-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) { .brand-hero { padding: 23px 20px; } .brand-hero h1 { font-size: 2.4rem; } .brand-hero-art { border-radius: 16px; } }
+@supports not (backdrop-filter: blur(1px)) { .glass-panel, .content-panel, .commerce-header, .discovery-card { background: #edf5e9; color: #173c34; } }
+@media (prefers-reduced-motion: reduce) {
+  .discovery-hero, .page-intro { animation: none; }
+  .discovery-card:hover, .equipment-card:hover, .equipment-card:focus-within, .commerce-page .button-primary:hover, .commerce-page .button-outline:hover { transform: none; }
+}

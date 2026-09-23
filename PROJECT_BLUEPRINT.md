@@ -1,12 +1,12 @@
 # M Air Electro AI — Authoritative Product Blueprint
 
-Version 3 · Official marketplace-first direction · 14 September 2026
+Version 4 · Official marketplace-first direction · 23 September 2026
 
 This specification supersedes earlier positioning across production, source, metadata, documentation and coding-agent instructions.
 
 ## Product Vision
 
-M Air Electro AI is a independent product discovery, comparison and sizing platform. Help customers understand a system before choosing equipment.
+M Air Electro AI is an independent product discovery, comparison and sizing platform. Help customers understand a system before choosing equipment.
 
 ## Official Positioning
 
@@ -22,7 +22,7 @@ Independent affiliate-commerce discovery. The merchant controls price, stock, pa
 
 ## Information Architecture
 
-Primary navigation: Equipment, Solutions, Tools, Learn, For Business. Planned professional help remains in the footer. Search and RO/EN switching stay accessible. Company and Legal are in a deep footer. Desktop mega menus group real destinations; mobile uses nested expandable groups. Every visible control works.
+Primary navigation: Marketplace, Solutions, Tools, Learn, Experts, For Business. Experts is a professional-preparation guide, not a booking directory. Search and RO/EN switching stay accessible. Company and Legal are in a deep footer. Desktop mega menus group real destinations; mobile uses nested expandable groups. Every visible control works.
 
 ## Marketplace Taxonomy
 
@@ -111,9 +111,15 @@ State independent discovery, preliminary calculations, external seller responsib
 
 A visitor can explore, calculate requirements, understand categories, review equipment, compare facts, read related guides, reach external suppliers and understand disclosure comfortably on desktop/mobile. Documentation, tests and metadata describe one product.
 
-Evidence: unit tests, i18n check, lint, typecheck, build, audit, functional browser tests, complete crawl, screenshots at 1440/1366/768/390 and 430 mobile navigation. Three passes cover functionality; content/navigation/mobile; public production/application quality. Push to main, confirm the Vercel commit, then test public production. A build is not completion.
+Evidence: unit tests, i18n check, lint, typecheck, build, audit, functional browser tests, complete crawl, screenshots at 1440/1366/768/430/390. Five passes cover routes/controls; discovery/calculators; responsive/accessibility; domain/SEO/i18n/disclosure; visual/reviewer quality. Push to main, confirm the Vercel commit, then test public production. A build is not completion.
 
 ## Rules for Future Coding Agents
+
+Official public origin: https://mairelectroai.com. The www hostname permanently redirects to the apex. Legacy Vercel URLs are historical deployment references, not public canonicals.
+
+Primary navigation: Marketplace, Solutions, Tools, Learn, Experts, For Business (RO/EN). Experts is a professional-preparation resource, not a bookable or verified directory. Home uses the original public/hero.png artwork; lib/visual-system.ts maps other route families to original lightweight energy schematics. Do not restore one shared raster background to every route. Search includes equipment, categories, solutions and guides.
+
+Release verification uses five passes: routes/controls; discovery and calculations; responsive/accessibility; domain/SEO/language/disclosures; visual and reviewer perspective. Confirm the production deployment SHA before claiming release success. Confirm publisher identity, private contact and human editorial approval before declaring affiliate-application readiness.
 
 Marketplace-first is authoritative. Do not restore diagnostics or Ukrainian outage/address flows as primary identity/navigation. Never invent commercial approval, inventory, prices, reviews, ratings or professionals. Do not redesign direction without owner instruction. Extend existing architecture; integrate commerce into Marketplace/Solutions/Learn. Every control must work. Keep Romania/EU orientation, honest limitations and user changes. Read AGENTS.md and installed Next.js docs.
 

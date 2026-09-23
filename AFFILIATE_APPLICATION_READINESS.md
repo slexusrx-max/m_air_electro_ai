@@ -1,5 +1,9 @@
 # Renogy EU / Impact application readiness
 
+## September 2026 production completion update
+
+The official domain is now https://mairelectroai.com. The old audit below is historical: its domain-provisioning task and navigation description are superseded. Current navigation includes an Experts preparation guide, not a verified booking directory. See docs/production-completion-report.md for the current five-pass verification and remaining real-world dependencies. No publisher facts, mailbox operation, affiliate approval or human editorial sign-off have been invented.
+
 Audit date: 14 September 2026. Verdict: **NOT READY** until the owner requirements below are evidenced. No application, email, purchase, account creation or external form submission was performed. Affiliate tracking remains inactive.
 
 ## Implemented changes

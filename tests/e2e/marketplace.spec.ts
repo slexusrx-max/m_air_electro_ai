@@ -14,7 +14,7 @@ test("RO/EN switching preserves the deep route and desktop menu works by keyboar
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(page).toHaveURL(/\/marketplace\/solar\/panels\/rigid$/);
   await page
-    .getByRole("button", { name: "Equipment menu", exact: true })
+    .getByRole("button", { name: "Marketplace menu", exact: true })
     .focus();
   await page.keyboard.press("Enter");
   await expect(page.locator("#mega-menu")).toBeVisible();
@@ -26,7 +26,7 @@ test("RO/EN switching preserves the deep route and desktop menu works by keyboar
     "Portable solar panels",
   );
   await page
-    .getByRole("button", { name: "Equipment menu", exact: true })
+    .getByRole("button", { name: "Marketplace menu", exact: true })
     .click();
   await page.keyboard.press("Escape");
   await expect(page.locator("#mega-menu")).toHaveCount(0);
@@ -39,7 +39,7 @@ for (const width of [320, 360, 390, 430, 768])
     const nav = page.locator("#mobile-menu");
     await nav
       .locator(":scope > details")
-      .filter({ has: page.locator("summary", { hasText: /^Echipamente$/ }) })
+      .filter({ has: page.locator("summary", { hasText: /^Marketplace$/ }) })
       .locator(":scope > summary")
       .click();
     const solar = nav
@@ -213,7 +213,7 @@ for (const width of [1440, 1366, 768, 390])
     }
     if (width >= 1100) {
       await page
-        .getByRole("button", { name: "Echipamente menu", exact: true })
+        .getByRole("button", { name: "Marketplace menu", exact: true })
         .click();
       await page.screenshot({
         path: testInfo.outputPath(`mega-${width}.png`),

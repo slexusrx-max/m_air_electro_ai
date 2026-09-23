@@ -27,8 +27,8 @@ export const information: Record<string, InformationPage> = {
       s(
         "Editorial independence",
         "Independență editorială",
-        "Calculations are deterministic and assumptions are visible. Real models have official source links; equipment classes are explicitly labelled. We do not fabricate prices, stock, ratings, reviews or expert verification. AI assistance and a future expert network support the buying decision.",
-        "Calculele sunt deterministe, cu ipoteze vizibile. Modelele reale au surse oficiale; clasele sunt etichetate explicit. Nu inventăm prețuri, stoc, evaluări, recenzii sau verificări de experți. AI și viitoarea rețea de experți susțin decizia.",
+        "Calculations are deterministic and assumptions are visible. Real models have official source links; equipment classes are explicitly labelled. We do not fabricate prices, stock, ratings, reviews or expert verification. Our guides help you prepare the buying decision and the conversation with a qualified installer.",
+        "Calculele sunt deterministe, cu ipoteze vizibile. Modelele reale au surse oficiale; clasele sunt etichetate explicit. Nu inventăm prețuri, stoc, evaluări, recenzii sau verificări de experți. Ghidurile pregătesc alegerea și discuția cu un instalator calificat.",
       ),
       s(
         "Commercial role",
@@ -58,23 +58,23 @@ export const information: Record<string, InformationPage> = {
         "Primim corecții de produse, interes din partea furnizorilor și feedback de proiect prin contact. Prețurile de volum, contractele de instalare, achizițiile gestionate și proiectarea nu sunt servicii active ale site-ului. Cere oferte ferme furnizorului sau contractorului real.",
       ),
       s(
-        "Future supplier relationships",
-        "Relații viitoare cu furnizorii",
-        "Future supplier onboarding will require identity, regional delivery, product-source and commercial-term checks. Inclusion will not imply certification, and payment integration will not be activated without a separate owner-approved scope.",
-        "Viitoarea integrare a furnizorilor va cere verificarea identității, livrării regionale, surselor și condițiilor. Includerea nu implică certificare, iar plățile nu se activează fără un scop separat aprobat de proprietar.",
+        "Supplier evaluation",
+        "Evaluarea furnizorilor",
+        "Evaluate the legal seller, regional delivery, official model documentation, warranty and commercial terms before procurement. Catalog inclusion is not certification. M Air provides independent research; the supplier provides the binding offer and handles payment.",
+        "Evaluează vânzătorul legal, livrarea regională, documentația modelului, garanția și condițiile înainte de achiziție. Includerea în catalog nu este certificare. M Air oferă cercetare independentă; furnizorul oferă oferta fermă și gestionează plata.",
       ),
     ],
   },
   experts: {
     title: b("Professional help", "Ajutor profesional"),
     intro: b(
-      "Use a qualified professional to turn a planning estimate into an installation-specific design. The expert marketplace is a future service layer.",
-      "Folosește un profesionist calificat pentru transformarea estimării în proiect specific instalației. Marketplace-ul de experți este un serviciu viitor.",
+      "Prepare a clear technical brief and select a qualified professional to turn your planning estimate into an installation-specific design.",
+      "Pregătește cerințe tehnice clare și alege un profesionist calificat pentru transformarea estimării într-un proiect specific instalației.",
     ),
     sections: [
       s(
-        "No fictional profiles",
-        "Fără profiluri fictive",
+        "Independent professional selection",
+        "Alegerea independentă a profesionistului",
         "No verified professional profiles are currently published. We do not promise response times, availability, certifications or a completed verification process. Use the contact path to express professional onboarding interest or suggest a regional service requirement.",
         "Nu sunt publicate în prezent profiluri profesionale verificate. Nu promitem timpi de răspuns, disponibilitate, certificări sau verificări finalizate. Folosește contactul pentru interes de înscriere profesională sau cerințe regionale.",
       ),
@@ -85,10 +85,10 @@ export const information: Record<string, InformationPage> = {
         "Pregătește lista sarcinilor, tensiunea și fazele, autonomia, modelele existente, condițiile și ipotezele. Cere validarea cablurilor, protecțiilor, transferului, împământării și testelor de punere în funcțiune.",
       ),
       s(
-        "Future verification",
-        "Verificare viitoare",
-        "A future directory will distinguish declared skills from checked credentials, identify regions and service scope, and require consent before publishing a profile. Until that process is operational, this page is an information and contact path, not a booking service.",
-        "Viitorul director va distinge competențele declarate de acreditările verificate, va arăta regiunile și scopul și va cere acordul înainte de publicare. Până atunci, pagina oferă informații și contact, nu rezervări.",
+        "Check scope and evidence",
+        "Verifică scopul și dovezile",
+        "Ask for applicable credentials, experience with your equipment class, a written scope, commissioning documentation and responsibility for warranty work. Verify credentials independently rather than relying on a profile badge. This page is a preparation guide, not an installer directory or booking service.",
+        "Cere acreditările aplicabile, experiența cu echipamentele tale, scopul scris, documentația punerii în funcțiune și responsabilitatea garanției. Verifică independent acreditările, nu doar o insignă de profil. Pagina este un ghid de pregătire, nu un director de instalatori sau serviciu de rezervări.",
       ),
     ],
   },

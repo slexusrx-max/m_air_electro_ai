@@ -1,4 +1,5 @@
 "use client";
+import { useCalculatorCopy } from "@/components/calculators/calculator-locale";
 import { CalculationAnalytics } from "@/components/calculation-analytics";
 
 import { useState } from "react";
@@ -66,6 +67,7 @@ function resolveGenerator(formState: FormState): CalculationResult {
 }
 
 export default function GeneratorCalculator() {
+  const l = useCalculatorCopy();
   const [formState, setFormState] = useState<FormState>(defaultFormState);
   const result = resolveGenerator(formState);
 
@@ -89,9 +91,9 @@ export default function GeneratorCalculator() {
           </CalculatorField>
           <CalculatorField label="Starting method">
             <CalculatorSelect value={formState.startingMethod} onChange={(event) => updateField("startingMethod", event.target.value as StartingMethod)}>
-              <option value="dol">Direct-on-line</option>
-              <option value="soft-starter">Soft starter</option>
-              <option value="vfd">VFD</option>
+              <option value="dol">{l("Direct-on-line")}</option>
+              <option value="soft-starter">{l("Soft starter")}</option>
+              <option value="vfd">{l("VFD")}</option>
             </CalculatorSelect>
           </CalculatorField>
           <CalculatorField label="Operating reserve (%)">
@@ -101,16 +103,16 @@ export default function GeneratorCalculator() {
 
         <CalculatorAssumptions>
           <ul className="list-disc space-y-2 pl-5">
-            <li>Running kVA is estimated from running kW and power factor.</li>
-            <li>Largest motor start allowance uses a simplified multiplier based on starting method.</li>
-            <li>Use this as a planning figure only. Final generator selection still requires transient, harmonic, and manufacturer-specific review.</li>
+            <li>{l("Running kVA is estimated from running kW and power factor.")}</li>
+            <li>{l("Largest motor start allowance uses a simplified multiplier based on starting method.")}</li>
+            <li>{l("Use this as a planning figure only. Final generator selection still requires transient, harmonic, and manufacturer-specific review.")}</li>
           </ul>
         </CalculatorAssumptions>
       </CalculatorFormPanel>
 
       <CalculatorResultsPanel>
         {"error" in result ? (
-          <CalculatorValidationCard message={result.error} />
+          <CalculatorValidationCard message={l(result.error)} />
         ) : (
           <>
             <CalculatorResultCard

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { rootCategories } from "@/lib/marketplace/content";
 import { solutions } from "@/lib/marketplace/solutions";
 import { guides } from "@/lib/marketplace/guides";
@@ -19,7 +20,7 @@ export async function DiscoveryHome({
   const ro = locale === "ro";
   return (
     <main className="commerce-page">
-      <section className="discovery-hero">
+      <section className={`discovery-hero ${marketplace ? "marketplace-hero" : "brand-hero"}`}>
         <div>
           <p className="eyebrow">M Air Electro AI · România / EU</p>
           <h1>
@@ -81,7 +82,10 @@ export async function DiscoveryHome({
             <button type="submit">{ro ? "Caută" : "Search"} →</button>
           </form>
         </div>
-        <aside className="hero-system">
+        {!marketplace ? <figure className="brand-hero-art">
+          <Image src="/hero.png" alt={ro ? "M Air Electro AI: litera M verde și profil uman digital" : "M Air Electro AI: lime M and futuristic digital human profile"} width={1254} height={1254} sizes="(max-width: 768px) 90vw, 48vw" preload />
+          <figcaption>{ro ? "INTELIGENȚĂ. ENERGIE. VIITOR." : "INTELLIGENCE. ENERGY. FUTURE."}</figcaption>
+        </figure> : <aside className="hero-system">
           <p>{ro ? "DE LA NEVOIE LA ALEGERE" : "FROM NEED TO CHOICE"}</p>
           <div className="system-flow">
             <span>
@@ -107,7 +111,7 @@ export async function DiscoveryHome({
               ? "Calcule explicabile. Specificații cu surse. Fără prețuri sau stocuri inventate."
               : "Transparent calculations. Sourced specifications. No invented prices or inventory."}
           </p>
-        </aside>
+        </aside>}
       </section>
       {requirements && (requirements.batteryKwh || requirements.inverterKw) && (
         <section className="content-panel">
@@ -322,8 +326,8 @@ export async function DiscoveryHome({
           </h2>
           <p>
             {ro
-              ? "Folosește calculele și lista de cerințe pentru o evaluare profesională. Rețeaua de experți este în dezvoltare; nu publicăm profiluri fictive."
-              : "Use calculations and a requirements brief for a professional assessment. The expert network is being developed; we do not publish fictional profiles."}
+              ? "Transformă calculele într-o listă de cerințe pentru instalatorul tău. Verifică împreună compatibilitatea, protecțiile și condițiile instalației."
+              : "Turn your calculations into a requirements brief for your installer. Review compatibility, protection and site conditions together."}
           </p>
         </div>
         <Link href="/experts" className="button-outline">

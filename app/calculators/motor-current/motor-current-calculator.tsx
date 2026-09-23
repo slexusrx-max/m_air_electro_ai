@@ -1,4 +1,5 @@
 "use client";
+import { useCalculatorCopy } from "@/components/calculators/calculator-locale";
 import { CalculationAnalytics } from "@/components/calculation-analytics";
 
 import { useState } from "react";
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/glass";
 import {
   calculateMotorCurrent,
+  resolveCalculation,
   formatElectricalNumber,
   getPositiveNumber,
   type MotorSystemType,
@@ -72,14 +74,14 @@ function resolveMotorCurrent(formState: FormState): CalculationResult {
     };
   }
 
-  return calculateMotorCurrent({
+  return resolveCalculation(() => calculateMotorCurrent({
     efficiencyPercent,
     powerFactor,
     powerKw,
     startCurrentMultiplier,
     systemType: formState.systemType,
     voltage,
-  });
+  }));
 }
 
 function ResultCard({
@@ -91,18 +93,20 @@ function ResultCard({
   label: string;
   value: string;
 }) {
+  const l = useCalculatorCopy();
   return (
     <article className={moduleCardClassName}>
       <p className="text-xs font-semibold uppercase tracking-[0.26em] text-lime-100/75">
-        {label}
+        {l(label)}
       </p>
-      <p className="mt-4 text-3xl font-semibold text-white">{value}</p>
-      <p className="mt-3 text-sm leading-7 text-white/72">{detail}</p>
+      <p className="mt-4 text-3xl font-semibold text-white">{l(value)}</p>
+      <p className="mt-3 text-sm leading-7 text-white/72">{l(detail)}</p>
     </article>
   );
 }
 
 export default function MotorCurrentCalculator() {
+  const l = useCalculatorCopy();
   const [formState, setFormState] = useState<FormState>(defaultFormState);
 
   const result = resolveMotorCurrent(formState);
@@ -123,9 +127,7 @@ export default function MotorCurrentCalculator() {
       <section className={`${glassPanelClassName} p-6 sm:p-8`}>
         <div className="grid gap-5 sm:grid-cols-2">
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/84">
-              Motor system type
-            </span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("Motor system type")}</span>
             <select
               value={formState.systemType}
               onChange={(event) =>
@@ -133,15 +135,13 @@ export default function MotorCurrentCalculator() {
               }
               className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-lime-100/60 focus:ring-2 focus:ring-lime-100/20"
             >
-              <option value="three-phase">Three-phase AC motor</option>
-              <option value="single-phase">Single-phase AC motor</option>
+              <option value="three-phase">{l("Three-phase AC motor")}</option>
+              <option value="single-phase">{l("Single-phase AC motor")}</option>
             </select>
           </label>
 
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/84">
-              Rated voltage (V)
-            </span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("Rated voltage (V)")}</span>
             <input
               type="number"
               min="1"
@@ -153,9 +153,7 @@ export default function MotorCurrentCalculator() {
           </label>
 
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/84">
-              Motor output power (kW)
-            </span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("Motor output power (kW)")}</span>
             <input
               type="number"
               min="0.1"
@@ -167,9 +165,7 @@ export default function MotorCurrentCalculator() {
           </label>
 
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/84">
-              Power factor
-            </span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("Power factor")}</span>
             <input
               type="number"
               min="0.01"
@@ -184,9 +180,7 @@ export default function MotorCurrentCalculator() {
           </label>
 
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/84">
-              Efficiency (%)
-            </span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("Efficiency (%)")}</span>
             <input
               type="number"
               min="1"
@@ -201,9 +195,7 @@ export default function MotorCurrentCalculator() {
           </label>
 
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/84">
-              Starting current multiplier
-            </span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("Starting current multiplier")}</span>
             <input
               type="number"
               min="1"
@@ -218,26 +210,12 @@ export default function MotorCurrentCalculator() {
         </div>
 
         <div className="mt-6 rounded-[1.5rem] border border-lime-100/16 bg-lime-100/[0.06] p-4 text-sm leading-7 text-white/78">
-          <p className="font-semibold text-lime-50">
-            Assumptions used by this calculator
-          </p>
+          <p className="font-semibold text-lime-50">{l("Assumptions used by this calculator")}</p>
           <ul className="mt-3 list-disc space-y-2 pl-5">
-            <li>
-              Motor power is treated as shaft output power, then converted to
-              estimated electrical input using efficiency.
-            </li>
-            <li>
-              Power factor and efficiency are assumed constant at rated load.
-            </li>
-            <li>
-              Starting current multiplier is a planning estimate only. Soft
-              starters and VFD systems can be much lower than direct-on-line
-              starting.
-            </li>
-            <li>
-              Final cable, breaker, overload, and starter decisions should still
-              be checked against the motor nameplate and applicable code.
-            </li>
+            <li>{l("Motor power is treated as shaft output power, then converted to estimated electrical input using efficiency.")}</li>
+            <li>{l("Power factor and efficiency are assumed constant at rated load.")}</li>
+            <li>{l("Starting current multiplier is a planning estimate only. Soft starters and VFD systems can be much lower than direct-on-line starting.")}</li>
+            <li>{l("Final cable, breaker, overload, and starter decisions should still be checked against the motor nameplate and applicable code.")}</li>
           </ul>
         </div>
       </section>
@@ -245,11 +223,9 @@ export default function MotorCurrentCalculator() {
       <section className="grid gap-4 content-start">
         {"error" in result ? (
           <article className={`${glassPanelClassName} p-6`}>
-            <p className="text-sm font-semibold uppercase tracking-[0.26em] text-amber-200/80">
-              Validation
-            </p>
+            <p className="text-sm font-semibold uppercase tracking-[0.26em] text-amber-200/80">{l("Validation")}</p>
             <p className="mt-4 text-base leading-8 text-white/82">
-              {result.error}
+              {l(result.error)}
             </p>
           </article>
         ) : (

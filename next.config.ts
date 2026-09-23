@@ -6,7 +6,14 @@ const isDevelopment = process.env.NODE_ENV === "development";
 const scriptPolicy = isDevelopment ? "'self' 'unsafe-inline' 'unsafe-eval'" : "'self' 'unsafe-inline'";
 
 const nextConfig: NextConfig = {
-  redirects(){return [...Object.entries(legacyRedirects).map(([source,destination])=>({source,destination,permanent:true})),...Object.entries(legacyProducts).map(([source,destination])=>({source:'/marketplace/products/'+source,destination:'/marketplace/products/'+destination,permanent:true})),...Object.entries(legacyCategories).map(([source,destination])=>({source:'/marketplace/category/'+source,destination:'/marketplace/'+destination,permanent:true}))];},
+  redirects() {
+    return [
+      { source: "/:path*", has: [{ type: "host" as const, value: "www.mairelectroai.com" }], destination: "https://mairelectroai.com/:path*", permanent: true },
+      ...Object.entries(legacyRedirects).map(([source, destination]) => ({ source, destination, permanent: true })),
+      ...Object.entries(legacyProducts).map(([source, destination]) => ({ source: "/marketplace/products/" + source, destination: "/marketplace/products/" + destination, permanent: true })),
+      ...Object.entries(legacyCategories).map(([source, destination]) => ({ source: "/marketplace/category/" + source, destination: "/marketplace/" + destination, permanent: true })),
+    ];
+  },
   poweredByHeader: false,
   compress: true,
   experimental: {

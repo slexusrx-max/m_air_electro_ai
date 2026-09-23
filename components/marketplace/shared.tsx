@@ -2,6 +2,8 @@ import Link from "next/link";
 import { BreadcrumbStructuredData } from "./structured-data";
 import { local, type LocalText } from "@/lib/marketplace/content";
 import type { Locale } from "@/lib/i18n/types";
+import { EnergySchematic } from "@/components/energy-schematic";
+import { visualFamily } from "@/lib/visual-system";
 export function Breadcrumbs({
   items,
 }: {
@@ -57,6 +59,7 @@ export function LinkGrid({
     <div className="discovery-grid">
       {items.map((i) => (
         <Link href={i.href} key={i.href} className="discovery-card">
+          {i.href.startsWith("/marketplace/") && !i.href.includes("/products/") && <EnergySchematic family={visualFamily(i.href)} className="category-symbol" />}
           <h3>
             {local(i.title, locale)} <span aria-hidden="true">↗</span>
           </h3>

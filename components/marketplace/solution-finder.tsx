@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 import { ProductCard } from "./product-card";
 import { catalog } from "@/lib/affiliate/catalog";
 import { estimateSystem } from "@/lib/marketplace/recommendation";
+import { categoryByPath, local } from "@/lib/marketplace/content";
 import {
   loadHomeEnergyProfile,
   calculateHomeEnergy,
@@ -86,6 +87,10 @@ export function SolutionFinder({
     )
     .slice(0, 6);
   function next() {
+    if (step === 2 && form.budget && (!Number.isFinite(Number(form.budget)) || Number(form.budget) < 0)) {
+      setError(l("Budget must be a finite, non-negative amount.", "Bugetul trebuie să fie o valoare finită, fără semn negativ."));
+      return;
+    }
     if (step === 2 && !result) {
       setError(
         l(
@@ -110,7 +115,10 @@ export function SolutionFinder({
     trackEvent("calculator_complete");
     setReady(true);
     setRevision((n) => n + 1);
-    setTimeout(() => resultRef.current?.focus(), 0);
+    setTimeout(() => {
+      resultRef.current?.focus({ preventScroll: true });
+      resultRef.current?.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
+    }, 0);
   }
   function importProfile() {
     try {
@@ -354,7 +362,7 @@ export function SolutionFinder({
                 key={path}
                 href={`/marketplace/${path}`}
               >
-                {path.replaceAll("-", " ")} →
+                {categoryByPath(path) ? local(categoryByPath(path)!.title, ro ? "ro" : "en") : path} →
               </Link>
             ))}
           </div>
@@ -385,7 +393,7 @@ export function SolutionFinder({
             </p>
           )}
           <div className="action-row">
-            <Link
+            {matches.length >= 2 && <Link
               className="button-primary"
               href={`/compare?ids=${encodeURIComponent(
                 matches
@@ -395,7 +403,7 @@ export function SolutionFinder({
               )}`}
             >
               {l("Compare candidates", "Compară opțiunile")}
-            </Link>
+            </Link>}
             <Link href={`/solutions/${form.application}`}>
               {l("Read the solution guide", "Citește soluția")} →
             </Link>

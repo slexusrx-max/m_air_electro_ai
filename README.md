@@ -2,7 +2,7 @@
 
 M Air Electro AI is a independent product discovery, comparison and sizing platform for Romania and the EU. Romanian is the default commercial language; English is supported.
 
-Production: https://m-air-electro-ai.vercel.app
+Production: https://mairelectroai.com
 
 Architecture, route inventory, repository audit and public deployment results: [marketplace expansion report](docs/marketplace-expansion-report.md).
 
@@ -57,13 +57,19 @@ Use the lockfile. On Windows, use `npm.cmd` if PowerShell blocks `npm.ps1`. If N
 
 ## Environment and affiliate state
 
+The official public origin is `https://mairelectroai.com`; `www` redirects permanently to the apex. This is also the safe canonical default when no site URL is configured. Use an explicit `NEXT_PUBLIC_SITE_URL=http://localhost:3100` only when testing local-origin contact delivery. Legacy Vercel-host values are normalized to the official public domain.
+
+The original `public/hero.png` M/head image is preserved and prominent on the homepage. `lib/visual-system.ts` selects lightweight SVG energy diagrams per page family, without fetching unrelated background images. Search spans equipment, categories, solutions and guides. Engineering calculator copy shares a tested RO/EN translation layer.
+
+Run `npx tsx scripts/audit-suppliers.ts` separately from the internal crawler. Merchant access blocks are reported as unverified, not internal-route failures. Release verification covers five passes: routes/controls; discovery/calculators; mobile/accessibility; SEO/domain/i18n/legal; visual/reviewer quality.
+
 See [docs/production-environment.md](docs/production-environment.md) and `.env.example`. Public discovery and calculation do not require auth, AI or payment credentials. Private contact requires verified domain mailboxes and enabled delivery/spam configuration. GitHub is supplementary; without a private channel the affiliate application remains NOT READY.
 
 **Renogy / Impact approval is not confirmed.** Current links are ordinary supplier links. Activation requires both `RENOGY_AFFILIATE_APPROVED=true` and `AFFILIATE_TRACKING_ENABLED=true`, with exact Impact-issued HTTPS links mapped by supplier URL in `RENOGY_IMPACT_LINKS_JSON`. The existing provider validates links and disclosure follows actual activation. Merchant model details, Romanian delivery and warranties remain external checks.
 
 ## Deployment
 
-Run all checks, commit implementation and alignment, push the reviewed commit to `main`, and confirm the connected Vercel deployment is for that commit. Then rerun browser tests and the crawler with `TEST_BASE_URL=https://m-air-electro-ai.vercel.app`. A local build alone is not completion.
+Run all checks, commit implementation and alignment, push the reviewed commit to `main`, and confirm the connected Vercel deployment is for that commit. Then rerun browser tests and the crawler with `TEST_BASE_URL=https://mairelectroai.com`. A local build alone is not completion.
 
 Optional account, document, AI and saved home-profile flows remain. Ukrainian energy adapters and demonstration datasets are retained as specialized supporting modules, outside primary navigation and the commercial sitemap. Obsolete map/tariff/directory routes redirect to active sections.
 

@@ -1,4 +1,5 @@
 "use client";
+import { useCalculatorCopy } from "@/components/calculators/calculator-locale";
 import { CalculationAnalytics } from "@/components/calculation-analytics";
 
 import { useState } from "react";
@@ -56,6 +57,7 @@ function resolveFuse(formState: FormState): CalculationResult {
 }
 
 export default function FuseSelectionCalculator() {
+  const l = useCalculatorCopy();
   const [formState, setFormState] = useState<FormState>(defaultFormState);
   const result = resolveFuse(formState);
 
@@ -73,15 +75,15 @@ export default function FuseSelectionCalculator() {
           </CalculatorField>
           <CalculatorField label="Application type">
             <CalculatorSelect value={formState.applicationType} onChange={(event) => updateField("applicationType", event.target.value as FuseApplicationType)}>
-              <option value="general-circuit">General circuit</option>
-              <option value="motor-circuit">Motor circuit</option>
-              <option value="semiconductor">Semiconductor protection</option>
+              <option value="general-circuit">{l("General circuit")}</option>
+              <option value="motor-circuit">{l("Motor circuit")}</option>
+              <option value="semiconductor">{l("Semiconductor protection")}</option>
             </CalculatorSelect>
           </CalculatorField>
           <CalculatorField label="Continuous load">
             <CalculatorSelect value={formState.continuousLoad} onChange={(event) => updateField("continuousLoad", event.target.value as "yes" | "no")}>
-              <option value="yes">Yes</option>
-              <option value="no">No</option>
+              <option value="yes">{l("Yes")}</option>
+              <option value="no">{l("No")}</option>
             </CalculatorSelect>
           </CalculatorField>
           <CalculatorField label="Spare margin (%)">
@@ -91,16 +93,16 @@ export default function FuseSelectionCalculator() {
 
         <CalculatorAssumptions>
           <ul className="list-disc space-y-2 pl-5">
-            <li>Fuse family is selected from application class: gG for general, aM for motor, and aR for semiconductor-focused protection.</li>
-            <li>Continuous-load and application multipliers are used for planning only and do not replace manufacturer coordination curves.</li>
-            <li>Fault duty, I2t behavior, and upstream/downstream coordination must still be checked before final issue of materials.</li>
+            <li>{l("Fuse family is selected from application class: gG for general, aM for motor, and aR for semiconductor-focused protection.")}</li>
+            <li>{l("Continuous-load and application multipliers are used for planning only and do not replace manufacturer coordination curves.")}</li>
+            <li>{l("Fault duty, I2t behavior, and upstream/downstream coordination must still be checked before final issue of materials.")}</li>
           </ul>
         </CalculatorAssumptions>
       </CalculatorFormPanel>
 
       <CalculatorResultsPanel>
         {"error" in result ? (
-          <CalculatorValidationCard message={result.error} />
+          <CalculatorValidationCard message={l(result.error)} />
         ) : (
           <>
             <CalculatorResultCard

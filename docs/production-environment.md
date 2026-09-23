@@ -4,7 +4,7 @@ The official product is marketplace-first equipment discovery for Romania/EU. Pu
 
 | Variable | Purpose | Missing behavior |
 | --- | --- | --- |
-| NEXT_PUBLIC_SITE_URL | Canonical production origin | Falls back to https://m-air-electro-ai.vercel.app |
+| NEXT_PUBLIC_SITE_URL | Canonical production origin | Falls back to https://mairelectroai.com |
 | NEXT_PUBLIC_CONTACT_EMAIL | Owner-provided working mailbox | Contact uses existing public GitHub issues |
 | RENOGY_AFFILIATE_APPROVED | Explicit written approval; must be true to activate tracking | Ordinary supplier links |
 | AFFILIATE_TRACKING_ENABLED | Explicit tracking activation flag, in addition to approval | Ordinary supplier links |
@@ -24,7 +24,7 @@ Never commit credentials. No tracking identifier, Impact account, site-verificat
 1. Use npm ci and the committed lockfile. Run unit, i18n, lint, typecheck, build and audit checks.
 2. Start the built site, run Playwright and the homepage-started crawler; inspect screenshots at all required widths.
 3. Commit and push to main. Confirm Vercel deploys that commit and wait for ready status.
-4. Set TEST_BASE_URL=https://m-air-electro-ai.vercel.app and rerun browser tests and crawl.
+4. Set TEST_BASE_URL=https://mairelectroai.com and rerun browser tests and crawl.
 5. Check default Romanian, English switching, suppliers/disclosure, canonical origin, sitemap, legacy redirects, 404 and absence of overflow/runtime errors.
 6. Record actual deployment commit and results in the delivery report. Do not infer production success from local checks.
 
@@ -33,5 +33,7 @@ Never commit credentials. No tracking identifier, Impact account, site-verificat
 Ukrainian energy adapters, map datasets and optional AI/document/account features remain outside the commercial navigation. Address and shipping endpoints were removed; they are not part of the current site. Demonstration energy datasets must never be represented as live operational status.
 
 ## External dependencies
+
+Official mailbox configuration after creation and verification: `NEXT_PUBLIC_CONTACT_EMAIL=contact@mairelectroai.com`, `NEXT_PUBLIC_PARTNERSHIPS_EMAIL=partnerships@mairelectroai.com`, `NEXT_PUBLIC_PRIVACY_EMAIL=privacy@mairelectroai.com`, `CONTACT_EMAIL_VERIFIED=true`. Form delivery additionally requires `CONTACT_FROM_EMAIL`, `RESEND_API_KEY`, `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` and `CONTACT_FORM_ENABLED=true`. Keep the form disabled until the sender domain, exact challenge hostname, privacy disclosures and receipt are verified. See `custom-domain-and-publisher.md` for owner-confirmed identity/editorial fields.
 
 Written affiliate approval and provider-issued attribution, optional feed/asset permissions, real expert verification, owner/legal-entity details, confirmed contact channel, provider retention policies and production legal review remain external responsibilities. Vercel environment values should be changed only within their intended feature scope.

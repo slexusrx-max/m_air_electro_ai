@@ -36,13 +36,13 @@ export const siteConfig = {
 
 export function getSiteUrl() {
   const value = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  const deployment = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim();
-  const url = new URL(value || (deployment ? "https://" + deployment : "http://localhost:3100"));
+  const url = new URL(value || "https://mairelectroai.com");
   if (url.username || url.password || url.search || url.hash || url.pathname !== "/" ||
       (url.protocol !== "https:" && !(url.protocol === "http:" && ["localhost", "127.0.0.1"].includes(url.hostname)))) {
     throw new Error("NEXT_PUBLIC_SITE_URL must be an HTTPS origin (HTTP is allowed only for local development)");
   }
-  if (!value && !deployment && process.env.VERCEL_ENV === "production") throw new Error("Configure NEXT_PUBLIC_SITE_URL before production deployment");
+  // Old deployment settings must not leak the legacy host into public metadata.
+  if (["www.mairelectroai.com", "m-air-electro-ai.vercel.app"].includes(url.hostname)) return "https://mairelectroai.com";
   return url.origin;
 }
 

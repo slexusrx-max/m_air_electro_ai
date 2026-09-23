@@ -1,4 +1,5 @@
 "use client";
+import { useCalculatorCopy } from "@/components/calculators/calculator-locale";
 import { CalculationAnalytics } from "@/components/calculation-analytics";
 
 import { useState } from "react";
@@ -65,6 +66,7 @@ function resolveBreaker(formState: FormState): CalculationResult {
 }
 
 export default function BreakerSelectionCalculator() {
+  const l = useCalculatorCopy();
   const [formState, setFormState] = useState<FormState>(defaultFormState);
   const result = resolveBreaker(formState);
 
@@ -82,9 +84,9 @@ export default function BreakerSelectionCalculator() {
           </CalculatorField>
           <CalculatorField label="Load profile">
             <CalculatorSelect value={formState.loadType} onChange={(event) => updateField("loadType", event.target.value as ProtectionLoadType)}>
-              <option value="general">General load</option>
-              <option value="continuous">Continuous load</option>
-              <option value="motor">Motor load</option>
+              <option value="general">{l("General load")}</option>
+              <option value="continuous">{l("Continuous load")}</option>
+              <option value="motor">{l("Motor load")}</option>
             </CalculatorSelect>
           </CalculatorField>
           <CalculatorField label="Ambient derating available (%)">
@@ -100,16 +102,16 @@ export default function BreakerSelectionCalculator() {
 
         <CalculatorAssumptions>
           <ul className="list-disc space-y-2 pl-5">
-            <li>This is a preliminary breaker-rating workflow and does not replace code-specific protection coordination.</li>
-            <li>Continuous and motor duty use a basic planning multiplier before rounding to the next standard rating.</li>
-            <li>High inrush loads still require curve and settings verification before procurement or energization.</li>
+            <li>{l("This is a preliminary breaker-rating workflow and does not replace code-specific protection coordination.")}</li>
+            <li>{l("Continuous and motor duty use a basic planning multiplier before rounding to the next standard rating.")}</li>
+            <li>{l("High inrush loads still require curve and settings verification before procurement or energization.")}</li>
           </ul>
         </CalculatorAssumptions>
       </CalculatorFormPanel>
 
       <CalculatorResultsPanel>
         {"error" in result ? (
-          <CalculatorValidationCard message={result.error} />
+          <CalculatorValidationCard message={l(result.error)} />
         ) : (
           <>
             <CalculatorResultCard

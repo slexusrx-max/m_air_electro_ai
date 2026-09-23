@@ -1,3 +1,5 @@
+"use client";
+import { useCalculatorCopy } from "./calculator-locale";
 import {
   glassPanelClassName,
   moduleCardClassName,
@@ -47,10 +49,11 @@ export function CalculatorGrid({ children }: { children: React.ReactNode }) {
 }
 
 export function CalculatorField({ label, children }: CalculatorFieldProps) {
+  const l = useCalculatorCopy();
   return (
     <label className="block">
       <span className="mb-2 block text-sm font-medium text-white/84">
-        {label}
+        {l(label)}
       </span>
       {children}
     </label>
@@ -83,9 +86,10 @@ export function CalculatorAssumptions({
   children: React.ReactNode;
   title?: string;
 }) {
+  const l = useCalculatorCopy();
   return (
     <div className="mt-6 rounded-[1.5rem] border border-lime-100/16 bg-lime-100/[0.06] p-4 text-sm leading-7 text-white/78">
-      <p className="font-semibold text-lime-50">{title}</p>
+      <p className="font-semibold text-lime-50">{l(title)}</p>
       <div className="mt-3">{children}</div>
     </div>
   );
@@ -100,24 +104,26 @@ export function CalculatorResultCard({
   label: string;
   value: string;
 }) {
+  const l = useCalculatorCopy();
   return (
     <article className={moduleCardClassName}>
       <p className="text-xs font-semibold uppercase tracking-[0.26em] text-lime-100/75">
-        {label}
+        {l(label)}
       </p>
-      <p className="mt-4 text-3xl font-semibold text-white">{value}</p>
-      <p className="mt-3 text-sm leading-7 text-white/72">{detail}</p>
+      <p className="mt-4 text-3xl font-semibold text-white">{l(value)}</p>
+      <p className="mt-3 text-sm leading-7 text-white/72">{l(detail)}</p>
     </article>
   );
 }
 
 export function CalculatorValidationCard({ message }: { message: string }) {
+  const l = useCalculatorCopy();
   return (
-    <article className={`${glassPanelClassName} p-6`}>
+    <article role="alert" className={`${glassPanelClassName} p-6`}>
       <p className="text-sm font-semibold uppercase tracking-[0.26em] text-amber-200/80">
-        Validation
+        {l("Validation")}
       </p>
-      <p className="mt-4 text-base leading-8 text-white/82">{message}</p>
+      <p className="mt-4 text-base leading-8 text-white/82">{l(message)}</p>
     </article>
   );
 }

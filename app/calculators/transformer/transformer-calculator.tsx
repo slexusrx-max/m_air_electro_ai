@@ -1,4 +1,5 @@
 "use client";
+import { useCalculatorCopy } from "@/components/calculators/calculator-locale";
 import { CalculationAnalytics } from "@/components/calculation-analytics";
 
 import { useState } from "react";
@@ -17,6 +18,7 @@ import {
 } from "@/components/calculators/calculator-primitives";
 import {
   calculateTransformer,
+  resolveCalculation,
   formatElectricalNumber,
   getPositiveNumber,
   type MotorSystemType,
@@ -54,16 +56,17 @@ function resolveTransformer(formState: FormState): CalculationResult {
     return { error: "Expected load percent must stay between 0 and 100." };
   }
 
-  return calculateTransformer({
+  return resolveCalculation(() => calculateTransformer({
     transformerKva,
     primaryVoltage,
     secondaryVoltage,
     expectedLoadPercent,
     systemType: formState.systemType,
-  });
+  }));
 }
 
 export default function TransformerCalculator() {
+  const l = useCalculatorCopy();
   const [formState, setFormState] = useState<FormState>(defaultFormState);
   const result = resolveTransformer(formState);
 
@@ -81,8 +84,8 @@ export default function TransformerCalculator() {
               value={formState.systemType}
               onChange={(event) => updateField("systemType", event.target.value as MotorSystemType)}
             >
-              <option value="three-phase">Three-phase transformer</option>
-              <option value="single-phase">Single-phase transformer</option>
+              <option value="three-phase">{l("Three-phase transformer")}</option>
+              <option value="single-phase">{l("Single-phase transformer")}</option>
             </CalculatorSelect>
           </CalculatorField>
           <CalculatorField label="Transformer rating (kVA)">
@@ -122,16 +125,16 @@ export default function TransformerCalculator() {
 
         <CalculatorAssumptions>
           <ul className="list-disc space-y-2 pl-5">
-            <li>This is a loading and current estimator only; it does not replace thermal, impedance, or fault-duty review.</li>
-            <li>Expected load percent is used to scale operating current from transformer full-load current.</li>
-            <li>Final design still needs protection, voltage regulation, impedance, cooling, and installation checks.</li>
+            <li>{l("This is a loading and current estimator only; it does not replace thermal, impedance, or fault-duty review.")}</li>
+            <li>{l("Expected load percent is used to scale operating current from transformer full-load current.")}</li>
+            <li>{l("Final design still needs protection, voltage regulation, impedance, cooling, and installation checks.")}</li>
           </ul>
         </CalculatorAssumptions>
       </CalculatorFormPanel>
 
       <CalculatorResultsPanel>
         {"error" in result ? (
-          <CalculatorValidationCard message={result.error} />
+          <CalculatorValidationCard message={l(result.error)} />
         ) : (
           <>
             <CalculatorResultCard

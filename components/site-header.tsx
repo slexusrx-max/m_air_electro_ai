@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import type { Dictionary, Locale, MarketplaceRole } from "@/lib/i18n/types";
 import type { NavigationGroup } from "@/lib/marketplace/navigation";
 import { signOut } from "@/app/(auth)/actions";
+import { EnergySchematic } from "./energy-schematic";
+import { visualFamily } from "@/lib/visual-system";
 export function SiteHeader({
   profile,
   dashboardHref = "/dashboard",
@@ -175,6 +177,7 @@ export function SiteHeader({
                   href={g.href}
                   onClick={() => setOpen(null)}
                 >
+                  {active.href === "/marketplace" && <EnergySchematic family={visualFamily(g.href)} className="category-symbol" />}
                   {g.label} →
                 </Link>
                 {g.children?.map((c) => (

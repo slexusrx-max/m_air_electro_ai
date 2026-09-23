@@ -69,3 +69,12 @@ export function CompareControl({
     </div>
   );
 }
+
+export function RemoveComparison({ ids, ro }: { ids: string[]; ro: boolean }) {
+  return <Link className="remove-compare" href={`/compare?ids=${encodeURIComponent(ids.join(","))}`} onClick={() => {
+    try {
+      localStorage.setItem(key, ids.join(","));
+      window.dispatchEvent(new Event("mair-compare"));
+    } catch { /* URL-based comparison remains usable without browser storage. */ }
+  }}>{ro ? "Elimină" : "Remove"}</Link>;
+}

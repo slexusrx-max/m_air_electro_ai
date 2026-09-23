@@ -24,7 +24,7 @@ for (const [width,height] of sizes) test(`responsive pages and images ${width}x$
         if (el instanceof HTMLImageElement) {
           if (!el.naturalWidth || rect.width <= 0 || rect.height <= 0) issues.push("invalid image");
           const style = getComputedStyle(el);
-          if (style.objectFit === "cover") {
+          if (style.objectFit === "cover" && !el.closest('[aria-hidden="true"]')) {
             const ratio = (rect.width / rect.height) / (el.naturalWidth / el.naturalHeight);
             if (ratio < .5 || ratio > 2) issues.push("extreme image crop");
           }

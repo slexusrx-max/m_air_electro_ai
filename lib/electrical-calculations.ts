@@ -294,6 +294,9 @@ export function calculateVoltageDrop({
   const actualVoltageDropPercent = (actualVoltageDropVolts / voltage) * 100;
   const allowedVoltageDropVolts = voltage * (maxVoltageDropPercent / 100);
 
+  if (actualVoltageDropVolts > voltage) {
+    throw new Error("Voltage drop exceeds the supply voltage. Review the cable, route and load before proceeding.");
+  }
   return {
     actualVoltageDropVolts,
     actualVoltageDropPercent,
@@ -464,7 +467,13 @@ export function calculateFuseSelection({
 }
 
 export function resolveCalculation<T>(calculate: () => T): T | { error: string } {
-  try { return calculate(); } catch (error) {
+  try {
+    const result = calculate();
+    if (result && typeof result === "object" && Object.values(result).some(value => typeof value === "number" && (!Number.isFinite(value) || value < 0 || value > Number.MAX_SAFE_INTEGER))) {
+      throw new Error("The inputs exceed the supported calculation range. Review the values with a qualified professional.");
+    }
+    return result;
+  } catch (error) {
     if (!(error instanceof Error)) throw error;
     return { error: error.message };
   }

@@ -5,6 +5,7 @@ import { EquipmentVisual } from "./equipment-visual";
 import type { CatalogProduct } from "@/lib/affiliate/types";
 import type { Dictionary } from "@/lib/i18n/types";
 import type { Equipment } from "@/lib/marketplace/catalog-data";
+import { categoryByPath } from "@/lib/marketplace/content";
 export function ProductCard({
   product,
   dictionary: t,
@@ -50,6 +51,14 @@ export function ProductCard({
         {ro ? "Detalii și compatibilitate" : "Details & compatibility"} →
       </Link>
       <CompareControl id={p.id} ro={ro} />
+      <div className="product-actions">
+        <Link href={categoryByPath(p.paths?.[0] ?? "")?.calculator ?? "/marketplace/find-my-solution"}>
+          {ro ? "Calculează necesarul" : "Calculate requirements"} →
+        </Link>
+        {p.productUrl && <a href={p.productUrl} target="_blank" rel="noopener noreferrer">
+          {ro ? "Verifică prețul la furnizor" : "Check price at supplier"} ↗
+        </a>}
+      </div>
     </article>
   );
 }

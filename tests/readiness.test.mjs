@@ -12,7 +12,9 @@ test("canonical origin is validated; only confirmed same-domain mailboxes are di
   for (const url of ["javascript:alert(1)", "https://user:pass@domain.org", "https://domain.org/path", "http://domain.org", "https://domain.org?x=1"]) {
     assert.throws(() => config({ ...env, NEXT_PUBLIC_SITE_URL: url }).getSiteUrl());
   }
-  assert.equal(config({ VERCEL_PROJECT_PRODUCTION_URL: "preview.example.org" }).getSiteUrl(), "https://preview.example.org");
+  assert.equal(config({ VERCEL_PROJECT_PRODUCTION_URL: "preview.example.org" }).getSiteUrl(), "https://mairelectroai.com");
+  for (const host of ["www.mairelectroai.com", "m-air-electro-ai.vercel.app"]) assert.equal(config({ NEXT_PUBLIC_SITE_URL: `https://${host}` }).getSiteUrl(), "https://mairelectroai.com");
+  assert.equal(config({ NEXT_PUBLIC_SITE_URL: "http://localhost:3100" }).getSiteUrl(), "http://localhost:3100");
 });
 test("contact rejects invalid origin, disabled configuration, missing consent, honeypots and oversize bodies before network", async () => {
   const handler = load("lib/contact.ts", { "./site": config() }, { process: { env }, TextDecoder }).handleContact;

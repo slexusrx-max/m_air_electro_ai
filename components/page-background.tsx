@@ -1,24 +1,27 @@
+"use client";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { visualFamily } from "@/lib/visual-system";
+import { EnergySchematic } from "./energy-schematic";
 
-/**
- * Original Future Space energy artwork. It deliberately sits below every
- * route, while page content is rendered in the stacking context above it.
- */
 export function PageBackground() {
+  const family = visualFamily(usePathname());
   return (
     <div
       aria-hidden="true"
-      className="marketing-page-background pointer-events-none fixed inset-0 z-0 overflow-hidden bg-[#f3fbfb]"
+      data-visual-family={family}
+      className="marketing-page-background pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
-      <Image
-        src="/future-space-energy.png"
+      {family === "brand" ? <Image
+        src="/hero.png"
         alt=""
         fill
         preload
         sizes="100vw"
-        className="energy-background-art saturate-110"
-      />
-      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(236,246,240,.7),rgba(236,246,240,.64),rgba(236,246,240,.76))]" />
+        className="brand-background-art"
+      /> : <EnergySchematic family={family} className="family-schematic" />}
+      <div className="background-grid" />
+      <div className="background-veil" />
     </div>
   );
 }

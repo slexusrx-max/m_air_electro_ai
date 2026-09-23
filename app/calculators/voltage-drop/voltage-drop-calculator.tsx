@@ -1,4 +1,5 @@
 "use client";
+import { useCalculatorCopy } from "@/components/calculators/calculator-locale";
 import { CalculationAnalytics } from "@/components/calculation-analytics";
 
 import { useState } from "react";
@@ -6,6 +7,7 @@ import { useState } from "react";
 import { glassPanelClassName, moduleCardClassName } from "@/components/ui/glass";
 import {
   calculateVoltageDrop,
+  resolveCalculation,
   formatElectricalNumber,
   getPositiveNumber,
   standardCableSizes,
@@ -52,7 +54,7 @@ function resolveVoltageDrop(formState: FormState): CalculationResult {
     };
   }
 
-  return calculateVoltageDrop({
+  return resolveCalculation(() => calculateVoltageDrop({
     cableSize,
     current,
     length,
@@ -60,7 +62,7 @@ function resolveVoltageDrop(formState: FormState): CalculationResult {
     maxVoltageDropPercent,
     systemType: formState.systemType,
     voltage,
-  });
+  }));
 }
 
 function ResultCard({
@@ -72,16 +74,18 @@ function ResultCard({
   label: string;
   value: string;
 }) {
+  const l = useCalculatorCopy();
   return (
     <article className={moduleCardClassName}>
-      <p className="text-xs font-semibold uppercase tracking-[0.26em] text-lime-100/75">{label}</p>
-      <p className="mt-4 text-3xl font-semibold text-white">{value}</p>
-      <p className="mt-3 text-sm leading-7 text-white/72">{detail}</p>
+      <p className="text-xs font-semibold uppercase tracking-[0.26em] text-lime-100/75">{l(label)}</p>
+      <p className="mt-4 text-3xl font-semibold text-white">{l(value)}</p>
+      <p className="mt-3 text-sm leading-7 text-white/72">{l(detail)}</p>
     </article>
   );
 }
 
 export default function VoltageDropCalculator() {
+  const l = useCalculatorCopy();
   const [formState, setFormState] = useState<FormState>(defaultFormState);
 
   const result = resolveVoltageDrop(formState);
@@ -99,32 +103,32 @@ export default function VoltageDropCalculator() {
       <section className={`${glassPanelClassName} p-6 sm:p-8`}>
         <div className="grid gap-5 sm:grid-cols-2">
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/84">System type</span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("System type")}</span>
             <select
               value={formState.systemType}
               onChange={(event) => updateField("systemType", event.target.value as SystemType)}
               className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-lime-100/60 focus:ring-2 focus:ring-lime-100/20"
             >
-              <option value="three-phase">Three-phase AC</option>
-              <option value="single-phase">Single-phase AC</option>
-              <option value="dc">DC</option>
+              <option value="three-phase">{l("Three-phase AC")}</option>
+              <option value="single-phase">{l("Single-phase AC")}</option>
+              <option value="dc">{l("DC")}</option>
             </select>
           </label>
 
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/84">Conductor material</span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("Conductor material")}</span>
             <select
               value={formState.material}
               onChange={(event) => updateField("material", event.target.value as CableMaterial)}
               className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-lime-100/60 focus:ring-2 focus:ring-lime-100/20"
             >
-              <option value="copper">Copper</option>
-              <option value="aluminum">Aluminum</option>
+              <option value="copper">{l("Copper")}</option>
+              <option value="aluminum">{l("Aluminum")}</option>
             </select>
           </label>
 
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/84">System voltage (V)</span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("System voltage (V)")}</span>
             <input
               type="number"
               min="1"
@@ -136,7 +140,7 @@ export default function VoltageDropCalculator() {
           </label>
 
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/84">Load current (A)</span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("Load current (A)")}</span>
             <input
               type="number"
               min="0.1"
@@ -148,7 +152,7 @@ export default function VoltageDropCalculator() {
           </label>
 
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/84">Cable size (mm^2)</span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("Cable size (mm^2)")}</span>
             <select
               value={formState.cableSize}
               onChange={(event) => updateField("cableSize", event.target.value)}
@@ -156,14 +160,13 @@ export default function VoltageDropCalculator() {
             >
               {standardCableSizes.map((size) => (
                 <option key={size} value={String(size)}>
-                  {size} mm^2
-                </option>
+                  {size}{l("mm^2")}</option>
               ))}
             </select>
           </label>
 
           <label className="block">
-            <span className="mb-2 block text-sm font-medium text-white/84">Cable length, one-way (m)</span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("Cable length, one-way (m)")}</span>
             <input
               type="number"
               min="0.1"
@@ -175,7 +178,7 @@ export default function VoltageDropCalculator() {
           </label>
 
           <label className="block sm:col-span-2">
-            <span className="mb-2 block text-sm font-medium text-white/84">Target maximum voltage drop (%)</span>
+            <span className="mb-2 block text-sm font-medium text-white/84">{l("Target maximum voltage drop (%)")}</span>
             <input
               type="number"
               min="0.1"
@@ -188,11 +191,11 @@ export default function VoltageDropCalculator() {
         </div>
 
         <div className="mt-6 rounded-[1.5rem] border border-lime-100/16 bg-lime-100/[0.06] p-4 text-sm leading-7 text-white/78">
-          <p className="font-semibold text-lime-50">How to use this calculator</p>
+          <p className="font-semibold text-lime-50">{l("How to use this calculator")}</p>
           <ul className="mt-3 list-disc space-y-2 pl-5">
-            <li>Enter one-way route length. AC and DC return-path factors are handled automatically.</li>
-            <li>This is a simplified resistive estimate intended for fast engineering checks and concept validation.</li>
-            <li>Final design still needs code-specific checks for installation method, temperature correction, harmonics, grouping, and fault duty.</li>
+            <li>{l("Enter one-way route length. AC and DC return-path factors are handled automatically.")}</li>
+            <li>{l("This is a simplified resistive estimate intended for fast engineering checks and concept validation.")}</li>
+            <li>{l("Final design still needs code-specific checks for installation method, temperature correction, harmonics, grouping, and fault duty.")}</li>
           </ul>
         </div>
       </section>
@@ -200,10 +203,8 @@ export default function VoltageDropCalculator() {
       <section className="grid gap-4 content-start">
         {"error" in result ? (
           <article className={`${glassPanelClassName} p-6`}>
-            <p className="text-sm font-semibold uppercase tracking-[0.26em] text-amber-200/80">
-              Validation
-            </p>
-            <p className="mt-4 text-base leading-8 text-white/82">{result.error}</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.26em] text-amber-200/80">{l("Validation")}</p>
+            <p className="mt-4 text-base leading-8 text-white/82">{l(result.error)}</p>
           </article>
         ) : (
           <>

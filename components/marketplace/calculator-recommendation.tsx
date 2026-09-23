@@ -1,4 +1,6 @@
+"use client";
 import Link from "next/link";
+import { useCalculatorCopy } from "@/components/calculators/calculator-locale";
 const destinations: Record<string, string> = {
   "lithium-batteries": "batteries",
   "electrical-accessories": "electrical-components",
@@ -17,10 +19,11 @@ export function CalculatorRecommendation({
   copy: string;
   category: string;
 }) {
+  const l = useCalculatorCopy();
   return (
     <aside className="content-panel mt-4">
-      <h3>{title}</h3>
-      <p>{copy}</p>
+      <h3>{l(title)}</h3>
+      <p>{l(copy)}</p>
       <Link href={`/marketplace/${destinations[category] ?? category}`}>
         Marketplace →
       </Link>

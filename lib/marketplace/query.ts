@@ -100,5 +100,6 @@ export function solarEstimate(
     yieldFactor > 1
   )
     return null;
-  return Math.ceil(dailyWh / sunHours / yieldFactor);
+  const watts = Math.ceil(dailyWh / sunHours / yieldFactor);
+  return Number.isSafeInteger(watts) && watts > 0 ? watts : null;
 }
