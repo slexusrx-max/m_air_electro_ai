@@ -47,8 +47,30 @@ export function getSiteUrl() {
 }
 
 export function absoluteUrl(path = "/") {
-  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  return `${getSiteUrl()}${normalizedPath}`;
+  const value = path.trim();
+  const url = new URL(value, `${getSiteUrl()}/`);
+  if (value.startsWith("//") || !["https:", "http:"].includes(url.protocol) ||
+      url.username || url.password || isMalformedHttpUrl(url.href)) {
+    throw new Error("Expected a relative path or a valid HTTP(S) URL without an embedded origin");
+  }
+  return url.href;
+}
+
+/** Inspect the path only: a URL inside search parameters is not a navigation origin. */
+export function isMalformedHttpUrl(value: string, base = "https://url-check.invalid") {
+  try {
+    const url = new URL(value, base);
+    let path = url.pathname;
+    for (let i = 0; i < 3; i++) {
+      const decoded = decodeURIComponent(path);
+      if (decoded === path) break;
+      path = decoded;
+    }
+    return /(?:^|[\/\\])https?:[\/\\]/i.test(path) ||
+      path.toLowerCase().split(/[\/\\]/).includes(url.host.toLowerCase());
+  } catch {
+    return true;
+  }
 }
 
 function safeProfile(value?: string) {

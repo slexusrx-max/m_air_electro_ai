@@ -4,6 +4,38 @@ import { load } from "./helpers.mjs";
 
 const env = { NEXT_PUBLIC_SITE_URL: "https://energy.example.org", CONTACT_EMAIL_VERIFIED: "true", NEXT_PUBLIC_CONTACT_EMAIL: "contact@energy.example.org", CONTACT_FROM_EMAIL: "contact@energy.example.org", CONTACT_FORM_ENABLED: "true", RESEND_API_KEY: "dummy", NEXT_PUBLIC_TURNSTILE_SITE_KEY: "dummy", TURNSTILE_SECRET_KEY: "dummy" };
 const config = (values = env) => load("lib/site.ts", {}, { process: { env: values } });
+
+test("absolute URL resolution is idempotent and never prefixes an existing origin", () => {
+  const site = config({ NEXT_PUBLIC_SITE_URL: "https://mairelectroai.com" });
+  for (const value of ["/", "https://mairelectroai.com/"]) {
+    assert.equal(site.absoluteUrl(value), "https://mairelectroai.com/");
+  }
+  for (const value of ["/marketplace", "marketplace", "https://mairelectroai.com/marketplace"]) {
+    assert.equal(site.absoluteUrl(value), "https://mairelectroai.com/marketplace");
+    assert.equal(site.absoluteUrl(site.absoluteUrl(value)), site.absoluteUrl(value));
+  }
+  assert.equal(site.absoluteUrl("/search?q=100ah#results"), "https://mairelectroai.com/search?q=100ah#results");
+  assert.equal(site.absoluteUrl("https://images.example.org/card.png"), "https://images.example.org/card.png");
+});
+
+test("URL validation rejects nested schemes and repeated hosts without rejecting query values", () => {
+  const site = config();
+  for (const value of [
+    "/https://mairelectroai.com/", "/http://mairelectroai.com/", "/https:/mairelectroai.com/",
+    "https://mairelectroai.com/https://mairelectroai.com/",
+    "/https%3A%2F%2Fmairelectroai.com/", "/https%253A%252F%252Fmairelectroai.com/",
+    "https://mairelectroai.com/mairelectroai.com/",
+  ]) {
+    assert.equal(site.isMalformedHttpUrl(value, "https://mairelectroai.com"), true, value);
+    assert.throws(() => config({ NEXT_PUBLIC_SITE_URL: "https://mairelectroai.com" }).absoluteUrl(value), undefined, value);
+  }
+  for (const value of ["/", "/marketplace", "https://mairelectroai.com/", "/search?q=https%3A%2F%2Fmairelectroai.com", "/auth/callback?next=/reset-password"]) {
+    assert.equal(site.isMalformedHttpUrl(value, "https://mairelectroai.com"), false, value);
+  }
+  for (const value of ["javascript:alert(1)", "data:text/html,test", "//elsewhere.org", "https://user:pass@example.org/"]) {
+    assert.throws(() => site.absoluteUrl(value), undefined, value);
+  }
+});
 test("canonical origin is validated; only confirmed same-domain mailboxes are displayed", () => {
   assert.equal(config().getSiteUrl(), env.NEXT_PUBLIC_SITE_URL);
   assert.equal(config().siteConfig.contactEmail, env.NEXT_PUBLIC_CONTACT_EMAIL);

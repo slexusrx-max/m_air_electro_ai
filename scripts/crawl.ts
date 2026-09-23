@@ -1,5 +1,6 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { publicRoutes } from "../lib/marketplace/routes";
+import { isMalformedHttpUrl } from "../lib/site";
 async function main() {
   const base = (process.env.TEST_BASE_URL ?? "http://localhost:3100").replace(
     /\/$/,
@@ -20,11 +21,12 @@ async function main() {
     if (seen.has(path)) continue;
     seen.add(path);
     try {
-      const response = await fetch(base + path, {
+      const response = await fetch(new URL(path, `${base}/`), {
         redirect: "follow",
         signal: AbortSignal.timeout(30000),
       });
       const html = await response.text();
+      if (isMalformedHttpUrl(response.url)) failures.push(`Malformed redirect destination ${path}: ${response.url}`);
       if (response.status !== 200) failures.push(`${response.status} ${path}`);
       if (response.redirected)
         redirects.push(`${path} -> ${new URL(response.url).pathname}`);
@@ -36,7 +38,11 @@ async function main() {
           continue;
         }
         if (/^(mailto:|tel:)/.test(href)) continue;
-        const url = new URL(href, base + path);
+        const url = new URL(href, new URL(path, `${base}/`));
+        if (isMalformedHttpUrl(url.href)) {
+          failures.push(`Embedded origin in link ${path}: ${href}`);
+          continue;
+        }
         if (url.origin !== new URL(base).origin) continue;
         if (url.pathname.includes("//") || url.pathname.includes("undefined"))
           failures.push(`Malformed ${path}: ${href}`);
