@@ -69,7 +69,7 @@ The original `public/hero.png` M/head image is preserved and prominent on the ho
 
 Run `npx tsx scripts/audit-suppliers.ts` separately from the internal crawler. Merchant access blocks are reported as unverified, not internal-route failures. Release verification covers five passes: routes/controls; discovery/calculators; mobile/accessibility; SEO/domain/i18n/legal; visual/reviewer quality.
 
-See [docs/production-environment.md](docs/production-environment.md) and `.env.example`. Public discovery and calculation do not require auth, AI or payment credentials. Private contact requires verified domain mailboxes and enabled delivery/spam configuration. GitHub is supplementary; without a private channel the affiliate application remains NOT READY.
+See [docs/production-environment.md](docs/production-environment.md) and `.env.example`. Public discovery and calculation do not require auth, AI or payment credentials. Visitors can use the owner-authorized Gmail link from their own email application; inbox delivery has not been tested. The website contact form separately requires verified domain mailboxes and enabled delivery/spam configuration. GitHub is supplementary. Unresolved delivery, editorial and program requirements keep the affiliate application NOT READY.
 
 **Renogy / Impact approval is not confirmed.** Current links are ordinary supplier links. Activation requires both `RENOGY_AFFILIATE_APPROVED=true` and `AFFILIATE_TRACKING_ENABLED=true`, with exact Impact-issued HTTPS links mapped by supplier URL in `RENOGY_IMPACT_LINKS_JSON`. The existing provider validates links and disclosure follows actual activation. Merchant model details, Romanian delivery and warranties remain external checks.
 

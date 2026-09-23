@@ -6,6 +6,8 @@ The owner/publisher identity requirement is now supplied: **Stanislav Zavizion**
 
 Status remains **NOT READY**: private mailbox/delivery configuration, responsible content-reviewer identity and evidence, human editorial approvals, remaining privacy/provider details and applicable Renogy/Impact conditions still need confirmation. Genuine audience evidence may be supplied when available/requested; it must not be fabricated. Ownership alone does not resolve those requirements. See [publisher identity report](docs/publisher-identity-update.md). Older missing-owner/domain findings below are historical, not current blockers.
 
+The owner subsequently authorized `slexusrx@gmail.com` as the public contact address, including partnership/privacy inquiries. It is published separately from the three planned domain mailboxes. This does not prove inbox delivery, provision domain mailboxes, activate the website form or establish Renogy/Impact approval. No physical address or postal code has been confirmed for publication.
+
 ## September 2026 production completion update
 
 The official domain is now https://mairelectroai.com. The old audit below is historical: its domain-provisioning task and navigation description are superseded. Current navigation includes an Experts preparation guide, not a verified booking directory. See docs/production-completion-report.md for the current five-pass verification and remaining real-world dependencies. No publisher facts, mailbox operation, affiliate approval or human editorial sign-off have been invented.

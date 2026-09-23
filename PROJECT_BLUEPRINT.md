@@ -28,7 +28,7 @@ Independent affiliate-commerce discovery. The merchant controls price, stock, pa
 
 ## Information Architecture
 
-Primary navigation: Marketplace, Solutions, Tools, Learn, Experts, For Business. Experts is a professional-preparation guide, not a booking directory. Search and RO/EN switching stay accessible. Company and Legal are in a deep footer. Desktop mega menus group real destinations; mobile uses nested expandable groups. Every visible control works.
+Primary navigation: Marketplace, Solutions, Tools, Learn, Experts, For Business. Experts is a professional-preparation guide, not a booking directory. Search and RO/EN switching stay accessible. About the platform and Legal are in a deep footer. Desktop mega menus group real destinations; mobile uses nested expandable groups. Every visible control works.
 
 ## Marketplace Taxonomy
 
@@ -72,7 +72,7 @@ Compare 2–4 unique valid IDs using a shareable URL and optional local card sel
 
 ## SEO Strategy
 
-Unique title, description, canonical and H1 for commercial pages. A real route inventory drives the sitemap. Use factual BreadcrumbList, Article and Organization/WebSite data. Product markup is restricted to actual models and has no invented offers/reviews/ratings. Auth/account/dashboard/search/filtered URLs are excluded from indexing. Obsolete routes redirect; retained specialized tools stay outside the commercial sitemap.
+Unique title, description, canonical and H1 for commercial pages. A real route inventory drives the sitemap. Use factual BreadcrumbList and Article data, Person for the individual publisher, and Brand/WebSite for the platform; do not represent the platform as an incorporated Organization. Product markup is restricted to actual models and has no invented offers/reviews/ratings. Auth/account/dashboard/search/filtered URLs are excluded from indexing. Obsolete routes redirect; retained specialized tools stay outside the commercial sitemap.
 
 ## Localization
 
