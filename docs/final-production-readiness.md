@@ -2,7 +2,7 @@
 
 Prepared 24 September 2026 for M Air Electro AI, `https://mairelectroai.com`.
 
-**READY FOR IMPACT / RENOGY APPLICATION.** The application-code release is deployed on the official domain, with **95/95 production browser tests passing** and a clean **114-route production crawl**. [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md) is the authoritative application status. The unsaved Vercel contact settings are disclosed separately in section 4; public contact links already reflect owner-confirmed facts.
+**READY FOR IMPACT / RENOGY APPLICATION.** The application-code release is deployed on the official domain, with **95/95 production browser tests passing** and a clean **114-route production crawl**. [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md) is the authoritative application status. The subsequently saved Vercel contact settings and their separate follow-up release verification are described in section 4; the complete browser run identifies its original tested code release.
 
 No affiliate application, live contact message, order or user-account creation was performed. Generated evidence remains in ignored `.task-work/` and `test-results/`; unrelated `tmp/pdfs/member-deal/` files were preserved.
 
@@ -45,7 +45,7 @@ Domain email links are primary, with distinct general, partnership and privacy c
 
 While disabled, the form renders an honest unavailable notice, no editable form controls and no Turnstile script. The contact API continues to reject unconfigured sending; mocked tests cover consent, origin, challenge validation and provider acceptance. No real message was sent during QA.
 
-The four non-secret Vercel Production updates are **pending fresh user confirmation required by automatic approval review**:
+Following fresh explicit user confirmation on 24 September 2026, the following four non-secret values were **successfully saved in Vercel with Production scope**:
 
 ```dotenv
 NEXT_PUBLIC_CONTACT_EMAIL=contact@mairelectroai.com
@@ -54,7 +54,7 @@ NEXT_PUBLIC_PRIVACY_EMAIL=privacy@mairelectroai.com
 CONTACT_EMAIL_VERIFIED=true
 ```
 
-Automatic approval review rejected saving these values despite the attached task's authorization and required fresh confirmation. No successful environment update is claimed. Public owner-confirmed address constants allow accurate email links independently; they do not enable the form. Keep `CONTACT_FORM_ENABLED=false` until its separate infrastructure and authorized delivery test are complete.
+Vercel displayed “Added Environment Variable successfully,” and all four entries were visible with Production scope. The earlier approval restriction was resolved by the user's fresh confirmation. For the resulting deployment identity and focused RO/EN contact checks, see `.task-work/final-readiness/email-env-release.json`. Public owner-confirmed address constants remain independent of form delivery. Keep `CONTACT_FORM_ENABLED=false` until its separate infrastructure and authorized delivery test are complete.
 
 ## 5. Publisher and editorial status
 
@@ -215,7 +215,7 @@ The existing Vercel project/domain is retained. Release code **`040795f3d51f162e
 
 The official domain passed the full production browser suite, internal crawl, canonical/domain checks and visual review. After the documentation-only close-out, the final deployment identity and focused production verification are recorded in `.task-work/final-readiness/release-final.json` and the task completion response. The complete suite is not relabelled as having run on a later documentation commit.
 
-The four non-secret email environment values remain blocked on the fresh confirmation required by automatic approval review. This is separate from code deployment and from verified inbound routing. No outbound/form, affiliate or analytics activation is implied by publication.
+After fresh user confirmation, the four non-secret contact environment values were saved successfully with Production scope. The resulting deployment and focused contact/form checks are recorded separately in `.task-work/final-readiness/email-env-release.json`. The 95-test production run above remains attributed to code SHA `040795f3d51f162e09bcbfe0ea2271bbc881387a`. No outbound/form, affiliate or analytics activation is implied by saving the settings or publishing documentation.
 
 ## 21. Final readiness status
 
@@ -229,7 +229,7 @@ The four non-secret email environment values remain blocked on the fresh confirm
 | 4. SEO, domain, RO/EN and disclosures | Canonicals, permanent www redirect, sitemap, indexing directives and bilingual checks passed; disclosures match active behavior |
 | 5. Application review simulation | No concrete blocker found from Impact, Renogy or Romanian customer perspectives |
 
-The Production email environment update requires the fresh confirmation described in section 4. Public email links already work as mailto links and accurately state owner-confirmed inbound status; this is not a website defect or an application prerequisite. External campaign eligibility, application approval and Search Console account actions remain pending. Outbound SMTP and an optional website form are not claimed operational and are not required to apply.
+The Production email values are now saved following the fresh confirmation described in section 4; subsequent deployment/QA evidence is maintained separately in `.task-work/final-readiness/email-env-release.json`. Public email links already work as mailto links and accurately state owner-confirmed inbound status. External campaign eligibility, application approval and Search Console account actions remain pending. Outbound SMTP and the optional website form remain unverified; the form and affiliate activation flags remain disabled.
 
 ## 22. Exact next application action
 

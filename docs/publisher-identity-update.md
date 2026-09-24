@@ -30,7 +30,7 @@ Routes forward to the owner's verified Google-hosted inbox. The destination Gmai
 
 Public constants are `publicEmailAddresses`. Operational mailbox fields still require explicit same-domain environment values plus `CONTACT_EMAIL_VERIFIED=true`. That flag describes inbound configuration; it does not establish outbound send-as/SMTP or form delivery.
 
-Production must set the three `NEXT_PUBLIC_*_EMAIL` values above and `CONTACT_EMAIL_VERIFIED=true`, then redeploy. `.env.example` reflects this state. `CONTACT_FORM_ENABLED=false` remains separate. Activation additionally requires sender configuration, Resend, Turnstile and an authorized delivery test. Until then, email links are working contact controls and the form section states that it is unavailable.
+On 24 September 2026, following fresh explicit user confirmation, the three `NEXT_PUBLIC_*_EMAIL` values above and `CONTACT_EMAIL_VERIFIED=true` were saved successfully in Vercel. All four entries were verified with Production scope and Vercel displayed a successful-save notification. For deployment identity and focused production verification, see `.task-work/final-readiness/email-env-release.json`. `.env.example` reflects these values. `CONTACT_FORM_ENABLED=false` remains separate: activation additionally requires sender configuration, Resend, Turnstile and an authorized delivery test. Email links remain the working contact controls, while the form states that it is unavailable. Outbound send-as/SMTP remains unverified and affiliate tracking remains disabled.
 
 ## Remaining optional or external steps
 

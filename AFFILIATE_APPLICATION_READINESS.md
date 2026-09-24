@@ -19,6 +19,7 @@ This file supersedes historical readiness checklists. See the dated files under 
 
 ## VERIFIED
 
+- Following fresh explicit user confirmation on 24 September 2026, all four non-secret contact environment values below were saved in Vercel and verified as Production-scoped entries. Vercel displayed “Added Environment Variable successfully.” Follow-up redeployment and focused production QA are separate from this settings-save confirmation; their results belong in `.task-work/final-readiness/email-env-release.json`.
 - Verified application-code release: `040795f3d51f162e09bcbfe0ea2271bbc881387a`, successful Vercel Production deployment `6633938113`, with the official domain attached. The subsequent report close-out changes documentation only; final release identity is recorded in the completion response and `.task-work/final-readiness/release-final.json`.
 - Production Playwright: **95 passed / 0 failed**, a single complete run against `https://mairelectroai.com` (20.3 minutes). This includes all requested calculator/search/compare/finder flows, RO/EN navigation, responsive layouts, metadata and seven-page axe coverage with zero violations.
 - Local and production crawls: **114 routes each, zero failures, zero orphans**.
@@ -36,7 +37,6 @@ This file supersedes historical readiness checklists. See the dated files under 
 
 ## EXTERNAL / PENDING
 
-- Vercel's four non-secret contact variables remain unsaved: automatic approval review requires a fresh user confirmation. This administrative configuration item does not block applying: the public site already displays the owner-confirmed addresses accurately, and the optional form stays disabled.
 - The precise Renogy EU advertiser/campaign, eligible destinations/territories and contract terms must be checked in the actual Impact application/account flow. Approval, commissions and tracking terms are not assumed.
 - Google Search Console verification/indexing is not claimed. Follow [setup instructions](docs/custom-domain-and-publisher.md): add the apex Domain property, verify using the provided DNS record, submit `https://mairelectroai.com/sitemap.xml`, inspect representative URLs and review indexing reports.
 - Optional outbound/form activation requires its own sender-domain, Resend, Turnstile and authorized delivery validation. Optional analytics requires real configuration/consent and genuine data.
