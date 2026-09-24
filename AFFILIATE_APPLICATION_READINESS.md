@@ -2,7 +2,7 @@
 
 ## Current authoritative status — 24 September 2026
 
-**NOT READY — final release verification is in progress.** The code corrections are being tested; the current production release still contains superseded contact/editorial presentation. This is a release gate, not a requirement to obtain affiliate approval before applying.
+**READY FOR IMPACT / RENOGY APPLICATION.** The corrected website is deployed and verified on the official domain. No known website defect remains that blocks applying. Affiliate approval and account decisions remain external; no approval or tracking activation is claimed.
 
 This file supersedes historical readiness checklists. See the dated files under `docs/` only for historical deployment evidence. No application, live contact message, purchase or user-account creation is performed by this audit.
 
@@ -19,10 +19,12 @@ This file supersedes historical readiness checklists. See the dated files under 
 
 ## VERIFIED
 
-- Baseline GitHub main / successful Vercel deployment: `9a3c4ced89959092f3ee7d05c7cd5fd0bf5bde0f`.
-- Baseline production crawl: **113 routes, zero failures, zero orphans**.
+- Verified application-code release: `040795f3d51f162e09bcbfe0ea2271bbc881387a`, successful Vercel Production deployment `6633938113`, with the official domain attached. The subsequent report close-out changes documentation only; final release identity is recorded in the completion response and `.task-work/final-readiness/release-final.json`.
+- Production Playwright: **95 passed / 0 failed**, a single complete run against `https://mairelectroai.com` (20.3 minutes). This includes all requested calculator/search/compare/finder flows, RO/EN navigation, responsive layouts, metadata and seven-page axe coverage with zero violations.
+- Local and production crawls: **114 routes each, zero failures, zero orphans**.
+- Unit tests **64/64**; i18n **419 declared keys**; lint, typecheck and production build passed; npm audit **0 vulnerabilities**.
 - Current Renogy audit: **7 models / 7 exact official EU URLs / 7 HTTP 200 responses**, no region redirects or malformed destinations. [Field-level source audit](docs/renogy-source-audit.md).
-- Final local and production test results will be recorded here after the release checks complete. Passing builds are not substituted for public browser/crawl evidence.
+- Current catalog: **19 records (7 models / 12 equipment classes)**, with useful coverage in all ten primary families. Original homepage artwork and route-family visuals are preserved. [Complete 22-part production report](docs/final-production-readiness.md).
 
 ## NOT REQUIRED TO APPLY
 
@@ -34,8 +36,7 @@ This file supersedes historical readiness checklists. See the dated files under 
 
 ## EXTERNAL / PENDING
 
-- Final deployment and production regression verification are still in progress for this release.
-- Vercel's four non-secret contact variables are prepared; automatic approval review requires a fresh user confirmation before saving them. This does not prevent the confirmed public email links from being represented accurately in code.
+- Vercel's four non-secret contact variables remain unsaved: automatic approval review requires a fresh user confirmation. This administrative configuration item does not block applying: the public site already displays the owner-confirmed addresses accurately, and the optional form stays disabled.
 - The precise Renogy EU advertiser/campaign, eligible destinations/territories and contract terms must be checked in the actual Impact application/account flow. Approval, commissions and tracking terms are not assumed.
 - Google Search Console verification/indexing is not claimed. Follow [setup instructions](docs/custom-domain-and-publisher.md): add the apex Domain property, verify using the provided DNS record, submit `https://mairelectroai.com/sitemap.xml`, inspect representative URLs and review indexing reports.
 - Optional outbound/form activation requires its own sender-domain, Resend, Turnstile and authorized delivery validation. Optional analytics requires real configuration/consent and genuine data.
@@ -51,7 +52,7 @@ CONTACT_EMAIL_VERIFIED=true
 
 Keep `CONTACT_FORM_ENABLED=false`, `RENOGY_AFFILIATE_APPROVED=false` and `AFFILIATE_TRACKING_ENABLED=false` until their separate requirements are actually met. Missing flags fail closed. Do not publish secrets or private provider details.
 
-## Application next action after release verification
+## Application next action
 
 Apply to the verified Renogy EU campaign through Impact using the official website, the actual individual publisher identity/country and `partnerships@mairelectroai.com`. Describe independent Romanian/English educational equipment discovery, calculations and comparison. Supply example guides, model pages and the system finder; provide audience data only if genuinely available. Submit sensitive tax/bank information only through the legitimate provider's secure application process. No application is submitted by this task.
 

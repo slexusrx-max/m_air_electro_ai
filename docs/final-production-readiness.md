@@ -1,8 +1,8 @@
-# Final production-readiness report — draft
+# Final production-readiness report
 
 Prepared 24 September 2026 for M Air Electro AI, `https://mairelectroai.com`.
 
-**DRAFT — NOT READY: final browser verification, publication and production verification are pending.** This document records completed work and current evidence; it must not be read as a completed release report. [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md) remains the authoritative application status. The release owner must replace the pending entries below with actual final results.
+**READY FOR IMPACT / RENOGY APPLICATION.** The application-code release is deployed on the official domain, with **95/95 production browser tests passing** and a clean **114-route production crawl**. [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md) is the authoritative application status. The unsaved Vercel contact settings are disclosed separately in section 4; public contact links already reflect owner-confirmed facts.
 
 No affiliate application, live contact message, order or user-account creation was performed. Generated evidence remains in ignored `.task-work/` and `test-results/`; unrelated `tmp/pdfs/member-deal/` files were preserved.
 
@@ -15,6 +15,8 @@ No affiliate application, live contact message, order or user-account creation w
 - The system finder could list model candidates below the calculated storage/inverter requirements. Comparison form selections needed to refresh with URL changes.
 - The EV Charging primary family lacked any equipment record or planning class. Filtered discovery indexing, source-check presentation and supplier-audit destination checks also required corrections.
 - Historical reports contained superseded owner, domain and contact prerequisites. Those were separated from current status.
+
+The classified repository text scan is retained in `.task-work/final-readiness/classified-text-scan.json`; historical/internal occurrences are distinguished from public defects.
 
 ## 2. Changes made
 
@@ -91,48 +93,76 @@ Evidence: `.task-work/supplier-audit.json` and [Renogy source audit](renogy-sour
 
 Normalization now handles compact and spaced electrical units consistently, alongside case, diacritics and separators. Existing search covers equipment, categories, solutions and guides, preserves queries and returns explicit counts/no-result guidance.
 
-Required query/edge-case browser coverage is included in the final functional suite. **Pending:** consolidate the final passing Playwright results and repeat against the deployed site; unit success alone is not the final search evidence.
+Production browser coverage passed for all twelve requested searches (`battery`, `12v`, `100ah`, `2000w`, `solar`, `inverter`, `backup`, `rv`, `marine`, `generator`, `mppt`, `renogy`), result counts, query preservation, special characters, Romanian diacritics and the no-result state.
 
 ## 10. Compare status
 
 Comparison remains a shareable 2–4-record URL flow with explicit unknown values. The selection form now remounts from the selected URL IDs so removal/back-navigation updates its controls. Real product source dates remain separate from equipment classes.
 
-The first complete local browser run recorded a comparison failure; the focused fix/rerun evidence is under `.task-work/final-readiness/compare-fix-browser/`. **Pending:** final passing full-run result and deployed 2–4-record/add/remove/share/back-navigation checks. Do not overwrite this entry with an assumed pass.
+The first complete local run exposed a test navigation race in the comparison scenario. The corrected test passed on rerun; evidence is under `.task-work/final-readiness/compare-fix-browser/`. The deployed browser checks also passed for 2–4 records, maximum selection, add/remove actions, shareable URLs and back navigation. Product and ordinary EU supplier links remain available.
 
 ## 11. Calculator and finder status
 
 Cable, voltage drop, generator, motor, transformer, battery, breaker and fuse logic now validate finite ranges consistently. Legitimate zero inputs such as no motor allowance, no spare margin or zero transformer load are handled where meaningful. Impossible percentages, negative values and unsupported magnitudes are rejected with feedback rather than silently producing invalid recommendations.
 
-The finder retains its three-step flow and deterministic sizing. Known product ratings below calculated capacity/power requirements are excluded; equipment classes remain planning candidates rather than compatibility certificates. Browser coverage includes validation, navigation, recalculation and connected marketplace actions. **Pending:** final complete local and production flow results, including Backup and Solar coverage.
+The finder retains its three-step flow and deterministic sizing. Known product ratings below calculated capacity/power requirements are excluded; equipment classes remain planning candidates rather than compatibility certificates. Production browser checks passed for all ten requested calculators, numeric fields, selectors, meaningful zero values, validation, custom Backup loads and marketplace handoff. The finder validation/result scenario passed on the deployed site.
 
 ## 12. Romanian/English status
 
 The i18n inheritance check passes with **419 declared keys**. New contact, editorial and privacy copy is bilingual; calculator validation messages use the existing translation layer. Romanian remains primary. Route hierarchy and language-switch behavior are preserved.
 
-**Pending:** finalize full browser evidence for both languages and confirm the deployed build has the same behavior. Untranslated specialist legacy interfaces are not represented as complete Romanian commercial coverage.
+Complete public-page navigation passed on production in both RO and EN, along with language switching that preserves deep routes, category FAQ controls and language-specific indexing checks. Untranslated specialist legacy interfaces are not represented as complete Romanian commercial coverage.
 
 ## 13. Mobile, accessibility and visual status
 
 The original M/head homepage hero and page-family visual system remain. Existing regression coverage exercises desktop/tablet/mobile widths, navigation, overflow, controls, focus and automated axe WCAG checks. Readiness screenshots and traces are under `.task-work/final-readiness/local-browser/` and the corresponding report directory.
 
-**Pending:** resolve/finalize every full-run failure, record exact axe results and visual inspections at 1440, 1366, 1024, 768, 430 and 390 pixels, then verify production. Earlier passing screenshots or partial test runs do not establish this final pass.
+Production responsive checks passed at 320, 360, 390, 412, 430, 768, 1024, 1366 and 1440 pixels, with additional readiness coverage at 375 and 414 pixels. No horizontal overflow, invalid/failed images or runtime errors were found in the checked routes. Keyboard menus, Escape, skip link, comparison-table scrolling and calculator feedback passed. Automated axe checks found **zero violations on seven representative public pages** for the selected WCAG 2/2.1/2.2 A/AA tags; this is bounded automated coverage, not accessibility certification.
+
+Production screenshots were manually inspected at 390 and 1440 pixels, including homepage, finder, contact and category presentation. Text and controls remained legible, the original M/head hero was prominent, and page-family backgrounds remained distinct. Evidence is retained in `.task-work/final-readiness/production-browser/` and `production-report/`.
+
+### Measured performance sample
+
+Read-only browser captures on the production-mode **localhost** server recorded:
+
+| Page | Viewport width | Observed LCP candidate | Observed CLS | Navigation response start |
+| --- | ---: | ---: | ---: | ---: |
+| Homepage | 390 px | 416 ms | 0 | 18.7 ms |
+| Marketplace | 390 px | 340 ms | 0 | 12.2 ms |
+| Homepage | 1440 px | 372 ms | 0 | 15.9 ms |
+| Marketplace | 1440 px | 432 ms | 0 | 17.9 ms |
+
+Each capture observed 10 script resources totaling 152,201 encoded bytes (about 149 KiB). Encoded image resources ranged from 0 to 56,564 bytes, with optimized homepage hero variants and the existing solar illustration where present. Source changes remove an unused dictionary payload from the client header without changing the visual identity.
+
+Evidence: `.task-work/final-readiness/performance-summary.json` and its four referenced capture files. Observation windows were approximately 467–616 ms after navigation. These short local samples have no representative network/device distribution and cannot exclude later layout shifts. They are **not field Core Web Vitals, a public-site performance guarantee or a Lighthouse score**.
+
+The official production site was also measured in four fresh browser contexts:
+
+| Page | Width | Observed LCP candidate | Observed CLS | Resource transfer, excluding HTML |
+| --- | ---: | ---: | ---: | ---: |
+| Homepage | 390 px | 1,816 ms | 0 | 325,980 B |
+| Marketplace | 390 px | 1,664 ms | 0.0000381 | 311,168 B |
+| Homepage | 1440 px | 1,884 ms | 0 | 368,632 B |
+| Marketplace | 1440 px | 1,680 ms | 0 | 329,576 B |
+
+Each production capture loaded 155,921 encoded JavaScript bytes; HTML added approximately 16.2 KB. Evidence: `.task-work/final-readiness/production-performance-summary.json`. These are unthrottled initial-load laboratory samples over 2.29–2.53 seconds, with uncontrolled CDN cache, not field Core Web Vitals or a complete interaction-lifetime measurement.
 
 ## 14. SEO and domain status
 
 The official canonical origin is `https://mairelectroai.com`; www permanently redirects to the apex. Metadata, sitemap, robots and publisher schema retain this identity. Search/filter variants are excluded from indexing as landing pages; private/account routes remain outside the commercial sitemap.
 
-The local SEO rerun is recorded in `.task-work/final-readiness/seo-rerun.log`. **Pending:** finalize comprehensive local results and repeat canonical/robots/sitemap/structured-data checks after publication. Google Search Console ownership verification and Google indexing are not claimed; [exact next steps](custom-domain-and-publisher.md#google-search-console) are documented separately.
+Production checks passed for the canonical URL on every public route, robots, sitemap, manifest, structured data, OpenGraph/Twitter images, private-route exclusion and permanent www-to-apex redirection preserving the path/query. No public canonical uses a Vercel hostname. The two local RO/EN checks initially rejected equivalent apex URLs solely because of a trailing slash; corrected URL-equivalence assertions passed locally and on production. Google Search Console ownership verification and indexing are not claimed; [exact next steps](custom-domain-and-publisher.md#google-search-console) are documented separately.
 
 ## 15. Internal crawl totals
 
 | Run | Visited routes | Failures | Orphans | Status |
 | --- | ---: | ---: | ---: | --- |
 | Baseline production, before fixes | 113 | 0 | 0 | Verified baseline only |
-| Intermediate local run after updates | 114 | 1 | 0 | Generator fetch failed; final rerun required |
-| Final local run | Pending | Pending | Pending | `.task-work/final-readiness/local-crawl-final.log` |
-| Final deployed production run | Pending | Pending | Pending | Must follow deployment-SHA verification |
+| Intermediate local run after updates | 114 | 1 | 0 | Historical transient generator fetch failure; superseded by final rerun |
+| Final local run | **114** | **0** | **0** | Verified; `.task-work/final-readiness/local-crawl-final.log` |
+| Deployed production, code release `040795f` | 114 | 0 | 0 | Verified on the official domain after successful deployment |
 
-Evidence: `initial-production-crawl.log`, `local-crawl.log` and final rerun artifacts in `.task-work/final-readiness/`. The crawler now reports external destinations and fails if its traversal limit leaves unchecked routes. The 109-route public inventory differs from a reachable crawl total because the crawl also encounters supporting/query/navigation destinations.
+Evidence: `initial-production-crawl.log`, `local-crawl.log`, `local-crawl-final.log`, `production-crawl.log` and `production-crawl.json` in `.task-work/final-readiness/`. The crawler now reports external destinations and fails if its traversal limit leaves unchecked routes. The 109-route public inventory differs from a reachable crawl total because the crawl also encounters supporting/query/navigation destinations. Production requests used the operating system's trusted CA store; certificate verification remained enabled.
 
 ## 16. Other external-link results
 
@@ -161,37 +191,60 @@ Paths in this table are relative to `.task-work/final-readiness/`. These checks 
 
 ## 18. Playwright results
 
-**Final complete result is pending.** The first full local run recorded **90 passed / 5 failed out of 95 tests**. Failures involved responsive navigation/route loads, comparison navigation and query indexing checks; focused rerun evidence exists, and the release owner is resolving/consolidating the final run. Preserve the original result rather than labelling it green.
+**All 95 unique tests have passed locally across the initial run and targeted reruns; there was no single clean 95-test local run.** The initial full run recorded **90 passed / 5 failed**. The remaining results were resolved as follows:
 
-The isolated mock-only contact form fixture separately passed; all of its requests were intercepted and no real email was sent. The final report must record the full local count, all reruns and the complete production run against `https://mairelectroai.com`.
+- Three test-only errors were corrected: a URL navigation race in the comparison flow and two RO/EN assertions that rejected equivalent root canonical URLs with/without a trailing slash. All three corrected tests passed on rerun.
+- Two other failures reported `ERR_NETWORK_IO_SUSPENDED` only 340 ms apart, indicating a shared interruption. Both tests were rerun **unchanged** and passed, in 25.8 and 47.2 seconds. Their initial failures are retained as evidence rather than erased.
+
+Evidence: `.task-work/final-readiness/local-playwright.log`, `compare-fix-browser/`, `seo-rerun.log` and `suspended-network-rerun/`. Coverage was not reduced to obtain passing results.
+
+The complete production suite finished **95 passed / 0 failed in 20.3 minutes**, with one Chromium worker and no retries, against `https://mairelectroai.com`. Evidence: `.task-work/final-readiness/production-playwright.log`, `production-report/` and `production-browser/`. The isolated mock-only contact form fixture also passed; all of its requests were intercepted and no real email was sent. The system CA store was used with HTTPS verification enabled.
 
 ## 19. Production commit SHA
 
 - Known baseline GitHub main / successful deployment: `9a3c4ced89959092f3ee7d05c7cd5fd0bf5bde0f`.
-- **Final released GitHub main SHA: pending.**
-- **Final deployed production SHA: pending.**
-- **Exact equality of those final SHAs: pending verification.**
+- Released code SHA: **`040795f3d51f162e09bcbfe0ea2271bbc881387a`**.
+- Vercel successfully deployed that same code SHA; deployment evidence is recorded in section 20.
+- The report close-out changes only Markdown documentation, preserving the tested application code. Its final GitHub main/Vercel SHA is recorded in the task's completion response and `.task-work/final-readiness/release-final.json`; the full regression evidence above identifies the exact code release tested.
 
-Do not use the baseline SHA as proof that this task's corrections have been published.
+The baseline SHA is historical evidence only.
 
 ## 20. Vercel production deployment
 
-The existing Vercel project/domain is retained. **Final deployment URL/ID, ready status and deployed commit are pending.** After pushing the authorized changes, wait for successful deployment, verify the actual commit and repeat public browser/crawl checks on the official domain.
+The existing Vercel project/domain is retained. Release code **`040795f3d51f162e09bcbfe0ea2271bbc881387a`** has a **successful** Vercel deployment, with deployment record **`6633938113`** and [deployment URL](https://m-air-electro-p6mlpkz3d-m-air-electro-ai.vercel.app). The official public origin remains `https://mairelectroai.com`; the deployment hostname is evidence, not the canonical domain.
+
+The official domain passed the full production browser suite, internal crawl, canonical/domain checks and visual review. After the documentation-only close-out, the final deployment identity and focused production verification are recorded in `.task-work/final-readiness/release-final.json` and the task completion response. The complete suite is not relabelled as having run on a later documentation commit.
 
 The four non-secret email environment values remain blocked on the fresh confirmation required by automatic approval review. This is separate from code deployment and from verified inbound routing. No outbound/form, affiliate or analytics activation is implied by publication.
 
 ## 21. Final readiness status
 
-**NOT READY — draft pending final release evidence.** Concrete remaining release gates are:
+**READY FOR IMPACT / RENOGY APPLICATION.** No known website defect remains that blocks applying.
 
-1. Resolve and verify the outstanding complete-browser/local-crawl results.
-2. Publish the corrected commit and confirm Vercel production equals GitHub main.
-3. Complete production browser, crawl, domain and visual checks, then record exact results here and in the authoritative readiness file.
+| Final pass | Evidence and result |
+| --- | --- |
+| 1. Functionality and links | Full production navigation and 114-route crawl passed; no failures or orphans |
+| 2. Marketplace and tools | All ten families covered; search, comparison, finder and all ten calculators passed |
+| 3. Mobile, accessibility and visuals | Requested widths passed; seven-page axe coverage found zero violations; production screenshots reviewed |
+| 4. SEO, domain, RO/EN and disclosures | Canonicals, permanent www redirect, sitemap, indexing directives and bilingual checks passed; disclosures match active behavior |
+| 5. Application review simulation | No concrete blocker found from Impact, Renogy or Romanian customer perspectives |
 
-The Production email environment update additionally requires the stated fresh confirmation. Renogy approval, prior traffic, outbound SMTP and an optional website form are **not** invented website prerequisites for applying. Change the final status to READY only after the release gates are actually satisfied.
+The Production email environment update requires the fresh confirmation described in section 4. Public email links already work as mailto links and accurately state owner-confirmed inbound status; this is not a website defect or an application prerequisite. External campaign eligibility, application approval and Search Console account actions remain pending. Outbound SMTP and an optional website form are not claimed operational and are not required to apply.
 
 ## 22. Exact next application action
 
-After final release verification, apply through the actual Renogy EU campaign in Impact using `https://mairelectroai.com`, Stanislav Zavizion's true individual-publisher identity, Romania and `partnerships@mairelectroai.com`.
+### Reviewer simulation
+
+The final production sample covered About, Contact, Affiliate Disclosure, Partnerships, the new EV charging class and the Renogy 200 Ah page. All six returned HTTP 200. No concrete blocker was found from the three requested perspectives:
+
+- **Impact reviewer:** individual publisher identity, domain contact and commercial disclosures are clear; audience figures are not fabricated.
+- **Renogy affiliate manager:** EU destinations and supported model specifications are accurate; no approval, dealer status, active tracking or merchant offers are claimed.
+- **Romanian customer:** email and form availability are distinguished, equipment classes are labelled, and related planning links remain usable.
+
+Evidence: `.task-work/final-readiness/production-reviewer-simulation.json`. This sample complements the full regression and crawl; it is not a promise of affiliate approval.
+
+### Application
+
+Apply through the actual Renogy EU campaign in Impact using `https://mairelectroai.com`, Stanislav Zavizion's true individual-publisher identity, Romania and `partnerships@mairelectroai.com`.
 
 Describe independent Romanian/English equipment discovery, source-based comparisons, educational guides and deterministic sizing. Supply representative guide/product/finder URLs and audience figures only if genuinely available. Confirm the EU campaign's eligible territory, approved domain and promotional terms in the application flow. Keep `RENOGY_AFFILIATE_APPROVED=false` and `AFFILIATE_TRACKING_ENABLED=false` until actual approval and provider-issued link configuration exist. No application is submitted by this audit.
