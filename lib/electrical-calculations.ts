@@ -210,6 +210,25 @@ export function getPositiveNumber(value: string) {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
 }
 
+export function getNonNegativeNumber(value: string) {
+  if (!value.trim()) return null;
+  const parsed = Number(value);
+  return Number.isFinite(parsed) && parsed >= 0 ? parsed : null;
+}
+
+function requireFiniteInputs(positive: number[], nonNegative: number[] = []) {
+  if (
+    positive.some(value => !Number.isFinite(value) || value <= 0 || value > Number.MAX_SAFE_INTEGER) ||
+    nonNegative.some(value => !Number.isFinite(value) || value < 0 || value > Number.MAX_SAFE_INTEGER)
+  ) {
+    throw new Error("The inputs exceed the supported calculation range. Review the values with a qualified professional.");
+  }
+}
+
+function requireVoltageDropLimit(percent: number) {
+  if (percent >= 100) throw new Error("Maximum voltage drop must be greater than 0 and below 100 percent.");
+}
+
 export function formatElectricalNumber(value: number, maximumFractionDigits = 2) {
   return new Intl.NumberFormat("en-US", {
     maximumFractionDigits,
@@ -245,6 +264,8 @@ export function calculateCableSizing({
   systemType,
   voltage,
 }: CableSizingCalculationInput): CableSizingCalculationResult {
+  requireFiniteInputs([current, length, maxVoltageDropPercent, voltage]);
+  requireVoltageDropLimit(maxVoltageDropPercent);
   const allowedVoltageDropVolts = voltage * (maxVoltageDropPercent / 100);
   const systemFactor = getVoltageDropSystemFactor(systemType);
   const resistivity = resistivityByMaterial[material];
@@ -288,6 +309,8 @@ export function calculateVoltageDrop({
   systemType,
   voltage,
 }: VoltageDropCalculationInput): VoltageDropCalculationResult {
+  requireFiniteInputs([cableSize, current, length, maxVoltageDropPercent, voltage]);
+  requireVoltageDropLimit(maxVoltageDropPercent);
   const resistivity = resistivityByMaterial[material];
   const systemFactor = getVoltageDropSystemFactor(systemType);
   const actualVoltageDropVolts = (systemFactor * resistivity * length * current) / cableSize;
@@ -315,6 +338,10 @@ export function calculateMotorCurrent({
   systemType,
   voltage,
 }: MotorCurrentCalculationInput): MotorCurrentCalculationResult {
+  requireFiniteInputs([efficiencyPercent, powerFactor, powerKw, startCurrentMultiplier, voltage]);
+  if (powerFactor > 1) throw new Error("Power factor must stay between 0 and 1.");
+  if (efficiencyPercent > 100) throw new Error("Efficiency must stay between 0 and 100 percent.");
+  if (startCurrentMultiplier < 1) throw new Error("Starting current multiplier must be at least 1.");
   const efficiency = efficiencyPercent / 100;
   const inputPowerKw = powerKw / efficiency;
   const apparentPowerKva = inputPowerKw / powerFactor;
@@ -336,6 +363,8 @@ export function calculateTransformer({
   systemType,
   transformerKva,
 }: TransformerCalculationInput): TransformerCalculationResult {
+  requireFiniteInputs([primaryVoltage, secondaryVoltage, transformerKva], [expectedLoadPercent]);
+  if (expectedLoadPercent > 100) throw new Error("Expected load percent must stay between 0 and 100.");
   const factor = getMotorCurrentSystemFactor(systemType);
   const fullLoadPrimaryCurrent = (transformerKva * 1000) / (primaryVoltage * factor);
   const fullLoadSecondaryCurrent = (transformerKva * 1000) / (secondaryVoltage * factor);
@@ -358,6 +387,10 @@ export function calculateBattery({
   maxDepthOfDischargePercent,
   systemVoltage,
 }: BatteryCalculationInput): BatteryCalculationResult {
+  requireFiniteInputs([backupHours, inverterEfficiencyPercent, loadPowerWatts, maxDepthOfDischargePercent, systemVoltage]);
+  if (maxDepthOfDischargePercent >= 100 || inverterEfficiencyPercent > 100) {
+    throw new Error("Depth of discharge must stay below 100 and efficiency must stay between 0 and 100.");
+  }
   const requiredLoadEnergyWh = loadPowerWatts * backupHours;
   const inverterEfficiency = inverterEfficiencyPercent / 100;
   const usableFraction = maxDepthOfDischargePercent / 100;
@@ -392,6 +425,8 @@ export function calculateGenerator({
   runningLoadKw,
   startingMethod,
 }: GeneratorCalculationInput): GeneratorCalculationResult {
+  requireFiniteInputs([powerFactor, runningLoadKw], [largestMotorKw, reservePercent]);
+  if (powerFactor > 1) throw new Error("Power factor must stay between 0 and 1.");
   const runningLoadKva = runningLoadKw / powerFactor;
   const reserveAdjustedRunningKva = runningLoadKva * (1 + reservePercent / 100);
   const motorStartAllowanceKva = largestMotorKw * getStartingMethodKvaMultiplier(startingMethod);
@@ -426,6 +461,9 @@ export function calculateBreakerSelection({
   loadType,
   spareMarginPercent,
 }: BreakerSelectionInput): BreakerSelectionResult {
+  requireFiniteInputs([ambientDeratingPercent, designCurrent, inrushMultiplier], [spareMarginPercent]);
+  if (ambientDeratingPercent > 100) throw new Error("Ambient derating should be expressed as a percent up to 100.");
+  if (inrushMultiplier < 1) throw new Error("Starting current multiplier must be at least 1.");
   const adjustedCurrent =
     (designCurrent * getBreakerLoadMultiplier(loadType) * (1 + spareMarginPercent / 100)) /
     (ambientDeratingPercent / 100);
@@ -449,6 +487,7 @@ export function calculateFuseSelection({
   designCurrent,
   spareMarginPercent,
 }: FuseSelectionInput): FuseSelectionResult {
+  requireFiniteInputs([designCurrent], [spareMarginPercent]);
   const applicationMultiplier =
     applicationType === "motor-circuit" ? 1.5 : applicationType === "semiconductor" ? 1.25 : 1;
   const continuousMultiplier = continuousLoad ? 1.25 : 1;

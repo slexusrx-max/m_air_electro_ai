@@ -220,9 +220,9 @@ export default function MotorCurrentCalculator() {
         </div>
       </section>
 
-      <section className="grid gap-4 content-start">
+      <section className="grid gap-4 content-start" aria-live="polite" aria-atomic="true">
         {"error" in result ? (
-          <article className={`${glassPanelClassName} p-6`}>
+          <article role="alert" className={`${glassPanelClassName} p-6`}>
             <p className="text-sm font-semibold uppercase tracking-[0.26em] text-amber-200/80">{l("Validation")}</p>
             <p className="mt-4 text-base leading-8 text-white/82">
               {l(result.error)}

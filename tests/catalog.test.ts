@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {
   categories,
+  rootCategories,
   categoryByPath,
   legacyCategories,
 } from "../lib/marketplace/content";
@@ -41,6 +42,27 @@ test("catalog records distinguish models from equipment classes without fabricat
       assert.equal(new URL(p.productUrl).hostname, "eu.renogy.com");
     } else assert.equal(p.brand, "Equipment class");
   }
+});
+test("every primary equipment family has a model or a useful planning class", () => {
+  for (const category of rootCategories) {
+    const records = catalog.filter((product) => product.paths.includes(category.path));
+    assert.ok(records.length > 0, `${category.path} must not be an empty primary family`);
+    assert.ok(guides.some((guide) => guide.slug === category.guide));
+    for (const record of records) {
+      assert.ok(record.compatibility.en.length > 50);
+      assert.ok(record.compatibility.ro.length > 50);
+    }
+  }
+  const ev = catalog.find((product) => product.id === "ac-ev-charging-class")!;
+  assert.equal(ev.kind, "equipment-class");
+  assert.equal(ev.productUrl, "");
+  assert.equal(ev.affiliateUrl, "");
+  assert.equal(ev.price, null);
+  assert.deepEqual(ev.sourceUrls, []);
+  for (const field of ["voltage", "power", "current", "capacityAh", "capacityWh"])
+    assert.equal(ev.facets[field], undefined, `${field} is not fixed for an EV equipment class`);
+  assert.ok(publicRoutes.includes(`/marketplace/products/${ev.slug}`));
+  assert.ok(filterEquipment(catalog, { q: "EV" }).some((product) => product.id === ev.id));
 });
 test("search covers spaced units, compact units, brands, use cases and Romanian", () => {
   for (const q of ["100 Ah", "100Ah", "Renogy", "RV", "acumulatoare", "200W"]) {

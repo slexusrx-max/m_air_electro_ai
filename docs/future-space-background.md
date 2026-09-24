@@ -1,9 +1,11 @@
-# Future Space background
+# Archived Future Space background artwork
+
+This artwork is retained as a historical asset. It is not the current page background: the homepage uses the original `public/hero.png` M/head artwork, and other families use the lightweight schematics selected by `lib/visual-system.ts`.
 
 Original decorative wallpaper requested by the owner. Earth, sunrise, orbital solar arrays, inverters and battery modules retain the site's polished energy illustration style. This artwork illustrates a future-energy concept, not actual merchant products or a technical installation.
 
 - Asset: `public/future-space-energy.png`.
-- Consumer: `components/page-background.tsx`, using Next Image responsive optimization and preload.
+- Historical consumer: `components/page-background.tsx`; no longer loaded by the current visual system.
 - Generation: built-in image generation tool, using the previous `public/green-energy-hero.png` as a style/subject reference. The original remains available.
 - Presentation: a pale mint overlay supports the existing light glass interface; the separate page tint is reduced so the artwork stays visible.
 

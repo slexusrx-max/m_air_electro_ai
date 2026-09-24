@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import type { Dictionary, Locale, MarketplaceRole } from "@/lib/i18n/types";
+import type { Locale, MarketplaceRole } from "@/lib/i18n/types";
 import type { NavigationGroup } from "@/lib/marketplace/navigation";
 import { signOut } from "@/app/(auth)/actions";
 import { EnergySchematic } from "./energy-schematic";
@@ -15,7 +15,6 @@ export function SiteHeader({
 }: {
   profile: { email: string; role: MarketplaceRole } | null;
   dashboardHref?: string;
-  dictionary: Dictionary;
   locale: Locale;
   groups: NavigationGroup[];
 }) {

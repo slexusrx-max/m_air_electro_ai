@@ -10,6 +10,7 @@ async function main() {
   const seen = new Set<string>();
   const failures: string[] = [];
   const redirects: string[] = [];
+  const externalLinks = new Set<string>();
   const details: { path: string; status: number; links: number }[] = [];
   const decode = (s: string) =>
     s
@@ -43,7 +44,10 @@ async function main() {
           failures.push(`Embedded origin in link ${path}: ${href}`);
           continue;
         }
-        if (url.origin !== new URL(base).origin) continue;
+        if (url.origin !== new URL(base).origin) {
+          externalLinks.add(url.href);
+          continue;
+        }
         if (url.pathname.includes("//") || url.pathname.includes("undefined"))
           failures.push(`Malformed ${path}: ${href}`);
         if (
@@ -67,6 +71,8 @@ async function main() {
     }
   }
   const orphans = publicRoutes.filter((path) => !seen.has(path));
+  const unvisited = [...new Set(queue)].filter(path => !seen.has(path));
+  if (unvisited.length) failures.push(`Crawl limit reached with ${unvisited.length} routes still unchecked`);
   const report = {
     base,
     checkedAt: new Date().toISOString(),
@@ -74,6 +80,8 @@ async function main() {
     failures,
     orphans,
     redirects,
+    externalLinks: [...externalLinks].sort(),
+    unvisited,
     details,
   };
   mkdirSync("test-results", { recursive: true });

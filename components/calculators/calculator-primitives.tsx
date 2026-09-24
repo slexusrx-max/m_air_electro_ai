@@ -41,7 +41,7 @@ export function CalculatorResultsPanel({
 }: {
   children: React.ReactNode;
 }) {
-  return <section className="grid content-start gap-4">{children}</section>;
+  return <section className="grid content-start gap-4" aria-live="polite" aria-atomic="true">{children}</section>;
 }
 
 export function CalculatorGrid({ children }: { children: React.ReactNode }) {

@@ -23,6 +23,7 @@ export function normalizeSearch(value: string) {
     .toLowerCase()
     .replace(/(\d)[,.](\d)/g, "$1.$2")
     .replace(/[^\p{L}\p{N}.]+/gu, " ")
+    .replace(/(\d)\s+(kwh|kw|ah|wh|v|w|a)\b/g, "$1$2")
     .trim();
 }
 export function cleanQuery(

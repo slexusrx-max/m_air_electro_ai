@@ -1,5 +1,7 @@
 # Navigation URL incident audit
 
+> Historical incident and release evidence. Its application prerequisites and NOT READY verdict below are superseded by [current readiness](../AFFILIATE_APPLICATION_READINESS.md); the URL regression evidence remains valid.
+
 Date: 2026-09-23. Production: https://mairelectroai.com.
 
 ## Confirmed defect and reproduction

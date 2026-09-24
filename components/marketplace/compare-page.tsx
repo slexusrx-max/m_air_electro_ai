@@ -13,7 +13,7 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
   ];
   return (
     <>
-      <form action="/compare" className="content-panel">
+      <form key={selected.map(p => p.id).join(",")} action="/compare" className="content-panel">
         <p>
           {ro
             ? "Selectează 2–4 înregistrări. Compară preferabil aceeași categorie; clasele de echipamente nu sunt modele comerciale."

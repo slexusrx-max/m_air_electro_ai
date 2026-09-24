@@ -13,9 +13,12 @@ export function ContactForm({ ro, enabled, siteKey }: { ro: boolean; enabled: bo
     const api = (window as unknown as { turnstile?: { render: (node: HTMLElement, options: object) => void } }).turnstile;
     if (api && container.current && !container.current.hasChildNodes()) api.render(container.current, { sitekey: siteKey, action: "contact", size: "flexible" });
   }
+  if (!enabled) return <section className="content-panel">
+    <h2>{l("Website contact form", "Formular de contact pe site")}</h2>
+    <p role="status">{l("The website form is unavailable. Please use the email links above to send your enquiry.", "Formularul de pe site nu este disponibil. Folosește linkurile de email de mai sus pentru a trimite întrebarea.")}</p>
+  </section>;
   return <section className="content-panel">
     <h2>{l("Send an enquiry", "Trimite o întrebare")}</h2>
-    {!enabled && <p role="status">{l("Sending through this form is not available yet. Use the contact email below in your own email application. The form requires separate delivery and anti-spam configuration before activation.", "Trimiterea prin acest formular nu este încă disponibilă. Folosește adresa de contact de mai jos în aplicația ta de email. Formularul necesită configurarea separată a livrării și protecției anti-spam înainte de activare.")}</p>}
     <form className="contact-form" onSubmit={async (event) => {
       event.preventDefault(); if (!enabled || busy) return;
       const form = event.currentTarget, data = new FormData(form);

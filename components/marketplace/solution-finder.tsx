@@ -4,7 +4,7 @@ import { trackEvent } from "@/lib/analytics";
 import { useState, useRef } from "react";
 import { ProductCard } from "./product-card";
 import { catalog } from "@/lib/affiliate/catalog";
-import { estimateSystem } from "@/lib/marketplace/recommendation";
+import { estimateSystem, matchingSystemCandidates } from "@/lib/marketplace/recommendation";
 import { categoryByPath, local } from "@/lib/marketplace/content";
 import {
   loadHomeEnergyProfile,
@@ -73,19 +73,7 @@ export function SolutionFinder({
                 ? ["solar"]
                 : []),
             ];
-  const matches = catalog
-    .filter(
-      (p) =>
-        form.region === "EU" &&
-        p.paths.some((path) => paths.includes(path)) &&
-        (p.kind === "equipment-class" ||
-          ((!p.facets.capacityWh ||
-            Number(p.facets.capacityWh) >= (result?.batteryWh ?? Infinity)) &&
-            (!p.facets.power ||
-              p.category !== "inverters" ||
-              Number(p.facets.power) >= (result?.inverterW ?? Infinity)))),
-    )
-    .slice(0, 6);
+  const matches = result ? matchingSystemCandidates(catalog, paths, form.region, result).slice(0, 6) : [];
   function next() {
     if (step === 2 && form.budget && (!Number.isFinite(Number(form.budget)) || Number(form.budget) < 0)) {
       setError(l("Budget must be a finite, non-negative amount.", "Bugetul trebuie să fie o valoare finită, fără semn negativ."));

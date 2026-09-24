@@ -21,6 +21,7 @@ import {
   calculateBreakerSelection,
   formatElectricalNumber,
   getPositiveNumber,
+  getNonNegativeNumber,
   type ProtectionLoadType,
 } from "@/lib/electrical-calculations";
 
@@ -45,11 +46,11 @@ const defaultFormState: FormState = {
 function resolveBreaker(formState: FormState): CalculationResult {
   const designCurrent = getPositiveNumber(formState.designCurrent);
   const ambientDeratingPercent = getPositiveNumber(formState.ambientDeratingPercent);
-  const spareMarginPercent = getPositiveNumber(formState.spareMarginPercent);
+  const spareMarginPercent = getNonNegativeNumber(formState.spareMarginPercent);
   const inrushMultiplier = getPositiveNumber(formState.inrushMultiplier);
 
-  if (!designCurrent || !ambientDeratingPercent || !spareMarginPercent || !inrushMultiplier) {
-    return { error: "Enter valid positive numbers for design current, derating, spare margin, and inrush." };
+  if (!designCurrent || !ambientDeratingPercent || spareMarginPercent === null || !inrushMultiplier) {
+    return { error: "Enter positive current, derating and inrush, and a zero or positive spare margin." };
   }
 
   if (ambientDeratingPercent > 100) {

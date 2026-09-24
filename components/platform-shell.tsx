@@ -1,7 +1,6 @@
 import { DeepFooter } from "@/components/marketplace/deep-footer";
 import { SiteHeader } from "@/components/site-header";
 import { getCurrentProfile, getCurrentUser } from "@/lib/supabase/auth";
-import { getDictionary } from "@/lib/i18n/dictionaries";
 import { getRequestLocale } from "@/lib/i18n/request";
 import { navigation } from "@/lib/marketplace/navigation";
 type PlatformShellProps = {
@@ -32,7 +31,6 @@ export async function PlatformShell({
             : null
         }
         dashboardHref="/dashboard"
-        dictionary={getDictionary(locale)}
         locale={locale}
         groups={navigation(locale)}
       />

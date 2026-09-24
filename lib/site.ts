@@ -1,4 +1,6 @@
-export const plannedEmailAddresses = {
+// Owner-confirmed active Cloudflare routes. Contact inbound receipt was tested;
+// this does not establish outbound sending or website-form readiness.
+export const publicEmailAddresses = {
   contact: "contact@mairelectroai.com",
   partnerships: "partnerships@mairelectroai.com",
   privacy: "privacy@mairelectroai.com",
@@ -15,14 +17,12 @@ export const siteConfig = {
   contactEmail: verifiedMailbox(process.env.NEXT_PUBLIC_CONTACT_EMAIL),
   partnershipsEmail: verifiedMailbox(process.env.NEXT_PUBLIC_PARTNERSHIPS_EMAIL),
   privacyEmail: verifiedMailbox(process.env.NEXT_PUBLIC_PRIVACY_EMAIL),
-  // Authorized for public contact by the owner; not a delivery-verification flag.
-  ownerContactEmail: "slexusrx@gmail.com",
   // Owner-confirmed public identity. It is not a company or an editorial sign-off.
   operatorName: "Stanislav Zavizion",
   operatingCountry: "Romania",
   commercialRegion: "Romania / European Union",
   publisherStatus: "Individual / independent publisher",
-  plannedEmailAddresses,
+  publicEmailAddresses,
   editorName: process.env.NEXT_PUBLIC_EDITOR_NAME?.trim() || undefined,
   editorBio: process.env.NEXT_PUBLIC_EDITOR_BIO?.trim() || undefined,
   editorExpertise: process.env.NEXT_PUBLIC_EDITOR_EXPERTISE?.trim() || undefined,

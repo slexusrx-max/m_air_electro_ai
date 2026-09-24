@@ -21,6 +21,7 @@ import {
   calculateFuseSelection,
   formatElectricalNumber,
   getPositiveNumber,
+  getNonNegativeNumber,
   type FuseApplicationType,
 } from "@/lib/electrical-calculations";
 
@@ -42,10 +43,10 @@ const defaultFormState: FormState = {
 
 function resolveFuse(formState: FormState): CalculationResult {
   const designCurrent = getPositiveNumber(formState.designCurrent);
-  const spareMarginPercent = getPositiveNumber(formState.spareMarginPercent);
+  const spareMarginPercent = getNonNegativeNumber(formState.spareMarginPercent);
 
-  if (!designCurrent || !spareMarginPercent) {
-    return { error: "Enter valid positive numbers for current and spare margin." };
+  if (!designCurrent || spareMarginPercent === null) {
+    return { error: "Enter positive current and a zero or positive spare margin." };
   }
 
   return resolveCalculation(() => calculateFuseSelection({

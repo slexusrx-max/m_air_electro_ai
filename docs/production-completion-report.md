@@ -1,4 +1,6 @@
-# Production completion and affiliate readiness
+# Historical production audit — 23 September 2026
+
+> Archived deployment evidence. This report describes the earlier release, including superseded contact and application prerequisites. For the single current readiness status, confirmed inbound domain email and current release evidence, use [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md). Historical NOT READY conclusions below are not current blockers.
 
 Subsequent owner identity update: Stanislav Zavizion is now owner-confirmed and configured as individual owner/publisher of the M Air Electro AI brand/platform, operating in Romania for Romania / EU, with no incorporated company. Earlier missing-owner findings in this dated deployment audit are historical. Editor/reviewer credentials, human approvals and verified private contact delivery remain unresolved. See `docs/publisher-identity-update.md` for the exact current fields and public-page coverage.
 

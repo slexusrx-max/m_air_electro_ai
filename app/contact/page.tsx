@@ -15,7 +15,7 @@ export const metadata = buildMetadata({
 export default async function ContactPage() {
   const t = await getRequestDictionary(),
     c = commercialCopy(t),
-    contactEmail = siteConfig.contactEmail ?? siteConfig.ownerContactEmail,
+    contactEmail = siteConfig.contactEmail ?? siteConfig.publicEmailAddresses.contact,
     mailto = `mailto:${contactEmail}?subject=${encodeURIComponent("M Air Electro AI enquiry")}`;
   return (
     <PlatformShell>
@@ -33,8 +33,6 @@ export default async function ContactPage() {
               : "Write for clarification about formulas, corrections to guides or information about supplier links."}
           </p>
         </section>
-        <ContactForm ro={c.ro} enabled={contactReady()} siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} />
-        <PublisherDetails ro={c.ro} />
         <section className="info-card">
           <h2>{c.ro ? "Email și canal public suplimentar" : "Email and supplementary public channel"}</h2>
           <a
@@ -51,9 +49,15 @@ export default async function ContactPage() {
           <a href={mailto} className="button-primary mt-5">
             {c.ro ? "Scrie un email" : "Write an email"}
           </a>
-          <p className="mt-5">{c.ro ? "Adresa proprietarului este publicată cu acordul său. Livrarea emailurilor nu a fost testată; adresele domeniului sunt încă în pregătire." : "The owner's address is published with permission. Email delivery has not been tested; domain mailboxes are still being prepared."}</p>
+          <p className="mt-5">{c.ro ? "Primirea mesajelor la contact@mairelectroai.com a fost verificată printr-un test real de livrare." : "Incoming email to contact@mairelectroai.com has been verified with a real delivery test."}</p>
+          <dl className="mt-5 grid gap-2">
+            <dt>{c.ro ? "Parteneriate" : "Partnerships"}</dt><dd><a className="break-all underline" href={`mailto:${siteConfig.partnershipsEmail ?? siteConfig.publicEmailAddresses.partnerships}`}>{siteConfig.partnershipsEmail ?? siteConfig.publicEmailAddresses.partnerships}</a></dd>
+            <dt>{c.ro ? "Confidențialitate" : "Privacy"}</dt><dd><a className="break-all underline" href={`mailto:${siteConfig.privacyEmail ?? siteConfig.publicEmailAddresses.privacy}`}>{siteConfig.privacyEmail ?? siteConfig.publicEmailAddresses.privacy}</a></dd>
+          </dl>
           <p><a href={siteConfig.publicContactUrl} className="underline">{c.ro ? "Raportează o problemă publică pe GitHub" : "Report a public issue on GitHub"}</a>. {c.ro ? "Nu publica date personale, parole sau documente." : "Do not post personal data, passwords or documents."}</p>
         </section>
+        <ContactForm ro={c.ro} enabled={contactReady()} siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY} />
+        <PublisherDetails ro={c.ro} />
         <section className="info-card">
           <h2>
             {c.ro

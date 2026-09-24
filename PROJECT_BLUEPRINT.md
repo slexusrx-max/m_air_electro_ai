@@ -1,6 +1,6 @@
 # M Air Electro AI — Authoritative Product Blueprint
 
-Version 4 · Official marketplace-first direction · 23 September 2026
+Version 4 · Official marketplace-first direction · 24 September 2026
 
 This specification supersedes earlier positioning across production, source, metadata, documentation and coding-agent instructions.
 
@@ -12,9 +12,9 @@ M Air Electro AI is an independent product discovery, comparison and sizing plat
 
 Owner-confirmed identity: **M Air Electro AI** is the brand/platform; **Stanislav Zavizion** is the owner/publisher, an **individual / independent publisher** operating in **Romania**, with commercial region **Romania / European Union**. No incorporated company exists behind the website. Do not invent company forms, registration/VAT/tax identifiers, offices, residential addresses, employees or credentials. Owner identity is not automatic attribution or technical review of every article.
 
-The three official domain emails are prepared in configuration but their operation/delivery is not confirmed. Keep verification and sending gates disabled until explicitly confirmed. Represent the publisher as `Person` and the platform name as `Brand` / `WebSite`, not an incorporated `Organization`.
+Cloudflare Email Routing is owner-confirmed active for the three official domain addresses. A real external inbound test to `contact@mairelectroai.com` reached the owner's inbox. Separate receipt tests for the other aliases and outbound send-as/SMTP are not confirmed. Use `CONTACT_EMAIL_VERIFIED=true` with the three explicit mailbox environment values; keep the separate website-form gate disabled until sender, Resend, Turnstile and form receipt are tested. Represent the publisher as `Person` and the platform name as `Brand` / `WebSite`, not an incorporated `Organization`.
 
-Owner-authorized public contact is `slexusrx@gmail.com`, also used for partnership/privacy inquiries until dedicated mailboxes are confirmed. Publication is not delivery verification and does not enable the website contact form. No physical address was provided.
+Public contacts are `contact@mairelectroai.com`, `partnerships@mairelectroai.com` and `privacy@mairelectroai.com`. Publish these domain addresses; the forwarding inbox is not the primary public brand contact. Active inbound routing does not enable the website contact form. No physical address was provided.
 
 **Need → Calculate → Understand → Discover → Compare → Choose → Visit supplier.** Marketplace is the primary commercial layer. Calculators, Find My Solution, technical guides, AI and future experts support the decision. The platform is not a direct merchant, warehouse, general handyman service, outage-monitoring product or brochure.
 
@@ -104,11 +104,11 @@ Maintain headers, validated inputs, server-only secrets and escaped JSON-LD. Nev
 
 ## Legal / Disclosure Model
 
-State independent discovery, preliminary calculations, external seller responsibility and current affiliate status consistently. Privacy describes cookies, local storage, optional providers and external navigation. Use the confirmed individual publisher identity above; never infer a functioning mailbox. Use the configured contact channel or existing public repository issues without inviting disclosure of private information. Mailbox operation, retention specifics, service-provider arrangements and legal review remain owner dependencies before unconditional legal/application readiness.
+State independent discovery, preliminary calculations, external seller responsibility and current affiliate status consistently. Privacy describes cookies, local storage, optional providers, Cloudflare email forwarding and external navigation. Use the confirmed publisher identity and active domain contact routes above; do not infer outbound or form delivery. GitHub issues remain supplementary and must not invite private information. Publish only evidenced authorship and review records, with source-based research and preliminary calculation limits clear. Do not invent retention periods, service-provider arrangements or legal sign-off.
 
 ## Development Roadmap
 
-1. Current phase: deep discovery, 22 categories, eight solutions, 18 guides, 18 records, search, compare, tools and official repository alignment. The catalog retains existing production models alongside the new records.
+1. Current phase: deep discovery, 22 categories, eight solutions, 18 guides, 19 records, search, compare, tools and official repository alignment. Every major category includes equipment records or classes; the catalog retains existing production models alongside the new records.
 2. After approval: actual Impact activation, disclosure update and approved attribution testing.
 3. Curate more verified EU models/suppliers and promote justified facets to categories.
 4. Real expert onboarding, optional saved projects and separately scoped database/feed/AI work.
@@ -125,7 +125,7 @@ Official public origin: https://mairelectroai.com. The www hostname permanently 
 
 Primary navigation: Marketplace, Solutions, Tools, Learn, Experts, For Business (RO/EN). Experts is a professional-preparation resource, not a bookable or verified directory. Home uses the original public/hero.png artwork; lib/visual-system.ts maps other route families to original lightweight energy schematics. Do not restore one shared raster background to every route. Search includes equipment, categories, solutions and guides.
 
-Release verification uses five passes: routes/controls; discovery and calculations; responsive/accessibility; domain/SEO/language/disclosures; visual and reviewer perspective. Confirm the production deployment SHA before claiming release success. Confirm publisher identity, private contact and human editorial approval before declaring affiliate-application readiness.
+Release verification uses five passes: routes/controls; discovery and calculations; responsive/accessibility; domain/SEO/language/disclosures; visual and reviewer perspective. Confirm the production deployment SHA before claiming release success. Application readiness requires accurate publisher/contact information, working public flows and transparent editorial claims. Affiliate approval and optional outbound/form activation are separate later steps. Human authorship or review must never be implied without evidence.
 
 Marketplace-first is authoritative. Do not restore diagnostics or Ukrainian outage/address flows as primary identity/navigation. Never invent commercial approval, inventory, prices, reviews, ratings or professionals. Do not redesign direction without owner instruction. Extend existing architecture; integrate commerce into Marketplace/Solutions/Learn. Every control must work. Keep Romania/EU orientation, honest limitations and user changes. Read AGENTS.md and installed Next.js docs.
 

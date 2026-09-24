@@ -1,30 +1,66 @@
-# Custom domain, publisher and contact setup
+# Domain, publisher and contact operations
 
-Owner-confirmed identity: Stanislav Zavizion owns and publishes the M Air Electro AI brand/platform as an individual / independent publisher operating in Romania, serving Romania / European Union. There is no incorporated company. This does not confirm article authorship, reviewer credentials or mailbox delivery. No private address is published. Blank/unverified operational mailbox values keep private contact unavailable.
+Current facts: 24 September 2026. Application status and release evidence live in [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md).
 
-1. Add the owned apex and www domain to the existing Vercel project under Settings → Domains. Use the DNS values shown for that project, preserving MX/SPF/DKIM/DMARC and other existing records. Verify ownership, successful TLS issuance and HTTPS behavior. Choose one primary hostname and redirect the other to it.
-2. Set `NEXT_PUBLIC_SITE_URL=https://mairelectroai.com`, without a path/query. It is the single source for canonical, OG, sitemap, robots, JSON-LD and contact origin checking. The official domain is the default; `www.mairelectroai.com` and the old Vercel production alias are normalized to it. Local-origin contact tests require an explicit `http://localhost:3100` override. Rebuild after public env changes.
-3. After the custom host works, configure the old project alias redirect in Vercel and verify a deep path/query survives. Verify auth provider Site URL and redirect allowlists for the new domain; retain necessary recovery callback paths. Never migrate DNS based on guessed values.
-4. Create and verify `contact@mairelectroai.com`, `partnerships@mairelectroai.com`, `privacy@mairelectroai.com`. Set `NEXT_PUBLIC_CONTACT_EMAIL`, `NEXT_PUBLIC_PARTNERSHIPS_EMAIL`, `NEXT_PUBLIC_PRIVACY_EMAIL` to those values, then `CONTACT_EMAIL_VERIFIED=true`. The app accepts verified mailboxes only on the canonical custom host. These examples are setup instructions, not claims that the mailboxes already exist.
-5. The owner/publisher is now confirmed in `lib/site.ts`; `NEXT_PUBLIC_OPERATOR_NAME` is obsolete and ignored. Separately confirm the person responsible for human content review, then supply real `NEXT_PUBLIC_EDITOR_NAME`, `NEXT_PUBLIC_EDITOR_BIO`, `NEXT_PUBLIC_EDITOR_EXPERTISE`, and optional HTTPS `NEXT_PUBLIC_EDITOR_PROFILE`. Do not assume Stanislav has accepted those separate roles or any technical qualification. These fields are public; do not place credentials or a residential address in them. All trust/legal pages share these fields.
-6. For private contact, verify the sending domain with Resend, configure `CONTACT_FROM_EMAIL` on the same domain and secret `RESEND_API_KEY`. Create Cloudflare Turnstile keys restricted to the exact canonical hostname; configure public `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and secret `TURNSTILE_SECRET_KEY`. The server requires the `contact` action and matching hostname, limits the request body, checks origin/consent and validates a single-use challenge. Add a deployment WAF rate limit for `/api/contact` as defense in depth. Review provider processing agreements, transfers, retention and mailbox access controls. Set `CONTACT_FORM_ENABLED=true` only after these steps.
-7. The form forwards a plain-text message only to the operator's fixed contact mailbox; it does not send autoresponses or store a message database. A successful API result means accepted for delivery, not confirmed receipt. Delivery and inbox verification are owner tasks and were NOT performed during this audit because no emails/forms may be sent.
-8. Fill per-page records in `lib/marketplace/editorial-records.json`, keyed by canonical pathname, using real `author`, `published`, `reviewed`, `evidence`, and optional `corrections: [{date, reason}]`. Set `author: "owner"` only after explicit approval of that page's attribution to Stanislav Zavizion; it resolves to the confirmed owner, not to a potentially different technical reviewer. Blank records still have no author. Use ISO dates from actual publication/review records. Do not use git timestamps as a substitute. Each existing guide, solution, comparison and equipment-class article needs explicit approval. Record original source/manual revision and precise verified fields with the review evidence.
+## Completed and owner-confirmed
 
-## Analytics: collect 30–60 days of real evidence
+- Official public origin: `https://mairelectroai.com`; `www.mairelectroai.com` permanently redirects to the apex.
+- Stanislav Zavizion owns and publishes M Air Electro AI as an individual / independent publisher in Romania, serving Romania / European Union. There is no incorporated company. No private address, corporate registration or unconfirmed credentials are published.
+- Cloudflare Email Routing is active for `contact@mairelectroai.com`, `partnerships@mairelectroai.com` and `privacy@mairelectroai.com`. Routes forward to the owner's verified Google-hosted inbox.
+- The owner performed a real external inbound test to `contact@mairelectroai.com` and confirmed receipt. Separate receipt tests for partnerships/privacy are not asserted.
+- Outbound send-as/SMTP and website-form delivery are **not verified**. Inbound forwarding does not provide outbound sending infrastructure.
 
-Create a Plausible site for the real hostname and set `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`. Keep it blank in local/preview/QA builds. Tracking uses the Events API directly from the visitor browser only after explicit consent, preserving real UA/IP handling. No account pages, queries, referrers, form fields or calculation values are submitted. Automated browsers, localhost, mismatched hosts and Do Not Track are excluded. Consent expires after 180 days; settings allow refusal/withdrawal. Cross-tab changes apply to subsequent events. No tracking script is installed.
+## Production configuration
 
-Create exactly these custom goals: `outbound_click`, `calculator_complete`, `comparison_view`. Outbound means a real HTTPS external-link click (not necessarily a purchase); comparison means a displayed valid 2–4-item table. The finder counts a successful calculation action; live calculators count a valid changed result after a 1.2-second editing pause, not the default example. These are usage signals, not sales.
+Set only these four contact values; leave unrelated environment values unchanged:
 
-Exclude owner/manual QA traffic using provider exclusions; automated tests never populate a live property. Obtain consent before measurement. Collect 30–60 consecutive days, then export date range, users/visits, country distribution, acquisition mix, relevant content and goal counts. Explain consent/ad-blocker limitations and sample size. Publish only reviewed exports in the media kit; no fake baseline, zeros or projected reach. With no verified export, the page says “Data being collected” and explicitly says no audience report is published. This phrase is not proof that analytics has been activated.
+```dotenv
+NEXT_PUBLIC_CONTACT_EMAIL=contact@mairelectroai.com
+NEXT_PUBLIC_PARTNERSHIPS_EMAIL=partnerships@mairelectroai.com
+NEXT_PUBLIC_PRIVACY_EMAIL=privacy@mairelectroai.com
+CONTACT_EMAIL_VERIFIED=true
+```
 
-## Sources checked for implementation
+Keep `NEXT_PUBLIC_SITE_URL=https://mairelectroai.com` and `CONTACT_FORM_ENABLED=false`. Public variables are bundled at build time: deploy again after changing them and verify the deployed commit and actual production links. Editing `.env.example` alone does not update Vercel.
+
+`lib/site.ts` holds owner-confirmed public domain addresses independently of sending configuration. Operational `contactEmail`, `partnershipsEmail` and `privacyEmail` fields still require explicit same-domain environment values plus `CONTACT_EMAIL_VERIFIED=true`. With missing environment values, public pages still show the confirmed domain contacts; the form cannot send.
+
+Preserve existing DNS routing records when maintaining the site domain. Use only DNS values provided by the actual Vercel/Cloudflare project. Canonical, OG, sitemap, robots, JSON-LD and contact origin checking use the official apex. For isolated local-origin form tests, explicitly set `NEXT_PUBLIC_SITE_URL=http://localhost:3100`.
+
+## Optional future website-form activation
+
+1. Verify an outbound sender domain with Resend; configure same-domain `CONTACT_FROM_EMAIL` and secret `RESEND_API_KEY`.
+2. Configure Cloudflare Turnstile with the exact canonical hostname, public `NEXT_PUBLIC_TURNSTILE_SITE_KEY` and secret `TURNSTILE_SECRET_KEY`. The server checks the `contact` action, hostname, origin, input bounds, consent and honeypot.
+3. Confirm actual provider processing arrangements, mailbox retention/access and privacy disclosure before enabling collection. Consider deployment rate limiting for `/api/contact`.
+4. Perform an explicitly authorized end-to-end form/inbox test and verify delivery. Routine read-only QA must not send messages.
+5. Only then set `CONTACT_FORM_ENABLED=true` and deploy. API acceptance alone is not proof of inbox receipt.
+
+The form sends plain text to the fixed contact address; it does not send autoresponses or store a message database. While disabled, the page shows a compact unavailable notice with no editable form controls and loads no Turnstile script. Email links remain available.
+
+## Editorial identity and evidence
+
+Ownership does not assign authorship, review or technical qualifications. Optional `NEXT_PUBLIC_EDITOR_NAME`, `NEXT_PUBLIC_EDITOR_BIO`, `NEXT_PUBLIC_EDITOR_EXPERTISE` and HTTPS `NEXT_PUBLIC_EDITOR_PROFILE` stay unset unless independently confirmed.
+
+Add only evidenced per-page records to `lib/marketplace/editorial-records.json`: `author`, `published`, `reviewed`, `evidence` and optional `corrections: [{date, reason}]`. Use `author: "owner"` only with confirmed attribution of that page. A git/deployment timestamp is not a human review date. Missing author/review fields are omitted from visible bylines and structured data; public methodology and AI disclosures explain source-based research and preliminary calculations. No human engineering sign-off is implied.
+
+## Optional audience measurement
+
+Plausible is optional. Keep `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` blank in local/preview/QA builds and until measurement is intentionally configured. Public privacy copy reflects whether it is configured. When enabled, events require explicit consent; settings allow withdrawal and consent expires after 180 days. Automated browsers, localhost, mismatched hosts and Do Not Track are excluded.
+
+Events contain only the public route and action type, not queries, referrers, form data, private/account pages or calculation inputs. The browser sends events directly, so the provider processes its IP address and user agent. The goals are `outbound_click`, `calculator_complete` and `comparison_view`; these are usage signals, not sales.
+
+Provide partners only real dated exports with the period, geography, traffic sources and consent/ad-blocker limitations. Exclude owner and QA traffic. No audience figures or collection claim is published without evidence. Historical traffic is not a technical prerequisite for applying; the program may separately request it.
+
+## Google Search Console
+
+Technical indexing readiness is separate from actual Google indexing. No Search Console verification is asserted. If not already configured: add a Domain property for `mairelectroai.com`, publish only the TXT value Google issues, verify ownership, submit `https://mairelectroai.com/sitemap.xml`, inspect the homepage and representative commercial URLs, request indexing where appropriate, and monitor Page indexing and sitemap reports. A successful sitemap response does not establish indexing.
+
+## Reference documentation
 
 - [Vercel domain setup](https://vercel.com/docs/domains/working-with-domains/add-a-domain)
+- [Cloudflare Email Routing](https://developers.cloudflare.com/email-routing/)
 - [Cloudflare server-side validation](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/)
 - [Resend email endpoint](https://resend.com/docs/api-reference/emails/send-email)
-- [Plausible Events API](https://plausible.io/docs/events-api) and [custom goals](https://plausible.io/docs/custom-event-goals)
-- [EU online privacy guidance](https://europa.eu/youreurope/business/growing/digitalising/online-privacy/index_en.htm)
+- [Plausible Events API](https://plausible.io/docs/events-api)
 
-The owner must confirm the actual processing inventory, controller identity, retention, lawful basis and required legal details with an appropriate adviser. A template is not legal sign-off.
+Operational privacy/retention and legally required disclosures must be based on actual arrangements. This configuration document does not constitute legal sign-off.

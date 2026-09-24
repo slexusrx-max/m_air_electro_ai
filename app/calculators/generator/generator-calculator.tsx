@@ -21,6 +21,7 @@ import {
   calculateGenerator,
   formatElectricalNumber,
   getPositiveNumber,
+  getNonNegativeNumber,
   type StartingMethod,
 } from "@/lib/electrical-calculations";
 import { CalculatorRecommendation } from "@/components/marketplace/calculator-recommendation";
@@ -46,11 +47,11 @@ const defaultFormState: FormState = {
 function resolveGenerator(formState: FormState): CalculationResult {
   const runningLoadKw = getPositiveNumber(formState.runningLoadKw);
   const powerFactor = getPositiveNumber(formState.powerFactor);
-  const largestMotorKw = getPositiveNumber(formState.largestMotorKw);
-  const reservePercent = getPositiveNumber(formState.reservePercent);
+  const largestMotorKw = getNonNegativeNumber(formState.largestMotorKw);
+  const reservePercent = getNonNegativeNumber(formState.reservePercent);
 
-  if (!runningLoadKw || !powerFactor || !largestMotorKw || !reservePercent) {
-    return { error: "Enter valid positive numbers for load, power factor, largest motor, and reserve." };
+  if (!runningLoadKw || !powerFactor || largestMotorKw === null || reservePercent === null) {
+    return { error: "Enter positive load and power factor, and zero or positive values for motor load and reserve." };
   }
 
   if (powerFactor > 1) {
@@ -87,7 +88,7 @@ export default function GeneratorCalculator() {
             <CalculatorNumberInput min="0.01" max="1" step="0.01" value={formState.powerFactor} onChange={(event) => updateField("powerFactor", event.target.value)} />
           </CalculatorField>
           <CalculatorField label="Largest motor (kW)">
-            <CalculatorNumberInput min="0.1" step="0.1" value={formState.largestMotorKw} onChange={(event) => updateField("largestMotorKw", event.target.value)} />
+            <CalculatorNumberInput min="0" step="0.1" value={formState.largestMotorKw} onChange={(event) => updateField("largestMotorKw", event.target.value)} />
           </CalculatorField>
           <CalculatorField label="Starting method">
             <CalculatorSelect value={formState.startingMethod} onChange={(event) => updateField("startingMethod", event.target.value as StartingMethod)}>

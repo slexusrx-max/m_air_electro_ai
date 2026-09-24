@@ -21,6 +21,7 @@ import {
   resolveCalculation,
   formatElectricalNumber,
   getPositiveNumber,
+  getNonNegativeNumber,
   type MotorSystemType,
 } from "@/lib/electrical-calculations";
 
@@ -46,10 +47,10 @@ function resolveTransformer(formState: FormState): CalculationResult {
   const transformerKva = getPositiveNumber(formState.transformerKva);
   const primaryVoltage = getPositiveNumber(formState.primaryVoltage);
   const secondaryVoltage = getPositiveNumber(formState.secondaryVoltage);
-  const expectedLoadPercent = getPositiveNumber(formState.expectedLoadPercent);
+  const expectedLoadPercent = getNonNegativeNumber(formState.expectedLoadPercent);
 
-  if (!transformerKva || !primaryVoltage || !secondaryVoltage || !expectedLoadPercent) {
-    return { error: "Enter valid positive numbers for transformer size, voltages, and expected load." };
+  if (!transformerKva || !primaryVoltage || !secondaryVoltage || expectedLoadPercent === null) {
+    return { error: "Enter positive transformer size and voltages, and an expected load from 0 to 100 percent." };
   }
 
   if (expectedLoadPercent > 100) {
@@ -114,7 +115,7 @@ export default function TransformerCalculator() {
           </CalculatorField>
           <CalculatorField label="Expected operating load (%)">
             <CalculatorNumberInput
-              min="1"
+              min="0"
               max="100"
               step="0.1"
               value={formState.expectedLoadPercent}

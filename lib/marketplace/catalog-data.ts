@@ -24,10 +24,11 @@ type Entry = {
   limitations: LocalText;
   compatibility: LocalText;
   facets: Record<string, string>;
-  url?: string;
-  kind?: "product" | "equipment-class";
   specs?: Record<string, string>;
-};
+} & (
+  | { kind: "product"; url: string; sourceCheckedAt: string }
+  | { kind?: "equipment-class"; url?: never; sourceCheckedAt?: never }
+);
 function item(e: Entry): Equipment {
   const kind = e.kind ?? "equipment-class";
   return {
@@ -50,7 +51,7 @@ function item(e: Entry): Equipment {
     technicalSpecs: e.specs ?? {},
     tags: [...e.paths, ...Object.values(e.facets)],
     featured: true,
-    lastUpdated: kind === "product" ? "2026-09-14" : "2026-09-13",
+    lastUpdated: e.sourceCheckedAt ?? "2026-09-13",
     recommendedFor: [e.bestFor.en],
     compatibilityNotes: e.compatibility.en,
     whyRecommended: e.summary.en,
@@ -66,6 +67,7 @@ export const equipment: Equipment[] = [
     id: "renogy-mini-100",
     slug: "renogy-core-mini-100ah",
     kind: "product",
+    sourceCheckedAt: "2026-09-24",
     title: b(
       "Renogy Core Mini 12.8 V 100 Ah",
       "Renogy Core Mini 12,8 V 100 Ah",
@@ -86,8 +88,8 @@ export const equipment: Equipment[] = [
       "Consumatori de servicii în rulotă și rezervă pentru sarcini moderate.",
     ),
     limitations: b(
-      "Not a stand-alone 2 kW continuous battery source. Charging below the specified temperature range is not allowed.",
-      "Nu alimentează singură 2 kW continuu. Încărcarea sub intervalul de temperatură specificat nu este permisă.",
+      "Not a stand-alone 2 kW continuous battery source. Charging below the specified temperature range is not allowed. Specifications are per battery; check the supplier's selected pack and monitoring options.",
+      "Nu alimentează singură 2 kW continuu. Încărcarea sub intervalul de temperatură specificat nu este permisă. Specificațiile sunt pentru o baterie; verifică pachetul și opțiunile de monitorizare selectate la furnizor.",
     ),
     compatibility: batteryCompat,
     facets: {
@@ -100,7 +102,7 @@ export const equipment: Equipment[] = [
     specs: {
       "Nominal voltage": "12.8 V",
       Capacity: "100 Ah",
-      "Stored energy (V × Ah)": "1280 Wh",
+      "Stored energy": "1280 Wh (12.8 V × 100 Ah)",
       "Maximum discharge": "100 A",
       Chemistry: "LiFePO4",
     },
@@ -110,6 +112,7 @@ export const equipment: Equipment[] = [
     id: "renogy-mini-200",
     slug: "renogy-core-mini-200ah",
     kind: "product",
+    sourceCheckedAt: "2026-09-24",
     title: b("Renogy Core Mini 12 V 200 Ah", "Renogy Core Mini 12 V 200 Ah"),
     category: "lithium-batteries",
     paths: ["batteries", "batteries/lifepo4", "batteries/12v"],
@@ -122,19 +125,25 @@ export const equipment: Equipment[] = [
       "Staționări prelungite cu rulota și stocare solară compactă.",
     ),
     limitations: b(
-      "Capacity alone does not establish inverter compatibility or permission to connect batteries in series.",
-      "Capacitatea nu stabilește compatibilitatea cu invertorul sau permisiunea legării în serie.",
+      "Capacity alone does not establish inverter compatibility or permission to connect batteries in series. Specifications are per battery; check the supplier's selected pack and monitoring options.",
+      "Capacitatea nu stabilește compatibilitatea cu invertorul sau permisiunea legării în serie. Specificațiile sunt pentru o baterie; verifică pachetul și opțiunile de monitorizare selectate la furnizor.",
     ),
-    compatibility: batteryCompat,
+    compatibility: b(
+      "Check charger profile, the documented 200 A continuous discharge limit and approved battery grouping. Size DC protection and wiring for actual inverter input current, including conversion losses.",
+      "Verifică profilul încărcătorului, limita documentată de descărcare continuă de 200 A și gruparea permisă. Dimensionează protecția și cablurile DC pentru curentul real de intrare al invertorului, inclusiv pierderile de conversie.",
+    ),
     facets: {
       voltage: "12",
       capacityAh: "200",
+      capacityWh: "2560",
       chemistry: "LiFePO4",
       application: "RV",
     },
     specs: {
       "Voltage class": "12 V",
       Capacity: "200 Ah",
+      "Stored energy": "2560 Wh",
+      "Maximum discharge": "200 A continuous",
       Chemistry: "LiFePO4",
     },
     url: "https://eu.renogy.com/products/core-mini-12-8v-200ah-lifepo4-battery-w-low-temperature-protection",
@@ -143,6 +152,7 @@ export const equipment: Equipment[] = [
     id: "renogy-panel-200",
     slug: "renogy-n-type-200w",
     kind: "product",
+    sourceCheckedAt: "2026-09-24",
     title: b(
       "Renogy 16BB N-Type 200 W rigid panel",
       "Panou rigid Renogy 16BB N-Type 200 W",
@@ -185,6 +195,7 @@ export const equipment: Equipment[] = [
     id: "renogy-inverter-1000",
     slug: "renogy-pure-sine-1000w",
     kind: "product",
+    sourceCheckedAt: "2026-09-24",
     title: b(
       "Renogy 12 V 1000 W pure sine inverter",
       "Invertor Renogy 12 V 1000 W sinus pur",
@@ -224,6 +235,7 @@ export const equipment: Equipment[] = [
     id: "renogy-dcc50",
     slug: "renogy-dcc50s-mppt",
     kind: "product",
+    sourceCheckedAt: "2026-09-24",
     title: b(
       "Renogy 12 V 50 A DC-DC + MPPT",
       "Renogy 12 V 50 A DC-DC + MPPT",
@@ -505,6 +517,7 @@ equipment.push(
     id: "mppt-charge-controller",
     slug: "mppt-charge-controller",
     kind: "product",
+    sourceCheckedAt: "2026-09-24",
     title: {
       en: "Renogy Rover Li MPPT / 40 A",
       ro: "Renogy Rover Li MPPT / 40 A",
@@ -538,6 +551,7 @@ equipment.push(
     id: "dc-dc-charger-20a",
     slug: "dc-dc-charger-20a",
     kind: "product",
+    sourceCheckedAt: "2026-09-24",
     title: {
       en: "Renogy 12 V / 20 A DC–DC charger",
       ro: "Renogy încărcător DC–DC 12 V / 20 A",
@@ -599,6 +613,38 @@ equipment.push(
       "Sarcini / Loads": "Control, automatizare / Controls, automation",
       "Date necesare / Required data":
         "kW, kVA, curent de pornire / starting current",
+    },
+  }),
+);
+
+equipment.push(
+  item({
+    id: "ac-ev-charging-class",
+    slug: "ac-ev-charging-class",
+    kind: "equipment-class",
+    title: b("Home AC EV charging class", "Clasă stație AC pentru încărcare auto acasă"),
+    category: "ev-charging",
+    paths: ["ev-charging"],
+    summary: b(
+      "A selection brief for a home AC charging point: define the vehicle, available electrical supply, parking position and charging schedule before choosing a wallbox.",
+      "Cerințe de selecție pentru un punct de încărcare AC acasă: definește automobilul, alimentarea electrică disponibilă, locul de parcare și programul de încărcare înainte de alegerea stației.",
+    ),
+    bestFor: b(
+      "Planning regular vehicle charging at a dedicated home parking space with an installer.",
+      "Planificarea încărcării regulate a automobilului într-un loc de parcare dedicat acasă, împreună cu instalatorul.",
+    ),
+    limitations: b(
+      "Not a purchasable wallbox or an installation design. Power, current, phase configuration, connector, cable and weather protection remain model- and site-specific. No supplier, price, stock or certification is asserted.",
+      "Nu este o stație comercială sau un proiect de instalație. Puterea, curentul, fazele, conectorul, cablul și protecția la intemperii depind de model și amplasament. Nu presupunem furnizor, preț, stoc sau certificare.",
+    ),
+    compatibility: b(
+      "Confirm the vehicle's AC charging capability, site capacity after household loads, phase availability and cable route. Ask the installer to assess earthing, circuit and residual-current protection, and whether compatible load management is needed. A wallbox's rated power alone does not establish the charging power available to the car.",
+      "Confirmă capacitatea de încărcare AC a automobilului, puterea disponibilă după consumul casei, fazele și traseul cablului. Instalatorul trebuie să evalueze împământarea, protecția circuitului și protecția diferențială, precum și necesitatea unui sistem compatibil de management al sarcinii. Puterea nominală a stației nu stabilește singură puterea disponibilă pentru automobil.",
+    ),
+    facets: { application: "EV" },
+    specs: {
+      "Rol / Role": "Planificare încărcare AC / AC charging planning",
+      "Date necesare / Required data": "Automobil, alimentare, parcare / Vehicle, supply, parking",
     },
   }),
 );

@@ -1,141 +1,60 @@
 # Renogy EU / Impact application readiness
 
-## Owner-confirmed identity update
+## Current authoritative status — 24 September 2026
 
-The owner/publisher identity requirement is now supplied: **Stanislav Zavizion**, **individual / independent publisher**, operating in **Romania**, commercial region **Romania / European Union**. **M Air Electro AI** is the brand/platform, not an incorporated company. Schema uses `Person` for the publisher and `Brand` / `WebSite` for the platform. No company identifiers, address or credentials are invented. The three domain email addresses are prepared, not delivery-verified.
+**NOT READY — final release verification is in progress.** The code corrections are being tested; the current production release still contains superseded contact/editorial presentation. This is a release gate, not a requirement to obtain affiliate approval before applying.
 
-Status remains **NOT READY**: private mailbox/delivery configuration, responsible content-reviewer identity and evidence, human editorial approvals, remaining privacy/provider details and applicable Renogy/Impact conditions still need confirmation. Genuine audience evidence may be supplied when available/requested; it must not be fabricated. Ownership alone does not resolve those requirements. See [publisher identity report](docs/publisher-identity-update.md). Older missing-owner/domain findings below are historical, not current blockers.
+This file supersedes historical readiness checklists. See the dated files under `docs/` only for historical deployment evidence. No application, live contact message, purchase or user-account creation is performed by this audit.
 
-The owner subsequently authorized `slexusrx@gmail.com` as the public contact address, including partnership/privacy inquiries. It is published separately from the three planned domain mailboxes. This does not prove inbox delivery, provision domain mailboxes, activate the website form or establish Renogy/Impact approval. No physical address or postal code has been confirmed for publication.
+## COMPLETED
 
-## September 2026 production completion update
+- Official brand/platform: M Air Electro AI. Owner and publisher: **Stanislav Zavizion**, an **individual / independent publisher** operating in **Romania** for **Romania / European Union**. No incorporated company, registration, tax ID, private address or professional credentials are invented.
+- Official domain: **https://mairelectroai.com**. The www hostname permanently redirects to the apex; canonical, sitemap and structured-data URLs use the apex.
+- Owner-confirmed Cloudflare Email Routing is active for `contact@mairelectroai.com`, `partnerships@mairelectroai.com` and `privacy@mairelectroai.com`. The owner confirmed an actual external-message receipt test for **contact**. The other two routes are active; individual receipt tests are not claimed.
+- Public brand contact uses the domain addresses. Gmail is no longer published as the primary contact. GitHub issues remain an optional public technical channel.
+- Website form and outbound SMTP/send-as remain separately disabled/unverified. Public pages show an honest unavailable form notice, with usable email links.
+- Publisher identity is separate from article authorship and human technical review. Source/methodology disclosures remain visible; no author, publication or human-review date is manufactured.
+- Marketplace-first architecture, original M/head hero, route-family artwork and RO/EN behavior are preserved.
+- Renogy/Impact approval is not confirmed. Ordinary EU supplier links remain active; affiliate tracking is disabled.
 
-The official domain is now https://mairelectroai.com. The old audit below is historical: its domain-provisioning task and navigation description are superseded. Current navigation includes an Experts preparation guide, not a verified booking directory. See docs/production-completion-report.md for the current five-pass verification and remaining real-world dependencies. No publisher facts, mailbox operation, affiliate approval or human editorial sign-off have been invented.
+## VERIFIED
 
-Audit date: 14 September 2026. Verdict: **NOT READY** until the owner requirements below are evidenced. No application, email, purchase, account creation or external form submission was performed. Affiliate tracking remains inactive.
+- Baseline GitHub main / successful Vercel deployment: `9a3c4ced89959092f3ee7d05c7cd5fd0bf5bde0f`.
+- Baseline production crawl: **113 routes, zero failures, zero orphans**.
+- Current Renogy audit: **7 models / 7 exact official EU URLs / 7 HTTP 200 responses**, no region redirects or malformed destinations. [Field-level source audit](docs/renogy-source-audit.md).
+- Final local and production test results will be recorded here after the release checks complete. Passing builds are not substituted for public browser/crawl evidence.
 
-## Implemented changes
+## NOT REQUIRED TO APPLY
 
-- Independent discovery/comparison/sizing positioning on the homepage, About and metadata. Equipment remains the primary discovery path; no checkout or merchant claims. Planned experts removed from primary navigation, retained transparently in the footer.
-- Validated canonical origin configuration used by metadata, sitemap, robots and structured data; no fixed production alias in application source. Verified same-domain mailboxes and real publisher/editor configuration; incomplete information is visible.
-- Contact form with accessible labels, length/email validation, consent, honeypot, bounded server body, origin validation, server-verified hostname/action/single-use Turnstile, fixed recipient and explicit failure/acceptance messages. Disabled until all real configuration exists. Mock-only transport tests prevent accidental mail.
-- Editorial Policy, Author Policy, Corrections Policy, AI Use Policy and Media Kit / Partnerships, linked from the footer and sitemap, in RO and EN.
-- Shared editorial records on guides, solutions, comparisons and product/class pages. Missing author, publication and human-review dates stay unconfirmed. TechArticle schema omits unconfirmed fields; this is valid vocabulary use but does not claim eligibility for a rich result. Product schema retains factual Product without invented offers/ratings.
-- Seven exact Renogy EU product pages checked against currently listed basic fields. Supplier source checks are dated separately from human approval. No copied long descriptions, prices, stock, ratings or shipping promises.
-  See the [field-level source audit](docs/renogy-source-audit.md); the legacy DCC50S product URL now displays a newer SKU, so the old revision name was removed from the visible title.
-- Optional consent-gated Plausible infrastructure, withdrawal/settings and the requested three events. Bots/private routes/query data excluded; real measurement not claimed as operational before configuration.
-- Responsive controls, contact/publisher layout, keyboard focus, enlarged navigation/footer targets and automated mobile/SEO/accessibility checks. Original category illustrations preserved.
+- Renogy approval or Impact tracking activation before the application itself.
+- Outbound SMTP/send-as or an operational website form when working email contact is available and the form is clearly unavailable.
+- An invented incorporated company, corporate identifiers, office, employees, credentials or verified professional directory.
+- Fabricated traffic, conversions, historic sales, product prices, stock, reviews or ratings. If audience evidence is requested and none is available, state that honestly.
+- A claim of hands-on product testing or human technical sign-off where no such record exists. Source-based desk research and preliminary calculations are described as such.
 
-## Manual owner actions / blockers
+## EXTERNAL / PENDING
 
-1. Supply and connect an owned custom domain; prove HTTPS and canonical/redirect behavior on it.
-2. Supply real operator/editor name, verified biography, expertise and any professional profile; confirm editorial responsibility. Legal controller information must be consistent and complete.
-3. Provision and verify all three domain mailboxes, delivery provider and spam keys; confirm mailbox retention, processing agreements and Privacy content. Then enable contact and personally verify delivery. No email was sent in this task.
-4. Review and sign every article/guide/comparison, record real author/publication/review/source evidence in the per-page registry, and resolve any technical findings. Source extraction and passing tests are not a human editorial sign-off.
-5. Configure consent-aware real analytics and collect 30–60 days of genuine reports. Share dated evidence and limitations; do not include browser QA visits.
-6. Confirm the exact EU campaign in Impact and approval terms with Renogy before applying or configuring tracking. A public US campaign is insufficient evidence.
+- Final deployment and production regression verification are still in progress for this release.
+- Vercel's four non-secret contact variables are prepared; automatic approval review requires a fresh user confirmation before saving them. This does not prevent the confirmed public email links from being represented accurately in code.
+- The precise Renogy EU advertiser/campaign, eligible destinations/territories and contract terms must be checked in the actual Impact application/account flow. Approval, commissions and tracking terms are not assumed.
+- Google Search Console verification/indexing is not claimed. Follow [setup instructions](docs/custom-domain-and-publisher.md): add the apex Domain property, verify using the provided DNS record, submit `https://mairelectroai.com/sitemap.xml`, inspect representative URLs and review indexing reports.
+- Optional outbound/form activation requires its own sender-domain, Resend, Turnstile and authorized delivery validation. Optional analytics requires real configuration/consent and genuine data.
 
-## Data that must never be invented
+## Production contact configuration
 
-Identity, qualifications, registrations, addresses, domain/email ownership, author attribution, human review or publication dates, hands-on experience, visitors/conversions, geographic reach, reviews, ratings, customers, verified professionals, prices, availability, shipping guarantees, campaign ID, commission rate, attribution window, approval or contracts.
+```dotenv
+NEXT_PUBLIC_CONTACT_EMAIL=contact@mairelectroai.com
+NEXT_PUBLIC_PARTNERSHIPS_EMAIL=partnerships@mairelectroai.com
+NEXT_PUBLIC_PRIVACY_EMAIL=privacy@mairelectroai.com
+CONTACT_EMAIL_VERIFIED=true
+```
 
-## Required application information
+Keep `CONTACT_FORM_ENABLED=false`, `RENOGY_AFFILIATE_APPROVED=false` and `AFFILIATE_TRACKING_ENABLED=false` until their separate requirements are actually met. Missing flags fail closed. Do not publish secrets or private provider details.
 
-Owned canonical site; legal publisher identity/country and tax details requested by Impact; monitored partnerships mailbox; truthful editorial competence; RO/EN Romania/EU audience scope; independent educational promotional model; example battery-sizing guide, Core Mini comparison and system finder; original source/review workflow; real audience period/export (or truthful no-data statement); intended traffic sources and prohibited promotional methods. Submit sensitive tax/bank details only to the legitimate provider's required secure process, never in repository files.
+## Application next action after release verification
 
-## Correct EU campaign — separate mandatory check
+Apply to the verified Renogy EU campaign through Impact using the official website, the actual individual publisher identity/country and `partnerships@mairelectroai.com`. Describe independent Romanian/English educational equipment discovery, calculations and comparison. Supply example guides, model pages and the system finder; provide audience data only if genuinely available. Submit sensitive tax/bank information only through the legitimate provider's secure application process. No application is submitted by this task.
 
-The [public Renogy affiliate page](https://www.renogy.com/pages/affiliate-program) is branded US and links to Impact. This does **not** establish that its campaign covers `eu.renogy.com`, Romania, the intended publisher country or the current seven models. Confirm the exact advertiser/campaign ID, EU destination domains, eligible territories, currency, contract entity, commission/attribution terms, trademark/PPC/email/coupon rules and allowed creative use in Impact and with Renogy. Record the confirmation and date privately. Until then: affiliation not yet approved, ordinary EU links only. Do not activate existing tracking flags or paste speculative Impact links.
+## Evidence and history
 
-## Go / no-go checklist
-
-- [ ] Owned custom domain live with HTTPS, correct canonical/OG/sitemap/robots and old-host redirects.
-- [ ] Real operator/editor identity and biography published consistently.
-- [ ] Domain contact, partnerships and privacy mailboxes verified; private form delivery proven by owner.
-- [ ] Legal/privacy/processing/retention review complete for actual services.
-- [ ] Every editorial page has confirmed author, real dates, evidence and human approval.
-- [ ] All Renogy facts and regional model revisions signed off; no unsupported commercial claims.
-- [ ] Genuine analytics report available or lack of data disclosed accurately to campaign manager.
-- [ ] Exact EU Impact campaign and Romania/EU eligibility confirmed.
-- [ ] Local quality checks and public production checks pass at the same deployed/main commit.
-- [ ] Owner reviews the application before any submission; tracking still off until contract approval.
-
-## Verification results
-
-Local validation: lint and TypeScript pass; production build passes; 33/33 unit tests pass; 419 i18n keys pass; dependency audit reports zero vulnerabilities. Browser validation passed all 54 cases across runs: 39 existing/account/catalog/form scenarios, then 15 final visual/editorial/accessibility/SEO scenarios after correcting the Romanian menu selector and metadata. Initial contrast failures were fixed; a disabled analytics settings panel no longer opens automatically.
-
-Responsive audit covers 320, 360, 375, 390, 414, 768, 1024 and 1440 px, plus legacy 412/430/1366 checks. Axe WCAG 2 A/AA, 2.1 AA and 2.2 AA checks report no violations on homepage, Contact, About, Media Kit, battery guide, comparison and battery calculator. Automated checks do not establish complete accessibility conformance or replace manual assistive-technology review. Keyboard navigation, focus and table scrolling also have browser coverage.
-
-Local crawl: 113 visited URLs, no failures or orphans. Sitemap SEO audit: 108 routes, no duplicate/missing titles or descriptions. Seven Renogy EU source pages were checked separately; third-party content availability can change.
-
-Screenshots: ignored `.task-work/readiness-local-complete/` contains 375/1440 full-page and viewport captures of homepage, About, Contact, policies, Media Kit, Privacy, battery guide, comparison and Renogy product. Production browser/crawl outputs are recorded separately in `.task-work/readiness-production/`, `.task-work/readiness-production.log`, and `.task-work/readiness-production-crawl.log` when deployment completes; the final task response states deployed/main commit verification. No live contact delivery or human identity/author verification is claimed.
-
-Production validation at application commit `f13ad4c`: **54/54 browser cases passed** (including nine isolated component/form fixtures), 113 crawled URLs without failures/orphans, 108 sitemap routes with unique titles/descriptions, and no violations in the seven-page automated accessibility scope. GitHub main and the successful Vercel deployment matched. Production screenshots were visually reviewed at 375 and 1440 px and collected in ignored `.task-work/affiliate-review-screenshots/index.html`.
-
-A final narrow correction removes inherited supplier-check dates from equipment classes: only actual sourced models show a supplier-check date. The added regression checks all eleven class pages and mixed comparisons at 375/1440; its local run passed. Post-deployment verification for that correction is recorded in `.task-work/readiness-classes-production.log` and the final task response. No new author/publication/human-review dates were invented.
-
-## Configuration guide
-
-See [custom domain and publisher setup](docs/custom-domain-and-publisher.md). Evidence belongs in ignored `.task-work/` and `test-results/`; the unrelated `tmp/pdfs/member-deal/` user folder is preserved.
-
-## Changed files
-
-- `.env.example`
-- `AFFILIATE_APPLICATION_READINESS.md`
-- `PROJECT_BLUEPRINT.md`
-- `README.md`
-- `app/ai-use-policy/page.tsx`
-- `app/api/contact/route.ts`
-- `app/author-policy/page.tsx`
-- `app/calculators/battery/battery-calculator.tsx`
-- `app/calculators/breaker-selection/breaker-selection-calculator.tsx`
-- `app/calculators/cable-sizing/cable-sizing-calculator.tsx`
-- `app/calculators/fuse-selection/fuse-selection-calculator.tsx`
-- `app/calculators/generator/generator-calculator.tsx`
-- `app/calculators/motor-current/motor-current-calculator.tsx`
-- `app/calculators/transformer/transformer-calculator.tsx`
-- `app/calculators/voltage-drop/voltage-drop-calculator.tsx`
-- `app/contact/page.tsx`
-- `app/corrections-policy/page.tsx`
-- `app/editorial-policy/page.tsx`
-- `app/globals.css`
-- `app/layout.tsx`
-- `app/learn/[slug]/page.tsx`
-- `app/marketplace/page.tsx`
-- `app/marketplace/products/[slug]/page.tsx`
-- `app/page.tsx`
-- `app/partnerships/page.tsx`
-- `app/solutions/[slug]/page.tsx`
-- `components/analytics-consent.tsx`
-- `components/analytics-event.tsx`
-- `components/calculation-analytics.tsx`
-- `components/contact-form.tsx`
-- `components/editorial-record.tsx`
-- `components/marketplace/compare-page.tsx`
-- `components/marketplace/deep-footer.tsx`
-- `components/marketplace/discovery-home.tsx`
-- `components/marketplace/information-page.tsx`
-- `components/marketplace/solar-calculator.tsx`
-- `components/marketplace/solution-finder.tsx`
-- `components/product/backup-calculator.tsx`
-- `components/publisher-details.tsx`
-- `docs/custom-domain-and-publisher.md`
-- `docs/renogy-source-audit.md`
-- `lib/analytics.ts`
-- `lib/contact.ts`
-- `lib/editorial.ts`
-- `lib/marketplace/catalog-data.ts`
-- `lib/marketplace/copy.ts`
-- `lib/marketplace/editorial-records.json`
-- `lib/marketplace/information.ts`
-- `lib/marketplace/navigation.ts`
-- `lib/marketplace/policies.ts`
-- `lib/marketplace/routes.ts`
-- `lib/marketplace/specifications.ts`
-- `lib/site.ts`
-- `package-lock.json`
-- `package.json`
-- `tests/e2e/contact-fixture.spec.ts`
-- `tests/e2e/marketplace.spec.ts`
-- `tests/e2e/readiness.spec.ts`
-- `tests/readiness.test.mjs`
+Generated logs/screenshots stay under ignored `.task-work/final-readiness/`, `test-results/` and `playwright-report/`; unrelated `tmp/pdfs/member-deal/` is preserved. Historical documents: [23 September production audit](docs/production-completion-report.md), [14 September marketplace expansion](docs/marketplace-expansion-report.md). Their superseded owner/domain/mailbox prerequisites are not current blockers.

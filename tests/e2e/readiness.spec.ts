@@ -29,18 +29,21 @@ for (const width of [320, 360, 375, 390, 414, 768, 1024, 1440]) {
     expect(externalAnalytics).toEqual([]);
   });
 }
-test("editorial gaps are explicit and new policies are reachable in both languages", async ({ page }) => {
+test("editorial sources and policies are clear without claiming unsupported review in either language", async ({ page }) => {
   await page.goto("/learn/how-to-size-backup-battery");
-  await expect(page.locator(".editorial-record")).toContainText("Neconfirmat");
+  await expect(page.locator(".editorial-record")).toContainText("Surse și metodologie");
+  await expect(page.locator(".editorial-record")).not.toContainText("Neconfirmat");
   const json = await page.locator('.editorial-record script[type="application/ld+json"]').textContent();
   expect(JSON.parse(json!).dateModified).toBeUndefined();
   await page.getByRole("button", { name: "EN", exact: true }).click();
-  await expect(page.locator(".editorial-record")).toContainText("Unconfirmed");
+  await expect(page.locator(".editorial-record")).toContainText("Sources and methodology");
+  await expect(page.locator(".editorial-record")).not.toContainText("Unconfirmed");
   await page.goto("/partnerships");
-  await expect(page.locator("main")).toContainText("Data being collected");
+  await expect(page.locator("main")).toContainText("No verified audience figures are published");
   await expect(page.locator("main")).toContainText("affiliation not yet approved");
   await page.goto("/contact");
-  await expect(page.locator('.contact-form input[name="email"]')).toHaveAttribute("type", "email");
+  await expect(page.locator('.contact-form')).toHaveCount(0);
+  await expect(page.locator('main a[href^="mailto:contact@mairelectroai.com"]').first()).toBeVisible();
   await page.getByRole("button", { name: "Analytics settings", exact: true }).click();
   await page.getByRole("button", { name: "Reject / withdraw consent", exact: true }).click();
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem("mair-analytics-consent-v1")!).choice)).toBe("rejected");

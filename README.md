@@ -1,6 +1,6 @@
 # M Air Electro AI
 
-M Air Electro AI is a independent product discovery, comparison and sizing platform for Romania and the EU. Romanian is the default commercial language; English is supported.
+M Air Electro AI is an independent product discovery, comparison and sizing platform for Romania and the EU. Romanian is the default commercial language; English is supported.
 
 Production: https://mairelectroai.com
 
@@ -8,7 +8,7 @@ Production: https://mairelectroai.com
 
 M Air Electro AI is the brand/platform. **Stanislav Zavizion** is its owner and publisher, operating in **Romania** as an **individual / independent publisher**, serving **Romania / European Union**. There is no incorporated company behind the website. These owner-confirmed facts are centralized in `lib/site.ts`; no company registration, VAT/tax identifier, office/residential address, employees, licenses or certifications are asserted.
 
-Owner-authorized public contact: `slexusrx@gmail.com`, configured separately as `ownerContactEmail`. Contact and publisher pages use this address, including partnership/privacy inquiries, without claiming delivery was tested. Prepared domain addresses: `contact@mairelectroai.com`, `partnerships@mairelectroai.com`, `privacy@mairelectroai.com`. Domain mail links still require explicitly configured addresses and `CONTACT_EMAIL_VERIFIED=true`; form delivery also requires separate operational configuration. Publishing the Gmail address does not activate those gates. Owner identity does not establish technical reviewer identity, credentials or per-article authorship. See [identity update report](docs/publisher-identity-update.md).
+Public contact: `contact@mairelectroai.com`; partnerships: `partnerships@mairelectroai.com`; privacy: `privacy@mairelectroai.com`. The owner confirms all three Cloudflare Email Routing addresses are active. A real external inbound message to `contact@mairelectroai.com` reached the owner's inbox; separate receipt tests for the other aliases are not claimed. Outbound send-as/SMTP and website-form delivery remain unverified. Public domain addresses are centralized in `lib/site.ts`; operational mailbox environment gates and the independent form gate remain in place. Owner identity does not establish reviewer credentials or per-article authorship. See [identity update report](docs/publisher-identity-update.md).
 
 Architecture, route inventory, repository audit and public deployment results: [marketplace expansion report](docs/marketplace-expansion-report.md).
 
@@ -17,7 +17,7 @@ Architecture, route inventory, repository audit and public deployment results: [
 ## Product modules
 
 - Marketplace: ten main families and 22 category/subcategory routes with buying advice, technical checks and working filters.
-- Catalog: seven sourced Renogy EU models and eleven explicitly labelled equipment classes; no invented prices, stock, reviews or ratings. Existing production models are preserved.
+- Catalog: seven sourced Renogy EU models and twelve explicitly labelled equipment classes, including AC EV charging; no invented prices, stock, reviews or ratings. Existing production models are preserved.
 - Solutions: apartment, home, solar + battery, RV/caravan, marine, off-grid cabin, workshop and business continuity.
 - Learn: 18 independent guides, twelve topic/reading-level hubs and grouped FAQ.
 - Search: names, brands, specifications, voltage, power, capacity, applications and tags; intersecting known-value filters.
@@ -69,7 +69,7 @@ The original `public/hero.png` M/head image is preserved and prominent on the ho
 
 Run `npx tsx scripts/audit-suppliers.ts` separately from the internal crawler. Merchant access blocks are reported as unverified, not internal-route failures. Release verification covers five passes: routes/controls; discovery/calculators; mobile/accessibility; SEO/domain/i18n/legal; visual/reviewer quality.
 
-See [docs/production-environment.md](docs/production-environment.md) and `.env.example`. Public discovery and calculation do not require auth, AI or payment credentials. Visitors can use the owner-authorized Gmail link from their own email application; inbox delivery has not been tested. The website contact form separately requires verified domain mailboxes and enabled delivery/spam configuration. GitHub is supplementary. Unresolved delivery, editorial and program requirements keep the affiliate application NOT READY.
+See [docs/production-environment.md](docs/production-environment.md) and `.env.example`. Public discovery and calculation do not require auth, AI or payment credentials. Visitors use domain email links from their own email application. Production mailbox values are the three addresses above with `CONTACT_EMAIL_VERIFIED=true`. `CONTACT_FORM_ENABLED=false` remains appropriate until outbound sender, Resend, Turnstile and an authorized form delivery test are complete. The disabled form shows an unavailable notice without editable controls; GitHub is supplementary. The current application status and release evidence are maintained only in [the readiness report](AFFILIATE_APPLICATION_READINESS.md).
 
 **Renogy / Impact approval is not confirmed.** Current links are ordinary supplier links. Activation requires both `RENOGY_AFFILIATE_APPROVED=true` and `AFFILIATE_TRACKING_ENABLED=true`, with exact Impact-issued HTTPS links mapped by supplier URL in `RENOGY_IMPACT_LINKS_JSON`. The existing provider validates links and disclosure follows actual activation. Merchant model details, Romanian delivery and warranties remain external checks.
 
@@ -79,7 +79,7 @@ Run all checks, commit implementation and alignment, push the reviewed commit to
 
 Optional account, document, AI and saved home-profile flows remain. Ukrainian energy adapters and demonstration datasets are retained as specialized supporting modules, outside primary navigation and the commercial sitemap. Obsolete map/tariff/directory routes redirect to active sections.
 
-External dependencies include affiliate approval, approved feeds/assets, real professional onboarding, confirmed private contact delivery, editorial review and remaining privacy/legal operational details. The owner/publisher identity above is confirmed; the other integrations are not complete.
+External activation dependencies include affiliate approval, approved feeds/assets, real professional onboarding and optional outbound/form delivery. None is implied by a successful build. Publisher identity, the official domain and inbound contact routing are confirmed. Human author/reviewer metadata is published only with page-specific evidence; source-based informational content does not claim professional sign-off. Missing affiliate approval or historical traffic does not prevent applying to a program.
 
 ## Affiliate application readiness
 

@@ -5,6 +5,7 @@ const labels: Record<string, string> = {
   "DC input class": "Clasă intrare DC",
   Capacity: "Capacitate",
   "Stored energy (V × Ah)": "Energie stocată (V × Ah)",
+  "Stored energy": "Energie stocată",
   "Continuous discharge": "Descărcare continuă",
   "Maximum discharge": "Curent maxim de descărcare",
   Chemistry: "Chimie",
