@@ -3,11 +3,18 @@ import BatteryCalculator from "@/app/calculators/battery/battery-calculator";
 import { CalculatorPageShell } from "@/components/calculators/calculator-page-shell";
 import { buildMetadata } from "@/lib/metadata";
 
-export const metadata = buildMetadata({
-  title: "Battery Calculator",
-  description: "Estimate battery-bank capacity and required backup runtime.",
-  path: "/calculators/battery",
-});
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const ro = locale === "ro";
+  return buildMetadata({
+    locale,
+    title: ro ? "Calculator pentru baterii" : "Battery calculator",
+    description: ro
+      ? "Estimează capacitatea bancului de baterii și autonomia necesară pentru alimentarea de rezervă."
+      : "Estimate battery-bank capacity and required backup runtime.",
+    path: "/calculators/battery",
+  });
+}
 
 export default async function BatteryPage() { const ro=await getRequestLocale()==="ro";
   return (

@@ -12,5 +12,16 @@ const questions=[
  ["Affiliate / suppliers","Afiliere / furnizori","Are you an approved Renogy affiliate?","Sunteți afiliat Renogy aprobat?","Approval is not confirmed. Renogy EU is the first intended affiliate supplier. Current links are ordinary external supplier links.","Aprobarea nu este confirmată. Renogy EU este primul furnizor vizat. Linkurile actuale sunt linkuri externe normale.","/affiliate-disclosure"],
  ["Safety","Siguranță","Can I use a generator inside a garage?","Pot folosi generatorul în garaj?","No. Combustion generators must operate outdoors away from openings, following manufacturer and local safety requirements. Open doors do not make indoor operation safe.","Nu. Generatorul cu ardere funcționează în exterior, departe de deschideri, conform producătorului și cerințelor locale. Ușile deschise nu fac sigură utilizarea în interior.","/learn/generator-vs-battery-backup"],
 ];
-export const metadata=buildMetadata({title:"FAQ — cumpărare și dimensionare / buying and sizing",description:"Answers about battery sizing, inverters, solar backup, suppliers, affiliation and safety.",path:"/faq"});
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const ro = locale === "ro";
+  return buildMetadata({
+    locale,
+    title: ro ? "Întrebări frecvente despre cumpărare și dimensionare" : "Buying and sizing FAQ",
+    description: ro
+      ? "Răspunsuri despre dimensionarea bateriilor, invertoare, energie solară, furnizori, afiliere și siguranță."
+      : "Answers about battery sizing, inverters, solar backup, suppliers, affiliation and safety.",
+    path: "/faq",
+  });
+}
 export default async function Page(){const ro=await getRequestLocale()==="ro";return <PlatformShell><main className="commerce-page"><Intro title={ro?"Întrebări frecvente":"Frequently asked questions"} description={ro?"Răspunsuri pentru alegerea echipamentelor și înțelegerea rolului platformei.":"Answers for choosing equipment and understanding the platform's role."}/>{questions.map(([group,groupRo,q,qRo,a,aRo,path])=><section className="content-panel" key={group}><h2>{ro?groupRo:group}</h2><details open><summary>{ro?qRo:q}</summary><p>{ro?aRo:a}</p><Link href={path}>{ro?"Află mai mult":"Learn more"} →</Link></details></section>)}</main></PlatformShell>;}

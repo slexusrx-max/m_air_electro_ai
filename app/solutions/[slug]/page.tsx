@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: Props) {
   if (!solution) notFound();
   const locale = await getRequestLocale();
   return buildMetadata({
+    locale,
     title: local(solution.title, locale),
     description: local(solution.summary, locale),
     path: `/solutions/${slug}`,

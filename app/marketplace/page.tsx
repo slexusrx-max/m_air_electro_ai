@@ -7,6 +7,7 @@ export async function generateMetadata({ searchParams }: Props) {
   const ro = (await getRequestLocale()) === "ro";
   const query = await searchParams;
   return { ...buildMetadata({
+    locale: ro ? "ro" : "en",
     title: ro
       ? "Descoperă echipamente energetice"
       : "Independent energy equipment discovery",

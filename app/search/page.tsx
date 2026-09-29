@@ -6,7 +6,21 @@ import { cleanQuery, facetLabels, type CatalogQuery } from "@/lib/marketplace/qu
 import { searchContent } from "@/lib/marketplace/search";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { buildMetadata } from "@/lib/metadata";
-export const metadata={...buildMetadata({title:"Caută echipamente / Search equipment",description:"Search names, brands, specifications, voltage, power, capacity and applications in the curated catalog.",path:"/search"}),robots:{index:false,follow:true}};
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const ro = locale === "ro";
+  return {
+    ...buildMetadata({
+      locale,
+      title: ro ? "Caută echipamente" : "Search equipment",
+      description: ro
+        ? "Caută în catalog după nume, marcă, caracteristici, tensiune, putere, capacitate și utilizare."
+        : "Search names, brands, specifications, voltage, power, capacity and applications in the curated catalog.",
+      path: "/search",
+    }),
+    robots: { index: false, follow: true },
+  };
+}
 export default async function Page({ searchParams }: { searchParams: Promise<CatalogQuery> }) {
   const locale = await getRequestLocale();
   const ro = locale === "ro";

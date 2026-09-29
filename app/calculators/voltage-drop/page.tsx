@@ -1,12 +1,20 @@
+import { getRequestLocale } from "@/lib/i18n/request";
 import VoltageDropCalculator from "@/app/calculators/voltage-drop/voltage-drop-calculator";
 import { CalculatorPageShell } from "@/components/calculators/calculator-page-shell";
 import { buildMetadata } from "@/lib/metadata";
 
-export const metadata = buildMetadata({
-  title: "Voltage Drop Calculator",
-  description: "Estimate electrical voltage drop for selected conductor size and route length.",
-  path: "/calculators/voltage-drop",
-});
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const ro = locale === "ro";
+  return buildMetadata({
+    locale,
+    title: ro ? "Calculator pentru căderea de tensiune" : "Voltage drop calculator",
+    description: ro
+      ? "Estimează căderea de tensiune pentru secțiunea conductorului și lungimea traseului alese."
+      : "Estimate electrical voltage drop for selected conductor size and route length.",
+    path: "/calculators/voltage-drop",
+  });
+}
 
 export default function VoltageDropPage() {
   return (

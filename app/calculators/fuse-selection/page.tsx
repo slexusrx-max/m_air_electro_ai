@@ -1,12 +1,20 @@
+import { getRequestLocale } from "@/lib/i18n/request";
 import FuseSelectionCalculator from "@/app/calculators/fuse-selection/fuse-selection-calculator";
 import { CalculatorPageShell } from "@/components/calculators/calculator-page-shell";
 import { buildMetadata } from "@/lib/metadata";
 
-export const metadata = buildMetadata({
-  title: "Fuse Selection Calculator",
-  description: "Select a preliminary fuse family and fuse rating from load and application assumptions.",
-  path: "/calculators/fuse-selection",
-});
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const ro = locale === "ro";
+  return buildMetadata({
+    locale,
+    title: ro ? "Alegerea siguranței fuzibile" : "Fuse selection",
+    description: ro
+      ? "Alege preliminar tipul și calibrul siguranței fuzibile după sarcină și condițiile de utilizare."
+      : "Select a preliminary fuse family and fuse rating from load and application assumptions.",
+    path: "/calculators/fuse-selection",
+  });
+}
 
 export default function FuseSelectionPage() {
   return (

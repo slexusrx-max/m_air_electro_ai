@@ -24,31 +24,37 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
-export const metadata: Metadata = {
-  ...buildMetadata({
-    title: siteConfig.name,
-    description: siteConfig.description,
-    path: "/",
-  }),
-  metadataBase: new URL(absoluteUrl()),
-  applicationName: siteConfig.name,
-  title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
-  },
-  keywords: [...siteConfig.keywords],
-  category: "technology",
-  publisher: siteConfig.operatorName,
-  formatDetection: {
-    address: false,
-    email: false,
-    telephone: false,
-  },
-  icons: {
-    icon: "/icon",
-    apple: "/apple-icon",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getRequestLocale();
+  return {
+    ...buildMetadata({
+      locale,
+      title: siteConfig.name,
+      description: locale === "ro"
+        ? siteConfig.description
+        : "Independent energy equipment discovery, comparison and sizing for Romania and the EU.",
+      path: "/",
+    }),
+    metadataBase: new URL(absoluteUrl()),
+    applicationName: siteConfig.name,
+    title: {
+      default: siteConfig.name,
+      template: `%s | ${siteConfig.name}`,
+    },
+    keywords: [...siteConfig.keywords],
+    category: "technology",
+    publisher: siteConfig.operatorName,
+    formatDetection: {
+      address: false,
+      email: false,
+      telephone: false,
+    },
+    icons: {
+      icon: "/icon",
+      apple: "/apple-icon",
+    },
+  };
+}
 
 export const viewport = {
   colorScheme: "light",

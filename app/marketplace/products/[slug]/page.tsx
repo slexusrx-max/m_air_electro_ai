@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: Props) {
   if (!p) notFound();
   const locale = await getRequestLocale();
   return buildMetadata({
+    locale,
     title: local(p.title, locale),
     description: local(p.summary, locale),
     path: `/marketplace/products/${p.slug}`,

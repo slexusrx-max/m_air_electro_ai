@@ -1,17 +1,24 @@
 import { ContactForm } from "@/components/contact-form";
+import { CopyEmailButton } from "@/components/copy-email-button";
 import { contactReady } from "@/lib/contact";
 import { PublisherDetails } from "@/components/publisher-details";
 import { PlatformShell } from "@/components/platform-shell";
-import { getRequestDictionary } from "@/lib/i18n/request";
+import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { commercialCopy } from "@/lib/marketplace/copy";
 import { siteConfig } from "@/lib/site";
 import { buildMetadata } from "@/lib/metadata";
-export const metadata = buildMetadata({
-  title: "Contact M Air Electro AI",
-  description:
-    "Întrebări despre calcule, conținut editorial și selecția echipamentelor pentru România.",
-  path: "/contact",
-});
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const ro = locale === "ro";
+  return buildMetadata({
+    locale,
+    title: "Contact M Air Electro AI",
+    description: ro
+      ? "Întrebări despre calcule, conținut editorial și selecția echipamentelor pentru România."
+      : "Questions about calculations, editorial content and equipment selection for Romania.",
+    path: "/contact",
+  });
+}
 export default async function ContactPage() {
   const t = await getRequestDictionary(),
     c = commercialCopy(t),
@@ -43,12 +50,15 @@ export default async function ContactPage() {
           </a>
           <p>
             {c.ro
-                ? "Butonul deschide aplicația ta de email. Mesajul este trimis numai după ce îl trimiți din acea aplicație."
-                : "The button opens your email application. Your message is sent only when you submit it there."}
+                ? "Deschide aplicația de email sau copiază adresa și lipește-o în serviciul de email din browser. Mesajul este trimis numai după ce îl trimiți de acolo."
+                : "Open your email app, or copy the address and paste it into your webmail. Your message is sent only when you submit it there."}
           </p>
-          <a href={mailto} className="button-primary mt-5">
-            {c.ro ? "Scrie un email" : "Write an email"}
-          </a>
+          <div className="mt-5 flex flex-wrap items-start gap-3">
+            <a href={mailto} className="button-primary">
+              {c.ro ? "Scrie un email" : "Write an email"}
+            </a>
+            <CopyEmailButton email={contactEmail} ro={c.ro} />
+          </div>
           <p className="mt-5">{c.ro ? "Primirea mesajelor la contact@mairelectroai.com a fost verificată printr-un test real de livrare." : "Incoming email to contact@mairelectroai.com has been verified with a real delivery test."}</p>
           <dl className="mt-5 grid gap-2">
             <dt>{c.ro ? "Parteneriate" : "Partnerships"}</dt><dd><a className="break-all underline" href={`mailto:${siteConfig.partnershipsEmail ?? siteConfig.publicEmailAddresses.partnerships}`}>{siteConfig.partnershipsEmail ?? siteConfig.publicEmailAddresses.partnerships}</a></dd>

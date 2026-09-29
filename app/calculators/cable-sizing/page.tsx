@@ -1,13 +1,20 @@
+import { getRequestLocale } from "@/lib/i18n/request";
 import CableSizingCalculator from "@/app/calculators/cable-sizing/cable-sizing-calculator";
 import { CalculatorPageShell } from "@/components/calculators/calculator-page-shell";
 import { buildMetadata } from "@/lib/metadata";
 
-export const metadata = buildMetadata({
-  title: "Cable Sizing Calculator",
-  description:
-    "Preliminary cable sizing based on current, ampacity, and voltage drop.",
-  path: "/calculators/cable-sizing",
-});
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const ro = locale === "ro";
+  return buildMetadata({
+    locale,
+    title: ro ? "Calculator pentru dimensionarea cablurilor" : "Cable sizing calculator",
+    description: ro
+      ? "Dimensionare preliminară a cablurilor pe baza curentului, capacității de transport și căderii de tensiune."
+      : "Preliminary cable sizing based on current, ampacity, and voltage drop.",
+    path: "/calculators/cable-sizing",
+  });
+}
 
 export default function CableSizingPage() {
   return (

@@ -32,6 +32,7 @@ export async function generateMetadata({ params, searchParams }: Props) {
   const query = await searchParams;
   return {
     ...buildMetadata({
+      locale,
       title: local(c.title, locale),
       description: local(c.summary, locale),
       path: `/marketplace/${c.path}`,

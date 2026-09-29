@@ -23,6 +23,7 @@ export async function generateMetadata({ params }: Props) {
   if (!g && !hub) notFound();
   const locale = await getRequestLocale();
   return buildMetadata({
+    locale,
     title: g ? local(g.title, locale) : `${local(hub!.title, locale)} — ${locale === "ro" ? "bibliotecă de ghiduri" : "guide library"}`,
     description: g
       ? `${local(g.title, locale)}. ${local(g.intro, locale)}`

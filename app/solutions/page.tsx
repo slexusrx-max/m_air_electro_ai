@@ -6,6 +6,7 @@ import { buildMetadata } from "@/lib/metadata";
 export async function generateMetadata() {
   const ro = (await getRequestLocale()) === "ro";
   return buildMetadata({
+    locale: ro ? "ro" : "en",
     title: ro ? "Soluții energetice" : "Energy solutions",
     description: ro
       ? "Opt scenarii pentru alegerea stocării, invertorului, solarului și rezervei."

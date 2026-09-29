@@ -1,12 +1,20 @@
+import { getRequestLocale } from "@/lib/i18n/request";
 import MotorCurrentCalculator from "@/app/calculators/motor-current/motor-current-calculator";
 import { CalculatorPageShell } from "@/components/calculators/calculator-page-shell";
 import { buildMetadata } from "@/lib/metadata";
 
-export const metadata = buildMetadata({
-  title: "Motor Current Calculator",
-  description: "Estimate motor full-load current, inrush current, and apparent power.",
-  path: "/calculators/motor-current",
-});
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const ro = locale === "ro";
+  return buildMetadata({
+    locale,
+    title: ro ? "Calculator pentru curentul motorului" : "Motor current calculator",
+    description: ro
+      ? "Estimează curentul motorului la sarcină nominală, curentul de pornire și puterea aparentă."
+      : "Estimate motor full-load current, inrush current, and apparent power.",
+    path: "/calculators/motor-current",
+  });
+}
 
 export default function MotorCurrentPage() {
   return (

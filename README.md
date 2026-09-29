@@ -61,6 +61,8 @@ Use the lockfile. On Windows, use `npm.cmd` if PowerShell blocks `npm.ps1`. If N
 
 `TEST_BASE_URL` selects a different local/public target. Browser tests include 1440/1366/768/390 screenshots and 430 mobile navigation. The crawler starts at the homepage, follows internal links, checks errors, redirects, malformed/dead links and local anchors, and reports orphan public routes. Generated evidence is in ignored `test-results/` and `playwright-report/`.
 
+Public page titles, descriptions and Open Graph locales follow the selected RO/EN language. `tests/e2e/locale-contact.spec.ts` checks public metadata in both languages, preserves canonical/noindex rules, and verifies language switching plus contact-email copying (including denied clipboard access). The contact page supports copying the address into webmail while the separate website-form delivery gate remains in place.
+
 ## Environment and affiliate state
 
 The official public origin is `https://mairelectroai.com`; `www` redirects permanently to the apex. This is also the safe canonical default when no site URL is configured. Use an explicit `NEXT_PUBLIC_SITE_URL=http://localhost:3100` only when testing local-origin contact delivery. Legacy Vercel-host values are normalized to the official public domain.

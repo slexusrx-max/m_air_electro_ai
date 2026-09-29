@@ -1,12 +1,20 @@
+import { getRequestLocale } from "@/lib/i18n/request";
 import GeneratorCalculator from "@/app/calculators/generator/generator-calculator";
 import { CalculatorPageShell } from "@/components/calculators/calculator-page-shell";
 import { buildMetadata } from "@/lib/metadata";
 
-export const metadata = buildMetadata({
-  title: "Generator Calculator",
-  description: "Estimate generator sizing for running load, reserve, and motor-start allowance.",
-  path: "/calculators/generator",
-});
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const ro = locale === "ro";
+  return buildMetadata({
+    locale,
+    title: ro ? "Calculator pentru generatoare" : "Generator sizing calculator",
+    description: ro
+      ? "Estimează puterea generatorului după sarcina de funcționare, rezerva de putere și pornirea motoarelor."
+      : "Estimate generator sizing for running load, reserve, and motor-start allowance.",
+    path: "/calculators/generator",
+  });
+}
 
 export default function GeneratorPage() {
   return (

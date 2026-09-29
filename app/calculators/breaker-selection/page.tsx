@@ -1,12 +1,20 @@
+import { getRequestLocale } from "@/lib/i18n/request";
 import BreakerSelectionCalculator from "@/app/calculators/breaker-selection/breaker-selection-calculator";
 import { CalculatorPageShell } from "@/components/calculators/calculator-page-shell";
 import { buildMetadata } from "@/lib/metadata";
 
-export const metadata = buildMetadata({
-  title: "Breaker Selection Calculator",
-  description: "Select a preliminary breaker rating from design current, duty assumptions, and derating.",
-  path: "/calculators/breaker-selection",
-});
+export async function generateMetadata() {
+  const locale = await getRequestLocale();
+  const ro = locale === "ro";
+  return buildMetadata({
+    locale,
+    title: ro ? "Alegerea întreruptorului automat" : "Circuit breaker selection",
+    description: ro
+      ? "Estimează calibrul preliminar al întreruptorului automat după curentul de calcul, regimul de lucru și factorii de corecție."
+      : "Select a preliminary breaker rating from design current, duty assumptions, and derating.",
+    path: "/calculators/breaker-selection",
+  });
+}
 
 export default function BreakerSelectionPage() {
   return (

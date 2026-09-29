@@ -14,6 +14,7 @@ export async function informationMetadata(slug: string) {
   const locale = await getRequestLocale();
   const p = information[slug];
   return buildMetadata({
+    locale,
     title: local(p.title, locale),
     description: local(p.intro, locale),
     path: `/${slug}`,
