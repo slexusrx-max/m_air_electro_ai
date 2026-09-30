@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { load } from "./helpers.mjs";
 
-const env = { NEXT_PUBLIC_SITE_URL: "https://energy.example.org", CONTACT_EMAIL_VERIFIED: "true", NEXT_PUBLIC_CONTACT_EMAIL: "contact@energy.example.org", CONTACT_FROM_EMAIL: "contact@energy.example.org", CONTACT_FORM_ENABLED: "true", RESEND_API_KEY: "dummy", NEXT_PUBLIC_TURNSTILE_SITE_KEY: "dummy", TURNSTILE_SECRET_KEY: "dummy" };
+const env = { NEXT_PUBLIC_SITE_URL: "https://energy.example.org", CONTACT_EMAIL_VERIFIED: "true", NEXT_PUBLIC_CONTACT_EMAIL: "contact@energy.example.org", CONTACT_FROM_EMAIL: "contact@energy.example.org", CONTACT_FORM_ENABLED: "true", BREVO_SMTP_LOGIN: "test-login", BREVO_SMTP_KEY: "dummy", NEXT_PUBLIC_TURNSTILE_SITE_KEY: "dummy", TURNSTILE_SECRET_KEY: "dummy" };
 const config = (values = env) => load("lib/site.ts", {}, { process: { env: values } });
 
 test("absolute URL resolution is idempotent and never prefixes an existing origin", () => {
@@ -69,17 +69,34 @@ test("contact requires successful hostname/action challenge and reports provider
     assert.equal((await handler(request(), async () => { calls++; return Response.json(challenge); })).status, 403);
     assert.equal(calls, 1);
   }
-  for (const status of [200, 500]) {
+  for (const accepted of [true, false]) {
     const calls = [];
     const response = await handler(request(), async (url, init) => {
       calls.push({ url, body: JSON.parse(init.body) });
-      return calls.length === 1 ? Response.json({ success: true, hostname: "energy.example.org", action: "contact" }) : Response.json(status === 200 ? { id: "mock-id" } : {}, { status });
-    });
-    assert.equal(response.status, status === 200 ? 200 : 502);
-    assert.deepEqual(calls[1].body.to, [env.NEXT_PUBLIC_CONTACT_EMAIL]);
-    assert.equal(calls[1].body.reply_to, "test@example.org");
-    assert.equal((await response.json()).code, status === 200 ? "accepted" : "failed");
+      return Response.json({ success: true, hostname: "energy.example.org", action: "contact" });
+    }, async (mail) => { calls.push(mail); return accepted; });
+    assert.equal(response.status, accepted ? 200 : 502);
+    assert.equal(calls[1].email, "test@example.org");
+    assert.equal(calls[1].message, "A sufficiently detailed test message.");
+    assert.equal((await response.json()).code, accepted ? "accepted" : "failed");
   }
+  assert.equal((await handler(request(), async () => Response.json({ success: true, hostname: "energy.example.org", action: "contact" }), async () => { throw Error("SMTP unavailable"); })).status, 502);
+});
+test("Brevo transport uses STARTTLS and the verified sender without exposing a visitor as From", async () => {
+  let transportOptions, mailOptions;
+  const mailer = { createTransport(options) {
+    transportOptions = options;
+    return { async sendMail(options) { mailOptions = options; return { accepted: [env.NEXT_PUBLIC_CONTACT_EMAIL] }; } };
+  } };
+  const contact = load("lib/contact.ts", { "./site": config(), nodemailer: { default: mailer } }, { process: { env } });
+  assert.equal(await contact.deliverContactMail({ name: "Test", email: "visitor@example.org", message: "A test enquiry." }), true);
+  assert.equal(transportOptions.host, "smtp-relay.brevo.com");
+  assert.equal(transportOptions.port, 587);
+  assert.equal(transportOptions.requireTLS, true);
+  assert.equal(transportOptions.auth.user, env.BREVO_SMTP_LOGIN);
+  assert.equal(mailOptions.from.address, env.CONTACT_FROM_EMAIL);
+  assert.equal(mailOptions.to, env.NEXT_PUBLIC_CONTACT_EMAIL);
+  assert.equal(mailOptions.replyTo, "visitor@example.org");
 });
 test("analytics needs current consent, excludes private/query data, bots, local hosts and DNT", () => {
   let saved = null; const calls = [];

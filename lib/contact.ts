@@ -1,12 +1,29 @@
 import { getSiteUrl, siteConfig, verifiedMailbox } from "./site";
+import nodemailer from "nodemailer";
 
 export function contactReady() {
   return Boolean(siteConfig.contactEmail && verifiedMailbox(process.env.CONTACT_FROM_EMAIL) &&
-    process.env.RESEND_API_KEY && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && process.env.TURNSTILE_SECRET_KEY &&
+    process.env.BREVO_SMTP_LOGIN && process.env.BREVO_SMTP_KEY && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY && process.env.TURNSTILE_SECRET_KEY &&
     process.env.CONTACT_FORM_ENABLED === "true");
 }
 
-export async function handleContact(request: Request, send: typeof fetch = fetch) {
+export async function deliverContactMail({ name, email, message }: { name: string; email: string; message: string }) {
+  const transport = nodemailer.createTransport({
+    host: "smtp-relay.brevo.com", port: 587, secure: false, requireTLS: true,
+    auth: { user: process.env.BREVO_SMTP_LOGIN, pass: process.env.BREVO_SMTP_KEY },
+    connectionTimeout: 10000, greetingTimeout: 10000, socketTimeout: 15000,
+  });
+  const result = await transport.sendMail({
+    from: { name: "M Air Electro AI", address: verifiedMailbox(process.env.CONTACT_FROM_EMAIL)! },
+    to: siteConfig.contactEmail,
+    replyTo: email,
+    subject: "M Air Electro AI — website enquiry",
+    text: `Name: ${name.trim()}\nEmail: ${email}\n\n${message.trim()}`,
+  });
+  return result.accepted.includes(siteConfig.contactEmail!);
+}
+
+export async function handleContact(request: Request, send: typeof fetch = fetch, deliver = deliverContactMail) {
   const reply = (status: number, code: string) => Response.json({ code }, { status });
   if (request.headers.get("origin") !== getSiteUrl()) return reply(403, "invalid");
   if (!contactReady()) return reply(503, "unavailable");
@@ -39,13 +56,7 @@ export async function handleContact(request: Request, send: typeof fetch = fetch
     });
     const challenge = await verification.json();
     if (!verification.ok || !challenge.success || challenge.hostname !== new URL(getSiteUrl()).hostname || challenge.action !== "contact") return reply(403, "challenge");
-    const sent = await send("https://api.resend.com/emails", {
-      method: "POST", headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from: verifiedMailbox(process.env.CONTACT_FROM_EMAIL), to: [siteConfig.contactEmail], reply_to: email,
-        subject: "M Air Electro AI — website enquiry", text: `Name: ${name.trim()}\nEmail: ${email}\n\n${message.trim()}` }),
-      signal: AbortSignal.timeout(10000),
-    });
-    const result = await sent.json();
-    return sent.ok && typeof result.id === "string" ? reply(200, "accepted") : reply(502, "failed");
+    try { return await deliver({ name, email, message }) ? reply(200, "accepted") : reply(502, "failed"); }
+    catch { return reply(502, "failed"); }
   } catch { return reply(400, "failed"); }
 }
