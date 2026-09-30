@@ -14,6 +14,10 @@ Owner-confirmed identity: M Air Electro AI is a brand/platform, owned and publis
 
 Owner-confirmed email status (24 September 2026): Cloudflare Email Routing is active for contact@mairelectroai.com, partnerships@mairelectroai.com and privacy@mairelectroai.com. Real inbound receipt is verified for contact@mairelectroai.com only. Use domain addresses publicly. Outbound send-as/SMTP and website-form delivery are not verified; retain the separate form gate until configuration and an authorized delivery test are complete.
 
+30 September 2026 update: Supabase custom SMTP uses Brevo with contact@mairelectroai.com as sender. Real auth-email delivery was verified in the owner's inbox. This does not verify the full new-account registration flow or contact-form delivery. Keep the contact-form gate until Turnstile and a real form receipt test are complete.
+
+Owner authorization (30 September 2026): Stanislav authorizes routine configuration, fixes, testing and deployment for mairelectroai.com, including saving the generated Brevo SMTP key in Supabase for auth emails. Do not repeatedly request this same authorization. This does not override platform requirements for user handoff, legal commitments, payments or expanded security access. Never commit credentials.
+
 Official public domain: https://mairelectroai.com. Keep canonicals, robots, sitemap and structured data aligned. Preserve the original public/hero.png homepage artwork and the route-family visual system. Primary navigation includes Marketplace, Solutions, Tools, Learn, Experts and For Business. Experts provides planning guidance without inventing a verified directory.
 
 Read PROJECT_BLUEPRINT.md and README.md. M Air Electro AI is a marketplace-first energy and electrical equipment discovery, calculation, comparison and recommendation platform for Romania / EU. Romanian is the primary commercial language; English is supported.
