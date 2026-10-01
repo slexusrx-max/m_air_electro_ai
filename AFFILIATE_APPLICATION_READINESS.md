@@ -2,7 +2,7 @@
 
 ## Current authoritative status — 1 October 2026
 
-**NOT READY TO APPLY.** Final audit is in progress. The 24 September READY result is historical and is not evidence for the current release. Production regression and the authorized contact delivery verification must be completed before changing this decision.
+**NOT READY TO APPLY.** The authorized production contact submission returned HTTP 400 before SMTP. Turnstile completion, Brevo acceptance and recipient inbox receipt remain unverified. The 24 September READY result is historical and is not evidence for this release.
 
 This is the single authoritative release/contact status. Configuration guides describe procedures; dated audit documents are historical snapshots.
 
@@ -11,7 +11,8 @@ This is the single authoritative release/contact status. Configuration guides de
 - Initial local checkout: `50b8722261b79af7a59f664ca9687dd56af34907`, branch `main`, behind remote by three commits. No tracked local modifications; unrelated `tmp/pdfs/member-deal/` preserved.
 - Starting audited GitHub/main SHA: `eeef5bc30c42673755d57384bf503ce00e4ee4cd`. Local main was fast-forwarded to it.
 - Starting Vercel Production: `Gk8NSuwTbHwCSJNVyvn2KUzR4QHj`, Ready / Current, official domain attached, source equals that complete SHA.
-- Audit corrections and final deployment verification are pending in this revision. Final deployment evidence belongs in ignored `.task-work/release-audit/`.
+- Audited application release: `5e651870102f36e13c86ff944bc4e243fa89397c`, pushed to GitHub main and deployed as Vercel `2MhPKuu5Axmk4iEHXvT54L3bXNhg`, Ready / Current Production, with the official apex attached. GitHub and Vercel source SHAs matched.
+- This report and `.env.example` comments are a documentation-only closeout of that tested application release. The closeout commit cannot contain its own Git SHA. Its final GitHub/main and Vercel equality check is recorded separately in ignored `.task-work/release-audit/release-final.json` and the final audit response; the application SHA above identifies the code tested by the full suites.
 
 ## Identity, domain and commercial facts
 
@@ -26,16 +27,17 @@ Renogy approval remains unconfirmed. Tracking is inactive; no Impact link/ID or 
 - Cloudflare Email Routing is owner-confirmed active for `contact@mairelectroai.com`, `partnerships@mairelectroai.com` and `privacy@mairelectroai.com`. Actual external inbound receipt is confirmed for contact only.
 - Supabase auth-email receipt was separately confirmed on 30 September. It does not prove contact-form receipt.
 - The website currently implements Brevo SMTP, `smtp-relay.brevo.com:587`, required STARTTLS, fixed verified sender/recipient, and visitor address in Reply-To only. SMTP acceptance is not inbox delivery.
-- The production form is enabled. It is not accurate to describe it as disabled. All required Brevo and Turnstile variables were present with Production scope. No credential values were printed.
-- Public DNS shows Cloudflare MX/SPF, Brevo domain verification, both Brevo DKIM CNAMEs and DMARC. Current provider UI authentication status and actual message authentication still require verification; a DNS record alone is not a delivered-message check.
-- Turnstile script and frame return 200 with production CSP permissions; no CSP blockage was observed. The audit browser has not completed a challenge. Third-party challenge warnings/network errors are not a clean Turnstile success.
-- **Authorized real form test: no message submitted yet; SMTP acceptance and inbox receipt are not claimed.** Brevo currently requires login in the audit browser.
+- The production form is enabled (`CONTACT_FORM_ENABLED=true`, `CONTACT_EMAIL_VERIFIED=true`). It is not accurate to describe it as disabled. The sender and three public mailbox values match the intended domain addresses. All required Brevo and Turnstile variables were present with Production scope. No credential values were printed.
+- Public DNS shows Cloudflare MX/SPF, Brevo domain verification, both Brevo DKIM CNAMEs with resolvable public keys, and DMARC. Current Brevo dashboard authentication status and actual delivered-message authentication remain unverified because the dashboard requires sign-in. DNS presence alone does not prove provider acceptance or delivery.
+- Turnstile scripts/frames load and the real widget displays “Verify you are human” at desktop and mobile sizes. No first-party hydration/runtime or CSP errors were observed. The automated browser did not obtain a completed token; third-party challenge warnings and a `brunhild.challenges.cloudflare.com` DNS failure were observed. That network failure is not established as the root cause. Production keys/security were preserved.
+- **Authorized real form test: exactly one submission at 13:41:37 Europe/Bucharest on 1 October 2026; `/api/contact` returned HTTP 400.** The UI correctly said the message was not sent and retained the email fallback. No completed Turnstile token was observed; the request was rejected before SMTP. Brevo acceptance and inbox receipt are **not confirmed**. No retry has been performed; CAPTCHA action confirmation/user completion and provider/inbox verification remain outstanding.
+- The test used the clearly labelled “M Air Production Test” identity and public contact mailbox, with the owner's authorized production-verification message. No purchase, account creation or other live message was submitted.
 
 ## Vercel Production environment inventory (no secrets)
 
 | Variable | Presence |
 | --- | --- |
-| NEXT_PUBLIC_SITE_URL | PRESENT; official apex correction saved, redeployment pending |
+| NEXT_PUBLIC_SITE_URL | PRESENT; official apex correction deployed |
 | NEXT_PUBLIC_CONTACT_EMAIL | PRESENT |
 | NEXT_PUBLIC_PARTNERSHIPS_EMAIL | PRESENT |
 | NEXT_PUBLIC_PRIVACY_EMAIL | PRESENT |
@@ -58,20 +60,34 @@ Renogy approval remains unconfirmed. Tracking is inactive; no Impact link/ID or 
 - Rejected mailbox lists/header syntax and passed structured single-address recipient/Reply-To objects to Nodemailer. Sender remains configured and visitor-independent; content remains plain text.
 - Patched lockfile dependencies from Next.js 16.3.5 to 16.3.8 and vulnerable brace-expansion versions. Initial audit: one critical / one high; after compatible updates: zero vulnerabilities.
 
-## Verification recorded so far
+## Verification results
 
 - Unit tests: 67 passed / 0 failed; i18n: 419 declared keys; lint, typecheck and production build passed.
 - Local crawl: 114 routes, zero failures, zero orphans, zero redirects.
-- Full local Playwright: 105 passed / 0 failed (6.9 minutes), including existing axe checks. Production repetition remains pending.
+- Full local Playwright: 105 passed / 0 failed (6.9 minutes). Full production Playwright: 105 passed / 0 failed (20.4 minutes), without reducing coverage. Automated WCAG 2.2 AA axe checks passed on all seven covered pages with zero violations; this is bounded automated coverage, not a claim of universal accessibility certification.
 - Supplier audit: 7 exact official EU URLs, all HTTP 200, no non-EU redirects, malformed URLs or failures. Current official product titles match the seven published models. Prices, stock, ratings and shipping promises remain unknown/unpublished.
 - [Renogy EU shipping policy](https://eu.renogy.com/pages/shipping-policy) lists Romania; product/order-specific availability and charges must be confirmed with the merchant. This is not a platform shipping promise.
-- Final production crawl, responsive/axe results, contact delivery and final deployed SHA: pending.
+- Production crawl: 114 routes visited, zero internal HTTP failures, zero orphan public routes, zero redirects/redirect loops, zero unvisited public routes; no malformed internal URLs found.
+- Additional real Turnstile/contact rendering checks at 390, 430, 768, 1366 and 1440px: readable form/widget and no horizontal overflow. These read-only checks blocked contact POSTs and did not send additional messages.
+- Production functional coverage includes homepage, marketplace, desktop/mega/mobile menus, categories/subcategories/products, ordinary supplier links, search, comparison, solutions, Learn, FAQ, About, Contact, privacy/terms/disclosure/partnerships and RO/EN navigation. Backup, battery, solar and all other engineering calculators respond to valid and invalid input in both languages.
+- Historical Find My Solution regression passed at 390px: full wizard, visible/focused result, back/forward step navigation, changing backup hours and recalculating from 1400 Wh to 2800 Wh, validation and unsupported-region empty state.
+- Canonical/domain, structured data, robots/manifest consistency, RO/EN metadata, safe navigation and factual publisher identity checks passed. No invented company, technical reviewer, reviews or affiliate approval is added by the factual model.
+- Responsive checks cover 390, 430, 768, 1366 and 1440px, plus additional small/tablet widths. Keyboard menus/FAQ, focus, forms, tables, calculators, footer, reduced motion and layout overflow checks passed. Mobile homepage, marketplace, product, finder and contact screenshots were inspected; the original artwork and route-family visual system remain intact.
+- Final documentation deployment identity and subsequent production smoke evidence are recorded in the separate closeout evidence described above. This revision changes no application behavior from the fully tested application SHA.
+
+## Security and application review
+
+The endpoint requires the exact canonical Origin, JSON content, a streamed body of at most 16,000 bytes, bounded input lengths, explicit consent and an empty honeypot. It verifies every Turnstile token server-side with success, hostname and `contact` action checks; tokens are not cached or bypassed. Cloudflare's single-use/expiry rules remain authoritative. Visitor input never controls From or subject and is sent as plain text, preventing HTML-body injection. Single-mailbox validation and structured addresses reject header/list injection. SMTP uses required STARTTLS with normal certificate verification, 10-second connection/greeting and 15-second socket timeouts; Turnstile verification has a 10-second timeout. Provider failures return generic errors, and application code does not log credentials or message payloads.
+
+- Renogy affiliate-manager view: marketplace-first RO/EU discovery, comparison, calculations and source links remain intact; no approval, audience, sales or supplier inventory is invented.
+- Impact reviewer view: individual publisher identity, merchant responsibility, privacy and disclosures are clear. The stale privacy-provider reference was corrected. Contact delivery is the remaining material verification gap.
+- Romanian customer view: Romanian remains primary with English switching; email fallback is usable. The form's failed live attempt is explicitly recorded rather than presented as successful delivery.
 
 ## Application decision boundary
 
 Do not submit the Renogy application during this audit. A GO requires current main deployed, clean production regression, usable truthful contact, working commercial flows, correct canonical/domain, safely inactive tracking and accurate current documentation. Contact-provider acceptance and inbox receipt must be reported separately, without fabrication.
 
-Current pending gates: finish production release verification; complete the one authorized form test if Turnstile permits it; confirm recipient receipt independently or explicitly record the remaining verification gap. No lack of approval, invented company or fabricated traffic is required.
+Concrete contact blocker: complete the real Turnstile challenge and, after addressing the failed attempt, verify one authorized retry succeeds through API acceptance, Brevo SMTP acceptance and the destination inbox. Confirm current Brevo authentication in the provider dashboard or authenticated delivery evidence. The existing successful inbound-email test and DNS records do not substitute for this contact-form test. Lack of affiliate approval or historical traffic is not a blocker.
 
 ## Evidence and historical records
 
