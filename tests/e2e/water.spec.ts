@@ -35,6 +35,9 @@ for (const locale of ["ro", "en"] as const) {
 test("water is responsive and accessible; original homepage artwork is retained", async ({ page }) => {
   test.setTimeout(120000);
   for (const width of [320, 390, 430, 768, 1366, 1440]) {
+    // Resize a blank page so the old responsive image request is not started
+    // and immediately cancelled by navigation to the next viewport sample.
+    await page.goto("about:blank");
     await page.setViewportSize({ width, height: 1000 });
     await page.goto("/marketplace/water");
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
