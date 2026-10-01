@@ -6,13 +6,24 @@
 
 This is the single authoritative release/contact status. Configuration guides describe procedures; dated audit documents are historical snapshots.
 
-## Source and deployment
+## Narrow contact follow-up — 1 October 2026
+
+Owner scope: diagnose the HTTP 400 / Turnstile failure, correct its cause, perform exactly one real retry, independently verify Brevo acceptance and recipient receipt, and update this report. No other site behavior or affiliate configuration is in scope. The owner retains the Renogy GO decision.
+
+- Starting follow-up production/main: `4bdfbbcdc78d7727e8e7ef284430efcb6a7311b4`.
+- The failed attempt had no completed Turnstile token. The client previously permitted submission with an empty token, which the server correctly rejected with HTTP 400 before SMTP. A rendered widget did not establish successful challenge completion.
+- Contact-only correction: keep submission unavailable until the success callback supplies a token; guard submission itself; invalidate tokens on expiry, timeout and error; remove/reset the widget after an attempt. Display the check's state without exposing its token. Server-side hostname/action/token verification and SMTP settings are unchanged.
+- Verification before deployment: 67 unit tests passed; lint, typecheck and build passed; isolated browser regression passed for empty-token prevention, expiry/error/timeout invalidation, fresh-token retry, failure retention and honest acceptance messaging. The fixture sends no live messages and mocks every network route.
+- One real retry is authorized but **has not been sent**. Production challenge completion, Brevo acceptance and inbox receipt remain pending. The correction does not itself prove the challenge can be completed in the audit browser.
+- Follow-up deployment identity and live-test evidence are maintained in ignored `.task-work/contact-followup/`. The earlier full audit below is baseline evidence, not a claim that its full suite was repeated for this focused change.
+
+## Prior full-audit source and deployment
 
 - Initial local checkout: `50b8722261b79af7a59f664ca9687dd56af34907`, branch `main`, behind remote by three commits. No tracked local modifications; unrelated `tmp/pdfs/member-deal/` preserved.
 - Starting audited GitHub/main SHA: `eeef5bc30c42673755d57384bf503ce00e4ee4cd`. Local main was fast-forwarded to it.
 - Starting Vercel Production: `Gk8NSuwTbHwCSJNVyvn2KUzR4QHj`, Ready / Current, official domain attached, source equals that complete SHA.
 - Audited application release: `5e651870102f36e13c86ff944bc4e243fa89397c`, pushed to GitHub main and deployed as Vercel `2MhPKuu5Axmk4iEHXvT54L3bXNhg`, Ready / Current Production, with the official apex attached. GitHub and Vercel source SHAs matched.
-- This report and `.env.example` comments are a documentation-only closeout of that tested application release. The closeout commit cannot contain its own Git SHA. Its final GitHub/main and Vercel equality check is recorded separately in ignored `.task-work/release-audit/release-final.json` and the final audit response; the application SHA above identifies the code tested by the full suites.
+- Prior audit closeout: `4bdfbbcdc78d7727e8e7ef284430efcb6a7311b4`; only this report and `.env.example` comments changed from the fully tested application release. Its deployment identity was verified in ignored `.task-work/release-audit/release-final.json`. The newer contact follow-up is recorded above.
 
 ## Identity, domain and commercial facts
 
@@ -60,7 +71,7 @@ Renogy approval remains unconfirmed. Tracking is inactive; no Impact link/ID or 
 - Rejected mailbox lists/header syntax and passed structured single-address recipient/Reply-To objects to Nodemailer. Sender remains configured and visitor-independent; content remains plain text.
 - Patched lockfile dependencies from Next.js 16.3.5 to 16.3.8 and vulnerable brace-expansion versions. Initial audit: one critical / one high; after compatible updates: zero vulnerabilities.
 
-## Verification results
+## Prior full-audit verification results
 
 - Unit tests: 67 passed / 0 failed; i18n: 419 declared keys; lint, typecheck and production build passed.
 - Local crawl: 114 routes, zero failures, zero orphans, zero redirects.
@@ -73,7 +84,7 @@ Renogy approval remains unconfirmed. Tracking is inactive; no Impact link/ID or 
 - Historical Find My Solution regression passed at 390px: full wizard, visible/focused result, back/forward step navigation, changing backup hours and recalculating from 1400 Wh to 2800 Wh, validation and unsupported-region empty state.
 - Canonical/domain, structured data, robots/manifest consistency, RO/EN metadata, safe navigation and factual publisher identity checks passed. No invented company, technical reviewer, reviews or affiliate approval is added by the factual model.
 - Responsive checks cover 390, 430, 768, 1366 and 1440px, plus additional small/tablet widths. Keyboard menus/FAQ, focus, forms, tables, calculators, footer, reduced motion and layout overflow checks passed. Mobile homepage, marketplace, product, finder and contact screenshots were inspected; the original artwork and route-family visual system remain intact.
-- Final documentation deployment identity and subsequent production smoke evidence are recorded in the separate closeout evidence described above. This revision changes no application behavior from the fully tested application SHA.
+- Prior documentation deployment identity and subsequent production smoke evidence are recorded in the separate closeout evidence described above. That documentation closeout changed no application behavior from the fully tested application SHA; the newer contact correction is recorded separately above.
 
 ## Security and application review
 

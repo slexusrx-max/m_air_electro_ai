@@ -11,7 +11,9 @@ export async function expectContactState(page: Page) {
     await expect(page.locator('.contact-form input[name="name"]')).toBeVisible();
     await expect(page.locator('.contact-form input[name="email"]')).toBeVisible();
     await expect(page.locator('.contact-form textarea')).toBeVisible();
-    await expect(page.locator('.contact-form button[type="submit"]')).toBeEnabled();
+    await expect(page.locator('.contact-form fieldset')).toBeEnabled();
+    await expect(page.locator('.contact-form button[type="submit"]')).toBeVisible();
+    // Turnstile controls submit readiness; the isolated fixture covers its lifecycle.
     await expect(page.locator("main")).not.toContainText(/form is unavailable|Formularul de pe site nu este disponibil/);
   } else {
     await expect(page.locator("main")).toContainText(/form is unavailable|Formularul de pe site nu este disponibil/);
