@@ -2,7 +2,7 @@
 
 ## Current authoritative status — 1 October 2026
 
-**NOT READY TO APPLY.** The authorized retry returned HTTP 200 after successful Turnstile verification and Brevo SMTP acceptance. Recipient inbox receipt remains unverified; the owner retains the Renogy GO decision. The 24 September READY result is historical and is not evidence for this release.
+**CONTACT END-TO-END CHECK COMPLETE; OWNER GO PENDING.** The authorized retry returned HTTP 200 after successful Turnstile verification and Brevo SMTP acceptance. The owner subsequently confirmed receipt in the destination mailbox. Receipt is owner-confirmed, not independently inspected by the agent. The owner retains the Renogy GO decision; no application has been submitted. The 24 September READY result remains historical.
 
 This is the single authoritative release/contact status. Configuration guides describe procedures; dated audit documents are historical snapshots.
 
@@ -17,7 +17,7 @@ Owner scope: diagnose the HTTP 400 / Turnstile failure, correct its cause, perfo
 - Deployed contact correction: `a07005f89a80b50846db3a194a43d793ce35ff7a`, Vercel Production `9fCJdRqhW5ET5mUX18ZrxYDcDq3g`, official apex attached; source matched GitHub main. Four RO/EN contact browser checks passed; all five requested widths passed; mobile contact axe reported zero violations.
 - **The owner performed the one authorized real retry.** Vercel recorded one `POST /api/contact`, HTTP **200**, at **16:57:27.896 Europe/Bucharest / 13:57:27.896 UTC on 1 October 2026**, execution duration 1.51 seconds, on deployment `dpl_9fCJdRqhW5ET5mUX18ZrxYDcDq3g`. No further live test is authorized or needed at this stage.
 - HTTP 200 on this deployed handler requires successful server-side Turnstile hostname/action validation and `deliverContactMail` returning true after Brevo SMTP accepts the configured contact recipient. Thus Turnstile validation and provider acceptance are verified through the production response and deployed code path. This does not establish inbox receipt or substitute for a Brevo dashboard/message authentication record.
-- Actual recipient inbox receipt remains **unverified**. Brevo dashboard and recipient mailbox access are still required for independent inspection; no delivered-message claim is made.
+- **Recipient receipt: owner-confirmed on 1 October 2026.** In direct response to the question about this test email, the owner stated that it arrived in the mailbox. The agent did not inspect the inbox, message headers or Brevo dashboard; no independent message-authentication claim is made. No further message was sent.
 - Follow-up deployment identity and live-test evidence are maintained in ignored `.task-work/contact-followup/`. The earlier full audit below is baseline evidence, not a claim that its full suite was repeated for this focused change.
 
 ## Prior full-audit source and deployment
@@ -44,7 +44,7 @@ Renogy approval remains unconfirmed. Tracking is inactive; no Impact link/ID or 
 - The production form is enabled (`CONTACT_FORM_ENABLED=true`, `CONTACT_EMAIL_VERIFIED=true`). It is not accurate to describe it as disabled. The sender and three public mailbox values match the intended domain addresses. All required Brevo and Turnstile variables were present with Production scope. No credential values were printed.
 - Public DNS shows Cloudflare MX/SPF, Brevo domain verification, both Brevo DKIM CNAMEs with resolvable public keys, and DMARC. Current Brevo dashboard authentication status and actual delivered-message authentication remain unverified because the dashboard requires sign-in. DNS presence alone does not prove provider acceptance or delivery.
 - Turnstile scripts/frames load at desktop and mobile sizes. No first-party hydration/runtime or CSP errors were observed. The earlier automated browser did not obtain a token and could not click the closed-shadow-root checkbox. The later owner-performed retry passed server-side Turnstile verification, as established by HTTP 200. Earlier third-party challenge warnings/DNS errors are historical diagnostic observations, not evidence of a current production rejection. Production keys/security were preserved.
-- **Initial test:** one submission at 13:41:37 Europe/Bucharest on 1 October 2026 returned HTTP 400 before SMTP with no completed token. **Authorized retry:** one owner-performed submission at 16:57:27.896 returned HTTP 200 after Brevo acceptance. Inbox receipt is still **not confirmed**. Do not send another message to verify the same retry.
+- **Initial test:** one submission at 13:41:37 Europe/Bucharest on 1 October 2026 returned HTTP 400 before SMTP with no completed token. **Authorized retry:** one owner-performed submission at 16:57:27.896 returned HTTP 200 after Brevo acceptance. **Inbox receipt was subsequently confirmed by the owner.** Do not send another message to verify the same retry.
 - The test used the clearly labelled “M Air Production Test” identity and public contact mailbox, with the owner's authorized production-verification message. No purchase, account creation or other live message was submitted.
 
 ## Vercel Production environment inventory (no secrets)
@@ -94,14 +94,14 @@ Renogy approval remains unconfirmed. Tracking is inactive; no Impact link/ID or 
 The endpoint requires the exact canonical Origin, JSON content, a streamed body of at most 16,000 bytes, bounded input lengths, explicit consent and an empty honeypot. It verifies every Turnstile token server-side with success, hostname and `contact` action checks; tokens are not cached or bypassed. Cloudflare's single-use/expiry rules remain authoritative. Visitor input never controls From or subject and is sent as plain text, preventing HTML-body injection. Single-mailbox validation and structured addresses reject header/list injection. SMTP uses required STARTTLS with normal certificate verification, 10-second connection/greeting and 15-second socket timeouts; Turnstile verification has a 10-second timeout. Provider failures return generic errors, and application code does not log credentials or message payloads.
 
 - Renogy affiliate-manager view: marketplace-first RO/EU discovery, comparison, calculations and source links remain intact; no approval, audience, sales or supplier inventory is invented.
-- Impact reviewer view: individual publisher identity, merchant responsibility, privacy and disclosures are clear. The stale privacy-provider reference was corrected. Contact delivery is the remaining material verification gap.
-- Romanian customer view: Romanian remains primary with English switching; email fallback is usable. The form's failed live attempt is explicitly recorded rather than presented as successful delivery.
+- Impact reviewer view: individual publisher identity, merchant responsibility, privacy and disclosures are clear. The stale privacy-provider reference was corrected. The contact follow-up now records API/SMTP acceptance and owner-confirmed mailbox receipt separately.
+- Romanian customer view: Romanian remains primary with English switching; email fallback is usable. The initial failed attempt and later successful retry are separately recorded with their evidence sources.
 
 ## Application decision boundary
 
 Do not submit the Renogy application during this audit. A GO requires current main deployed, clean production regression, usable truthful contact, working commercial flows, correct canonical/domain, safely inactive tracking and accurate current documentation. Contact-provider acceptance and inbox receipt must be reported separately, without fabrication.
 
-Concrete remaining verification: locate the already accepted retry in the destination inbox and confirm current Brevo authentication through its dashboard or authenticated message evidence. API 200 and SMTP acceptance are complete; do not repeat the send. The existing successful inbound-email test and DNS records do not substitute for this contact-form receipt. Lack of affiliate approval or historical traffic is not a blocker. The owner retains the final Renogy GO decision.
+The narrow contact delivery check is complete with production API 200, SMTP acceptance and owner-confirmed receipt of that retry. Independent Brevo dashboard/header inspection was not available and remains an explicitly stated evidence limitation, not a fabricated check. No additional send is needed. The owner will compare the final commit and decide GO for Renogy; that approval has not been given. Lack of affiliate approval or historical traffic is not a blocker.
 
 ## Evidence and historical records
 
