@@ -2,12 +2,13 @@ export type VisualFamily =
   | "brand" | "marketplace" | "solar" | "batteries" | "inverters"
   | "chargers" | "backup" | "generators" | "ev" | "electrical"
   | "marine" | "industrial" | "solutions" | "tools" | "learn"
-  | "experts" | "business";
+  | "experts" | "business" | "water";
 
 /** Small routing rules only: never ship the catalog just to choose decoration. */
 export function visualFamily(pathname: string): VisualFamily {
   const path = pathname.replace(/\/$/, "") || "/";
   if (path === "/" || path === "/about") return "brand";
+  if (path === "/marketplace/water" || path.startsWith("/marketplace/water/") || path === "/marketplace/products/water-system-planning") return "water";
   if (path.startsWith("/learn")) return "learn";
   if (path.startsWith("/solutions")) return "solutions";
   if (path.startsWith("/calculators") || path === "/backup-calculator" || path.endsWith("/find-my-solution")) return "tools";

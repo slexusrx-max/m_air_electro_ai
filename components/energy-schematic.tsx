@@ -4,6 +4,7 @@ import type { VisualFamily } from "@/lib/visual-system";
 export function EnergySchematic({ family, className }: { family: VisualFamily; className?: string }) {
   const drawing = (() => {
     switch (family) {
+      case "water": return <><path d="M120 25c-14 24-62 66-62 104a62 62 0 0 0 124 0c0-38-48-80-62-104zM80 135c0 22 18 38 40 38M88 111q32-18 64 0"/></>;
       case "solar": return <><circle cx="178" cy="40" r="22"/><path d="M178 6v8m0 52v8m34-34h-8m-52 0h-8M60 65h116l28 91H32zM76 65l-9 91m33-91v91m26-91 8 91m18-91 16 91M52 96h134M42 126h153M96 156v20m42-20v20M76 177h81"/></>;
       case "batteries": return <><rect x="45" y="48" width="150" height="119" rx="15"/><path d="M66 48V34h26v14m57 0V34h26v14M64 74h29m-15-14v28M152 74h27M132 87l-32 43h26l-15 25 38-45h-27z"/></>;
       case "inverters": return <><rect x="40" y="32" width="160" height="144" rx="16"/><rect x="58" y="50" width="60" height="27" rx="5"/><circle cx="163" cy="63" r="12"/><path d="M62 116c20-58 37 58 57 0s38 58 59 0M61 153h118"/></>;

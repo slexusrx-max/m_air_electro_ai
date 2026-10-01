@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n/types";
+import { waterCategories } from "./water";
 
 export type LocalText = { en: string; ro: string };
 export const bilingual = (en: string, ro: string): LocalText => ({ en, ro });
@@ -430,6 +431,14 @@ for (const [path, parent, en, ro, summary] of subcategories)
     title: bilingual(en, ro),
     summary,
   });
+const waterRoot: Category = {
+  path: "water", title: bilingual("Water & Resilience", "Apă și reziliență"),
+  summary: bilingual("Water solutions for home, travel and off-grid living, selected around your source and documented performance.", "Soluții de apă pentru acasă, călătorii și off-grid, alese după sursă și performanța documentată."),
+  choose: bilingual("Start with a water analysis and your installation needs.", "Începe cu analiza apei și condițiile de instalare."),
+  checks: bilingual("Verify the exact model, cartridge and performance documentation.", "Verifică modelul exact, cartușul și documentația de performanță."),
+  facets: [], calculator: "/marketplace/water", solution: "off-grid-cabin", guide: "choosing-water-system", topics: bilingual("Home · On the go · Off-grid", "Acasă · În călătorie · Off-grid"),
+};
+categories.push(waterRoot, ...waterCategories.map(w => ({ ...waterRoot, path: `water/${w.slug}`, title: w.title, summary: w.summary, checks: w.checks })));
 export const rootCategories = categories.filter((c) => !c.path.includes("/"));
 export const categoryByPath = (path: string) =>
   categories.find((c) => c.path === path);

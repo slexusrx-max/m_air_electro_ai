@@ -1,4 +1,5 @@
 export const legacyRedirects: Record<string, string> = {
+  "/water": "/marketplace/water",
   "/knowledge-base": "/learn",
   "/knowledge-base/breaker-trips-under-load":
     "/learn/cable-and-protection-basics",

@@ -1,6 +1,8 @@
 import Image from "next/image";
+import { EnergySchematic } from "@/components/energy-schematic";
 
 export function EquipmentVisual({ category }: { category: string }) {
+  if (category === "water") return <div className="equipment-visual" aria-hidden="true"><EnergySchematic family="water" /></div>;
   const solar = category.includes("solar");
   const battery = category.includes("batter");
   if (solar) {

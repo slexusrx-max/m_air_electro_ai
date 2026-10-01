@@ -575,6 +575,7 @@ for (const guide of guides) {
   }
 }
 export const learnHubs = [
+  ["water", "Water & Resilience", "Apă și reziliență"],
   ["getting-started", "Getting started", "Primii pași"],
   ["buying-guides", "Buying guides", "Ghiduri de cumpărare"],
   ["technical-guides", "Technical guides", "Ghiduri tehnice"],
@@ -588,3 +589,15 @@ export const learnHubs = [
   ["marine", "Marine", "Naval"],
   ["industrial", "Industrial", "Industrial"],
 ].map(([slug, en, ro]) => ({ slug, title: b(en, ro) }));
+
+guides.push({
+  slug: "choosing-water-system", title: b("Choosing a water system", "Cum alegi un sistem de apă"),
+  hub: "water", level: "buying-guides", category: "water", solution: "off-grid-cabin", calculator: "/marketplace/water#finder",
+  intro: b("Start with the source and the job, then verify the exact model. This guide is a selection checklist, not a declaration that your water is safe to drink.", "Începe cu sursa și utilizarea, apoi verifică modelul exact. Acest ghid este o listă de criterii de alegere, nu o confirmare că apa ta este potabilă."),
+  sections: [
+    section("Know your starting water", "Cunoaște apa de la sursă", "Gather your utility’s report or a laboratory analysis of your private supply. Identify the substances or organisms you actually need to address. In an emergency, follow local public-health instructions; a product category is not a substitute for source assessment.", "Obține raportul furnizorului de apă sau o analiză de laborator a sursei private. Identifică substanțele sau organismele care necesită tratare. În urgențe, urmează instrucțiunile autorităților sanitare; o categorie de produse nu înlocuiește evaluarea sursei."),
+    section("Match evidence to the exact configuration", "Potrivește dovada cu configurația exactă", "Read the official performance sheet for the model and cartridge together. Record the named substance, reduction claim, tested capacity and operating conditions. Check the independent certification listing or test report when available. A claim for one PFAS compound does not prove coverage of all PFAS.", "Citește fișa oficială de performanță pentru model și cartuș împreună. Notează substanța, reducerea declarată, capacitatea testată și condițiile de funcționare. Verifică certificarea independentă sau raportul de test, dacă există. O afirmație pentru un compus PFAS nu dovedește acoperirea tuturor PFAS."),
+    section("Plan installation and upkeep", "Planifică instalarea și întreținerea", "Measure the available space and check the manual for inlet pressure, power and drain requirements. Confirm replacement part numbers, cleaning instructions and service intervals. Ask the supplier about delivery to Romania, warranty handling and replacement availability before choosing a model.", "Măsoară spațiul disponibil și verifică manualul pentru presiune, alimentare electrică și evacuare. Confirmă codurile pieselor de schimb, curățarea și intervalele de întreținere. Întreabă furnizorul despre livrarea în România, garanție și disponibilitatea consumabilelor înainte de alegere."),
+  ],
+  sources: ["https://www.cdc.gov/drinking-water/prevention/about-choosing-home-water-filters.html", "https://www.nsf.org/consumer-resources/articles/contaminant-reduction-claims-guide", "https://info.nsf.org/Certified/DWTU/"],
+});

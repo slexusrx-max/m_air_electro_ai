@@ -1,0 +1,8 @@
+.promo { display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 32px; margin: 32px 0; padding: clamp(24px,4vw,42px); border: 1px solid #6acfb9; border-radius: 24px; background: linear-gradient(115deg,#dcfff4,#62e5cf); color: #123f36; }
+.eyebrow { font-size: .72rem; font-weight: 750; letter-spacing: .14em; }
+.promo h2 { margin: 10px 0; max-width: 650px; font-size: clamp(1.6rem,2.6vw,2.2rem); line-height: 1.2; letter-spacing: -.025em; }
+.promo p { max-width: 650px; line-height: 1.7; }
+.actions { display: flex; flex-direction: column; align-items: flex-start; gap: 18px; font-weight: 700; }
+.primary { display: inline-flex; padding: 13px 20px; border-radius: 999px; background: #143d32; color: #f2ffe6; text-decoration: none; }
+.promo a:focus-visible { outline: 3px solid #175440; outline-offset: 5px; }
+@media(max-width:768px) { .promo { grid-template-columns: 1fr; gap: 18px; } }

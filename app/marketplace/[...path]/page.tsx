@@ -1,4 +1,5 @@
 import { categories } from "@/lib/marketplace/content";
+import { WaterPage } from "@/components/marketplace/water-page";
 export const dynamicParams=false;
 export function generateStaticParams(){return categories.map(c=>({path:c.path.split("/")}));}
 import { notFound } from "next/navigation";
@@ -50,6 +51,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   const t = await getRequestDictionary();
   const query = await searchParams;
   const segments = c.path.split("/");
+  if (segments[0] === "water") return <WaterPage category={c} locale={locale} />;
   const crumbs = [
     { name: "Marketplace", path: "/marketplace" },
     ...segments.map((_, i) => {

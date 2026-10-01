@@ -1,3 +1,5 @@
+import type { WaterSupplierId } from "./providers/water";
+import type { WaterPerformanceClaim } from "../marketplace/water";
 export type MarketplaceRegion = "RO" | "EU" | "US" | "UK";
 export type ProductCategory =
   | "solar-panels"
@@ -12,7 +14,8 @@ export type ProductCategory =
   | "battery-chargers"
   | "chargers"
   | "generators"
-  | "ev-charging";
+  | "ev-charging"
+  | "water";
 export type CatalogProduct = {
   id: string;
   slug: string;
@@ -26,7 +29,8 @@ export type CatalogProduct = {
   originalPrice: number | null;
   availability: "partner-check" | "unavailable";
   kind: "product" | "equipment-class";
-  provider: "renogy" | "amazon" | "ebay" | "other";
+  provider: "renogy" | "amazon" | "ebay" | "other" | WaterSupplierId;
+  waterPerformance?: WaterPerformanceClaim[];
   merchant: string;
   merchantRegion: MarketplaceRegion;
   affiliateUrl: string;

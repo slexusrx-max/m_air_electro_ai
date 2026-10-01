@@ -1,5 +1,6 @@
 import type { CatalogProduct, ProductCategory } from "@/lib/affiliate/types";
 import { bilingual as b, type LocalText } from "@/lib/marketplace/content";
+import { waterSuppliers, type WaterSupplierId } from "@/lib/affiliate/providers/water";
 
 export type Equipment = CatalogProduct & {
   kind: "product" | "equipment-class";
@@ -25,17 +26,23 @@ type Entry = {
   compatibility: LocalText;
   facets: Record<string, string>;
   specs?: Record<string, string>;
+  waterPerformance?: CatalogProduct["waterPerformance"];
 } & (
   | { kind: "product"; url: string; sourceCheckedAt: string }
+  | { kind: "product"; url: string; sourceCheckedAt: string; provider: WaterSupplierId; brand: string }
   | { kind?: "equipment-class"; url?: never; sourceCheckedAt?: never }
 );
 function item(e: Entry): Equipment {
   const kind = e.kind ?? "equipment-class";
+  const waterSupplier = "provider" in e ? waterSuppliers.find(s => s.id === e.provider) : undefined;
+  if (waterSupplier && (!waterSupplier.url || !e.url || new URL(e.url).origin !== new URL(waterSupplier.url).origin)) {
+    throw new Error(`Water product ${e.id} must use its verified official supplier origin`);
+  }
   return {
     ...e,
     kind,
     name: e.title.en,
-    brand: kind === "product" ? "Renogy" : "Equipment class",
+    brand: "brand" in e ? e.brand : kind === "product" ? "Renogy" : "Equipment class",
     model: kind === "product" ? e.title.en : undefined,
     description: e.summary.en,
     image: null,
@@ -43,8 +50,8 @@ function item(e: Entry): Equipment {
     currency: "EUR",
     originalPrice: null,
     availability: "partner-check",
-    provider: e.url ? "renogy" : "other",
-    merchant: e.url ? "Renogy EU" : "No supplier selected",
+    provider: waterSupplier?.id ?? (e.url ? "renogy" : "other"),
+    merchant: waterSupplier?.name ?? (e.url ? "Renogy EU" : "No supplier selected"),
     merchantRegion: "EU",
     productUrl: e.url ?? "",
     affiliateUrl: e.url ?? "",
@@ -647,4 +654,17 @@ equipment.push(
       "Date necesare / Required data": "Automobil, alimentare, parcare / Vehicle, supply, parking",
     },
   }),
+);
+
+equipment.push(
+  item({
+    id: "water-system-planning", slug: "water-system-planning", category: "water", paths: ["water"],
+    title: b("Water system planning", "Planificarea sistemului de apă"),
+    summary: b("A planning class for matching a water source, installation and documented model performance. Not a purchasable filter.", "Clasă de planificare pentru corelarea sursei de apă, instalării și performanței documentate a modelului. Nu este un filtru comercial."),
+    bestFor: b("Preparing a water analysis and installation brief before comparing specific filters.", "Pregătirea analizei apei și a cerințelor de instalare înainte de compararea filtrelor concrete."),
+    limitations: b("Contaminant reduction, flow, capacity and certification remain unknown until an exact model and cartridge are documented. No supplier, price or stock is asserted.", "Reducerea contaminanților, debitul, capacitatea și certificarea rămân necunoscute până la documentarea modelului și cartușului exact. Nu presupunem furnizor, preț sau stoc."),
+    compatibility: b("Check source-water analysis, inlet pressure, available space, power and drainage against the model manual. Verify replacement cartridge identity and local availability independently.", "Verifică analiza sursei, presiunea, spațiul, alimentarea electrică și evacuarea conform manualului modelului. Confirmă separat cartușul de schimb și disponibilitatea locală."),
+    facets: {},
+  }),
+
 );
