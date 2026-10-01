@@ -15,7 +15,7 @@ export function navigation(locale: Locale): NavigationGroup[] {
       label: "Marketplace",
       href: "/marketplace",
       children: rootCategories.map((c) => ({
-        label: local(c.title, locale),
+        label: c.path === "generators" ? l("Power generators", "Generatoare electrice") : local(c.title, locale),
         href: `/marketplace/${c.path}`,
         children: categories
           .filter((n) => n.path.startsWith(c.path + "/"))
@@ -29,7 +29,7 @@ export function navigation(locale: Locale): NavigationGroup[] {
       label: l("Solutions", "Soluții"),
       href: "/solutions",
       children: solutions.map((s) => ({
-        label: local(s.title, locale),
+        label: s.slug === "apartment-backup" ? l("Apartment backup power", "Alimentare de rezervă pentru apartament") : local(s.title, locale),
         href: `/solutions/${s.slug}`,
       })),
     },
@@ -47,7 +47,7 @@ export function navigation(locale: Locale): NavigationGroup[] {
         ["/calculators/solar", "Solar sizing", "Dimensionare solară"],
         ["/calculators/cable-sizing", "Cable sizing", "Dimensionare cabluri"],
         ["/calculators/voltage-drop", "Voltage drop", "Cădere de tensiune"],
-        ["/calculators/generator", "Generator", "Generator"],
+        ["/calculators/generator", "Generator sizing", "Dimensionare generator"],
         ["/calculators/motor-current", "Motor current", "Curent motor"],
         [
           "/calculators/breaker-selection",
@@ -63,7 +63,7 @@ export function navigation(locale: Locale): NavigationGroup[] {
       href: "/learn",
       children: [
         ...learnHubs.map((h) => ({
-          label: local(h.title, locale),
+          label: h.slug === "generators" ? l("Power generators", "Generatoare electrice") : local(h.title, locale),
           href: `/learn/${h.slug}`,
         })),
         { label: "FAQ", href: "/faq" },

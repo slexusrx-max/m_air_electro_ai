@@ -18,6 +18,7 @@ test("RO/EN switching preserves the deep route and desktop menu works by keyboar
     .focus();
   await page.keyboard.press("Enter");
   await expect(page.locator("#mega-menu")).toBeVisible();
+  await page.locator("#mega-menu summary").filter({ hasText: "Solar equipment" }).click();
   await page
     .locator("#mega-menu")
     .getByRole("link", { name: "Portable solar panels", exact: true })

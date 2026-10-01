@@ -162,34 +162,37 @@ export function SiteHeader({
               {ro ? "Explorează" : "Explore"} {active.label} →
             </Link>
             <button
-              onClick={() => setOpen(null)}
+              onClick={() => {
+                ref.current?.querySelector<HTMLButtonElement>('[data-menu-trigger][aria-expanded="true"]')?.focus();
+                setOpen(null);
+              }}
               aria-label={ro ? "Închide meniul" : "Close menu"}
             >
               ✕
             </button>
           </div>
           <div className="mega-columns">
-            {active.children.map((g) => (
-              <div key={g.href}>
-                <Link
-                  className="mega-category"
-                  href={g.href}
-                  onClick={() => setOpen(null)}
-                >
-                  {active.href === "/marketplace" && <EnergySchematic family={visualFamily(g.href)} className="category-symbol" />}
-                  {g.label} →
-                </Link>
-                {g.children?.map((c) => (
-                  <Link
-                    key={c.href}
-                    href={c.href}
-                    onClick={() => setOpen(null)}
-                  >
-                    {c.label}
-                  </Link>
-                ))}
-              </div>
+            {groups.filter((g) => g.children.length > 0).map((group) => (
+              <section className="mega-section" key={group.href} aria-label={group.label}>
+                <Link className="mega-section-title" href={group.href} onClick={() => setOpen(null)}>{group.label} <span aria-hidden="true">↗</span></Link>
+                {group.children.filter((item) => item.href !== "/marketplace/water").map((item) => item.children?.length ? (
+                  <details className="mega-subcategory" name="marketplace-category" key={item.href}>
+                    <summary><EnergySchematic family={visualFamily(item.href)} className="category-symbol" />{item.label}</summary>
+                    <div className="mega-subcategory-links">
+                      <Link href={item.href} onClick={() => setOpen(null)}>{ro ? "Vezi categoria" : "View category"} →</Link>
+                      {item.children.map((child) => <Link key={child.href} href={child.href} onClick={() => setOpen(null)}>{child.label}</Link>)}
+                    </div>
+                  </details>
+                ) : <Link key={item.href} href={item.href} onClick={() => setOpen(null)}>{item.label}</Link>)}
+              </section>
             ))}
+            <Link className="mega-water" href="/marketplace/water" onClick={() => setOpen(null)}>
+              <span className="mega-water-icon" aria-hidden="true">◇</span>
+              <span className="mega-water-eyebrow">{ro ? "Apă și reziliență" : "Water & Resilience"}</span>
+              <strong>{ro ? "Apă pură. Un viitor mai luminos." : "Pure Water. Brighter Tomorrow."}</strong>
+              <span>{ro ? "Soluții pentru acasă, călătorii și viața off-grid." : "Solutions for home, travel and off-grid living."}</span>
+              <span className="mega-water-cta">{ro ? "Explorează soluțiile" : "Explore water solutions"} ↗</span>
+            </Link>
           </div>
         </nav>
       )}
@@ -204,17 +207,17 @@ export function SiteHeader({
           </div>
           {groups.map((g) =>
             g.children.length ? (
-              <details key={g.href}>
+              <details name="mobile-section" key={g.href}>
                 <summary>{g.label}</summary>
                 <Link href={g.href} onClick={() => setMobile(false)}>
                   {ro ? "Explorează" : "Explore"} {g.label} →
                 </Link>
                 {g.children.map((c) =>
                   c.children?.length ? (
-                    <details key={c.href}>
+                    <details name={`mobile-category-${g.href}`} key={c.href}>
                       <summary>{c.label}</summary>
                       <Link href={c.href} onClick={() => setMobile(false)}>
-                        {ro ? "Toate" : "All"} {c.label}
+                        {ro ? "Explorează:" : "Explore:"} {c.label}
                       </Link>
                       {c.children.map((n) => (
                         <Link
