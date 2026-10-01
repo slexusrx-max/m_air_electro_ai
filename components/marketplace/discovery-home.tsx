@@ -34,8 +34,8 @@ export async function DiscoveryHome({
           </h1>
           <p>
             {ro
-              ? "Platformă independentă de descoperire, comparație și dimensionare. Explorează solarul, bateriile și rezerva înainte de a vizita furnizorul extern. Nu primim comenzi sau plăți pentru echipamente."
-              : "Independent product discovery, comparison and sizing platform. Explore solar, batteries and backup power before visiting an external supplier. We do not accept equipment orders or payments."}
+              ? `Platformă independentă de descoperire, comparație și dimensionare. Explorează solarul, bateriile și rezerva înainte de a vizita furnizorul extern. ${marketplace ? "Nu primim comenzi sau plăți pentru echipamente." : "Calculează sistemul — achiziția se face direct de la furnizorul ales."}`
+              : `Independent product discovery, comparison and sizing platform. Explore solar, batteries and backup power before visiting an external supplier. ${marketplace ? "We do not accept equipment orders or payments." : "Size your system — purchase directly from your chosen supplier."}`}
           </p>
           <div className="action-row">
             <Link
