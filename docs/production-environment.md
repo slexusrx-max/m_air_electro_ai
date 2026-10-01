@@ -1,6 +1,6 @@
 # Production environment — M Air Electro AI
 
-Current contact facts: 24 September 2026. Public browsing, search, comparison and deterministic tools do not require account, AI or payment credentials.
+Configuration reference updated 1 October 2026. The sole current release/contact status is [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md). Public browsing, search, comparison and deterministic tools do not require account, AI or payment credentials.
 
 | Variable | Production purpose/value | Missing behavior |
 | --- | --- | --- |
@@ -9,8 +9,8 @@ Current contact facts: 24 September 2026. Public browsing, search, comparison an
 | NEXT_PUBLIC_PARTNERSHIPS_EMAIL | `partnerships@mairelectroai.com` | Public confirmed partnership route remains visible |
 | NEXT_PUBLIC_PRIVACY_EMAIL | `privacy@mairelectroai.com` | Public confirmed privacy route remains visible |
 | CONTACT_EMAIL_VERIFIED | `true`, reflecting confirmed inbound routing | Operational mailbox values fail closed |
-| CONTACT_FORM_ENABLED | `false` until separate sender/form testing | Form unavailable; email links work |
-| CONTACT_FROM_EMAIL / RESEND_API_KEY | Optional verified outbound sender / secret | Form unavailable |
+| CONTACT_FORM_ENABLED | `true` for configured production; controlled receipt verification is separate | Form unavailable; email links work |
+| CONTACT_FROM_EMAIL / BREVO_SMTP_LOGIN / BREVO_SMTP_KEY | Verified same-domain sender / SMTP login / SMTP secret | Form unavailable |
 | NEXT_PUBLIC_TURNSTILE_SITE_KEY / TURNSTILE_SECRET_KEY | Optional contact challenge / secret | Form unavailable |
 | RENOGY_AFFILIATE_APPROVED | `false` until real approval | Ordinary supplier links |
 | AFFILIATE_TRACKING_ENABLED | `false` until approved activation | Ordinary supplier links |
@@ -24,11 +24,11 @@ Current contact facts: 24 September 2026. Public browsing, search, comparison an
 
 ## Email state and safety boundaries
 
-Cloudflare routing is active for all three addresses. The owner confirmed real inbound receipt at `contact@mairelectroai.com`; separate receipt tests for partnerships/privacy are not asserted. Outbound send-as/SMTP and website-form delivery are unverified.
+Cloudflare routing is active for all three addresses. The owner confirmed real inbound receipt at `contact@mairelectroai.com`; separate receipt tests for partnerships/privacy are not asserted. Brevo SMTP is implemented for website delivery. Supabase auth-email receipt was separately verified on 30 September; this does not prove website-form receipt. See the readiness report for current test evidence.
 
-Public domain constants in `lib/site.ts` are owner-confirmed facts. Operational fields require explicit environment values and `CONTACT_EMAIL_VERIFIED=true`, with same-canonical-domain validation. Public email links do not bypass the independent form gate. The form requires every sender, Resend and Turnstile value plus `CONTACT_FORM_ENABLED=true` and must remain disabled until authorized end-to-end testing succeeds.
+Public domain constants in `lib/site.ts` are owner-confirmed facts. Operational fields require explicit environment values and `CONTACT_EMAIL_VERIFIED=true`, with same-canonical-domain validation. Public email links do not bypass the independent form gate. The form requires the sender, Brevo SMTP credentials and Turnstile values plus `CONTACT_FORM_ENABLED=true`. Enable only for a controlled authorized test after configuration; retain it for public use only with successful validation. API acceptance is not inbox receipt.
 
-Set or update only the four non-secret email values above in Production. Do not print secrets or overwrite unrelated variables. Rebuild/redeploy after public environment changes; `.env.example` is documentation, not a live update.
+Maintain the documented production values and keep secret values server-only. Do not print secrets or overwrite unrelated variables. Rebuild/redeploy after public environment changes; `.env.example` is documentation, not a live update.
 
 ## Publisher and affiliate state
 
@@ -42,7 +42,7 @@ Never commit credentials. No tracking identifier, Impact account, site-verificat
 2. Run Playwright and the homepage-started crawler; inspect required desktop/mobile widths.
 3. Commit/push and confirm the Vercel deployment commit equals GitHub main.
 4. Rerun browser checks and crawl with `TEST_BASE_URL=https://mairelectroai.com`.
-5. Verify Romanian/English, domain email links, form unavailability, supplier disclosure, canonical/sitemap, redirects and no overflow/runtime errors.
+5. Verify Romanian/English, domain email links, the expected enabled/disabled form state, supplier disclosure, canonical/sitemap, redirects and no overflow/runtime errors.
 6. Record deployment/results in [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md). Do not infer public success from localhost.
 
 Read-only QA must not create accounts, submit messages or place orders. Mock-only form tests verify software behavior, not real receipt.

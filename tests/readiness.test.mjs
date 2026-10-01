@@ -95,8 +95,33 @@ test("Brevo transport uses STARTTLS and the verified sender without exposing a v
   assert.equal(transportOptions.requireTLS, true);
   assert.equal(transportOptions.auth.user, env.BREVO_SMTP_LOGIN);
   assert.equal(mailOptions.from.address, env.CONTACT_FROM_EMAIL);
-  assert.equal(mailOptions.to, env.NEXT_PUBLIC_CONTACT_EMAIL);
-  assert.equal(mailOptions.replyTo, "visitor@example.org");
+  assert.equal(mailOptions.to.address, env.NEXT_PUBLIC_CONTACT_EMAIL);
+  assert.equal(mailOptions.replyTo.address, "visitor@example.org");
+  assert.equal(mailOptions.html, undefined);
+  assert.equal(transportOptions.secure, false);
+  assert.equal(transportOptions.connectionTimeout, 10000);
+  assert.equal(transportOptions.greetingTimeout, 10000);
+  assert.equal(transportOptions.socketTimeout, 15000);
+});
+
+test("contact rejects address lists, header injection, malformed JSON and excessive inputs without delivery", async () => {
+  const site = config();
+  const handler = load("lib/contact.ts", { "./site": site }, { process: { env }, TextDecoder }).handleContact;
+  const base = { name: "Audit", email: "audit@example.org", message: "An isolated, mock-only test message.", consent: true, website: "", token: "dummy" };
+  let calls = 0;
+  const noNetwork = async () => { calls++; throw Error("Unexpected network"); };
+  const request = (body, type = "application/json") => new Request(env.NEXT_PUBLIC_SITE_URL + "/api/contact", { method: "POST", headers: { origin: env.NEXT_PUBLIC_SITE_URL, "Content-Type": type }, body });
+  for (const email of ["a,b@example.org", "a;Bcc:x@example.org", "a\r\nBcc:x@example.org", '"a"@example.org', "a(comment)@example.org", "a@bad..org"]) {
+    assert.equal(site.isSingleMailbox(email), false);
+    assert.equal((await handler(request(JSON.stringify({ ...base, email })), noNetwork, noNetwork)).status, 400);
+    assert.equal(config({ ...env, CONTACT_FROM_EMAIL: email }).verifiedMailbox(email), undefined);
+  }
+  for (const data of [{ ...base, name: "x".repeat(101) }, { ...base, message: "x".repeat(4001) }, { ...base, token: "x".repeat(2049) }, []]) {
+    assert.equal((await handler(request(JSON.stringify(data)), noNetwork, noNetwork)).status, 400);
+  }
+  assert.equal((await handler(request("{"), noNetwork, noNetwork)).status, 400);
+  assert.equal((await handler(request(JSON.stringify(base), "text/plain"), noNetwork, noNetwork)).status, 415);
+  assert.equal(calls, 0);
 });
 test("analytics needs current consent, excludes private/query data, bots, local hosts and DNT", () => {
   let saved = null; const calls = [];

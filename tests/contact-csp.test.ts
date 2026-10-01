@@ -6,7 +6,7 @@ test("document CSP allows Turnstile scripts and frames without allowing arbitrar
   const rules = await config.headers!();
   const csp = rules.find(rule => rule.source === "/(.*)")!.headers.find(header => header.key === "Content-Security-Policy")!.value;
   const directives = new Map(csp.split(";").filter(value => value.trim()).map(value => {
-    const [name, ...sources] = value.trim().split(/s+/);
+    const [name, ...sources] = value.trim().split(/\s+/);
     return [name, sources];
   }));
   assert.ok(directives.get("script-src")!.includes("https://challenges.cloudflare.com"));

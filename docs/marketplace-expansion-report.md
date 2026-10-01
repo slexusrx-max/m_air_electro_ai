@@ -1,5 +1,7 @@
 # Historical marketplace expansion — 14 September 2026
 
+> Historical audit snapshot. Provider, contact gates, deployment and test results below describe that dated audit only. Current authoritative status: [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md).
+
 > Archived architecture and deployment evidence. The official public origin is now https://mairelectroai.com. Old Vercel URLs and missing owner/contact findings below describe the earlier release; use [current readiness](../AFFILIATE_APPLICATION_READINESS.md), [README](../README.md) and [PROJECT_BLUEPRINT](../PROJECT_BLUEPRINT.md) for current facts.
 
 Review date: 14 September 2026 (Romania). Production: https://m-air-electro-ai.vercel.app

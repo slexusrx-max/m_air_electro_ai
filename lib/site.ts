@@ -119,6 +119,11 @@ export function verifiedMailbox(value?: string) {
   if (process.env.CONTACT_EMAIL_VERIFIED !== "true" || !value) return undefined;
   const email = value.trim();
   const host = new URL(getSiteUrl()).hostname.replace(/^www\./, "");
-  if (!/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email) || host.endsWith(".example") || host.endsWith(".vercel.app") || email.split("@")[1].toLowerCase() !== host) return undefined;
+  if (!isSingleMailbox(email) || host.endsWith(".example") || host.endsWith(".vercel.app") || email.split("@")[1].toLowerCase() !== host) return undefined;
   return email;
+}
+
+/** A single unquoted mailbox, never an address list or display-name header. */
+export function isSingleMailbox(value: string) {
+  return value.length <= 254 && /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/i.test(value);
 }

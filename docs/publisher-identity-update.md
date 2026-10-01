@@ -1,5 +1,7 @@
 # Publisher identity and contact update
 
+> Historical audit snapshot. Provider, contact gates, deployment and test results below describe that dated audit only. Current authoritative status: [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md).
+
 Current facts: 24 September 2026. This supersedes the prepared-mailbox/Gmail-first status. The sole current application status is in [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md).
 
 ## Publisher

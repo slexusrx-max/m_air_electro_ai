@@ -1,3 +1,4 @@
+import { expectContactState } from "./helpers/contact-state";
 import { test, expect } from "@playwright/test";
 import { publicRoutes } from "../../lib/marketplace/routes";
 
@@ -58,8 +59,7 @@ for (const locale of ["ro", "en"]) {
     await page.getByRole("button", { name: locale === "ro" ? "Copiază adresa de email" : "Copy email address", exact: true }).click();
     await expect(page.getByRole("status").filter({ hasText: locale === "ro" ? "Adresa a fost copiată" : "Address copied" })).toBeVisible();
     expect(await page.evaluate(() => navigator.clipboard.readText())).toBe("contact@mairelectroai.com");
-    await expect(page.locator(".contact-form")).toHaveCount(0);
-    await expect(page.locator('script[src*="turnstile"]')).toHaveCount(0);
+    await expectContactState(page);
     expect(posts).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
     await page.locator(".info-card").first().screenshot({ path: info.outputPath(`contact-${locale}.png`) });

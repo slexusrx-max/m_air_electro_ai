@@ -1,3 +1,4 @@
+import { expectContactState } from "./helpers/contact-state";
 import AxeBuilder from "@axe-core/playwright";
 import { test, expect } from "@playwright/test";
 import { publicRoutes } from "../../lib/marketplace/routes";
@@ -42,7 +43,7 @@ test("editorial sources and policies are clear without claiming unsupported revi
   await expect(page.locator("main")).toContainText("No verified audience figures are published");
   await expect(page.locator("main")).toContainText("affiliation not yet approved");
   await page.goto("/contact");
-  await expect(page.locator('.contact-form')).toHaveCount(0);
+  await expectContactState(page);
   await expect(page.locator('main a[href^="mailto:contact@mairelectroai.com"]').first()).toBeVisible();
   await page.getByRole("button", { name: "Analytics settings", exact: true }).click();
   await page.getByRole("button", { name: "Reject / withdraw consent", exact: true }).click();

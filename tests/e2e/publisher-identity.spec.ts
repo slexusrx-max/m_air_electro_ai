@@ -1,3 +1,4 @@
+import { expectContactState } from "./helpers/contact-state";
 import { test, expect } from "@playwright/test";
 
 const identityPages = ["/about", "/contact", "/privacy", "/terms", "/affiliate-disclosure", "/partnerships", "/business", "/experts", "/methodology", "/editorial-policy", "/author-policy", "/corrections-policy", "/ai-use-policy"];
@@ -41,10 +42,8 @@ for (const locale of ["ro", "en"]) test(`publisher is an individual, not a compa
   const emails = await page.locator('a[href^="mailto:"]').evaluateAll(links => links.map(link => link.getAttribute("href")));
   expect(emails.length).toBeGreaterThan(0);
   expect([...new Set(emails.map(href => href?.split("?")[0]))].sort()).toEqual(["mailto:contact@mairelectroai.com", "mailto:partnerships@mairelectroai.com", "mailto:privacy@mairelectroai.com"]);
-  await expect(page.locator("main")).toContainText(locale === "ro" ? "Formularul de pe site nu este disponibil" : "The website form is unavailable");
   await expect(page.locator("main")).toContainText(locale === "ro" ? "verificată printr-un test real de livrare" : "verified with a real delivery test");
-  await expect(page.locator('.contact-form')).toHaveCount(0);
-  await expect(page.locator('script[src*="turnstile"]')).toHaveCount(0);
+  await expectContactState(page);
   for (const [path, email] of [["/privacy", "privacy@mairelectroai.com"], ["/partnerships", "partnerships@mairelectroai.com"]]) {
     await page.goto(path);
     expect(await page.locator(`main a[href="mailto:${email}"]`).count()).toBeGreaterThan(0);

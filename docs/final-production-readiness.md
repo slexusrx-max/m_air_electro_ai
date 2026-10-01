@@ -1,5 +1,7 @@
 # Final production-readiness report
 
+> Historical audit snapshot. Provider, contact gates, deployment and test results below describe that dated audit only. Current authoritative status: [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md).
+
 Prepared 24 September 2026 for M Air Electro AI, `https://mairelectroai.com`.
 
 **READY FOR IMPACT / RENOGY APPLICATION.** The application-code release is deployed on the official domain, with **95/95 production browser tests passing** and a clean **114-route production crawl**. [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md) is the authoritative application status. The subsequently saved Vercel contact settings and their separate follow-up release verification are described in section 4; the complete browser run identifies its original tested code release.

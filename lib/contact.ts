@@ -1,4 +1,4 @@
-import { getSiteUrl, siteConfig, verifiedMailbox } from "./site";
+import { getSiteUrl, isSingleMailbox, siteConfig, verifiedMailbox } from "./site";
 import nodemailer from "nodemailer";
 
 export function contactReady() {
@@ -15,8 +15,8 @@ export async function deliverContactMail({ name, email, message }: { name: strin
   });
   const result = await transport.sendMail({
     from: { name: "M Air Electro AI", address: verifiedMailbox(process.env.CONTACT_FROM_EMAIL)! },
-    to: siteConfig.contactEmail,
-    replyTo: email,
+    to: { address: siteConfig.contactEmail!, name: "M Air Electro AI" },
+    replyTo: { address: email, name: "" },
     subject: "M Air Electro AI — website enquiry",
     text: `Name: ${name.trim()}\nEmail: ${email}\n\n${message.trim()}`,
   });
@@ -46,7 +46,7 @@ export async function handleContact(request: Request, send: typeof fetch = fetch
     if (!data || typeof data !== "object") return reply(400, "invalid");
     const { name, email, message, consent, website, token } = data;
     if (typeof name !== "string" || !name.trim() || name.length > 100 ||
-      typeof email !== "string" || email.length > 254 || !/^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/.test(email) ||
+      typeof email !== "string" || !isSingleMailbox(email) ||
       typeof message !== "string" || message.trim().length < 20 || message.length > 4000 ||
       consent !== true || website || typeof token !== "string" || !token || token.length > 2048) return reply(400, "invalid");
     const verification = await send("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
