@@ -2,7 +2,7 @@
 
 ## Current authoritative status — 1 October 2026
 
-**NOT READY TO APPLY.** The authorized production contact submission returned HTTP 400 before SMTP. Turnstile completion, Brevo acceptance and recipient inbox receipt remain unverified. The 24 September READY result is historical and is not evidence for this release.
+**NOT READY TO APPLY.** The authorized retry returned HTTP 200 after successful Turnstile verification and Brevo SMTP acceptance. Recipient inbox receipt remains unverified; the owner retains the Renogy GO decision. The 24 September READY result is historical and is not evidence for this release.
 
 This is the single authoritative release/contact status. Configuration guides describe procedures; dated audit documents are historical snapshots.
 
@@ -14,7 +14,10 @@ Owner scope: diagnose the HTTP 400 / Turnstile failure, correct its cause, perfo
 - The failed attempt had no completed Turnstile token. The client previously permitted submission with an empty token, which the server correctly rejected with HTTP 400 before SMTP. A rendered widget did not establish successful challenge completion.
 - Contact-only correction: keep submission unavailable until the success callback supplies a token; guard submission itself; invalidate tokens on expiry, timeout and error; remove/reset the widget after an attempt. Display the check's state without exposing its token. Server-side hostname/action/token verification and SMTP settings are unchanged.
 - Verification before deployment: 67 unit tests passed; lint, typecheck and build passed; isolated browser regression passed for empty-token prevention, expiry/error/timeout invalidation, fresh-token retry, failure retention and honest acceptance messaging. The fixture sends no live messages and mocks every network route.
-- One real retry is authorized but **has not been sent**. Production challenge completion, Brevo acceptance and inbox receipt remain pending. The correction does not itself prove the challenge can be completed in the audit browser.
+- Deployed contact correction: `a07005f89a80b50846db3a194a43d793ce35ff7a`, Vercel Production `9fCJdRqhW5ET5mUX18ZrxYDcDq3g`, official apex attached; source matched GitHub main. Four RO/EN contact browser checks passed; all five requested widths passed; mobile contact axe reported zero violations.
+- **The owner performed the one authorized real retry.** Vercel recorded one `POST /api/contact`, HTTP **200**, at **16:57:27.896 Europe/Bucharest / 13:57:27.896 UTC on 1 October 2026**, execution duration 1.51 seconds, on deployment `dpl_9fCJdRqhW5ET5mUX18ZrxYDcDq3g`. No further live test is authorized or needed at this stage.
+- HTTP 200 on this deployed handler requires successful server-side Turnstile hostname/action validation and `deliverContactMail` returning true after Brevo SMTP accepts the configured contact recipient. Thus Turnstile validation and provider acceptance are verified through the production response and deployed code path. This does not establish inbox receipt or substitute for a Brevo dashboard/message authentication record.
+- Actual recipient inbox receipt remains **unverified**. Brevo dashboard and recipient mailbox access are still required for independent inspection; no delivered-message claim is made.
 - Follow-up deployment identity and live-test evidence are maintained in ignored `.task-work/contact-followup/`. The earlier full audit below is baseline evidence, not a claim that its full suite was repeated for this focused change.
 
 ## Prior full-audit source and deployment
@@ -40,8 +43,8 @@ Renogy approval remains unconfirmed. Tracking is inactive; no Impact link/ID or 
 - The website currently implements Brevo SMTP, `smtp-relay.brevo.com:587`, required STARTTLS, fixed verified sender/recipient, and visitor address in Reply-To only. SMTP acceptance is not inbox delivery.
 - The production form is enabled (`CONTACT_FORM_ENABLED=true`, `CONTACT_EMAIL_VERIFIED=true`). It is not accurate to describe it as disabled. The sender and three public mailbox values match the intended domain addresses. All required Brevo and Turnstile variables were present with Production scope. No credential values were printed.
 - Public DNS shows Cloudflare MX/SPF, Brevo domain verification, both Brevo DKIM CNAMEs with resolvable public keys, and DMARC. Current Brevo dashboard authentication status and actual delivered-message authentication remain unverified because the dashboard requires sign-in. DNS presence alone does not prove provider acceptance or delivery.
-- Turnstile scripts/frames load and the real widget displays “Verify you are human” at desktop and mobile sizes. No first-party hydration/runtime or CSP errors were observed. The automated browser did not obtain a completed token; third-party challenge warnings and a `brunhild.challenges.cloudflare.com` DNS failure were observed. That network failure is not established as the root cause. Production keys/security were preserved.
-- **Authorized real form test: exactly one submission at 13:41:37 Europe/Bucharest on 1 October 2026; `/api/contact` returned HTTP 400.** The UI correctly said the message was not sent and retained the email fallback. No completed Turnstile token was observed; the request was rejected before SMTP. Brevo acceptance and inbox receipt are **not confirmed**. No retry has been performed; CAPTCHA action confirmation/user completion and provider/inbox verification remain outstanding.
+- Turnstile scripts/frames load at desktop and mobile sizes. No first-party hydration/runtime or CSP errors were observed. The earlier automated browser did not obtain a token and could not click the closed-shadow-root checkbox. The later owner-performed retry passed server-side Turnstile verification, as established by HTTP 200. Earlier third-party challenge warnings/DNS errors are historical diagnostic observations, not evidence of a current production rejection. Production keys/security were preserved.
+- **Initial test:** one submission at 13:41:37 Europe/Bucharest on 1 October 2026 returned HTTP 400 before SMTP with no completed token. **Authorized retry:** one owner-performed submission at 16:57:27.896 returned HTTP 200 after Brevo acceptance. Inbox receipt is still **not confirmed**. Do not send another message to verify the same retry.
 - The test used the clearly labelled “M Air Production Test” identity and public contact mailbox, with the owner's authorized production-verification message. No purchase, account creation or other live message was submitted.
 
 ## Vercel Production environment inventory (no secrets)
@@ -98,7 +101,7 @@ The endpoint requires the exact canonical Origin, JSON content, a streamed body 
 
 Do not submit the Renogy application during this audit. A GO requires current main deployed, clean production regression, usable truthful contact, working commercial flows, correct canonical/domain, safely inactive tracking and accurate current documentation. Contact-provider acceptance and inbox receipt must be reported separately, without fabrication.
 
-Concrete contact blocker: complete the real Turnstile challenge and, after addressing the failed attempt, verify one authorized retry succeeds through API acceptance, Brevo SMTP acceptance and the destination inbox. Confirm current Brevo authentication in the provider dashboard or authenticated delivery evidence. The existing successful inbound-email test and DNS records do not substitute for this contact-form test. Lack of affiliate approval or historical traffic is not a blocker.
+Concrete remaining verification: locate the already accepted retry in the destination inbox and confirm current Brevo authentication through its dashboard or authenticated message evidence. API 200 and SMTP acceptance are complete; do not repeat the send. The existing successful inbound-email test and DNS records do not substitute for this contact-form receipt. Lack of affiliate approval or historical traffic is not a blocker. The owner retains the final Renogy GO decision.
 
 ## Evidence and historical records
 
