@@ -16,12 +16,19 @@ export function AnalyticsConsent({ ro }: { ro: boolean }) {
   useEffect(() => {
     if (choice === "accepted") trackEvent("pageview");
     const click = (event: MouseEvent) => {
+      if (event.type === "auxclick" && event.button !== 1) return;
       const target = event.target;
       const link = target instanceof Element ? target.closest("a[href]") as HTMLAnchorElement | null : null;
-      if (link && link.protocol === "https:" && link.origin !== window.location.origin) trackEvent("outbound_click");
+      if (link && link.protocol === "https:" && link.origin !== window.location.origin) {
+        const data = link.dataset;
+        if (data.supplierProduct && data.supplier && data.supplierCategory && data.supplierLanguage) {
+          trackEvent("supplier_outbound_click", { product: data.supplierProduct, supplier: data.supplier, category: data.supplierCategory, language: data.supplierLanguage });
+        } else trackEvent("outbound_click");
+      }
     };
     document.addEventListener("click", click);
-    return () => document.removeEventListener("click", click);
+    document.addEventListener("auxclick", click);
+    return () => { document.removeEventListener("click", click); document.removeEventListener("auxclick", click); };
   }, [path, choice]);
   function choose(value: string) {
     try { localStorage.setItem(consentKey, JSON.stringify({ choice: value, at: Date.now() })); } catch { /* No persistent storage means no tracking. */ }

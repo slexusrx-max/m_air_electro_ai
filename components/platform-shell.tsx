@@ -3,6 +3,9 @@ import { SiteHeader } from "@/components/site-header";
 import { getCurrentProfile, getCurrentUser } from "@/lib/supabase/auth";
 import { getRequestLocale } from "@/lib/i18n/request";
 import { navigation } from "@/lib/marketplace/navigation";
+import { SupplierLinksProvider } from "@/components/marketplace/supplier-link";
+import { supplierLink } from "@/lib/affiliate/providers";
+import { catalog } from "@/lib/affiliate/catalog";
 type PlatformShellProps = {
   children: React.ReactNode;
   contentClassName?: string;
@@ -16,6 +19,10 @@ export async function PlatformShell({
     getCurrentUser(),
     getRequestLocale(),
   ]);
+  const supplierLinks = Object.fromEntries(catalog.filter(p => p.productUrl).map(p => {
+    const { href, tracked } = supplierLink(p);
+    return [p.id, { href, tracked }];
+  }));
   return (
     <div className="platform-root">
       <a className="skip-link" href="#main-content">
@@ -35,7 +42,7 @@ export async function PlatformShell({
         groups={navigation(locale)}
       />
       <div id="main-content" tabIndex={-1} className={contentClassName}>
-        {children}
+        <SupplierLinksProvider links={supplierLinks}>{children}</SupplierLinksProvider>
       </div>
       <DeepFooter locale={locale} />
     </div>

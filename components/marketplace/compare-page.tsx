@@ -5,7 +5,7 @@ import { specificationLabel } from "@/lib/marketplace/specifications";
 import { catalog } from "@/lib/affiliate/catalog";
 import { parseComparison } from "@/lib/marketplace/query";
 import { RemoveComparison } from "./compare-control";
-import { renogyLink } from "@/lib/affiliate/providers/renogy";
+import { SupplierLink } from "./supplier-link";
 export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
   const selected = parseComparison(ids, catalog);
   const fields = [
@@ -90,10 +90,7 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
                 <tr>
                   <th scope="row">{ro ? "Furnizor extern" : "External supplier"}</th>
                   {selected.map(p => {
-                    const link = p.productUrl ? renogyLink(p.productUrl) : null;
-                    return <td key={p.id}>{link ? <a href={link.href} target="_blank" rel={link.tracked ? "sponsored noopener noreferrer" : "noopener noreferrer"}>
-                      {ro ? "Verifică prețul la furnizor" : "Check price at supplier"} ↗{link.tracked ? (ro ? " (afiliat)" : " (affiliate)") : ""}
-                    </a> : (ro ? "Niciun furnizor selectat" : "No supplier selected")}</td>;
+                    return <td key={p.id}>{p.productUrl ? <SupplierLink product={p} ro={ro} /> : (ro ? "Niciun furnizor selectat" : "No supplier selected")}</td>;
                   })}
                 </tr>
                 <tr>
@@ -101,7 +98,7 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
                   {selected.map((p) => (
                     <td key={p.id}>
                       {p.kind === "product"
-                        ? "Renogy"
+                        ? p.brand
                         : ro
                           ? "Clasă de echipament"
                           : "Equipment class"}

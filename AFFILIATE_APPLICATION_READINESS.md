@@ -1,6 +1,10 @@
 # Renogy EU / Impact application readiness
 
-## Current authoritative status — 1 October 2026
+## Current affiliate status — 3 October 2026
+
+The owner has now authorized truthful publisher onboarding and suitable program applications. The prior owner-GO gate below is historical. The existing Impact publisher account was accessed and `mairelectroai.com` was verified as its website. The primary-property setting remains unchanged after automatic approval review blocked that action; renewed sign-in and confirmation are pending. No program application or agreement was submitted, no approval or tracking link was obtained, and ordinary supplier links remain active. See [the Impact onboarding report](docs/impact-onboarding.md) for account evidence, program findings, payout requirements and website preparation.
+
+## Contact authoritative status — 1 October 2026
 
 **CONTACT END-TO-END CHECK COMPLETE; OWNER GO PENDING.** The authorized retry returned HTTP 200 after successful Turnstile verification and Brevo SMTP acceptance. The owner subsequently confirmed receipt in the destination mailbox. Receipt is owner-confirmed, not independently inspected by the agent. The owner retains the Renogy GO decision; no application has been submitted. The 24 September READY result remains historical.
 

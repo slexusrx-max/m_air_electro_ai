@@ -20,11 +20,11 @@ export function commercialCopy(t: Dictionary) {
     supplierNote:
       t["affiliate.active"] === "true"
         ? ro
-          ? "M Air Electro AI este independent. Unele legături marcate sunt afiliate: achizițiile eligibile pot genera un comision. Furnizorul stabilește prețul, stocul, plata, livrarea, garanția și retururile."
-          : "M Air Electro AI is independent. Some marked links are affiliate links: qualifying purchases may generate a commission. The supplier controls price, stock, payment, delivery, warranty and returns."
+          ? "M Air Electro AI este independent. Unele legături marcate sunt afiliate: achizițiile eligibile pot genera un comision. Achiziția se finalizează la furnizor, care stabilește prețul, stocul, plata, livrarea, garanția și retururile. Afilierea nu implică recomandarea unui produs."
+          : "M Air Electro AI is independent. Some marked links are affiliate links: qualifying purchases may generate a commission. Purchases are completed with the supplier, which controls price, stock, payment, delivery, warranty and returns. Affiliation does not imply product endorsement."
         : ro
-          ? "M Air Electro AI este un ghid independent. Legăturile către Renogy EU sunt legături obișnuite către furnizor, fără urmărire afiliată. Furnizorul stabilește prețul, stocul, plata, livrarea, garanția și retururile."
-          : "M Air Electro AI is an independent guide. Renogy EU links are ordinary supplier links without affiliate tracking. The supplier controls price, stock, payment, delivery, warranty and returns.",
+          ? "M Air Electro AI este un ghid independent. Legăturile către Renogy EU sunt legături obișnuite către furnizor, fără urmărire afiliată. Achiziția se finalizează la furnizor, care stabilește prețul, stocul, plata, livrarea, garanția și retururile. Afilierea nu implică recomandarea unui produs."
+          : "M Air Electro AI is an independent guide. Renogy EU links are ordinary supplier links without affiliate tracking. Purchases are completed with the supplier, which controls price, stock, payment, delivery, warranty and returns. Affiliation does not imply product endorsement.",
     price: ro
       ? "Verifică prețul actual la furnizor"
       : "Check current price at supplier",

@@ -1,3 +1,4 @@
+import { SupplierLink } from "./supplier-link";
 import Link from "next/link";
 import { specificationLabel } from "@/lib/marketplace/specifications";
 import { CompareControl } from "./compare-control";
@@ -55,9 +56,7 @@ export function ProductCard({
         <Link href={categoryByPath(p.paths?.[0] ?? "")?.calculator ?? "/marketplace/find-my-solution"}>
           {ro ? "Calculează necesarul" : "Calculate requirements"} →
         </Link>
-        {p.productUrl && <a href={p.productUrl} target="_blank" rel="noopener noreferrer">
-          {ro ? "Verifică prețul la furnizor" : "Check price at supplier"} ↗
-        </a>}
+        <SupplierLink product={p} ro={ro} />
       </div>
     </article>
   );

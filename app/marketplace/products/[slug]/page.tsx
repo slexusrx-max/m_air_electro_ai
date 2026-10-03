@@ -17,7 +17,7 @@ import { ProductCard } from "@/components/marketplace/product-card";
 import { catalog, productBySlug } from "@/lib/affiliate/catalog";
 import { categoryByPath, local } from "@/lib/marketplace/content";
 import { guides } from "@/lib/marketplace/guides";
-import { supplierLink } from "@/lib/affiliate/providers";
+import { SupplierLink } from "@/components/marketplace/supplier-link";
 import { buildMetadata } from "@/lib/metadata";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { legacyProducts as oldProducts } from "@/lib/marketplace/legacy";
@@ -95,24 +95,9 @@ export default async function Page({ params }: Props) {
               ))}
             </dl>
             {p.productUrl ? (
-              <a
-                href={supplierLink(p).href}
-                target="_blank"
-                rel={
-                  supplierLink(p).tracked
-                    ? "sponsored noopener noreferrer"
-                    : "noopener noreferrer"
-                }
-                className="button-primary"
-              >
-                {ro ? `Vezi modelul la ${p.merchant}` : `View model at ${p.merchant}`}{" "}
-                ↗{" "}
-                {supplierLink(p).tracked
-                  ? ro
-                    ? "(link afiliat)"
-                    : "(affiliate link)"
-                  : ""}
-              </a>
+              <SupplierLink product={p} ro={ro} className="button-primary">
+                {ro ? `Vezi modelul la ${p.merchant}` : `View model at ${p.merchant}`}
+              </SupplierLink>
             ) : (
               <Link href={`/marketplace/${c.path}`} className="button-primary">
                 {ro

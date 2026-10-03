@@ -118,8 +118,8 @@ export const information: Record<string, InformationPage> = {
       s(
         "Buying and verification",
         "Cumpărare și verificare",
-        "The external merchant sets price, stock, taxes, shipping, warranty and return conditions. Confirm the exact model and delivery to Romania before ordering. Our catalog is not a live merchant feed. Illustrations are original schematics, and equipment-class records are not claims that a specific product exists or is available.",
-        "Comerciantul extern stabilește prețul, stocul, taxele, livrarea, garanția și retururile. Confirmă modelul și livrarea în România înainte de comandă. Catalogul nu este flux comercial live. Ilustrațiile sunt scheme originale, iar clasele nu pretind existența sau disponibilitatea unui produs specific.",
+        "Purchases are completed directly with the external supplier, which controls price, stock, payment, taxes, delivery, warranty and returns. An affiliate relationship does not guarantee or imply product endorsement. Confirm the exact model and delivery to Romania before ordering. Our catalog is not a live merchant feed. Illustrations are original schematics, and equipment-class records are not claims that a specific product exists or is available.",
+        "Achizițiile se finalizează direct la furnizorul extern, care stabilește prețul, stocul, plata, taxele, livrarea, garanția și retururile. O relație de afiliere nu garantează și nu implică recomandarea unui produs. Confirmă modelul și livrarea în România înainte de comandă. Catalogul nu este flux comercial live. Ilustrațiile sunt scheme originale, iar clasele nu pretind existența sau disponibilitatea unui produs specific.",
       ),
     ],
   },
