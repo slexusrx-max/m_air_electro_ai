@@ -174,7 +174,7 @@ export default async function Page({ params }: Props) {
             p.sourceUrls.map((url) => (
               <p key={url}>
                 <a href={url} target="_blank" rel="noreferrer">
-                  Renogy EU ·{" "}
+                  {p.merchant} ·{" "}
                   {ro ? "pagina oficială a modelului" : "official model page"}{" "}
                   ↗
                 </a>

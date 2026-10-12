@@ -34,8 +34,8 @@ export const information: Record<string, InformationPage> = {
       s(
         "Commercial role",
         "Rol comercial",
-        "We are not the seller, warehouse or Renogy dealer. Renogy EU is the first intended affiliate supplier, with approval not yet confirmed. Until approval and configuration, supplier links are ordinary external links. The supplier handles orders, delivery, warranty and returns.",
-        "Nu suntem vânzător, depozit sau dealer Renogy. Renogy EU este primul furnizor vizat pentru afiliere, fără aprobare confirmată. Până la aprobare și configurare, linkurile sunt normale. Furnizorul gestionează comenzile, livrarea, garanția și retururile.",
+        "We are not the seller, warehouse or an authorized dealer. Renogy EU, Waterdrop Europe, PECRON EU and BLUETTI EU are research and prospective affiliate suppliers, not confirmed partners. Until approval and configuration, supplier links are ordinary external links. The supplier handles orders, delivery, warranty and returns.",
+        "Nu suntem vânzător, depozit sau dealer autorizat. Renogy EU, Waterdrop Europe, PECRON EU și BLUETTI EU sunt furnizori documentați și vizați pentru afiliere, nu parteneri confirmați. Până la aprobare și configurare, linkurile sunt normale. Furnizorul gestionează comenzile, livrarea, garanția și retururile.",
       ),
     ],
   },
@@ -106,14 +106,14 @@ export const information: Record<string, InformationPage> = {
       s(
         "Current status",
         "Starea actuală",
-        "Renogy EU is the first intended affiliate merchant. Approval is not confirmed; we do not claim an official partnership, dealership or stock ownership. Current catalog links point directly to ordinary supplier pages, with no configured Impact attribution.",
-        "Renogy EU este primul comerciant vizat pentru afiliere. Aprobarea nu este confirmată; nu pretindem parteneriat oficial, statut de dealer sau proprietate asupra stocului. Linkurile actuale duc direct la pagini normale, fără atribuire Impact configurată.",
+        "Renogy EU, Waterdrop Europe, PECRON EU and BLUETTI EU are prospective affiliate suppliers. Approval is not confirmed; we do not claim an official partnership, dealership or stock ownership. Ordinary unmarked supplier links are not affiliate tracked. Each program requires its own approval and exact network-issued links before activation.",
+        "Renogy EU, Waterdrop Europe, PECRON EU și BLUETTI EU sunt furnizori vizați pentru afiliere. Aprobarea nu este confirmată; nu pretindem parteneriat oficial, statut de dealer sau proprietate asupra stocului. Linkurile obișnuite nemarcate nu au urmărire afiliată. Fiecare program necesită aprobare separată și linkuri exacte emise de rețea înainte de activare.",
       ),
       s(
         "After approval",
         "După aprobare",
-        `If an affiliate program is approved and activated, some qualifying purchases may earn ${siteConfig.operatorName}, the individual publisher of M Air Electro AI, a commission. Activation requires explicit approval status and the actual provider-issued Impact link configuration. The disclosure must be updated at activation. Editorial descriptions and factual comparisons remain separate from tracking configuration.`,
-        `Dacă programul este aprobat și activat, unele achiziții eligibile pot aduce comision lui ${siteConfig.operatorName}, editorul independent al platformei M Air Electro AI. Activarea cere statut explicit de aprobare și configurația Impact emisă de furnizor. Politica trebuie actualizată la activare. Descrierile și comparațiile rămân separate de urmărire.`,
+        `If an affiliate program is approved and activated, qualifying purchases through marked affiliate links may earn ${siteConfig.operatorName}, the individual publisher of M Air Electro AI, a commission. Activation requires explicit approval status and exact links issued by the approved program's network, with the appropriate disclosure active. The disclosure must be updated at activation. Editorial descriptions and factual comparisons remain separate from tracking configuration.`,
+        `Dacă programul este aprobat și activat, achizițiile eligibile prin linkuri marcate ca afiliate pot aduce comision lui ${siteConfig.operatorName}, editorul independent al platformei M Air Electro AI. Activarea cere statut explicit de aprobare și linkuri exacte emise de rețeaua programului aprobat, cu informarea corespunzătoare activă. Politica trebuie actualizată la activare. Descrierile și comparațiile rămân separate de urmărire.`,
       ),
       s(
         "Buying and verification",
@@ -151,8 +151,8 @@ export const information: Record<string, InformationPage> = {
       s(
         "External sites and requests",
         "Site-uri externe și solicitări",
-        "Following a supplier link opens an external website with its own privacy and cookie policies. Ordinary links are currently used for Renogy EU. Contact us about access, correction or deletion of information you supplied; use the configured contact channel and avoid posting personal data in public issue reports. Retention of hosting and provider logs follows the configured service policies.",
-        "Linkul către furnizor deschide un site extern cu propriile politici. Pentru Renogy EU folosim acum linkuri normale. Contactează-ne pentru acces, corectare sau ștergerea informației furnizate; folosește canalul configurat și evită date personale în sesizări publice. Păstrarea jurnalelor depinde de politicile serviciilor configurate.",
+        "Following a supplier link opens an external website with its own privacy and cookie policies. Ordinary unmarked supplier links are not affiliate tracked. Contact us about access, correction or deletion of information you supplied; use the configured contact channel and avoid posting personal data in public issue reports. Retention of hosting and provider logs follows the configured service policies.",
+        "Linkul către furnizor deschide un site extern cu propriile politici. Linkurile obișnuite nemarcate către furnizori nu au urmărire afiliată. Contactează-ne pentru acces, corectare sau ștergerea informației furnizate; folosește canalul configurat și evită date personale în sesizări publice. Păstrarea jurnalelor depinde de politicile serviciilor configurate.",
       ),
     ],
   },

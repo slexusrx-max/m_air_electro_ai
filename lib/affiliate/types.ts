@@ -1,4 +1,5 @@
 import type { WaterSupplierId } from "./providers/water";
+import type { SupplierId } from "./suppliers";
 import type { WaterPerformanceClaim } from "../marketplace/water";
 export type MarketplaceRegion = "RO" | "EU" | "US" | "UK";
 export type ProductCategory =
@@ -29,7 +30,7 @@ export type CatalogProduct = {
   originalPrice: number | null;
   availability: "partner-check" | "unavailable";
   kind: "product" | "equipment-class";
-  provider: "renogy" | "amazon" | "ebay" | "other" | WaterSupplierId;
+  provider: SupplierId | "amazon" | "ebay" | "other" | WaterSupplierId;
   waterPerformance?: WaterPerformanceClaim[];
   merchant: string;
   merchantRegion: MarketplaceRegion;
@@ -44,7 +45,7 @@ export type CatalogProduct = {
   whyRecommended: string;
 };
 export interface AffiliateProvider {
-  id: "renogy" | "amazon" | "ebay" | "homedepot" | "future_partner";
+  id: SupplierId | "amazon" | "ebay" | "homedepot" | "future_partner";
   region: MarketplaceRegion;
   baseUrl: string;
   trackingEnvironmentVariable?: string;

@@ -114,6 +114,7 @@ test("Renogy activation requires both flags and a mapped catalog URL; disclosure
     "lib/affiliate/providers/renogy.ts",
     {
       "server-only": {},
+      "../suppliers": load("lib/affiliate/suppliers.ts", { "./providers/water": load("lib/affiliate/providers/water.ts") }),
       "@/lib/affiliate/catalog": {
         catalog: [{ provider: "renogy", productUrl: normal }],
       },

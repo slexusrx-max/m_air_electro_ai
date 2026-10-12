@@ -4,11 +4,14 @@ import { ebay } from "./ebay";
 import { renogyEu, renogyLink } from "./renogy";
 import { resolveSupplierLink } from "../tracking";
 import type { CatalogProduct } from "../types";
+import { pendingSupplierLink } from "./pending";
+import { isSupplierId } from "../suppliers";
 export { amazon, ebay, renogyEu };
 export function supplierLink(
   product: Pick<CatalogProduct, "provider" | "productUrl">,
 ) {
   if (product.provider === "renogy") return renogyLink(product.productUrl);
+  if (isSupplierId(product.provider)) return pendingSupplierLink(product.provider, product.productUrl);
   const provider =
     product.provider === "amazon"
       ? amazon

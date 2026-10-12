@@ -1,5 +1,11 @@
 # Renogy EU / Impact application readiness
 
+## Multi-supplier preparation - 12 October 2026
+
+Renogy EU, Waterdrop Europe, PECRON EU and BLUETTI EU remain prospective affiliate suppliers, not approved partners. The nine new source-backed EU listings and separate provider identities are documented in [the supplier evidence record](docs/eu-supplier-listings-2026-10-12.md). Ordinary unmarked supplier links are untracked; prices and stock remain unknown. Waterdrop/PECRON/BLUETTI configurations remain explicitly pending with no tracking links or network IDs, independent of Renogy's existing Impact gate. Source checking does not establish human technical approval, campaign acceptance, granted commission or eligibility.
+
+The [8 October outreach record](docs/affiliate-outreach-2026-10-08.md) establishes correspondence only. This catalog task does not submit applications or accept agreements. Future activation requires actual program acceptance, exact issued links/IDs, confirmed EU destinations and appropriate active disclosures. Existing contact-delivery evidence below remains unchanged; no new message is sent to re-verify it. Public production release verification is reported only after the matching commit is deployed and smoke-tested.
+
 ## Current affiliate status — 3 October 2026
 
 The owner has now authorized truthful publisher onboarding and suitable program applications. The prior owner-GO gate below is historical. The existing Impact publisher account was accessed and `mairelectroai.com` was verified as its website. The primary-property setting remains unchanged after automatic approval review blocked that action; renewed sign-in and confirmation are pending. No program application or agreement was submitted, no approval or tracking link was obtained, and ordinary supplier links remain active. See [the Impact onboarding report](docs/impact-onboarding.md) for account evidence, program findings, payout requirements and website preparation.

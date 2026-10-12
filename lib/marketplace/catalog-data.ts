@@ -1,6 +1,7 @@
 import type { CatalogProduct, ProductCategory } from "@/lib/affiliate/types";
 import { bilingual as b, type LocalText } from "@/lib/marketplace/content";
-import { waterSuppliers, type WaterSupplierId } from "@/lib/affiliate/providers/water";
+import { suppliers, assertSupplierUrl, type SupplierId } from "@/lib/affiliate/suppliers";
+import { supplierProducts } from "./supplier-products";
 
 export type Equipment = CatalogProduct & {
   kind: "product" | "equipment-class";
@@ -14,7 +15,7 @@ export type Equipment = CatalogProduct & {
   sourceUrls: string[];
   model?: string;
 };
-type Entry = {
+export type Entry = {
   id: string;
   slug: string;
   title: LocalText;
@@ -28,21 +29,18 @@ type Entry = {
   specs?: Record<string, string>;
   waterPerformance?: CatalogProduct["waterPerformance"];
 } & (
-  | { kind: "product"; url: string; sourceCheckedAt: string }
-  | { kind: "product"; url: string; sourceCheckedAt: string; provider: WaterSupplierId; brand: string }
+  | { kind: "product"; url: string; sourceCheckedAt: string; provider: SupplierId }
   | { kind?: "equipment-class"; url?: never; sourceCheckedAt?: never }
 );
 function item(e: Entry): Equipment {
   const kind = e.kind ?? "equipment-class";
-  const waterSupplier = "provider" in e ? waterSuppliers.find(s => s.id === e.provider) : undefined;
-  if (waterSupplier && (!waterSupplier.url || !e.url || new URL(e.url).origin !== new URL(waterSupplier.url).origin)) {
-    throw new Error(`Water product ${e.id} must use its verified official supplier origin`);
-  }
+  const supplier = e.kind === "product" ? suppliers[e.provider] : undefined;
+  if (e.kind === "product") assertSupplierUrl(e.provider, e.url);
   return {
     ...e,
     kind,
     name: e.title.en,
-    brand: "brand" in e ? e.brand : kind === "product" ? "Renogy" : "Equipment class",
+    brand: supplier?.brand ?? "Equipment class",
     model: kind === "product" ? e.title.en : undefined,
     description: e.summary.en,
     image: null,
@@ -50,8 +48,8 @@ function item(e: Entry): Equipment {
     currency: "EUR",
     originalPrice: null,
     availability: "partner-check",
-    provider: waterSupplier?.id ?? (e.url ? "renogy" : "other"),
-    merchant: waterSupplier?.name ?? (e.url ? "Renogy EU" : "No supplier selected"),
+    provider: e.kind === "product" ? e.provider : "other",
+    merchant: supplier?.name ?? "No supplier selected",
     merchantRegion: "EU",
     productUrl: e.url ?? "",
     affiliateUrl: e.url ?? "",
@@ -70,10 +68,12 @@ const batteryCompat = b(
   "Verifică profilul încărcătorului, curentul BMS și gruparea permisă. La 2 kW, un banc de 12,8 V poate necesita peste 170 A cu pierderile de conversie; un BMS de 100 A nu ajunge pentru această sarcină continuă.",
 );
 export const equipment: Equipment[] = [
+  ...supplierProducts.map(item),
   item({
     id: "renogy-mini-100",
     slug: "renogy-core-mini-100ah",
     kind: "product",
+    provider: "renogy",
     sourceCheckedAt: "2026-09-24",
     title: b(
       "Renogy Core Mini 12.8 V 100 Ah",
@@ -119,6 +119,7 @@ export const equipment: Equipment[] = [
     id: "renogy-mini-200",
     slug: "renogy-core-mini-200ah",
     kind: "product",
+    provider: "renogy",
     sourceCheckedAt: "2026-09-24",
     title: b("Renogy Core Mini 12 V 200 Ah", "Renogy Core Mini 12 V 200 Ah"),
     category: "lithium-batteries",
@@ -159,6 +160,7 @@ export const equipment: Equipment[] = [
     id: "renogy-panel-200",
     slug: "renogy-n-type-200w",
     kind: "product",
+    provider: "renogy",
     sourceCheckedAt: "2026-09-24",
     title: b(
       "Renogy 16BB N-Type 200 W rigid panel",
@@ -202,6 +204,7 @@ export const equipment: Equipment[] = [
     id: "renogy-inverter-1000",
     slug: "renogy-pure-sine-1000w",
     kind: "product",
+    provider: "renogy",
     sourceCheckedAt: "2026-09-24",
     title: b(
       "Renogy 12 V 1000 W pure sine inverter",
@@ -242,6 +245,7 @@ export const equipment: Equipment[] = [
     id: "renogy-dcc50",
     slug: "renogy-dcc50s-mppt",
     kind: "product",
+    provider: "renogy",
     sourceCheckedAt: "2026-09-24",
     title: b(
       "Renogy 12 V 50 A DC-DC + MPPT",
@@ -524,6 +528,7 @@ equipment.push(
     id: "mppt-charge-controller",
     slug: "mppt-charge-controller",
     kind: "product",
+    provider: "renogy",
     sourceCheckedAt: "2026-09-24",
     title: {
       en: "Renogy Rover Li MPPT / 40 A",
@@ -558,6 +563,7 @@ equipment.push(
     id: "dc-dc-charger-20a",
     slug: "dc-dc-charger-20a",
     kind: "product",
+    provider: "renogy",
     sourceCheckedAt: "2026-09-24",
     title: {
       en: "Renogy 12 V / 20 A DC–DC charger",

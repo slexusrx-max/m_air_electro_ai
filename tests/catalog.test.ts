@@ -7,6 +7,7 @@ import {
   legacyCategories,
 } from "../lib/marketplace/content";
 import { catalog } from "../lib/affiliate/catalog";
+import { validSupplierUrl } from "../lib/affiliate/suppliers";
 import { guides, learnHubs } from "../lib/marketplace/guides";
 import { solutions } from "../lib/marketplace/solutions";
 import {
@@ -39,7 +40,7 @@ test("catalog records distinguish models from equipment classes without fabricat
     assert.ok(p.paths.every((path) => categoryByPath(path)));
     if (p.kind === "product") {
       assert.ok(p.sourceUrls.length);
-      assert.equal(new URL(p.productUrl).hostname, "eu.renogy.com");
+      assert.ok(validSupplierUrl(p.productUrl, p.provider));
     } else assert.equal(p.brand, "Equipment class");
   }
 });

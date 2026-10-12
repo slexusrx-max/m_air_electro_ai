@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { validSupplierUrl } from "../../lib/affiliate/suppliers";
 
 for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
   test(`supplier links and disclosure stay honest in ${locale} at ${width}px`, async ({ page, context }, info) => {
@@ -13,7 +14,7 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
       const links = page.locator("a[data-supplier-product]");
       expect(await links.count()).toBeGreaterThan(0);
       for (const link of await links.all()) {
-        expect(await link.getAttribute("href")).toMatch(/^https:\/\/eu\.renogy\.com\//);
+        expect(validSupplierUrl((await link.getAttribute("href"))!, (await link.getAttribute("data-supplier"))!)).toBe(true);
         await expect(link).toHaveAttribute("data-tracking-status", "ordinary");
         await expect(link).toHaveAttribute("data-supplier-language", locale);
         expect(await link.getAttribute("rel")).not.toContain("sponsored");

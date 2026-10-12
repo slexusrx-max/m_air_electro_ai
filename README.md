@@ -17,7 +17,7 @@ Architecture, route inventory, repository audit and public deployment results: [
 ## Product modules
 
 - Marketplace: ten main families and 22 category/subcategory routes with buying advice, technical checks and working filters.
-- Catalog: seven sourced Renogy EU models and twelve explicitly labelled equipment classes, including AC EV charging; no invented prices, stock, reviews or ratings. Existing production models are preserved.
+- Catalog: seven sourced Renogy EU models plus three Waterdrop Europe, three PECRON EU and three BLUETTI EU models; explicitly labelled equipment classes are retained. No invented prices, stock, reviews or ratings. See the [EU source and safety record](docs/eu-supplier-listings-2026-10-12.md).
 - Solutions: apartment, home, solar + battery, RV/caravan, marine, off-grid cabin, workshop and business continuity.
 - Learn: 18 independent guides, twelve topic/reading-level hubs and grouped FAQ.
 - Search: names, brands, specifications, voltage, power, capacity, applications and tags; intersecting known-value filters.
@@ -74,6 +74,8 @@ Run `npx tsx scripts/audit-suppliers.ts` separately from the internal crawler. M
 See [docs/production-environment.md](docs/production-environment.md) and `.env.example`. Public discovery and calculation do not require auth, AI or payment credentials. Visitors use domain email links from their own email application. Production mailbox values are the three addresses above with `CONTACT_EMAIL_VERIFIED=true`. The form requires a verified same-domain sender, `BREVO_SMTP_LOGIN`, `BREVO_SMTP_KEY`, both Turnstile keys and `CONTACT_FORM_ENABLED=true`. Production has been enabled for the authorized delivery verification; do not infer inbox receipt from configuration or SMTP acceptance. A disabled environment shows an unavailable notice without editable controls; GitHub is supplementary. The current application status and release evidence are maintained only in [the readiness report](AFFILIATE_APPLICATION_READINESS.md).
 
 **Renogy / Impact approval is not confirmed.** Current links are ordinary supplier links. Activation requires both `RENOGY_AFFILIATE_APPROVED=true` and `AFFILIATE_TRACKING_ENABLED=true`, with exact Impact-issued HTTPS links mapped by supplier URL in `RENOGY_IMPACT_LINKS_JSON`. The existing provider validates links and disclosure follows actual activation. Merchant model details, Romanian delivery and warranties remain external checks.
+
+**Waterdrop Europe, PECRON EU and BLUETTI EU tracking is OFF.** Separate pending providers cannot be activated by Renogy/global flags. Real product entries explicitly select a supplier from `lib/affiliate/suppliers.ts`; ordinary product/source URLs must match its exact EU origin. Existing Waterdrop discovery is preserved, with model listings in Water / Water & Resilience. No network or commercial approval is inferred from a listing or correspondence.
 
 ## Deployment
 

@@ -1,28 +1,11 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { pathToFileURL } from "node:url";
 import { catalog } from "../lib/affiliate/catalog";
+import { validSupplierUrl } from "../lib/affiliate/suppliers";
+export { validSupplierUrl } from "../lib/affiliate/suppliers";
 
-export function validSupplierUrl(href: string) {
-  try {
-    const url = new URL(href);
-    return (
-      url.protocol === "https:" &&
-      url.hostname === "eu.renogy.com" &&
-      !url.port &&
-      !url.username &&
-      !url.password &&
-      !url.search &&
-      !url.hash &&
-      /^\/products\/[^/]+\/?$/.test(url.pathname) &&
-      !decodeURIComponent(url.pathname).includes("://")
-    );
-  } catch {
-    return false;
-  }
-}
-
-export function supplierOutcome(status: number, finalUrl: string) {
-  if (!validSupplierUrl(finalUrl)) return "destination-needs-review";
+export function supplierOutcome(status: number, finalUrl: string, provider?: string) {
+  if (!validSupplierUrl(finalUrl, provider)) return "destination-needs-review";
   if ([401, 403, 429].includes(status)) return "automated-access-blocked";
   if (status >= 200 && status < 300) return "reachable";
   return "http-needs-review";
@@ -30,6 +13,7 @@ export function supplierOutcome(status: number, finalUrl: string) {
 
 async function main() {
   const results: {
+    provider: string;
     href: string;
     valid: boolean;
     outcome: ReturnType<typeof supplierOutcome> | "invalid-url" | "network-unverified";
@@ -39,27 +23,36 @@ async function main() {
     error?: string;
     causeCode?: string;
   }[] = [];
-  const urls = new Set(
-    catalog.flatMap((p) => [p.productUrl, p.affiliateUrl, ...p.sourceUrls]).filter(Boolean),
-  );
-  for (const href of urls) {
-    const valid = validSupplierUrl(href);
+  const urls = new Map(catalog.flatMap(p =>
+    [p.productUrl, p.affiliateUrl, ...p.sourceUrls].filter(Boolean)
+      .map(href => [`${p.provider}:${href}`, { href, provider: p.provider }] as const)));
+  for (const { href, provider } of urls.values()) {
+    const valid = validSupplierUrl(href, provider);
     if (!valid) {
-      results.push({ href, valid, outcome: "invalid-url" });
+      results.push({ href, provider, valid, outcome: "invalid-url" });
       continue;
     }
     try {
-      const response = await fetch(href, {
-        signal: AbortSignal.timeout(30000),
-        redirect: "follow",
-      });
+      let finalUrl = href;
+      let response: Response;
+      for (let hop = 0; ; hop++) {
+        response = await fetch(finalUrl, { signal: AbortSignal.timeout(30000), redirect: "manual" });
+        const location = response.headers.get("location");
+        if (response.status < 300 || response.status >= 400 || !location) break;
+        const next = new URL(location, finalUrl).href;
+        await response.body?.cancel();
+        finalUrl = next;
+        // Never follow redirects to another merchant, region or tracking service.
+        if (!validSupplierUrl(next, provider) || hop >= 4) break;
+      }
       results.push({
         href,
+        provider,
         valid,
         status: response.status,
-        finalUrl: response.url,
-        regionalDestination: new URL(response.url).hostname === "eu.renogy.com",
-        outcome: supplierOutcome(response.status, response.url),
+        finalUrl,
+        regionalDestination: validSupplierUrl(finalUrl, provider),
+        outcome: supplierOutcome(response.status, finalUrl, provider),
       });
       await response.body?.cancel();
     } catch (error) {
@@ -67,7 +60,7 @@ async function main() {
       const causeCode = cause && typeof cause === "object" && "code" in cause
         ? String(cause.code)
         : undefined;
-      results.push({ href, valid, outcome: "network-unverified", error: String(error), causeCode });
+      results.push({ href, provider, valid, outcome: "network-unverified", error: String(error), causeCode });
     }
   }
   const outcomes = (outcome: string) => results.filter((r) => r.outcome === outcome).length;

@@ -53,6 +53,9 @@ for (const width of [390, 430, 1440]) test(`logo, menus and language preserve cl
       if (await summary.isVisible()) await summary.click();
     }
     await auditLinks(page);
+    const marketplace = page.locator('#mobile-menu > details').filter({ has: page.locator(':scope > summary', { hasText: /^Marketplace$/ }) });
+    // Named details form an accordion: the last section opened closes Marketplace.
+    if (await marketplace.getAttribute("open") === null) await marketplace.locator(':scope > summary').click();
     await page.locator('#mobile-menu a[href="/marketplace"]').click();
   } else {
     for (const trigger of await page.locator("[data-menu-trigger]").all()) {

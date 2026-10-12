@@ -20,11 +20,11 @@ export function commercialCopy(t: Dictionary) {
     supplierNote:
       t["affiliate.active"] === "true"
         ? ro
-          ? "M Air Electro AI este independent. Unele legături marcate sunt afiliate: achizițiile eligibile pot genera un comision. Achiziția se finalizează la furnizor, care stabilește prețul, stocul, plata, livrarea, garanția și retururile. Afilierea nu implică recomandarea unui produs."
-          : "M Air Electro AI is independent. Some marked links are affiliate links: qualifying purchases may generate a commission. Purchases are completed with the supplier, which controls price, stock, payment, delivery, warranty and returns. Affiliation does not imply product endorsement."
+          ? "M Air Electro AI este independent. Numai linkurile marcate ca afiliate pot genera comision pentru achiziții eligibile, după aprobarea și activarea programului respectiv. Linkurile obișnuite nemarcate nu au urmărire afiliată. Furnizorul stabilește prețul, stocul, plata, livrarea, garanția și retururile."
+          : "M Air Electro AI is independent. Only marked affiliate links may generate commission on qualifying purchases after that program is approved and activated. Ordinary unmarked supplier links are not affiliate tracked. The merchant controls price, stock, payment, shipping, warranty and returns."
         : ro
-          ? "M Air Electro AI este un ghid independent. Legăturile către Renogy EU sunt legături obișnuite către furnizor, fără urmărire afiliată. Achiziția se finalizează la furnizor, care stabilește prețul, stocul, plata, livrarea, garanția și retururile. Afilierea nu implică recomandarea unui produs."
-          : "M Air Electro AI is an independent guide. Renogy EU links are ordinary supplier links without affiliate tracking. Purchases are completed with the supplier, which controls price, stock, payment, delivery, warranty and returns. Affiliation does not imply product endorsement.",
+          ? "M Air Electro AI este un ghid independent. Linkurile obișnuite nemarcate către furnizori nu au urmărire afiliată. Numai după aprobarea și activarea unui program, linkurile marcate ca afiliate pot genera comision. Furnizorul stabilește prețul, stocul, plata, livrarea, garanția și retururile."
+          : "M Air Electro AI is an independent guide. Ordinary unmarked supplier links are not affiliate tracked. Only after a program is approved and activated may marked affiliate links generate commission. The merchant controls price, stock, payment, shipping, warranty and returns.",
     price: ro
       ? "Verifică prețul actual la furnizor"
       : "Check current price at supplier",
@@ -51,8 +51,8 @@ export function commercialCopy(t: Dictionary) {
     why: ro ? "De ce merită analizat" : "Why consider this option",
     checked: ro ? "Revizie editorială" : "Editorial review",
     visit: ro
-      ? "Vezi la furnizorul Renogy EU ↗"
-      : "Visit Renogy EU supplier ↗",
+      ? "Vezi la furnizor ↗"
+      : "Visit supplier ↗",
     illustration: ro
       ? "Imagine ilustrativă a categoriei; aspectul modelului real poate diferi."
       : "Illustrative category image; the actual model’s appearance may differ.",

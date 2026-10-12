@@ -60,6 +60,8 @@ Renogy EU is the first intended affiliate supplier, **not an approved partner or
 
 ## Supplier Architecture
 
+12 October 2026 expansion: retain Renogy EU and the existing Waterdrop supplier architecture; add distinct PECRON EU and BLUETTI EU identities. All real products require an explicit supplier, with brand/merchant/origin checked centrally in `lib/affiliate/suppliers.ts`. Nine new EU-source-checked models are documented in `docs/eu-supplier-listings-2026-10-12.md`. Waterdrop remains in Water / Water & Resilience; portable power stations belong to Backup Power. No new prices, stock, ratings, certifications or partner approval are inferred. Waterdrop/PECRON/BLUETTI tracking stays off independently of Renogy's preserved activation gate.
+
 Real models carry official sources and review dates. Classes describe technical roles, not invented purchasable products. No merchant copy or images are reproduced. Original category artwork includes studio-style generated solar panel imagery and schematic illustrations for other families. Category imagery is illustrative, not a photograph of the named model. New suppliers need evidence, regional URL, disclosure and delivery checks. Never label a generic collection URL as a specific model.
 
 ## Search

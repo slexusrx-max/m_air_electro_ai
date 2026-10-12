@@ -1071,7 +1071,7 @@ Object.assign(ro, {
   "marketplace.page.catalogDescription":
     "Nu afișăm stocuri, prețuri sau disponibilitate. Verifică specificațiile finale direct la furnizor.",
   "marketplace.disclosure":
-    "M Air Electro AI este un instrument independent de planificare. Pregătim cererea pentru programul Renogy prin Impact; până la aprobare, legăturile sunt simple legături către furnizor. Prețul, stocul, livrarea și retururile se verifică direct la furnizor.",
+    "M Air Electro AI este un instrument independent de planificare. Linkurile obișnuite nemarcate nu au urmărire afiliată. Numai linkurile marcate, după aprobarea și activarea programului, pot genera comision. Furnizorul gestionează prețul, stocul, plata, livrarea, garanția și retururile.",
   "marketplace.page.inputs":
     "Aceste valori sunt pentru planificare, nu reprezintă un proiect electric final.",
   "marketplace.card.price": "Verifică la furnizor",

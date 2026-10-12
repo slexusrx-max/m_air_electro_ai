@@ -31,6 +31,12 @@ export function matchingSystemCandidates(
   return products.filter(product => {
     if (!product.paths.some(path => paths.includes(path))) return false;
     if (product.kind === "equipment-class") return true;
+    if (product.category === "backup-power") {
+      const output = Number(product.facets.power);
+      const surge = Number(product.facets.surgePower ?? product.facets.power);
+      return Number(product.facets.capacityWh) >= requirements.batteryWh &&
+        output >= requirements.inverterW && surge >= requirements.surgeW;
+    }
     const enough = (field: string, required: number) =>
       !product.facets[field] || Number(product.facets[field]) >= required;
     return enough("capacityWh", requirements.batteryWh) &&

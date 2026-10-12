@@ -90,7 +90,7 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
                 <tr>
                   <th scope="row">{ro ? "Furnizor extern" : "External supplier"}</th>
                   {selected.map(p => {
-                    return <td key={p.id}>{p.productUrl ? <SupplierLink product={p} ro={ro} /> : (ro ? "Niciun furnizor selectat" : "No supplier selected")}</td>;
+                    return <td key={p.id}>{p.productUrl ? <SupplierLink product={p} ro={ro}>{p.merchant}</SupplierLink> : (ro ? "Niciun furnizor selectat" : "No supplier selected")}</td>;
                   })}
                 </tr>
                 <tr>

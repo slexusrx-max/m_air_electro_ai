@@ -2,6 +2,7 @@ import "server-only";
 import { catalog } from "@/lib/affiliate/catalog";
 import { configuredSupplierLink, parseApprovedLinks, type AffiliateConfiguration } from "@/lib/affiliate/configuration";
 import type { AffiliateProvider } from "@/lib/affiliate/types";
+import { assertSupplierUrl } from "../suppliers";
 export const renogyEu: AffiliateProvider = {
   id: "renogy",
   region: "EU",
@@ -22,6 +23,7 @@ export function renogyConfiguration(): AffiliateConfiguration {
   };
 }
 export function renogyLink(productUrl: string) {
+  assertSupplierUrl("renogy", productUrl);
   return configuredSupplierLink(renogyConfiguration(), productUrl);
 }
 

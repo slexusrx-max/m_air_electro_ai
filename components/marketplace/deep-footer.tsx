@@ -66,8 +66,8 @@ export function DeepFooter({ locale }: { locale: Locale }) {
       </div>
       <p className="footer-disclosure">
         {ro
-          ? "România / UE · Descoperire independentă de echipamente. Nu vindem și nu deținem stoc. Renogy EU este primul furnizor vizat; afilierea nu este aprobată. Cumpărarea și retururile se gestionează cu furnizorul extern."
-          : "Romania / EU · Independent equipment discovery. We do not sell or hold inventory. Renogy EU is the first intended supplier; affiliate approval is not in place. Purchases and returns are handled by the external supplier."}
+          ? "România / UE · Descoperire independentă de echipamente. Nu vindem și nu deținem stoc. Linkurile obișnuite nemarcate nu au urmărire afiliată. Numai linkurile marcate, după aprobarea și activarea programului, pot genera comision. Comerciantul gestionează prețul, stocul, plata, livrarea, garanția și retururile."
+          : "Romania / EU · Independent equipment discovery. We do not sell or hold inventory. Ordinary unmarked links are not affiliate tracked. Only marked links, after program approval and activation, may generate commission. The merchant controls price, stock, payment, shipping, warranty and returns."}
       </p>
       <p className="small-copy">© 2026 M Air Electro AI</p>
       <p className="small-copy">{ro ? "Proprietar și editor independent" : "Owner and independent publisher"}: {siteConfig.operatorName} · {ro ? "România" : siteConfig.operatingCountry}. <Link href="/about">{ro ? "Despre editor" : "About the publisher"}</Link></p>
