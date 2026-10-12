@@ -81,6 +81,8 @@ See [docs/production-environment.md](docs/production-environment.md) and `.env.e
 
 Run all checks, commit implementation and alignment, push the reviewed commit to `main`, and confirm the connected Vercel deployment is for that commit. Then rerun browser tests and the crawler with `TEST_BASE_URL=https://mairelectroai.com`. A local build alone is not completion.
 
+Run `npx tsx scripts/verify-suppliers-production.ts` after confirming the production source SHA. This read-only smoke test targets the actual public domain, requires exactly nine Waterdrop/PECRON/BLUETTI models, and verifies HTTP 200, model headings, supplier identity and ordinary untracked CTAs. Success prints `{"verifiedModels":9,"failures":0}` and writes the evidence JSON and screenshot to ignored `.task-work/`. A prior report is not evidence for a new run; check the process exit code and `checkedAt` timestamp.
+
 Optional account, document, AI and saved home-profile flows remain. Ukrainian energy adapters and demonstration datasets are retained as specialized supporting modules, outside primary navigation and the commercial sitemap. Obsolete map/tariff/directory routes redirect to active sections.
 
 External activation dependencies include affiliate approval, approved feeds/assets, real professional onboarding and optional outbound/form delivery. None is implied by a successful build. Publisher identity, the official domain and inbound contact routing are confirmed. Human author/reviewer metadata is published only with page-specific evidence; source-based informational content does not claim professional sign-off. Missing affiliate approval or historical traffic does not prevent applying to a program.

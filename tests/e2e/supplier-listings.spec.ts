@@ -39,6 +39,13 @@ for (const locale of ["ro", "en"] as const) for (const width of [390, 1440]) {
 test("new models can be found, compared and browsed in the correct Water subcategories", async ({ page, context, baseURL }) => {
   test.setTimeout(180000);
   await context.addCookies([{ name: "mr-electro-locale", value: "en", url: baseURL! }]);
+  for (const brand of ["Waterdrop", "PECRON", "BLUETTI"]) {
+    await page.goto(`/search?q=${brand}`);
+    const cards = page.locator(".equipment-card");
+    await expect(cards).toHaveCount(3);
+    for (const product of additions.filter(p => p.brand === brand))
+      await expect(cards.locator(`h3 a[href="/marketplace/products/${product.slug}"]`)).toBeVisible();
+  }
   for (const product of additions) {
     await page.goto(`/search?q=${encodeURIComponent(product.name)}`);
     await expect(page.locator(`main h3 a[href="/marketplace/products/${product.slug}"]`)).toBeVisible();
