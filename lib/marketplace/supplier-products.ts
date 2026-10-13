@@ -22,11 +22,11 @@ const powerStations: PowerStation[] = [
 
 const waterSystems = [
   { id: "waterdrop-g3p600", name: "Waterdrop G3P600", gpd: 600, ratio: "2:1",
-    url: "https://www.waterdropfilter.eu/products/reverse-osmosis-water-filtration-system-g3p600" },
+    url: "https://www.waterdropfilter.de/en/products/g3p600-waterdrop-umkehrosmose-wasserfilteranlage" },
   { id: "waterdrop-g3p800", name: "Waterdrop G3P800", gpd: 800, ratio: "3:1",
-    url: "https://www.waterdropfilter.eu/products/tankless-reverse-osmosis-system-g3p800" },
+    url: "https://www.waterdropfilter.de/en/products/umkehrosmoseanlage-g3p800" },
   { id: "waterdrop-x12", name: "Waterdrop X12", gpd: 1200, ratio: "3:1",
-    url: "https://www.waterdropfilter.eu/products/reverse-osmosis-system-x12" },
+    url: "https://www.waterdropfilter.de/en/products/umkehrosmose-wasserfilter-x12" },
 ];
 
 /** AI-assisted official EU source check, not hands-on testing or human technical approval. */

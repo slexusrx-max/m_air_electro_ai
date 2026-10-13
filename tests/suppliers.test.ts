@@ -42,7 +42,7 @@ test("Waterdrop models stay in water families with bounded manufacturer ratings,
     const p = catalog.find(p => p.id === `waterdrop-${model}`)!;
     assert.ok(p);
     assert.equal(p.provider, "waterdrop-eu");
-    assert.equal(p.merchant, "Waterdrop Europe");
+    assert.equal(p.merchant, "Waterdrop Germany");
     assert.equal(p.brand, "Waterdrop");
     assert.equal(p.category, "water");
     assert.deepEqual(p.paths, ["water", "water/home-purification", "water/reverse-osmosis", "water/under-sink"]);
@@ -54,12 +54,12 @@ test("Waterdrop models stay in water families with bounded manufacturer ratings,
   }
 });
 
-test("new suppliers remain ordinary regardless of global or guessed affiliate environment settings", () => {
+test("pending suppliers remain ordinary regardless of global or guessed affiliate environment settings", () => {
   const old = process.env.AFFILIATE_TRACKING_ENABLED;
   process.env.AFFILIATE_TRACKING_ENABLED = "true";
   try {
-    for (const p of catalog.filter(p => ["waterdrop-eu", "pecron-eu", "bluetti-eu"].includes(p.provider))) {
-      const link = pendingSupplierLink(p.provider as "pecron-eu" | "bluetti-eu" | "waterdrop-eu", p.productUrl);
+    for (const p of catalog.filter(p => ["pecron-eu", "bluetti-eu"].includes(p.provider))) {
+      const link = pendingSupplierLink(p.provider as "pecron-eu" | "bluetti-eu", p.productUrl);
       assert.equal(p.price, null); assert.equal(p.originalPrice, null); assert.equal(p.image, null);
       assert.equal(p.availability, "partner-check");
       assert.equal(p.affiliateUrl, p.productUrl);
@@ -87,7 +87,7 @@ test("EU URL policy rejects cross-supplier, non-EU variants, tracking, encoded o
       assert.equal(supplierOutcome(200, url, other), "destination-needs-review");
     }
   }
-  for (const origin of ["https://www.pecron.com", "https://www.bluettipower.com", "https://ie.bluettipower.eu", "https://www.waterdropfilter.com", "https://eu.pecron.com.evil.com"]) assert.equal(validSupplierUrl(`${origin}/products/example`), false);
+  for (const origin of ["https://www.pecron.com", "https://www.bluettipower.com", "https://ie.bluettipower.eu", "https://www.waterdropfilter.com", "https://www.waterdropfilter.eu", "https://eu.pecron.com.evil.com"]) assert.equal(validSupplierUrl(`${origin}/products/example`), false);
   assert.throws(() => pendingSupplierLink("pecron-eu", "https://www.bluettipower.eu/products/example"));
 });
 

@@ -17,7 +17,7 @@ Architecture, route inventory, repository audit and public deployment results: [
 ## Product modules
 
 - Marketplace: ten main families and 22 category/subcategory routes with buying advice, technical checks and working filters.
-- Catalog: seven sourced Renogy EU models plus three Waterdrop Europe, three PECRON EU and three BLUETTI EU models; explicitly labelled equipment classes are retained. No invented prices, stock, reviews or ratings. See the [EU source and safety record](docs/eu-supplier-listings-2026-10-12.md).
+- Catalog: seven sourced Renogy EU models plus three Waterdrop Germany, three PECRON EU and three BLUETTI EU models; explicitly labelled equipment classes are retained. No invented prices, stock, reviews or ratings. See the [EU source and safety record](docs/eu-supplier-listings-2026-10-12.md).
 - Solutions: apartment, home, solar + battery, RV/caravan, marine, off-grid cabin, workshop and business continuity.
 - Learn: 18 independent guides, twelve topic/reading-level hubs and grouped FAQ.
 - Search: names, brands, specifications, voltage, power, capacity, applications and tags; intersecting known-value filters.
@@ -75,7 +75,7 @@ See [docs/production-environment.md](docs/production-environment.md) and `.env.e
 
 **Renogy / Impact approval is not confirmed.** Current links are ordinary supplier links. Activation requires both `RENOGY_AFFILIATE_APPROVED=true` and `AFFILIATE_TRACKING_ENABLED=true`, with exact Impact-issued HTTPS links mapped by supplier URL in `RENOGY_IMPACT_LINKS_JSON`. The existing provider validates links and disclosure follows actual activation. Merchant model details, Romanian delivery and warranties remain external checks.
 
-**Waterdrop Europe, PECRON EU and BLUETTI EU tracking is OFF.** Separate pending providers cannot be activated by Renogy/global flags. Real product entries explicitly select a supplier from `lib/affiliate/suppliers.ts`; ordinary product/source URLs must match its exact EU origin. Existing Waterdrop discovery is preserved, with model listings in Water / Water & Resilience. No network or commercial approval is inferred from a listing or correspondence.
+**Waterdrop Germany is accepted through Impact, while PECRON EU and BLUETTI EU tracking remains OFF.** Waterdrop stays fail-closed until `WATERDROP_AFFILIATE_APPROVED=true`, `AFFILIATE_TRACKING_ENABLED=true` and exact network-issued links are mapped in `WATERDROP_IMPACT_LINKS_JSON`. Real product entries explicitly select a supplier from `lib/affiliate/suppliers.ts`; ordinary product/source URLs must match its exact European origin. The `/waterdrop` landing page and Water / Water & Resilience listings disclose tracked links beside the action. Delivery to Romania must be confirmed with the merchant; acceptance in the DE program does not prove Romanian delivery. No approval is inferred for the remaining suppliers.
 
 ## Deployment
 

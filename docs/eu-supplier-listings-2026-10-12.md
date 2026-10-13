@@ -6,9 +6,9 @@ AI-assisted official-source check on 12 October 2026. These are manufacturer-sta
 
 | Model | Verified fields published | Official EU model page |
 | --- | --- | --- |
-| Waterdrop G3P600 | Under-sink tankless RO; electricity required; 600 GPD; purified-to-drain 2:1 | https://www.waterdropfilter.eu/products/reverse-osmosis-water-filtration-system-g3p600 |
-| Waterdrop G3P800 | Under-sink tankless RO; electricity required; 800 GPD; purified-to-drain 3:1 | https://www.waterdropfilter.eu/products/tankless-reverse-osmosis-system-g3p800 |
-| Waterdrop X12 | Under-sink tankless RO; electricity required; 1200 GPD; purified-to-drain 3:1 | https://www.waterdropfilter.eu/products/reverse-osmosis-system-x12 |
+| Waterdrop G3P600 | Under-sink tankless RO; electricity required; 600 GPD; purified-to-drain 2:1 | https://www.waterdropfilter.de/en/products/g3p600-waterdrop-umkehrosmose-wasserfilteranlage |
+| Waterdrop G3P800 | Under-sink tankless RO; electricity required; 800 GPD; purified-to-drain 3:1 | https://www.waterdropfilter.de/en/products/umkehrosmoseanlage-g3p800 |
+| Waterdrop X12 | Under-sink tankless RO; electricity required; 1200 GPD; purified-to-drain 3:1 | https://www.waterdropfilter.de/en/products/umkehrosmose-wasserfilter-x12 |
 | PECRON E1500LFP | Base capacity 1536 Wh; rated AC output 2200 W | https://eu.pecron.com/products/e1500lfp-power-station-2200w-1536wh |
 | PECRON E2400LFP | Base capacity 2048 Wh; rated AC output 2400 W | https://eu.pecron.com/products/pecron-e2400lfp-power-station-2400w-2048wh |
 | PECRON F3000LFP | Base capacity 3072 Wh; rated AC output 3600 W | https://eu.pecron.com/products/pecron-f3000lfp-portable-power-station |
@@ -22,7 +22,7 @@ Water production/recovery ratings depend on inlet and filter conditions. No cont
 
 ## Provider identity and URL policy
 
-`lib/affiliate/suppliers.ts` centralizes Renogy EU, Waterdrop Europe, PECRON EU and BLUETTI EU identities and exact official origins. Real catalog entries must explicitly select a supplier; a URL no longer defaults to Renogy. Brand, merchant and region derive from that selection. The existing Waterdrop identity comes from `providers/water.ts`, not a competing registry.
+`lib/affiliate/suppliers.ts` centralizes Renogy EU, Waterdrop Germany, PECRON EU and BLUETTI EU identities and exact official origins. Real catalog entries must explicitly select a supplier; a URL no longer defaults to Renogy. Brand, merchant and region derive from that selection. The Waterdrop DE origin and three exact model pages were updated on 2026-10-13 after Impact rejected the former `.eu` landing domain and accepted `.de`. The Waterdrop identity comes from `providers/water.ts`, not a competing registry.
 
 The shared validator rejects HTTP, credentials, non-default ports, query/fragment tracking, malformed/encoded embedded origins, noncanonical paths, other regions and cross-supplier mismatches. The supplier audit checks every catalog/source URL and validates each redirect before following it. Access blocks and network failures remain unverified evidence, not successes.
 

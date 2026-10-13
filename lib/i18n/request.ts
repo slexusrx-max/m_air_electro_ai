@@ -1,5 +1,6 @@
 import "server-only";
-import { affiliateTrackingActive } from "@/lib/affiliate/providers/renogy";
+import { catalog } from "@/lib/affiliate/catalog";
+import { supplierLink } from "@/lib/affiliate/providers";
 import { cookies } from "next/headers";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import type { Dictionary, Locale } from "@/lib/i18n/types";
@@ -10,8 +11,11 @@ export async function getRequestLocale(): Promise<Locale> {
   return value === "en" || value === "ro" ? value : "ro";
 }
 export async function getRequestDictionary(): Promise<Dictionary> {
+  const affiliateTrackingActive = catalog
+    .filter((product) => product.productUrl)
+    .some((product) => supplierLink(product).tracked);
   return {
     ...getDictionary(await getRequestLocale()),
-    "affiliate.active": String(affiliateTrackingActive()),
+    "affiliate.active": String(affiliateTrackingActive),
   };
 }

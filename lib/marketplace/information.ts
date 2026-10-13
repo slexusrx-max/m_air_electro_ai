@@ -34,8 +34,8 @@ export const information: Record<string, InformationPage> = {
       s(
         "Commercial role",
         "Rol comercial",
-        "We are not the seller, warehouse or an authorized dealer. Renogy EU, Waterdrop Europe, PECRON EU and BLUETTI EU are research and prospective affiliate suppliers, not confirmed partners. Until approval and configuration, supplier links are ordinary external links. The supplier handles orders, delivery, warranty and returns.",
-        "Nu suntem vânzător, depozit sau dealer autorizat. Renogy EU, Waterdrop Europe, PECRON EU și BLUETTI EU sunt furnizori documentați și vizați pentru afiliere, nu parteneri confirmați. Până la aprobare și configurare, linkurile sunt normale. Furnizorul gestionează comenzile, livrarea, garanția și retururile.",
+        "We are not the seller, warehouse or an authorized dealer. Waterdrop Germany has accepted M Air Electro AI into its affiliate program through Impact; marked Waterdrop links may earn commission after tracking is activated. Renogy EU, PECRON EU and BLUETTI EU remain prospective affiliate suppliers. The supplier handles orders, delivery, warranty and returns.",
+        "Nu suntem vânzător, depozit sau dealer autorizat. Waterdrop Germany a acceptat M Air Electro AI în programul afiliat prin Impact; linkurile Waterdrop marcate pot genera comision după activarea urmăririi. Renogy EU, PECRON EU și BLUETTI EU rămân furnizori vizați pentru afiliere. Furnizorul gestionează comenzile, livrarea, garanția și retururile.",
       ),
     ],
   },
@@ -106,8 +106,8 @@ export const information: Record<string, InformationPage> = {
       s(
         "Current status",
         "Starea actuală",
-        "Renogy EU, Waterdrop Europe, PECRON EU and BLUETTI EU are prospective affiliate suppliers. Approval is not confirmed; we do not claim an official partnership, dealership or stock ownership. Ordinary unmarked supplier links are not affiliate tracked. Each program requires its own approval and exact network-issued links before activation.",
-        "Renogy EU, Waterdrop Europe, PECRON EU și BLUETTI EU sunt furnizori vizați pentru afiliere. Aprobarea nu este confirmată; nu pretindem parteneriat oficial, statut de dealer sau proprietate asupra stocului. Linkurile obișnuite nemarcate nu au urmărire afiliată. Fiecare program necesită aprobare separată și linkuri exacte emise de rețea înainte de activare.",
+        "Waterdrop Germany has accepted M Air Electro AI into its affiliate program through Impact. Marked Waterdrop links may earn commission on qualifying purchases after exact network-issued links and tracking are activated. Renogy EU, PECRON EU and BLUETTI EU remain prospective suppliers with ordinary untracked links unless separately approved. We do not claim dealership or stock ownership.",
+        "Waterdrop Germany a acceptat M Air Electro AI în programul afiliat prin Impact. Linkurile Waterdrop marcate pot genera comision pentru achiziții eligibile după activarea linkurilor exacte emise de rețea. Renogy EU, PECRON EU și BLUETTI EU rămân furnizori vizați, cu linkuri obișnuite fără urmărire până la aprobarea separată. Nu pretindem statut de dealer sau proprietate asupra stocului.",
       ),
       s(
         "After approval",
