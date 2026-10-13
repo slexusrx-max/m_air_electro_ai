@@ -14,7 +14,7 @@ export function isSupplierId(value: string): value is SupplierId {
   return Object.hasOwn(suppliers, value);
 }
 
-/** Only canonical, untracked EU model URLs; region-specific variants need review. */
+/** Only canonical, untracked European model URLs; region-specific variants need review. */
 export function validSupplierUrl(href: string, provider?: string): boolean {
   try {
     const url = new URL(href);
@@ -23,7 +23,7 @@ export function validSupplierUrl(href: string, provider?: string): boolean {
       ? Object.values(suppliers).find(entry => entry.origin === url.origin)
       : isSupplierId(provider) ? suppliers[provider] : undefined;
     return Boolean(supplier && supplier.origin === url.origin &&
-      /^\/products\/[a-z0-9]+(?:-[a-z0-9]+)*\/?$/.test(url.pathname) &&
+      /^\/(?:en\/)?products\/[a-z0-9]+(?:-[a-z0-9]+)*\/?$/.test(url.pathname) &&
       !/(?:^|-)(?:uk|ukraine|us|usa|au|canada)(?:-|\/?$)/i.test(url.pathname));
   } catch { return false; }
 }
