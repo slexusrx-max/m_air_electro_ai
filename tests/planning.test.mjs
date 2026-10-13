@@ -141,3 +141,37 @@ test("Renogy activation requires both flags and a mapped catalog URL; disclosure
     assert.equal(api.renogyLink(normal).href, normal);
   }
 });
+
+test("Waterdrop activation requires acceptance, the global gate and an exact Impact link", () => {
+  const normal = "https://www.waterdropfilter.de/en/products/test";
+  const env = {
+    WATERDROP_AFFILIATE_APPROVED: "false",
+    AFFILIATE_TRACKING_ENABLED: "false",
+    WATERDROP_IMPACT_PROGRAM_ID: "waterdrop-de",
+    WATERDROP_IMPACT_LINKS_JSON: JSON.stringify({
+      [normal]: "https://waterdrop.sjv.io/issued-link",
+    }),
+  };
+  const api = load(
+    "lib/affiliate/providers/waterdrop.ts",
+    {
+      "server-only": {},
+      "../suppliers": load("lib/affiliate/suppliers.ts", { "./providers/water": load("lib/affiliate/providers/water.ts") }),
+      "@/lib/affiliate/configuration": load("lib/affiliate/configuration.ts", { "./tracking": load("lib/affiliate/tracking.ts") }),
+    },
+    { process: { env } },
+  );
+  assert.equal(api.waterdropLink(normal).tracked, false);
+  env.WATERDROP_AFFILIATE_APPROVED = "true";
+  assert.equal(api.waterdropLink(normal).tracked, false);
+  env.AFFILIATE_TRACKING_ENABLED = "true";
+  const active = api.waterdropLink(normal);
+  assert.equal(active.tracked, true);
+  assert.equal(active.href, "https://waterdrop.sjv.io/issued-link");
+  assert.equal(active.network, "impact");
+  assert.equal(active.programId, "waterdrop-de");
+  env.WATERDROP_IMPACT_LINKS_JSON = JSON.stringify({
+    "https://www.waterdropfilter.de/en/products/other": "https://waterdrop.sjv.io/other",
+  });
+  assert.equal(api.waterdropLink(normal).href, normal);
+});

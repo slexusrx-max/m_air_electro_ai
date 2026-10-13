@@ -36,7 +36,7 @@ test("missing evidence never becomes a contaminant match", () => {
 });
 test("supplier preparation has no approval or tracking and turquoise stays scoped", () => {
   for (const supplier of waterSuppliers) {
-    assert.equal(supplier.affiliateApproved, false);
+    assert.equal(supplier.affiliateApproved, supplier.id === "waterdrop-eu");
     if (supplier.phase === "initial") {
       const url = new URL(supplier.url!);
       assert.equal(url.protocol, "https:"); assert.equal(url.search, "");
@@ -45,4 +45,6 @@ test("supplier preparation has no approval or tracking and turquoise stays scope
   assert.equal(visualFamily("/"), "brand");
   assert.equal(visualFamily("/marketplace"), "marketplace");
   assert.equal(visualFamily("/marketplace/water"), "water");
+  assert.equal(visualFamily("/waterdrop"), "water");
+  assert.ok(publicRoutes.includes("/waterdrop"));
 });
