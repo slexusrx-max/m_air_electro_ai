@@ -6,6 +6,7 @@ export const publicRoutes = [
   "/",
   "/marketplace",
   "/marketplace/find-my-solution",
+  "/waterdrop",
   "/solutions",
   "/learn",
   "/faq",
