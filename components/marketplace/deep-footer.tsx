@@ -14,6 +14,8 @@ export function DeepFooter({ locale }: { locale: Locale }) {
         { label: ro ? "Pentru afaceri" : "For business", href: "/business" },
         { label: ro ? "Experți" : "Experts", href: "/experts" },
         { label: "Contact", href: "/contact" },
+        { label: "Renogy", href: "/renogy" },
+        { label: "Waterdrop", href: "/waterdrop" },
         { label: ro ? "Media kit și parteneriate" : "Media kit & partnerships", href: "/partnerships" },
       ],
     },
@@ -55,7 +57,7 @@ export function DeepFooter({ locale }: { locale: Locale }) {
               <Link href={g.href}>{g.label}</Link>
             </h2>
             <ul>
-              {g.children.slice(0, g.href === "/learn" ? 6 : 10).map((i) => (
+              {g.children.slice(0, g.href === "/learn" ? 6 : g.href === "/marketplace" ? g.children.length : 10).map((i) => (
                 <li key={i.href}>
                   <Link href={i.href}>{i.label}</Link>
                 </li>

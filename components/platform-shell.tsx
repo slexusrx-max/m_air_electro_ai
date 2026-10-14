@@ -6,6 +6,7 @@ import { navigation } from "@/lib/marketplace/navigation";
 import { SupplierLinksProvider } from "@/components/marketplace/supplier-link";
 import { supplierLink } from "@/lib/affiliate/providers";
 import { catalog } from "@/lib/affiliate/catalog";
+import { CommercialNotice } from "@/components/marketplace/commercial-notice";
 type PlatformShellProps = {
   children: React.ReactNode;
   contentClassName?: string;
@@ -41,8 +42,11 @@ export async function PlatformShell({
         locale={locale}
         groups={navigation(locale)}
       />
+      <CommercialNotice ro={locale === "ro"} />
       <div id="main-content" tabIndex={-1} className={contentClassName}>
-        <SupplierLinksProvider links={supplierLinks}>{children}</SupplierLinksProvider>
+        <SupplierLinksProvider links={supplierLinks}>
+          {children}
+        </SupplierLinksProvider>
       </div>
       <DeepFooter locale={locale} />
     </div>

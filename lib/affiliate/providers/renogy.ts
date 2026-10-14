@@ -3,6 +3,7 @@ import { catalog } from "@/lib/affiliate/catalog";
 import { configuredSupplierLink, parseApprovedLinks, type AffiliateConfiguration } from "@/lib/affiliate/configuration";
 import type { AffiliateProvider } from "@/lib/affiliate/types";
 import { assertSupplierUrl } from "../suppliers";
+import { renogyProgram, verifiedImpactLinks } from "../renogy-policy";
 export const renogyEu: AffiliateProvider = {
   id: "renogy",
   region: "EU",
@@ -10,16 +11,19 @@ export const renogyEu: AffiliateProvider = {
   trackingEnvironmentVariable: "RENOGY_IMPACT_LINKS_JSON",
   buildAffiliateUrl: (productUrl) => renogyLink(productUrl).href,
   disclosure:
-    "Ordinary supplier links until an approved relationship is activated.",
+    "Independent Renogy affiliate partner. Unmarked supplier links remain ordinary; marked links may earn commission only after verified Impact activation.",
 };
 export function renogyConfiguration(): AffiliateConfiguration {
   return {
     provider: "renogy", network: "impact",
-    programId: process.env.RENOGY_IMPACT_PROGRAM_ID?.trim() || null,
-    approved: process.env.RENOGY_AFFILIATE_APPROVED === "true",
-    trackingEnabled: process.env.AFFILIATE_TRACKING_ENABLED === "true",
+    programId: renogyProgram.programId,
+    approved: renogyProgram.approved,
+    trackingEnabled: process.env.AFFILIATE_TRACKING_ENABLED === "true"
+      && process.env.RENOGY_AFFILIATE_APPROVED === "true"
+      && process.env.RENOGY_IMPACT_EU_VERIFIED === "true"
+      && (!process.env.RENOGY_IMPACT_PROGRAM_ID || process.env.RENOGY_IMPACT_PROGRAM_ID === renogyProgram.programId),
     affiliateDisclosureRequired: true,
-    links: parseApprovedLinks(process.env.RENOGY_IMPACT_LINKS_JSON),
+    links: verifiedImpactLinks(parseApprovedLinks(process.env.RENOGY_IMPACT_LINKS_JSON), process.env.RENOGY_IMPACT_VERIFIED_ORIGINS_JSON),
   };
 }
 export function renogyLink(productUrl: string) {

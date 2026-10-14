@@ -1,12 +1,20 @@
 # Renogy EU / Impact application readiness
 
-## Multi-supplier preparation - 12 October 2026
+## Current affiliate status - 14 October 2026
+
+The owner confirms Renogy Impact approval on 14 October 2026, program `14864`, advertiser `3086767`. This supersedes historical pending-approval statements below, but does not confirm EU campaign eligibility, active tracking, commissions or dealer status. Waterdrop Germany was independently launched on 13 October; its exact existing links and activation settings must remain intact. PECRON EU and BLUETTI EU remain unapproved, ordinary-link suppliers.
+
+The current Renogy work adds `/renogy`, homepage/category/product/navigation entry points, visible pre-content RO/EN disclosures and fail-closed EU/origin activation controls. Impact now shows its sign-in form after the initial security check; owner authentication is still required. No Renogy link, banner license, territory or commission action has been obtained during this work. See [the detailed launch and evidence record](docs/renogy-affiliate-launch-2026-10-14.md). Production verification must be recorded against the actual deployed SHA; local build success is not launch proof.
+
+Contact configuration and the owner-confirmed 1 October inbox receipt remain unchanged. No test email, order or account creation is authorized by the read-only release test suite.
+
+## Historical multi-supplier preparation - 12 October 2026
 
 Renogy EU, Waterdrop Europe, PECRON EU and BLUETTI EU remain prospective affiliate suppliers, not approved partners. The nine new source-backed EU listings and separate provider identities are documented in [the supplier evidence record](docs/eu-supplier-listings-2026-10-12.md). Ordinary unmarked supplier links are untracked; prices and stock remain unknown. Waterdrop/PECRON/BLUETTI configurations remain explicitly pending with no tracking links or network IDs, independent of Renogy's existing Impact gate. Source checking does not establish human technical approval, campaign acceptance, granted commission or eligibility.
 
 The [8 October outreach record](docs/affiliate-outreach-2026-10-08.md) establishes correspondence only. This catalog task does not submit applications or accept agreements. Future activation requires actual program acceptance, exact issued links/IDs, confirmed EU destinations and appropriate active disclosures. Existing contact-delivery evidence below remains unchanged; no new message is sent to re-verify it. Public production release verification is reported only after the matching commit is deployed and smoke-tested.
 
-## Current affiliate status — 3 October 2026
+## Historical affiliate status — 3 October 2026
 
 The owner has now authorized truthful publisher onboarding and suitable program applications. The prior owner-GO gate below is historical. The existing Impact publisher account was accessed and `mairelectroai.com` was verified as its website. The primary-property setting remains unchanged after automatic approval review blocked that action; renewed sign-in and confirmation are pending. No program application or agreement was submitted, no approval or tracking link was obtained, and ordinary supplier links remain active. See [the Impact onboarding report](docs/impact-onboarding.md) for account evidence, program findings, payout requirements and website preparation.
 

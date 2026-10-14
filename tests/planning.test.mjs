@@ -101,11 +101,13 @@ test("Romanian runtime dictionary contains late-added English fallback keys", ()
   assert.equal(ro.locale, "ro");
 });
 
-test("Renogy activation requires both flags and a mapped catalog URL; disclosure follows the links", () => {
+test("Renogy approval is separate from both activation flags, EU verification and exact trusted links", () => {
   const normal = "https://eu.renogy.com/products/test";
   const env = {
     RENOGY_AFFILIATE_APPROVED: "false",
     AFFILIATE_TRACKING_ENABLED: "false",
+    RENOGY_IMPACT_EU_VERIFIED: "false",
+    RENOGY_IMPACT_VERIFIED_ORIGINS_JSON: "[]",
     RENOGY_IMPACT_LINKS_JSON: JSON.stringify({
       [normal]: "https://example.org/approved",
     }),
@@ -114,6 +116,7 @@ test("Renogy activation requires both flags and a mapped catalog URL; disclosure
     "lib/affiliate/providers/renogy.ts",
     {
       "server-only": {},
+      "../renogy-policy": load("lib/affiliate/renogy-policy.ts"),
       "../suppliers": load("lib/affiliate/suppliers.ts", { "./providers/water": load("lib/affiliate/providers/water.ts") }),
       "@/lib/affiliate/catalog": {
         catalog: [{ provider: "renogy", productUrl: normal }],
@@ -123,10 +126,19 @@ test("Renogy activation requires both flags and a mapped catalog URL; disclosure
     { process: { env } },
   );
   assert.equal(api.affiliateTrackingActive(), false);
+  assert.equal(api.renogyLink(normal).approvalStatus, "approved");
+  assert.equal(api.renogyLink(normal).programId, "14864");
   env.RENOGY_AFFILIATE_APPROVED = "true";
   assert.equal(api.affiliateTrackingActive(), false);
   env.AFFILIATE_TRACKING_ENABLED = "true";
+  assert.equal(api.affiliateTrackingActive(), false);
+  env.RENOGY_IMPACT_EU_VERIFIED = "true";
+  assert.equal(api.affiliateTrackingActive(), false);
+  env.RENOGY_IMPACT_VERIFIED_ORIGINS_JSON = '["https://example.org"]';
   assert.equal(api.affiliateTrackingActive(), true);
+  env.RENOGY_IMPACT_PROGRAM_ID = "wrong-program";
+  assert.equal(api.affiliateTrackingActive(), false);
+  delete env.RENOGY_IMPACT_PROGRAM_ID;
   assert.equal(
     api.renogyEu.buildAffiliateUrl(normal),
     "https://example.org/approved",

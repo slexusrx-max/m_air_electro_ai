@@ -10,9 +10,11 @@ import { categoryByPath } from "@/lib/marketplace/content";
 export function ProductCard({
   product,
   dictionary: t,
+  extended = false,
 }: {
   product: CatalogProduct;
   dictionary: Dictionary;
+  extended?: boolean;
 }) {
   const p = product as Equipment;
   const ro = t["locale.code"] === "ro";
@@ -48,6 +50,11 @@ export function ProductCard({
             </div>
           ))}
       </dl>
+      {extended && <div className="product-context">
+        <p><strong>{ro ? "Utilizare" : "Applications"}</strong>{ro ? p.bestFor.ro : p.bestFor.en}</p>
+        <p><strong>{ro ? "Compatibilitate" : "Compatibility"}</strong>{ro ? p.compatibility.ro : p.compatibility.en}</p>
+        <p><strong>{ro ? "Limite" : "Limitations"}</strong>{ro ? p.limitations.ro : p.limitations.en}</p>
+      </div>}
       <Link className="text-link" href={`/marketplace/products/${p.slug}`}>
         {ro ? "Detalii și compatibilitate" : "Details & compatibility"} →
       </Link>
