@@ -446,6 +446,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 @media (max-width: 480px) { .brand-hero { padding: 23px 20px; } .brand-hero h1 { font-size: 2.4rem; } .brand-hero-art { border-radius: 16px; } }
 @supports not (backdrop-filter: blur(1px)) { .glass-panel, .content-panel, .commerce-header, .discovery-card { background: #edf5e9; color: #173c34; } }
+.commercial-notice { width: calc(100% - 32px); max-width: 1240px; margin: 24px auto 0; display: flex; align-items: baseline; gap: 18px; padding: 16px 20px; border: 1px solid #cfdbd1; border-radius: 14px; background: #f1f5eb; color: #314e42; font-size: 12px; line-height: 1.7; }
+.commercial-notice p { margin: 0; }
+.commercial-notice-label { font-size: 10px; letter-spacing: .12em; font-weight: 750; flex-shrink: 0; }
+.commercial-notice a { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+.product-context { display: grid; gap: 12px; border-top: 1px solid #d9e4d9; padding-top: 16px; margin-bottom: 16px; }
+.product-context p { font-size: 12px; line-height: 1.65; margin: 0; }
+.product-context strong { display: block; color: #254d3e; font-size: 11px; margin-bottom: 4px; }
+@media (max-width: 600px) { .commercial-notice { display: block; padding: 14px 16px; } .commercial-notice-label { display: block; margin-bottom: 5px; } }
 @media (prefers-reduced-motion: reduce) {
   .discovery-hero, .page-intro { animation: none; }
   .discovery-card:hover, .equipment-card:hover, .equipment-card:focus-within, .commerce-page .button-primary:hover, .commerce-page .button-outline:hover { transform: none; }

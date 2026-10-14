@@ -72,7 +72,7 @@ test("legacy product URLs preserve models, schema and supplier disclosure", asyn
     expect(data.aggregateRating).toBeUndefined();
   }
   await expect(page.locator(".supplier-disclosure")).toContainText(
-    "fără urmărire afiliată",
+    "Linkurile obișnuite nemarcate către furnizori nu au urmărire afiliată",
   );
 });
 test("keyboard skip link reaches the main content", async ({ page }) => {

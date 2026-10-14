@@ -80,6 +80,7 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           }))}
         />
         <p className="category-topics">{local(c.topics, locale)}</p>
+        {catalog.some(p => p.provider === "renogy" && p.paths.includes(c.path)) && <p className="small-copy"><Link className="text-link" href="/renogy">Renogy · {ro ? "partener afiliat independent: modele, limite și dimensionare" : "independent affiliate partner: models, limitations and sizing"} →</Link></p>}
         <CatalogBrowser
           products={catalog.filter((p) => p.paths.includes(c.path))}
           query={query}

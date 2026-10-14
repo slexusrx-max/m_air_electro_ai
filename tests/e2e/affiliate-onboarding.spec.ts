@@ -2,10 +2,9 @@ import { test, expect } from "@playwright/test";
 import { validSupplierUrl } from "../../lib/affiliate/suppliers";
 
 for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
-  test(`supplier links and disclosure stay honest in ${locale} at ${width}px`, async ({ page, context }, info) => {
+  test(`supplier links and disclosure stay honest in ${locale} at ${width}px`, async ({ page, context, baseURL }, info) => {
     await page.setViewportSize({ width, height: 900 });
-    await page.goto("/");
-    await context.addCookies([{ name: "mr-electro-locale", value: locale, url: page.url() }]);
+    await context.addCookies([{ name: "mr-electro-locale", value: locale, url: baseURL! }]);
     const errors: string[] = [], analytics: string[] = [];
     page.on("pageerror", e => errors.push(e.message));
     page.on("request", r => { if (r.url().includes("plausible.io/api/event")) analytics.push(r.url()); });

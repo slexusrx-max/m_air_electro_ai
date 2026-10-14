@@ -66,6 +66,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const deploymentCommit = process.env.VERCEL_GIT_COMMIT_SHA;
   return (
     <html
       lang={await getRequestLocale()}
@@ -73,6 +74,7 @@ export default async function RootLayout({
       className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
       <head>
+        {deploymentCommit && /^[a-f0-9]{40}$/i.test(deploymentCommit) && <meta name="deployment-commit" content={deploymentCommit} />}
         {/* Impact requires its custom value attribute in addition to content. */}
         <meta
           name="impact-site-verification"

@@ -1,6 +1,7 @@
 import { chromium, expect } from "@playwright/test";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { catalog } from "../lib/affiliate/catalog";
+import { expectSupplierCta } from "../tests/supplier-link-expectations";
 
 async function main() {
   mkdirSync(".task-work", { recursive: true });
@@ -66,24 +67,7 @@ async function main() {
 
       await expect(cta).toBeVisible();
 
-      await expect(cta).toHaveAttribute(
-        "href",
-        product.productUrl,
-      );
-
-      await expect(cta).toHaveAttribute(
-        "data-supplier",
-        product.provider,
-      );
-
-      await expect(cta).toHaveAttribute(
-        "data-tracking-status",
-        "ordinary",
-      );
-
-      const rel = (await cta.getAttribute("rel")) ?? "";
-
-      expect(rel).not.toContain("sponsored");
+      await expectSupplierCta(cta, product, true);
 
       results.push({
         model: product.name,

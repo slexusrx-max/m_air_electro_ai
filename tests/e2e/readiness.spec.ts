@@ -41,7 +41,9 @@ test("editorial sources and policies are clear without claiming unsupported revi
   await expect(page.locator(".editorial-record")).not.toContainText("Unconfirmed");
   await page.goto("/partnerships");
   await expect(page.locator("main")).toContainText("No verified audience figures are published");
-  await expect(page.locator("main")).toContainText("affiliation not yet approved");
+  await expect(page.locator("main")).toContainText("The owner confirmed Renogy Impact approval on 14 October 2026");
+  await expect(page.locator("main")).toContainText("independent affiliate partner, not an authorized dealer");
+  await expect(page.locator("main")).toContainText("EU campaign eligibility are verified and activated");
   await page.goto("/contact");
   await expectContactState(page);
   await expect(page.locator('main a[href^="mailto:contact@mairelectroai.com"]').first()).toBeVisible();

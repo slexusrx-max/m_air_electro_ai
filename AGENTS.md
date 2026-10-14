@@ -29,7 +29,7 @@ Read PROJECT_BLUEPRINT.md and README.md. M Air Electro AI is a marketplace-first
 1. Marketplace-first is authoritative. Do not turn the homepage back into an AI diagnostics landing page.
 2. Do not restore Ukraine outage/address tools to primary navigation. Retained specialist adapters are supporting modules.
 3. Never invent affiliate approval, partnership, dealer status, inventory, prices, reviews, ratings or verified professionals.
-4. Renogy EU is the first intended affiliate target; approval is not confirmed. Preserve ordinary supplier links until actual approval and Impact configuration exist.
+4. Owner-confirmed 14 October 2026: Renogy Impact approval (program 14864, advertiser 3086767); Waterdrop Germany is separately approved. Approval is not tracking activation or dealer status. Renogy stays ordinary until exact Impact links, verified tracking origins and EU campaign eligibility are documented and the existing activation gates are enabled. Preserve Waterdrop's independent configuration.
 5. Do not redesign product direction without owner instruction.
 6. Extend the existing architecture; do not create parallel replacements.
 7. Integrate new commercial features with Marketplace, Solutions and Learn where appropriate.

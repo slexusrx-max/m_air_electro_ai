@@ -5,6 +5,7 @@ import { ProductCard } from "@/components/marketplace/product-card";
 import { SupplierLink } from "@/components/marketplace/supplier-link";
 import { PlatformShell } from "@/components/platform-shell";
 import { catalog } from "@/lib/affiliate/catalog";
+import { supplierLink } from "@/lib/affiliate/providers";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { buildMetadata } from "@/lib/metadata";
 import type { Equipment } from "@/lib/marketplace/catalog-data";
@@ -35,7 +36,7 @@ export default async function WaterdropPage() {
     getRequestDictionary(),
   ]);
   const ro = locale === "ro";
-  const trackingActive = dictionary["affiliate.active"] === "true";
+  const trackingActive = waterdropProducts.some((product) => supplierLink(product).tracked);
 
   return (
     <PlatformShell>

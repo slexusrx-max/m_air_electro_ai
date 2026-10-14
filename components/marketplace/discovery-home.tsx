@@ -9,6 +9,7 @@ import { ProductCard } from "./product-card";
 import { LinkGrid } from "./shared";
 import { AffiliateDisclosure } from "./affiliate-disclosure";
 import { WaterPromo } from "./water-promo";
+import { RenogyFeature } from "./renogy-feature";
 export async function DiscoveryHome({
   marketplace = false,
   requirements,
@@ -114,6 +115,7 @@ export async function DiscoveryHome({
           </p>
         </aside>}
       </section>
+      {!marketplace && <RenogyFeature ro={ro} />}
       {!marketplace && <WaterPromo ro={ro} />}
       {requirements && (requirements.batteryKwh || requirements.inverterKw) && (
         <section className="content-panel">

@@ -14,7 +14,7 @@ export function navigation(locale: Locale): NavigationGroup[] {
     {
       label: "Marketplace",
       href: "/marketplace",
-      children: rootCategories.map((c) => ({
+      children: [{ label: l("Partner storefronts", "Vitrine partenere"), href: "/partnerships", children: [{ label: "Renogy", href: "/renogy" }, { label: "Waterdrop", href: "/waterdrop" }] }, ...rootCategories.map((c) => ({
         label: c.path === "generators" ? l("Power generators", "Generatoare electrice") : local(c.title, locale),
         href: `/marketplace/${c.path}`,
         children: categories
@@ -23,7 +23,7 @@ export function navigation(locale: Locale): NavigationGroup[] {
             label: local(n.title, locale),
             href: `/marketplace/${n.path}`,
           })),
-      })),
+      }))],
     },
     {
       label: l("Solutions", "Soluții"),

@@ -34,8 +34,8 @@ export const information: Record<string, InformationPage> = {
       s(
         "Commercial role",
         "Rol comercial",
-        "We are not the seller, warehouse or an authorized dealer. Waterdrop Germany has accepted M Air Electro AI into its affiliate program through Impact; marked Waterdrop links may earn commission after tracking is activated. Renogy EU, PECRON EU and BLUETTI EU remain prospective affiliate suppliers. The supplier handles orders, delivery, warranty and returns.",
-        "Nu suntem vânzător, depozit sau dealer autorizat. Waterdrop Germany a acceptat M Air Electro AI în programul afiliat prin Impact; linkurile Waterdrop marcate pot genera comision după activarea urmăririi. Renogy EU, PECRON EU și BLUETTI EU rămân furnizori vizați pentru afiliere. Furnizorul gestionează comenzile, livrarea, garanția și retururile.",
+        "We are not the seller, warehouse or an authorized dealer. M Air Electro AI is an independent affiliate partner of Renogy and Waterdrop Germany through Impact. Renogy approval was confirmed by the owner on 14 October 2026. Approval is separate from tracking activation and EU campaign eligibility. Only marked affiliate links may earn commission on qualifying purchases. PECRON EU and BLUETTI EU remain prospective affiliate suppliers. The supplier handles orders, delivery, warranty and returns.",
+        "Nu suntem vânzător, depozit sau dealer autorizat. M Air Electro AI este partener afiliat independent Renogy și Waterdrop Germany prin Impact. Aprobarea Renogy a fost confirmată de proprietar la 14 octombrie 2026. Aprobarea este separată de activarea urmăririi și de eligibilitatea campaniei EU. Numai linkurile marcate ca afiliate pot genera comision pentru achiziții eligibile. PECRON EU și BLUETTI EU rămân furnizori vizați pentru afiliere. Furnizorul gestionează comenzile, livrarea, garanția și retururile.",
       ),
     ],
   },
@@ -106,8 +106,8 @@ export const information: Record<string, InformationPage> = {
       s(
         "Current status",
         "Starea actuală",
-        "Waterdrop Germany has accepted M Air Electro AI into its affiliate program through Impact. Marked Waterdrop links may earn commission on qualifying purchases after exact network-issued links and tracking are activated. Renogy EU, PECRON EU and BLUETTI EU remain prospective suppliers with ordinary untracked links unless separately approved. We do not claim dealership or stock ownership.",
-        "Waterdrop Germany a acceptat M Air Electro AI în programul afiliat prin Impact. Linkurile Waterdrop marcate pot genera comision pentru achiziții eligibile după activarea linkurilor exacte emise de rețea. Renogy EU, PECRON EU și BLUETTI EU rămân furnizori vizați, cu linkuri obișnuite fără urmărire până la aprobarea separată. Nu pretindem statut de dealer sau proprietate asupra stocului.",
+        "M Air Electro AI is an independent Renogy and Waterdrop Germany affiliate partner through Impact. The owner confirmed Renogy approval on 14 October 2026. Approval does not establish dealership, EU campaign eligibility or active tracking. Marked affiliate links may earn commission on qualifying purchases at no additional cost to you, only after exact network-issued URLs and tracking are activated. Ordinary unmarked supplier links are not affiliate tracked. PECRON EU and BLUETTI EU remain unapproved prospective programs. The merchant controls price, stock, payment, shipping, warranty and returns. We do not claim dealership or stock ownership.",
+        "M Air Electro AI este partener afiliat independent Renogy și Waterdrop Germany prin Impact. Proprietarul a confirmat aprobarea Renogy la 14 octombrie 2026. Aprobarea nu stabilește statut de dealer, eligibilitatea campaniei EU sau urmărire activă. Linkurile marcate ca afiliate pot genera comision pentru achiziții eligibile, fără cost suplimentar pentru tine, numai după activarea adreselor exacte emise de rețea. Linkurile obișnuite nemarcate nu au urmărire afiliată. PECRON EU și BLUETTI EU rămân programe vizate, neaprobate. Comerciantul controlează prețul, stocul, plata, livrarea, garanția și retururile. Nu pretindem statut de dealer sau proprietate asupra stocului.",
       ),
       s(
         "After approval",

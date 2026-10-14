@@ -117,7 +117,7 @@ type PresentationMetrics = {
 };
 
 for (const width of [390, 1440]) {
-  for (const path of ["/", "/marketplace"]) {
+  for (const path of ["/", "/marketplace", "/renogy", "/waterdrop"]) {
     test(`performance evidence and relevant artwork ${path} at ${width}px`, async ({ page }, info) => {
       await page.setViewportSize({ width, height: 900 });
       await page.addInitScript(() => {

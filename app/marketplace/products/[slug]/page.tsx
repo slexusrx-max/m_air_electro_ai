@@ -70,6 +70,7 @@ export default async function Page({ params }: Props) {
             </p>
           </div>
           <article>
+            {(p.provider === "renogy" || p.provider === "waterdrop-eu") && <Link className="text-link" href={p.provider === "renogy" ? "/renogy" : "/waterdrop"}>{ro ? "Vezi vitrina" : "Explore storefront"}: {p.brand} →</Link>}
             <Intro
               eyebrow={
                 p.kind === "product"

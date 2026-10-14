@@ -11,6 +11,7 @@ export function WaterPromo({ ro }: { ro: boolean }) {
     <div className={styles.actions}>
       <Link className={styles.primary} href="/marketplace/water">{ro ? "Explorează soluțiile de apă" : "Explore Water Solutions"} ↗</Link>
       <Link href="/marketplace/water#finder">{ro ? "Găsește sistemul tău de apă" : "Find Your Water System"} →</Link>
+      <Link href="/waterdrop">{ro ? "Waterdrop · partener afiliat independent" : "Waterdrop · independent affiliate partner"} →</Link>
     </div>
   </section>;
 }

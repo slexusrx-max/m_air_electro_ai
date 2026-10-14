@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { catalog } from "../../lib/affiliate/catalog";
-import { validSupplierUrl } from "../../lib/affiliate/suppliers";
+import { expectSupplierCta } from "../supplier-link-expectations";
 
 const additions = catalog.filter(p => ["waterdrop-eu", "pecron-eu", "bluetti-eu"].includes(p.provider));
 for (const locale of ["ro", "en"] as const) for (const width of [390, 1440]) {
@@ -14,11 +14,8 @@ for (const locale of ["ro", "en"] as const) for (const width of [390, 1440]) {
       expect((await page.goto(`/marketplace/products/${product.slug}`))?.status()).toBe(200);
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(product.name);
       const cta = page.locator(`.product-detail a[data-supplier-product="${product.id}"]`);
-      await expect(cta).toHaveAttribute("href", product.productUrl);
-      await expect(cta).toHaveAttribute("data-supplier", product.provider);
-      await expect(cta).toHaveAttribute("data-tracking-status", "ordinary");
+      await expectSupplierCta(cta, product, new URL(baseURL!).hostname === "mairelectroai.com");
       await expect(cta).toContainText(product.merchant);
-      expect(await cta.getAttribute("rel")).not.toContain("sponsored");
       const source = page.getByRole("link", { name: `${product.merchant} · ${locale === "ro" ? "pagina oficială a modelului" : "official model page"} ↗`, exact: true });
       await expect(source).toHaveAttribute("href", product.productUrl);
       await expect(page.locator("main")).not.toContainText("Renogy EU");
@@ -63,8 +60,7 @@ test("new models can be found, compared and browsed in the correct Water subcate
       const product = catalog.find(p => p.id === id)!;
       const link = page.locator(`table a[data-supplier-product="${id}"]`);
       await expect(link).toContainText(product.merchant);
-      await expect(link).toHaveAttribute("href", product.productUrl);
-      expect(validSupplierUrl((await link.getAttribute("href"))!, product.provider)).toBe(true);
+      await expectSupplierCta(link, product, new URL(baseURL!).hostname === "mairelectroai.com");
     }
   }
 });
