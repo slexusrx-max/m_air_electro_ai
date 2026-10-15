@@ -146,3 +146,20 @@ test("Romanian is available without removing English or saved Ukrainian locale",
   }
   assert.equal(getDictionary("ro")["auth.login"], "Autentificare");
 });
+
+test("brand filtering intersects technical filters and rejects unknown brands", () => {
+  const results = filterEquipment(catalog, { brand: "Renogy", capacityAh: "100" });
+  assert.ok(results.length > 0);
+  assert.ok(results.every(p => p.brand === "Renogy" && p.facets.capacityAh === "100"));
+  assert.equal(filterEquipment(catalog, { brand: "unknown-brand" }).length, 0);
+});
+test("catalog sorting preserves source order and returns only filtered records", () => {
+  const before = catalog.map(p => p.id);
+  const byName = filterEquipment(catalog, { brand: "Renogy", sort: "name" });
+  assert.deepEqual(byName.map(p => p.name), byName.map(p => p.name).sort((a, b) => a.localeCompare(b, "en", { numeric: true })));
+  const models = filterEquipment(catalog, { sort: "models" });
+  const firstClass = models.findIndex(p => p.kind !== "product");
+  assert.ok(models.slice(firstClass).every(p => p.kind !== "product"));
+  assert.deepEqual(catalog.map(p => p.id), before);
+  assert.deepEqual(filterEquipment(catalog, { sort: "unknown" }).map(p => p.id), before);
+});
