@@ -41,7 +41,7 @@ export function filterEquipment(products: Equipment[], raw: CatalogQuery) {
   const terms = normalizeSearch(query.q ?? "")
     .split(/\s+/)
     .filter(Boolean);
-  return products.filter((p) => {
+  const results = products.filter((p) => {
     const names: Record<string, string> = {
       "lithium-batteries": "batteries acumulator acumulatoare baterii",
       inverters: "invertoare invertor",
@@ -74,9 +74,13 @@ export function filterEquipment(products: Equipment[], raw: CatalogQuery) {
       Object.keys(facetLabels).every(
         (key) => !query[key] || p.facets[key] === query[key],
       ) &&
-      (!query.kind || p.kind === query.kind)
+      (!query.kind || p.kind === query.kind) &&
+      (!query.brand || p.brand === query.brand)
     );
   });
+  if (query.sort === "name") return results.sort((a, b) => a.name.localeCompare(b.name, "en", { numeric: true }));
+  if (query.sort === "models") return results.sort((a, b) => Number(b.kind === "product") - Number(a.kind === "product"));
+  return results;
 }
 export function parseComparison(
   ids: string | undefined,
