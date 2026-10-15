@@ -9,6 +9,7 @@ import { ProductCard } from "./product-card";
 import { AffiliateDisclosure } from "./affiliate-disclosure";
 import { WaterPromo } from "./water-promo";
 import { RenogyFeature } from "./renogy-feature";
+import { EquipmentVisual } from "./equipment-visual";
 import { CatalogBrowser } from "./catalog-browser";
 
 const applications = [
@@ -26,17 +27,17 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
   const dictionary = await getRequestDictionary();
   const ro = locale === "ro";
   const products = catalog.filter(p => p.provider === "renogy").slice(0, 3);
-  return <main className="commerce-page discovery-home">
+  return <main className="commerce-page discovery-home storefront-home">
     <section className={`discovery-hero ${marketplace ? "marketplace-hero" : "brand-hero"}`}>
       <div className="discovery-hero-copy">
         <p className="eyebrow">M Air Electro AI · România / EU</p>
-        <h1>{marketplace ? (ro ? "Echipamente.\nAlegeri informate." : "Equipment.\nWithout the guesswork.") : (ro ? "Energia ta.\nAlegerea potrivită." : "Your energy.\nA clearer choice.")}</h1>
+        <h1>{marketplace ? (ro ? "Catalog de echipamente energetice" : "Energy equipment catalog") : (ro ? "Panouri solare, baterii și invertoare" : "Solar panels, batteries and inverters")}</h1>
         <p>{ro ? "Descoperă panouri solare, baterii și sisteme de rezervă. Compară specificațiile sau găsește echipamentul potrivit pornind de la nevoile tale." : "Discover solar panels, batteries and backup power. Compare the specifications or find equipment around the way you live."}</p>
         <div className="action-row">
           <Link className="button-primary" href={marketplace ? "#equipment-categories" : "/marketplace"}>{ro ? "Alege echipamente" : "Browse Equipment"} <span aria-hidden="true">↗</span></Link>
           <Link className="button-outline" href="/marketplace/find-my-solution">{ro ? "Găsește soluția" : "Find My Solution"} <span aria-hidden="true">→</span></Link>
         </div>
-        <form action="/search" className="hero-search" role="search" aria-label={ro ? "Caută echipamente" : "Search equipment"}>
+        <form action="/marketplace" className="hero-search" role="search" aria-label={ro ? "Caută echipamente" : "Search equipment"}>
           <label className="sr-only" htmlFor="hero-query">{ro ? "Caută echipamente" : "Search equipment"}</label>
           <input id="hero-query" name="q" type="search" placeholder={ro ? "Renogy, 100 Ah, panouri solare…" : "Renogy, 100 Ah, solar panels…"} maxLength={120} />
           <button type="submit">{ro ? "Caută" : "Search"} →</button>
@@ -55,13 +56,14 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
       <Link href="/marketplace/batteries">{ro ? "Verifică baterii" : "Review batteries"} →</Link>
     </section>}
     <section id="equipment-categories" className="equipment-explorer" aria-labelledby="equipment-heading">
-      <div className="section-line"><div><p className="eyebrow">{ro ? "EXPLORARE DIRECTĂ" : "STRAIGHT TO THE EQUIPMENT"}</p><h2 id="equipment-heading">{ro ? "Ce construiești?" : "What are you building?"}</h2></div><Link href="/search?kind=product">{ro ? "Toate modelele" : "All models"} →</Link></div>
+      <div className="section-line"><div><p className="eyebrow">{ro ? "EXPLORARE DIRECTĂ" : "STRAIGHT TO THE EQUIPMENT"}</p><h2 id="equipment-heading">{ro ? "Categorii de echipamente" : "Equipment categories"}</h2></div><Link href="/search?kind=product">{ro ? "Toate modelele" : "All models"} →</Link></div>
       <div className="category-tiles">{rootCategories.map(category => <Link key={category.path} href={`/marketplace/${category.path}`}>
-        <EnergySchematic family={visualFamily(`/marketplace/${category.path}`)} className="category-symbol" />
+        <div className="category-preview">{category.path === "solar" ? <EquipmentVisual category="solar" /> : <EnergySchematic family={visualFamily(`/marketplace/${category.path}`)} className="category-symbol" />}</div>
         <span>{category.title[ro ? "ro" : "en"]}</span><span aria-hidden="true">↗</span>
       </Link>)}</div>
     </section>
-    {marketplace ? <CatalogBrowser products={catalog} query={{ kind: "product", ...requirements }} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} /> : <>
+    <CatalogBrowser products={catalog} query={{ kind: "product", ...requirements }} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} />
+    {!marketplace && <>
     <section className="application-section" aria-labelledby="application-heading">
       <div className="section-line"><div><p className="eyebrow">{ro ? "PORNEȘTE DE LA NEVOIE" : "START WITH YOUR EVERYDAY"}</p><h2 id="application-heading">{ro ? "Un sistem pentru felul tău de a trăi." : "A system for the way you live."}</h2></div><Link href="/solutions">{ro ? "Toate soluțiile" : "All solutions"} →</Link></div>
       <div className="application-grid">{applications.map(([slug, en, romanian, summary, translated]) => <Link key={slug} href={`/marketplace/find-my-solution?application=${slug}`}>
