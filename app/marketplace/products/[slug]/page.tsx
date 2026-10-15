@@ -48,7 +48,7 @@ export default async function Page({ params }: Props) {
   const c = categoryByPath(p.paths[0])!;
   return (
     <PlatformShell>
-      <main className="commerce-page">
+      <main className="commerce-page product-storefront">
         {p.kind === "product" && <ProductStructuredData product={p} />}
         <Breadcrumbs
           items={[
@@ -86,15 +86,9 @@ export default async function Page({ params }: Props) {
               {ro ? "Verificare sursă (asistată AI)" : "Source check (AI-assisted)"}: {p.lastUpdated} · EU
             </p>}
             <EditorialRecord path={`/marketplace/products/${slug}`} title={local(p.title, locale)} ro={ro} sources={p.sourceUrls} schema={p.kind !== "product"} />
+            <div className="product-key-specs">{Object.entries(p.technicalSpecs).slice(0, 3).map(([key, value]) => <div key={key}><span>{specificationLabel(key, ro)}</span><strong>{value}</strong></div>)}</div>
+            <a className="text-link" href="#specifications">{ro ? "Toate caracteristicile" : "All specifications"} ↓</a>
             <CompareControl id={p.id} ro={ro} />
-            <dl className="spec-grid">
-              {Object.entries(p.technicalSpecs).map(([k, v]) => (
-                <div key={k}>
-                  <dt>{specificationLabel(k, ro)}</dt>
-                  <dd>{v}</dd>
-                </div>
-              ))}
-            </dl>
             {p.productUrl ? (
               <SupplierLink product={p} ro={ro} className="button-primary">
                 {ro ? `Vezi modelul la ${p.merchant}` : `View model at ${p.merchant}`}
@@ -114,6 +108,17 @@ export default async function Page({ params }: Props) {
             </p>
           </article>
         </div>
+        <section className="content-panel" id="specifications">
+          <h2>{ro ? "Caracteristici și descriere" : "Specifications and description"}</h2>
+            <dl className="spec-grid">
+              {Object.entries(p.technicalSpecs).map(([k, v]) => (
+                <div key={k}>
+                  <dt>{specificationLabel(k, ro)}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))}
+            </dl>
+        </section>
         <div className="two-columns">
           <section className="content-panel">
             <h2>{ro ? "Potrivit de evaluat pentru" : "Best considered for"}</h2>
