@@ -54,7 +54,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
           <Link href="/marketplace/batteries" className="hero-equipment-tile"><EquipmentVisual category="batteries" /><span>{ro ? "Baterii" : "Batteries"}<b aria-hidden="true">↗</b></span></Link>
           <Link href="/marketplace/inverters" className="hero-equipment-tile"><EquipmentVisual category="inverters" /><span>{ro ? "Invertoare" : "Inverters"}<b aria-hidden="true">↗</b></span></Link>
           <Link href="/marketplace/backup-power" className="hero-equipment-tile">
-            <svg className="hero-power-station" viewBox="0 0 240 130" fill="none" aria-hidden="true"><ellipse cx="120" cy="115" rx="76" ry="8" fill="#233b58" opacity=".12"/><path d="M87 36V22h65v14" stroke="#35475c" strokeWidth="10" strokeLinejoin="round"/><rect x="56" y="32" width="128" height="78" rx="13" fill="#35475c"/><rect x="69" y="44" width="102" height="51" rx="6" fill="#dde7f2"/><rect x="80" y="52" width="44" height="18" rx="3" fill="#7898ab"/><path d="M87 61h28" stroke="#eaf4fc" strokeWidth="3"/><circle cx="144" cy="62" r="8" stroke="#35475c" strokeWidth="3"/><circle cx="87" cy="83" r="5" fill="#35475c"/><circle cx="108" cy="83" r="5" fill="#35475c"/><path d="M133 83h22" stroke="#35475c" strokeWidth="4" strokeLinecap="round"/></svg>
+            <EquipmentVisual category="backup-power" />
             <span>{ro ? "Stații portabile" : "Portable power"}<b aria-hidden="true">↗</b></span>
           </Link>
         </div>
@@ -70,7 +70,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
     <section id="equipment-categories" className="equipment-explorer" aria-labelledby="equipment-heading">
       <div className="section-line"><div><p className="eyebrow">{ro ? "EXPLORARE DIRECTĂ" : "STRAIGHT TO THE EQUIPMENT"}</p><h2 id="equipment-heading">{ro ? "Categorii de echipamente" : "Equipment categories"}</h2></div><Link href="/search?kind=product">{ro ? "Toate modelele" : "All models"} →</Link></div>
       <div className="category-tiles">{rootCategories.map(category => <Link key={category.path} href={`/marketplace/${category.path}`}>
-        <div className="category-preview">{category.path === "solar" ? <EquipmentVisual category="solar" /> : <EnergySchematic family={visualFamily(`/marketplace/${category.path}`)} className="category-symbol" />}</div>
+        <div className="category-preview">{["solar", "batteries", "inverters", "backup-power"].includes(category.path) ? <EquipmentVisual category={category.path} /> : <EnergySchematic family={visualFamily(`/marketplace/${category.path}`)} className="category-symbol" />}</div>
         <span>{category.title[ro ? "ro" : "en"]}</span><span aria-hidden="true">↗</span>
       </Link>)}</div>
     </section>
