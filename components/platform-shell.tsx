@@ -7,6 +7,7 @@ import { SupplierLinksProvider } from "@/components/marketplace/supplier-link";
 import { supplierLink } from "@/lib/affiliate/providers";
 import { catalog } from "@/lib/affiliate/catalog";
 import { CommercialNotice } from "@/components/marketplace/commercial-notice";
+import { ComparisonProvider, ComparisonTray } from "@/components/marketplace/compare-control";
 type PlatformShellProps = {
   children: React.ReactNode;
   contentClassName?: string;
@@ -45,7 +46,10 @@ export async function PlatformShell({
       <CommercialNotice ro={locale === "ro"} />
       <div id="main-content" tabIndex={-1} className={contentClassName}>
         <SupplierLinksProvider links={supplierLinks}>
+          <ComparisonProvider products={Object.fromEntries(catalog.map(p => [p.id, locale === "ro" ? p.title.ro : p.name]))}>
           {children}
+          <ComparisonTray ro={locale === "ro"} />
+          </ComparisonProvider>
         </SupplierLinksProvider>
       </div>
       <DeepFooter locale={locale} />

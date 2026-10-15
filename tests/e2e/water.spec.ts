@@ -47,8 +47,9 @@ test("water is responsive and accessible; original homepage artwork is retained"
   await page.goto("/");
   await expect(page.locator('.brand-hero img')).toHaveAttribute("src", /hero\.png|hero%2Epng/);
   await expect(page.getByTestId("water-home-promo")).toBeVisible();
-  expect(await page.locator(".brand-hero").evaluate(el => el.nextElementSibling?.getAttribute("data-testid"))).toBe("renogy-feature");
-  expect(await page.getByTestId("renogy-feature").evaluate(el => el.nextElementSibling?.getAttribute("data-testid"))).toBe("water-home-promo");
+  // Equipment and application discovery precede partner promotions; Waterdrop remains secondary.
+  expect(await page.locator("#equipment-categories").evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector('[data-testid="renogy-feature"]')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
+  expect(await page.getByTestId("renogy-feature").evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector('[data-testid="water-home-promo"]')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
   await page.getByTestId("water-home-promo").locator('a[href="/marketplace/water"]').click();
   await expect(page).toHaveURL(/\/marketplace\/water$/);
   await page.goto("/");

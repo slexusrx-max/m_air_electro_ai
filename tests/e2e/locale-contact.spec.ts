@@ -37,7 +37,12 @@ for (const width of [390, 430, 768, 1366, 1440]) {
     await expect(page).toHaveTitle(/Find My Solution/);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /^Size an energy system/);
     await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute("content", "en_GB");
-    await expect(page).toHaveURL(/\/marketplace\/find-my-solution\?load=500&hours=4$/);
+    const draft = new URL(page.url());
+    expect(draft.pathname).toBe("/marketplace/find-my-solution");
+    expect(draft.searchParams.get("load")).toBe("500");
+    expect(draft.searchParams.get("hours")).toBe("4");
+    expect(draft.searchParams.get("peak")).toBe("750");
+    expect(draft.searchParams.get("step")).toBe("1");
     await page.getByRole("button", { name: "RO", exact: true }).click();
     await expect(page).toHaveTitle(/Găsește soluția energetică/);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);

@@ -50,11 +50,12 @@ export function ProductCard({
             </div>
           ))}
       </dl>
-      {extended && <div className="product-context">
+      <details className="product-context">
+        <summary>{ro ? "Utilizare și limite" : "Applications & limitations"}</summary>
         <p><strong>{ro ? "Utilizare" : "Applications"}</strong>{ro ? p.bestFor.ro : p.bestFor.en}</p>
-        <p><strong>{ro ? "Compatibilitate" : "Compatibility"}</strong>{ro ? p.compatibility.ro : p.compatibility.en}</p>
+        {extended && <p><strong>{ro ? "Compatibilitate" : "Compatibility"}</strong>{ro ? p.compatibility.ro : p.compatibility.en}</p>}
         <p><strong>{ro ? "Limite" : "Limitations"}</strong>{ro ? p.limitations.ro : p.limitations.en}</p>
-      </div>}
+      </details>
       <Link className="text-link" href={`/marketplace/products/${p.slug}`}>
         {ro ? "Detalii și compatibilitate" : "Details & compatibility"} →
       </Link>

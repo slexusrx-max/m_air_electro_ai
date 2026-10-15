@@ -16,6 +16,8 @@ Architecture, route inventory, repository audit and public deployment results: [
 
 ## Product modules
 
+The [15 October UX redesign](docs/ux-redesign-2026-10-15.md) makes equipment browsing and guided selection the two homepage entry points. Marketplace opens a filterable catalog, Renogy categories have no decorative numbering, and a shared comparison tray preserves selections across RO/EN switching. Finder drafts use bounded, non-sensitive URL parameters; filtered/draft URLs remain noindex. Existing supplier gates and Waterdrop configuration are unchanged.
+
 - Marketplace: ten main families and 22 category/subcategory routes with buying advice, technical checks and working filters.
 - Catalog: seven sourced Renogy EU models plus three Waterdrop Germany, three PECRON EU and three BLUETTI EU models; explicitly labelled equipment classes are retained. No invented prices, stock, reviews or ratings. See the [EU source and safety record](docs/eu-supplier-listings-2026-10-12.md).
 - Solutions: apartment, home, solar + battery, RV/caravan, marine, off-grid cabin, workshop and business continuity.

@@ -25,6 +25,7 @@ export function CatalogBrowser({
 }) {
   const query = cleanQuery(raw);
   const results = filterEquipment(products, query);
+  const active = Object.entries(query).filter(([key, value]) => value && ["q", "kind", ...Object.keys(facetLabels)].includes(key));
   return (
     <section className="catalog-layout">
       <form action={path} className="catalog-filters">
@@ -52,7 +53,9 @@ export function CatalogBrowser({
             </option>
           </select>
         </label>
-        {facets.map((key) => {
+        <details className="filter-options" open={facets.some(key => Boolean(query[key]))}>
+          <summary>{ro ? "Filtre tehnice" : "Technical filters"}</summary>
+          <div>{facets.map((key) => {
           const values = [
             ...new Set(products.map((p) => p.facets[key]).filter(Boolean)),
           ].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
@@ -69,7 +72,8 @@ export function CatalogBrowser({
               </select>
             </label>
           ) : null;
-        })}
+        })}</div>
+        </details>
         <button className="button-primary" type="submit">
           {ro ? "Aplică filtrele" : "Apply filters"}
         </button>
@@ -81,6 +85,15 @@ export function CatalogBrowser({
         </p>
       </form>
       <div>
+        {active.length > 0 && <nav className="active-filters" aria-label={ro ? "Filtre active" : "Active filters"}>
+          {active.map(([key, value]) => {
+            const params = new URLSearchParams(active.filter(([other]) => other !== key).map(([k, v]) => [k, v!]));
+            const label = key === "q" ? (ro ? "Căutare" : "Search") : key === "kind" ? (ro ? "Tip" : "Type") : facetLabels[key]?.[ro ? 1 : 0] ?? key;
+            const display = value === "product" ? (ro ? "Modele reale" : "Real models") : value === "equipment-class" ? (ro ? "Clase de echipamente" : "Equipment classes") : value;
+            return <Link key={key} href={`${path}${params.size ? `?${params}` : ""}`} aria-label={`${ro ? "Elimină filtrul" : "Remove filter"}: ${label} ${display}`}>{label}: {display} <span aria-hidden="true">×</span></Link>;
+          })}
+          <Link href={path}>{ro ? "Șterge toate" : "Clear all"}</Link>
+        </nav>}
         <p className="result-count" role="status">
           {results.length} {ro ? "rezultate" : "results"}
           {query.q ? ` · “${query.q}”` : ""}

@@ -28,6 +28,8 @@ Independent affiliate-commerce discovery. The merchant controls price, stock, pa
 
 ## Information Architecture
 
+15 October 2026 owner-requested UX direction: a customer-first hybrid entry with Browse Equipment and Find My Solution. Equipment tiles and home/RV/off-grid/marine application shortcuts precede affiliate promotion. Renogy is the leading partner feature, Waterdrop secondary. Each desktop menu reveals its own section rather than the whole site. Comparison is a separate utility, never an equipment category; decorative category numbering is removed. Preserve product model/specification numbers and real wizard progress.
+
 Primary navigation: Marketplace, Solutions, Tools, Learn, Experts, For Business. Experts is a professional-preparation guide, not a booking directory. Search and RO/EN switching stay accessible. About the platform and Legal are in a deep footer. Desktop mega menus group real destinations; mobile uses nested expandable groups. Every visible control works.
 
 ## Marketplace Taxonomy

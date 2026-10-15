@@ -17,11 +17,11 @@ export function RenogyFeature({ ro, storefront = false }: { ro: boolean; storefr
           <Link className={styles.primary} href={storefront ? "#renogy-products" : "/renogy"}>{ro ? "Explorează Renogy" : "Explore Renogy"} <span aria-hidden="true">↗</span></Link>
           <Link className={styles.secondary} href="/calculators/solar">{ro ? "Dimensionează sistemul" : "Size your system"} →</Link>
         </div>
-        <p className={styles.fine}>{ro ? "Selecție independentă · Achiziție la comerciant · Fără prețuri inventate" : "Independent selection · Merchant checkout · No invented prices"}</p>
+        <p className={styles.fine}>{ro ? "Selecție independentă · Specificații documentate · Achiziție la comerciant" : "Independent selection · Documented specifications · Merchant checkout"}</p>
       </div>
       <figure className={styles.visual}>
         <Image src="/equipment/solar-panel-studio.png" alt={ro ? "Ilustrație de categorie: panou solar, nu fotografie de produs Renogy" : "Category illustration: solar panel, not a Renogy product photograph"} width={1536} height={1024} sizes="(max-width: 800px) 90vw, 48vw" preload={storefront} />
-        <div className={styles.flow} aria-hidden="true"><span>01 / SOLAR</span><span>02 / {ro ? "STOCARE" : "STORAGE"}</span><span>03 / AC</span></div>
+        <div className={styles.flow} aria-hidden="true"><span>SOLAR</span><span>→</span><span>{ro ? "STOCARE" : "STORAGE"}</span><span>→</span><span>AC</span></div>
         <figcaption>{ro ? "Vizual ilustrativ M Air. Modelul real poate diferi." : "M Air illustrative visual. Actual models may differ."}</figcaption>
       </figure>
     </section>
