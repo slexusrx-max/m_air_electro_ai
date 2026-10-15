@@ -5,6 +5,8 @@ export function EquipmentVisual({ category }: { category: string }) {
   if (category === "water") return <div className="equipment-visual" aria-hidden="true"><EnergySchematic family="water" /></div>;
   const solar = category.includes("solar");
   const battery = category.includes("batter");
+  const studioImage = battery ? "lifepo4-battery-studio.png" : category.includes("inverter") ? "hybrid-inverter-studio.png" : category.includes("backup") ? "portable-power-studio.png" : null;
+  if (studioImage) return <div className="equipment-visual equipment-visual-photo" aria-hidden="true"><Image src={`/equipment/${studioImage}`} alt="" width={1254} height={1254} sizes="(max-width: 768px) 45vw, 300px" /></div>;
   if (solar) {
     return (
       <div className="equipment-visual equipment-visual-photo" aria-hidden="true">

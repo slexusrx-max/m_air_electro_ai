@@ -681,3 +681,8 @@ html:has(.comparison-tray) { scroll-padding-bottom:220px; }
 @media(max-width:400px) { .hero-equipment-tile>span { font-size:9px; } .hero-equipment-tile>img,.hero-equipment-tile .equipment-visual,.hero-power-station,.hero-equipment-tile .equipment-visual svg { height:65px; } }
 @media(prefers-reduced-motion:reduce) { .hero-equipment-tile { transition:none; } .hero-equipment-tile:hover { transform:none; } }
 @media(prefers-reduced-transparency:reduce) { .hero-equipment-showcase,.hero-equipment-tile { background:#f4f7fc; backdrop-filter:none; } }
+
+/* Photorealistic category artwork retains the whole equipment silhouette. */
+.hero-equipment-tile .equipment-visual-photo img { display:block; width:100%; height:118px; object-fit:contain; }
+@media(max-width:768px) { .hero-equipment-tile .equipment-visual-photo img { height:78px; } }
+@media(max-width:400px) { .hero-equipment-tile .equipment-visual-photo img { height:65px; } }
