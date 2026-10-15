@@ -44,10 +44,22 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
         </form>
         <p className="hero-assurance">{ro ? "Selecție independentă. Calcule explicabile. Achiziție la furnizor." : "Independent selection. Clear calculations. Buy from the supplier."}</p>
       </div>
-      {!marketplace && <figure className="brand-hero-art">
-        <Image src="/hero.png" alt={ro ? "M Air Electro AI: litera M verde și profil uman digital" : "M Air Electro AI: lime M and futuristic digital human profile"} width={1254} height={1254} sizes="(max-width: 768px) 90vw, 45vw" preload />
-        <figcaption>{ro ? "INTELIGENȚĂ. ENERGIE. VIITOR." : "INTELLIGENCE. ENERGY. FUTURE."}</figcaption>
-      </figure>}
+      <div className="hero-equipment-showcase" aria-label={ro ? "Explorează echipamentele" : "Explore the equipment"}>
+        <div className="hero-equipment-heading"><span>{ro ? "ENERGIE PENTRU FIECARE ZI" : "POWER FOR EVERY DAY"}</span><Image src="/hero.png" alt="M Air Electro AI" width={36} height={36} /></div>
+        <div className="hero-equipment-grid">
+          <Link href="/marketplace/solar" className="hero-equipment-tile hero-equipment-solar">
+            <Image src="/equipment/solar-panel-studio.png" alt={ro ? "Ilustrație de panouri solare" : "Solar panel illustration"} width={1536} height={1024} sizes="(max-width: 768px) 45vw, 28vw" preload />
+            <span>{ro ? "Panouri solare" : "Solar panels"}<b aria-hidden="true">↗</b></span>
+          </Link>
+          <Link href="/marketplace/batteries" className="hero-equipment-tile"><EquipmentVisual category="batteries" /><span>{ro ? "Baterii" : "Batteries"}<b aria-hidden="true">↗</b></span></Link>
+          <Link href="/marketplace/inverters" className="hero-equipment-tile"><EquipmentVisual category="inverters" /><span>{ro ? "Invertoare" : "Inverters"}<b aria-hidden="true">↗</b></span></Link>
+          <Link href="/marketplace/backup-power" className="hero-equipment-tile">
+            <svg className="hero-power-station" viewBox="0 0 240 130" fill="none" aria-hidden="true"><ellipse cx="120" cy="115" rx="76" ry="8" fill="#233b58" opacity=".12"/><path d="M87 36V22h65v14" stroke="#35475c" strokeWidth="10" strokeLinejoin="round"/><rect x="56" y="32" width="128" height="78" rx="13" fill="#35475c"/><rect x="69" y="44" width="102" height="51" rx="6" fill="#dde7f2"/><rect x="80" y="52" width="44" height="18" rx="3" fill="#7898ab"/><path d="M87 61h28" stroke="#eaf4fc" strokeWidth="3"/><circle cx="144" cy="62" r="8" stroke="#35475c" strokeWidth="3"/><circle cx="87" cy="83" r="5" fill="#35475c"/><circle cx="108" cy="83" r="5" fill="#35475c"/><path d="M133 83h22" stroke="#35475c" strokeWidth="4" strokeLinecap="round"/></svg>
+            <span>{ro ? "Stații portabile" : "Portable power"}<b aria-hidden="true">↗</b></span>
+          </Link>
+        </div>
+        <p className="hero-equipment-caption">{ro ? "Ilustrații de categorii · Vezi modelele și specificațiile în catalog" : "Category illustrations · Explore models and specifications in the catalog"}</p>
+      </div>
     </section>
     {requirements && (requirements.batteryKwh || requirements.inverterKw) && <section className="content-panel">
       <h2>{ro ? "Cerințe primite din calculator" : "Requirements received from calculator"}</h2>
