@@ -55,6 +55,24 @@ for (const locale of ["ro", "en"] as const) {
   });
 }
 
+test("language control waits for hydration instead of losing early clicks", async ({ page }) => {
+  let releaseScripts!: () => void;
+  const scriptsReady = new Promise<void>(resolve => { releaseScripts = resolve; });
+  await page.route("**/_next/static/**/*.js", async route => {
+    await scriptsReady;
+    await route.continue();
+  });
+  try {
+    await page.goto("/search?q=100+Ah", { waitUntil: "commit" });
+    await expect(page.getByRole("button", { name: "EN", exact: true })).toBeDisabled();
+  } finally {
+    releaseScripts();
+  }
+  await page.getByRole("button", { name: "EN", exact: true }).click();
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  expect(new URL(page.url()).searchParams.get("q")).toBe("100 Ah");
+});
+
 for (const width of [320, 360, 390, 768, 1024, 1440]) test(`Renogy clean categories and accessibility at ${width}`, async ({ page }, info) => {
   test.setTimeout(120000);
   await page.setViewportSize({ width, height: 900 });

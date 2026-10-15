@@ -39,6 +39,10 @@ The full regression also identified a root loading boundary causing unknown mark
 
 Final local release checks: 84 unit tests and all 154 Playwright tests passed with no skips. Translation parity passed for 419 keys. ESLint, TypeScript validation and the production build passed. The final build's crawl visited 139 routes with zero failures, orphans or redirects. All 16 official supplier source URLs returned HTTP 200 with zero invalid, blocked or unverified destinations. The runtime dependency audit reported zero vulnerabilities.
 
+The first public-domain run exposed an obsolete all-links-are-ordinary assumption in four onboarding tests: the new full catalog now includes Waterdrop's already-active production links. These checks now reuse the existing exact-issued-URL assertions for Waterdrop and retain exact ordinary destinations for Renogy and every other supplier. No merchant URL, provider gate or environment configuration was changed to satisfy the test.
+
+A public search test also exposed an early language-switch click before hydration after a full filter-form navigation. Language controls now stay disabled until the client handler is ready; a delayed-script browser regression checks this explicitly rather than adding arbitrary sleeps to the test.
+
 The pull request release record contains deployment SHA and actual public-domain verification. Screenshots and test artifacts are ignored, not committed. Automated accessibility results are bounded test coverage, not certification of universal WCAG compliance. Real contact delivery and affiliate purchase attribution are not exercised by these read-only tests.
 
 ## Impact blockers

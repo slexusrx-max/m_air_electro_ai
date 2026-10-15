@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
-import { validSupplierUrl } from "../../lib/affiliate/suppliers";
+import { catalog } from "../../lib/affiliate/catalog";
+import { expectSupplierCta } from "../supplier-link-expectations";
 
 for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
   test(`supplier links and disclosure stay honest in ${locale} at ${width}px`, async ({ page, context, baseURL }, info) => {
@@ -13,10 +14,11 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
       const links = page.locator("a[data-supplier-product]");
       expect(await links.count()).toBeGreaterThan(0);
       for (const link of await links.all()) {
-        expect(validSupplierUrl((await link.getAttribute("href"))!, (await link.getAttribute("data-supplier"))!)).toBe(true);
-        await expect(link).toHaveAttribute("data-tracking-status", "ordinary");
+        const id = await link.getAttribute("data-supplier-product");
+        const product = catalog.find(item => item.id === id);
+        expect(product, `Known catalog product for supplier link ${id}`).toBeDefined();
+        await expectSupplierCta(link, product!, new URL(baseURL!).hostname === "mairelectroai.com");
         await expect(link).toHaveAttribute("data-supplier-language", locale);
-        expect(await link.getAttribute("rel")).not.toContain("sponsored");
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBeTruthy();
     }
