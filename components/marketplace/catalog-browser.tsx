@@ -25,7 +25,7 @@ export function CatalogBrowser({
 }) {
   const query = cleanQuery(raw);
   const results = filterEquipment(products, query);
-  const active = Object.entries(query).filter(([key, value]) => value && ["q", "kind", ...Object.keys(facetLabels)].includes(key));
+  const active = Object.entries(query).filter(([key, value]) => value && ["q", "kind", "brand", ...Object.keys(facetLabels)].includes(key));
   return (
     <section className="catalog-layout">
       <form action={path} className="catalog-filters">
@@ -51,6 +51,21 @@ export function CatalogBrowser({
             <option value="equipment-class">
               {ro ? "Clase de echipamente" : "Equipment classes"}
             </option>
+          </select>
+        </label>
+        <label>
+          {ro ? "Marcă" : "Brand"}
+          <select name="brand" defaultValue={query.brand ?? ""}>
+            <option value="">{ro ? "Toate mărcile" : "All brands"}</option>
+            {[...new Set(products.filter(p => p.kind === "product").map(p => p.brand))].sort().map(brand => <option key={brand} value={brand}>{brand}</option>)}
+          </select>
+        </label>
+        <label>
+          {ro ? "Ordonează" : "Sort by"}
+          <select name="sort" defaultValue={query.sort ?? ""}>
+            <option value="">{ro ? "Ordinea catalogului" : "Catalog order"}</option>
+            <option value="name">{ro ? "Nume A–Z" : "Name A–Z"}</option>
+            <option value="models">{ro ? "Modele reale mai întâi" : "Real models first"}</option>
           </select>
         </label>
         <details className="filter-options" open={facets.some(key => Boolean(query[key]))}>
@@ -87,8 +102,8 @@ export function CatalogBrowser({
       <div>
         {active.length > 0 && <nav className="active-filters" aria-label={ro ? "Filtre active" : "Active filters"}>
           {active.map(([key, value]) => {
-            const params = new URLSearchParams(active.filter(([other]) => other !== key).map(([k, v]) => [k, v!]));
-            const label = key === "q" ? (ro ? "Căutare" : "Search") : key === "kind" ? (ro ? "Tip" : "Type") : facetLabels[key]?.[ro ? 1 : 0] ?? key;
+            const params = new URLSearchParams([...active, ...(query.sort ? [["sort", query.sort]] : [])].filter(([other]) => other !== key).map(([k, v]) => [k, v!]));
+            const label = key === "q" ? (ro ? "Căutare" : "Search") : key === "kind" ? (ro ? "Tip" : "Type") : key === "brand" ? (ro ? "Marcă" : "Brand") : facetLabels[key]?.[ro ? 1 : 0] ?? key;
             const display = value === "product" ? (ro ? "Modele reale" : "Real models") : value === "equipment-class" ? (ro ? "Clase de echipamente" : "Equipment classes") : value;
             return <Link key={key} href={`${path}${params.size ? `?${params}` : ""}`} aria-label={`${ro ? "Elimină filtrul" : "Remove filter"}: ${label} ${display}`}>{label}: {display} <span aria-hidden="true">×</span></Link>;
           })}
