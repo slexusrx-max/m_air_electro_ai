@@ -1,12 +1,15 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
 import type { Locale, MarketplaceRole } from "@/lib/i18n/types";
 import type { NavigationGroup } from "@/lib/marketplace/navigation";
 import { signOut } from "@/app/(auth)/actions";
 import { EnergySchematic } from "./energy-schematic";
 import { visualFamily } from "@/lib/visual-system";
+const subscribeHydration = () => () => {};
+const clientReady = () => true;
+const serverReady = () => false;
 export function SiteHeader({
   profile,
   dashboardHref = "/dashboard",
@@ -22,6 +25,7 @@ export function SiteHeader({
   const [mobile, setMobile] = useState(false);
   const [error, setError] = useState("");
   const [switching, setSwitching] = useState(false);
+  const hydrated = useSyncExternalStore(subscribeHydration, clientReady, serverReady);
   const ref = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const ro = locale === "ro";
@@ -73,7 +77,7 @@ export function SiteHeader({
       {(["ro", "en"] as const).map((l) => (
         <button
           key={l}
-          disabled={switching}
+          disabled={!hydrated || switching}
           aria-pressed={locale === l}
           onClick={() => language(l)}
         >
