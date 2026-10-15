@@ -14,10 +14,11 @@ for (const locale of ["ro", "en"] as const) for (const width of [390, 430, 768, 
     const menu = page.locator(desktop ? "#mega-menu" : "#mobile-menu");
     await expect(menu).toBeVisible();
     if (desktop) {
-      await expect(menu.locator(".mega-section")).toHaveCount(4);
+      await expect(menu.locator(".mega-section")).toHaveCount(1);
+      await expect(menu.locator(".mega-renogy")).toBeVisible();
       await expect(menu.locator(".mega-water")).toBeVisible();
       await expect(menu).toContainText(locale === "ro" ? "Generatoare electrice" : "Power generators");
-      await expect(menu).toContainText(locale === "ro" ? "Alimentare de rezervă pentru apartament" : "Apartment backup power");
+      await expect(menu.locator('.mega-section a[href="/solutions/apartment-backup"]')).toHaveCount(0);
     } else {
       await menu.locator(":scope > details > summary").filter({ hasText: /^Marketplace$/ }).click();
       const water = menu.locator("details details").filter({ has: page.locator('a[href="/marketplace/water"]') });

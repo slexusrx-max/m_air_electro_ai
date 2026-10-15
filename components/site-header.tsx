@@ -132,7 +132,7 @@ export function SiteHeader({
             aria-label={ro ? "Caută" : "Search"}
             className="search-link"
           >
-            ⌕
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg><span>{ro ? "Caută" : "Search"}</span>
           </Link>
           {languages}
           <div className="desktop-account-actions">
@@ -172,7 +172,7 @@ export function SiteHeader({
             </button>
           </div>
           <div className="mega-columns">
-            {groups.filter((g) => g.children.length > 0).map((group) => (
+            {[active].map((group) => (
               <section className="mega-section" key={group.href} aria-label={group.label}>
                 <Link className="mega-section-title" href={group.href} onClick={() => setOpen(null)}>{group.label} <span aria-hidden="true">↗</span></Link>
                 {group.children.filter((item) => item.href !== "/marketplace/water").map((item) => item.children?.length ? (
@@ -186,6 +186,7 @@ export function SiteHeader({
                 ) : <Link key={item.href} href={item.href} onClick={() => setOpen(null)}>{item.label}</Link>)}
               </section>
             ))}
+            <Link className="mega-renogy" href="/renogy" onClick={() => setOpen(null)}><span>{ro ? "PARTENER AFILIAT INDEPENDENT" : "INDEPENDENT AFFILIATE PARTNER"}</span><strong>Renogy</strong><p>{ro ? "Solar. Stocare. Libertate de construit." : "Solar. Storage. Freedom to build."}</p><span>{ro ? "Explorează selecția" : "Explore the selection"} ↗</span></Link>
             <Link className="mega-water" href="/marketplace/water" onClick={() => setOpen(null)}>
               <span className="mega-water-icon" aria-hidden="true">◇</span>
               <span className="mega-water-eyebrow">{ro ? "Apă și reziliență" : "Water & Resilience"}</span>

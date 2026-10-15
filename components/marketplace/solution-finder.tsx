@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { trackEvent } from "@/lib/analytics";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ProductCard } from "./product-card";
 import { catalog } from "@/lib/affiliate/catalog";
 import { estimateSystem, matchingSystemCandidates } from "@/lib/marketplace/recommendation";
@@ -32,20 +32,25 @@ export function SolutionFinder({
   const l = (en: string, translated: string) => (ro ? translated : en);
   const resultRef = useRef<HTMLElement>(null);
   const [revision, setRevision] = useState(0);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(["1", "2", "3"].includes(initial.step ?? "") ? Number(initial.step) : 1);
   const [form, setForm] = useState({
     application: applications.some((a) => a[0] === initial.application)
       ? initial.application!
       : "apartment-backup",
     load: initial.load ?? "250",
-    peak: initial.load ? String(Number(initial.load) * 1.5) : "500",
+    peak: initial.peak ?? (initial.load ? String(Number(initial.load) * 1.5) : "500"),
     hours: initial.hours ?? "4",
-    region: "EU",
-    budget: "",
-    battery: "no",
-    solar: "no",
-    generator: "no",
+    region: ["EU", "UK", "US"].includes(initial.region ?? "") ? initial.region! : "EU",
+    budget: initial.budget ?? "",
+    battery: initial.battery === "yes" ? "yes" : "no",
+    solar: initial.solar === "yes" ? "yes" : "no",
+    generator: initial.generator === "yes" ? "yes" : "no",
   });
+  // Keep non-sensitive planning inputs in the URL so a language reload preserves the draft.
+  useEffect(() => {
+    const params = new URLSearchParams({ ...form, step: String(step) });
+    window.history.replaceState(null, "", `${window.location.pathname}?${params}${window.location.hash}`);
+  }, [form, step]);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
   function update(key: keyof typeof form, value: string) {

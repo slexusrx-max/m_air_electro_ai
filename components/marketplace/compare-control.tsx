@@ -1,6 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useSyncExternalStore, useState } from "react";
+import { createContext, useContext, useSyncExternalStore, useState, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
+const Products = createContext<Record<string, string>>({});
+export function ComparisonProvider({ products, children }: { products: Record<string, string>; children: ReactNode }) {
+  return <Products.Provider value={products}>{children}</Products.Provider>;
+}
 const key = "mair-compare";
 function snapshot() {
   try {
@@ -17,8 +22,34 @@ function subscribe(cb: () => void) {
     window.removeEventListener("mair-compare", cb);
   };
 }
-export function SavedComparison({ ro }: { ro: boolean }) {
+function save(ids: string[]) {
+  localStorage.setItem(key, ids.join(","));
+  window.dispatchEvent(new Event("mair-compare"));
+}
+function useSelection() {
   const saved = useSyncExternalStore(subscribe, snapshot, () => "");
+  const products = useContext(Products);
+  const ids = [...new Set(saved.split(","))].filter(id => Object.hasOwn(products, id)).slice(0, 4);
+  return { ids, products };
+}
+export function ComparisonTray({ ro }: { ro: boolean }) {
+  const { ids, products } = useSelection();
+  const [error, setError] = useState("");
+  const pathname = usePathname();
+  if (!ids.length || pathname === "/compare" || /^(\/login|\/register|\/dashboard|\/account)/.test(pathname)) return null;
+  function remove(id: string) {
+    try { save(ids.filter(value => value !== id)); setError(""); }
+    catch { setError(ro ? "Selecția nu poate fi actualizată în acest browser." : "Your selection could not be updated in this browser."); }
+  }
+  return <aside className="comparison-tray" aria-label={ro ? "Produse pentru comparație" : "Products to compare"}>
+    <div className="comparison-tray-heading"><strong aria-live="polite">{ro ? "Comparația ta" : "Your comparison"} <span>{ids.length}/4</span></strong><Link href={`/compare?ids=${encodeURIComponent(ids.join(","))}`}>{ro ? "Compară" : "Compare"} →</Link></div>
+    <ul>{ids.map(id => <li key={id}><span>{products[id]}</span><button onClick={() => remove(id)} aria-label={`${ro ? "Elimină" : "Remove"} ${products[id]}`}>×</button></li>)}</ul>
+    {ids.length === 1 && <p>{ro ? "Adaugă încă un produs pentru comparație." : "Add one more product to compare."}</p>}
+    {error && <p role="alert">{error}</p>}
+  </aside>;
+}
+export function SavedComparison({ ro }: { ro: boolean }) {
+  const saved = useSelection().ids.join(",");
   return <><p>{ro ? "Selecția este păstrată doar în acest browser, pe acest dispozitiv, și poate fi accesată de alți utilizatori ai browserului. Nu este sincronizată cu contul." : "The selection is stored only in this browser on this device and may be accessed by other browser users. It is not synced to your account."}</p>{saved ? <Link className="button-outline" href={`/compare?ids=${encodeURIComponent(saved)}`}>{ro ? "Continuă comparația" : "Continue comparison"} →</Link> : <p>{ro ? "Nu există o selecție de comparat în acest browser." : "There is no comparison selection in this browser."}</p>}</>;
 }
 export function CompareControl({
@@ -28,8 +59,8 @@ export function CompareControl({
   id: string;
   ro?: boolean;
 }) {
-  const saved = useSyncExternalStore(subscribe, snapshot, () => "");
-  const ids = saved.split(",").filter(Boolean);
+  const { ids } = useSelection();
+  const saved = ids.join(",");
   const active = ids.includes(id);
   const [message, setMessage] = useState("");
   function toggle() {
@@ -43,8 +74,7 @@ export function CompareControl({
       return;
     }
     try {
-      localStorage.setItem(key, next.join(","));
-      window.dispatchEvent(new Event("mair-compare"));
+      save(next);
       setMessage("");
     } catch {
       setMessage(

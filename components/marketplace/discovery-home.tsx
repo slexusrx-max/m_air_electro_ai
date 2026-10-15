@@ -1,344 +1,90 @@
 import Link from "next/link";
 import Image from "next/image";
 import { rootCategories } from "@/lib/marketplace/content";
-import { solutions } from "@/lib/marketplace/solutions";
-import { guides } from "@/lib/marketplace/guides";
 import { catalog } from "@/lib/affiliate/catalog";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
+import { EnergySchematic } from "@/components/energy-schematic";
+import { visualFamily } from "@/lib/visual-system";
 import { ProductCard } from "./product-card";
-import { LinkGrid } from "./shared";
 import { AffiliateDisclosure } from "./affiliate-disclosure";
 import { WaterPromo } from "./water-promo";
 import { RenogyFeature } from "./renogy-feature";
-export async function DiscoveryHome({
-  marketplace = false,
-  requirements,
-}: {
+import { CatalogBrowser } from "./catalog-browser";
+
+const applications = [
+  ["home-backup", "Home backup", "Rezervă pentru casă", "Keep essential loads in focus.", "Pornește de la consumatorii esențiali."],
+  ["rv-caravan", "RV & camper", "Rulotă și camper", "Energy for the road ahead.", "Energie pentru următoarea călătorie."],
+  ["off-grid-cabin", "Off-grid cabin", "Cabană off-grid", "Plan solar, storage and autonomy.", "Planifică solarul, stocarea și autonomia."],
+  ["marine", "Marine systems", "Sisteme marine", "Start with your onboard loads.", "Începe cu necesarul de la bord."],
+];
+
+export async function DiscoveryHome({ marketplace = false, requirements }: {
   marketplace?: boolean;
   requirements?: Record<string, string | undefined>;
 }) {
   const locale = await getRequestLocale();
-  const t = await getRequestDictionary();
+  const dictionary = await getRequestDictionary();
   const ro = locale === "ro";
-  return (
-    <main className="commerce-page">
-      <section className={`discovery-hero ${marketplace ? "marketplace-hero" : "brand-hero"}`}>
-        <div>
-          <p className="eyebrow">M Air Electro AI · România / EU</p>
-          <h1>
-            {marketplace
-              ? ro
-                ? "Echipamentul potrivit începe cu cerințe clare."
-                : "The right equipment starts with clear requirements."
-              : ro
-                ? "Calculează necesarul. Compară echipamentele."
-                : "Size your system. Compare your equipment."}
-          </h1>
-          <p>
-            {ro
-              ? `Platformă independentă de descoperire, comparație și dimensionare. Explorează solarul, bateriile și rezerva înainte de a vizita furnizorul extern. ${marketplace ? "Nu primim comenzi sau plăți pentru echipamente." : "Calculează sistemul — achiziția se face direct de la furnizorul ales."}`
-              : `Independent product discovery, comparison and sizing platform. Explore solar, batteries and backup power before visiting an external supplier. ${marketplace ? "We do not accept equipment orders or payments." : "Size your system — purchase directly from your chosen supplier."}`}
-          </p>
-          <div className="action-row">
-            <Link
-              className="button-primary"
-              href={
-                marketplace ? "/marketplace/find-my-solution" : "/marketplace"
-              }
-            >
-              {marketplace
-                ? ro
-                  ? "Găsește soluția"
-                  : "Find My Solution"
-                : ro
-                  ? "Explorează marketplace"
-                  : "Explore marketplace"}
-            </Link>
-            <Link
-              className="button-outline"
-              href={marketplace ? "/compare" : "/marketplace/find-my-solution"}
-            >
-              {marketplace
-                ? ro
-                  ? "Compară echipamente"
-                  : "Compare equipment"
-                : ro
-                  ? "Găsește soluția"
-                  : "Find My Solution"}
-            </Link>
-          </div>
-          <form action="/search" className="hero-search">
-            <label className="sr-only" htmlFor="hero-query">
-              {ro ? "Caută echipamente" : "Search equipment"}
-            </label>
-            <input
-              id="hero-query"
-              name="q"
-              placeholder={
-                ro
-                  ? "Caută 100 Ah, 200 W, Renogy…"
-                  : "Search 100 Ah, 200 W, Renogy…"
-              }
-              maxLength={120}
-            />
-            <button type="submit">{ro ? "Caută" : "Search"} →</button>
-          </form>
+  const products = catalog.filter(p => p.provider === "renogy").slice(0, 3);
+  return <main className="commerce-page discovery-home">
+    <section className={`discovery-hero ${marketplace ? "marketplace-hero" : "brand-hero"}`}>
+      <div className="discovery-hero-copy">
+        <p className="eyebrow">M Air Electro AI · România / EU</p>
+        <h1>{marketplace ? (ro ? "Echipamente.\nAlegeri informate." : "Equipment.\nWithout the guesswork.") : (ro ? "Energia ta.\nAlegerea potrivită." : "Your energy.\nA clearer choice.")}</h1>
+        <p>{ro ? "Descoperă panouri solare, baterii și sisteme de rezervă. Compară specificațiile sau găsește echipamentul potrivit pornind de la nevoile tale." : "Discover solar panels, batteries and backup power. Compare the specifications or find equipment around the way you live."}</p>
+        <div className="action-row">
+          <Link className="button-primary" href={marketplace ? "#equipment-categories" : "/marketplace"}>{ro ? "Alege echipamente" : "Browse Equipment"} <span aria-hidden="true">↗</span></Link>
+          <Link className="button-outline" href="/marketplace/find-my-solution">{ro ? "Găsește soluția" : "Find My Solution"} <span aria-hidden="true">→</span></Link>
         </div>
-        {!marketplace ? <figure className="brand-hero-art">
-          <Image src="/hero.png" alt={ro ? "M Air Electro AI: litera M verde și profil uman digital" : "M Air Electro AI: lime M and futuristic digital human profile"} width={1254} height={1254} sizes="(max-width: 768px) 90vw, 48vw" preload />
-          <figcaption>{ro ? "INTELIGENȚĂ. ENERGIE. VIITOR." : "INTELLIGENCE. ENERGY. FUTURE."}</figcaption>
-        </figure> : <aside className="hero-system">
-          <p>{ro ? "DE LA NEVOIE LA ALEGERE" : "FROM NEED TO CHOICE"}</p>
-          <div className="system-flow">
-            <span>
-              01 <strong>{ro ? "Consum & autonomie" : "Load & runtime"}</strong>
-            </span>
-            <span>
-              02{" "}
-              <strong>
-                {ro ? "Baterie & invertor" : "Battery & inverter"}
-              </strong>
-            </span>
-            <span>
-              03{" "}
-              <strong>{ro ? "Solar & încărcare" : "Solar & charging"}</strong>
-            </span>
-            <span>
-              04{" "}
-              <strong>{ro ? "Compară & verifică" : "Compare & verify"}</strong>
-            </span>
-          </div>
-          <p className="small-copy">
-            {ro
-              ? "Calcule explicabile. Specificații cu surse. Fără prețuri sau stocuri inventate."
-              : "Transparent calculations. Sourced specifications. No invented prices or inventory."}
-          </p>
-        </aside>}
-      </section>
-      {!marketplace && <RenogyFeature ro={ro} />}
-      {!marketplace && <WaterPromo ro={ro} />}
-      {requirements && (requirements.batteryKwh || requirements.inverterKw) && (
-        <section className="content-panel">
-          <h2>
-            {ro
-              ? "Cerințe primite din calculator"
-              : "Requirements received from calculator"}
-          </h2>
-          <p>
-            {ro ? "Baterie" : "Battery"}: {requirements.batteryKwh ?? "—"} kWh ·{" "}
-            {ro ? "Invertor" : "Inverter"}: {requirements.inverterKw ?? "—"} kW
-            · {ro ? "Vârf" : "Surge"}: {requirements.surgeKw ?? "—"} kW ·{" "}
-            {requirements.region ?? "EU"}
-          </p>
-          <p>
-            {ro
-              ? "Aceste valori descriu sistemul necesar, nu compatibilitatea automată a unui produs."
-              : "These values describe the system requirement, not automatic product compatibility."}
-          </p>
-          <Link href="/marketplace/batteries">
-            {ro ? "Verifică baterii" : "Review batteries"} →
-          </Link>
-        </section>
-      )}
-      <section>
-        <div className="section-line">
-          <div>
-            <p className="eyebrow">Marketplace</p>
-            <h2>
-              {ro ? "Explorează după componentă" : "Explore by component"}
-            </h2>
-          </div>
-          <Link href="/search">
-            {ro ? "Toate echipamentele" : "All equipment"} →
-          </Link>
-        </div>
-        <LinkGrid
-          locale={locale}
-          items={rootCategories.map((c) => ({
-            href: `/marketplace/${c.path}`,
-            title: c.title,
-            summary: c.summary,
-          }))}
-        />
-      </section>
-      <section className="solution-banner">
-        <div>
-          <p className="eyebrow">
-            {ro ? "Nu știi de unde să începi?" : "Not sure where to start?"}
-          </p>
-          <h2>
-            {ro
-              ? "Spune ce vrei să alimentezi."
-              : "Tell us what you need to power."}
-          </h2>
-          <p>
-            {ro
-              ? "Locuință, rulotă, ambarcațiune sau afacere. Introdu puterea și autonomia pentru o estimare transparentă."
-              : "Home, RV, boat or business. Enter load and runtime for a transparent starting estimate."}
-          </p>
-        </div>
-        <Link className="button-primary" href="/marketplace/find-my-solution">
-          {ro ? "Găsește soluția" : "Find My Solution"} →
-        </Link>
-      </section>
-      <section>
-        <div className="section-line">
-          <h2>
-            {ro ? "Soluții pentru situația ta" : "Solutions for your setting"}
-          </h2>
-          <Link href="/solutions">
-            {ro ? "Toate soluțiile" : "All solutions"} →
-          </Link>
-        </div>
-        <LinkGrid
-          locale={locale}
-          items={solutions
-            .slice(0, 4)
-            .map((s) => ({
-              href: `/solutions/${s.slug}`,
-              title: s.title,
-              summary: s.summary,
-            }))}
-        />
-      </section>
-      <section>
-        <div className="section-line">
-          <h2>
-            {ro
-              ? "Modele documentate, selecție independentă"
-              : "Documented models, independent selection"}
-          </h2>
-          <Link href="/search?kind=product">
-            {ro ? "Vezi modelele" : "View models"} →
-          </Link>
-        </div>
-        <div className="product-grid">
-          {catalog
-            .filter((p) => p.kind === "product")
-            .slice(0, 3)
-            .map((p) => (
-              <ProductCard key={p.id} product={p} dictionary={t} />
-            ))}
-        </div>
-      </section>
-      <section className="content-panel">
-        <h2>
-          {ro
-            ? "Cum funcționează M Air Electro AI"
-            : "How M Air Electro AI works"}
-        </h2>
-        <ol className="journey">
-          <li>
-            <strong>{ro ? "Calculează" : "Calculate"}</strong>
-            <p>
-              {ro
-                ? "Separă puterea de energie și stabilește autonomia."
-                : "Separate power from energy and define runtime."}
-            </p>
-          </li>
-          <li>
-            <strong>{ro ? "Înțelege" : "Understand"}</strong>
-            <p>
-              {ro
-                ? "Verifică tensiunile, curenții și compatibilitatea."
-                : "Check voltages, currents and compatibility."}
-            </p>
-          </li>
-          <li>
-            <strong>{ro ? "Compară" : "Compare"}</strong>
-            <p>
-              {ro
-                ? "Compară câmpurile documentate și limitele."
-                : "Compare documented fields and limitations."}
-            </p>
-          </li>
-          <li>
-            <strong>{ro ? "Vizitează furnizorul" : "Visit supplier"}</strong>
-            <p>
-              {ro
-                ? "Confirmă modelul, livrarea și condițiile înainte de comandă."
-                : "Confirm the model, delivery and terms before ordering."}
-            </p>
-          </li>
-        </ol>
-      </section>
-      <section className="two-columns">
-        <div className="content-panel">
-          <p className="eyebrow">
-            {ro ? "Calcule pentru alegere" : "Calculate before choosing"}
-          </p>
-          <h2>{ro ? "De la Wh la componente" : "From Wh to components"}</h2>
-          <div className="link-stack">
-            <Link href="/calculators/battery">
-              {ro
-                ? "Capacitate și autonomie baterie"
-                : "Battery capacity & runtime"}{" "}
-              →
-            </Link>
-            <Link href="/calculators/solar">
-              {ro ? "Puterea panourilor solare" : "Solar array sizing"} →
-            </Link>
-            <Link href="/backup-calculator">
-              {ro ? "Sistem de rezervă" : "Backup system sizing"} →
-            </Link>
-            <Link href="/calculators/cable-sizing">
-              {ro
-                ? "Cabluri și cădere de tensiune"
-                : "Cable sizing & voltage drop"}{" "}
-              →
-            </Link>
-          </div>
-        </div>
-        <div className="content-panel">
-          <p className="eyebrow">
-            {ro ? "Învață înainte să cumperi" : "Learn before you buy"}
-          </p>
-          <h2>
-            {ro
-              ? "Specificațiile au nevoie de context."
-              : "Specifications need context."}
-          </h2>
-          <p>
-            {ro
-              ? "100 Ah nu exprimă singur energia. 2000 W nu descriu durata unui vârf. Ghidurile explică diferențele care contează la alegere."
-              : "100 Ah alone does not express energy. 2000 W does not describe surge duration. Our guides explain the differences that matter when choosing."}
-          </p>
-          <Link href="/learn">
-            {ro ? "Deschide centrul de ghiduri" : "Open the learning centre"} →
-          </Link>
-        </div>
-      </section>
-      <section>
-        <h2>{ro ? "Ghiduri de început" : "Start with these guides"}</h2>
-        <LinkGrid
-          locale={locale}
-          items={guides
-            .slice(0, 6)
-            .map((g) => ({
-              href: `/learn/${g.slug}`,
-              title: g.title,
-              summary: g.intro,
-            }))}
-        />
-      </section>
-      <section className="solution-banner">
-        <div>
-          <h2>
-            {ro
-              ? "Pregătește discuția cu instalatorul."
-              : "Prepare the conversation with your installer."}
-          </h2>
-          <p>
-            {ro
-              ? "Transformă calculele într-o listă de cerințe pentru instalatorul tău. Verifică împreună compatibilitatea, protecțiile și condițiile instalației."
-              : "Turn your calculations into a requirements brief for your installer. Review compatibility, protection and site conditions together."}
-          </p>
-        </div>
-        <Link href="/experts" className="button-outline">
-          {ro ? "Ajutor profesional" : "Professional help"} →
-        </Link>
-      </section>
-      <AffiliateDisclosure dictionary={t} />
-    </main>
-  );
+        <form action="/search" className="hero-search" role="search" aria-label={ro ? "Caută echipamente" : "Search equipment"}>
+          <label className="sr-only" htmlFor="hero-query">{ro ? "Caută echipamente" : "Search equipment"}</label>
+          <input id="hero-query" name="q" type="search" placeholder={ro ? "Renogy, 100 Ah, panouri solare…" : "Renogy, 100 Ah, solar panels…"} maxLength={120} />
+          <button type="submit">{ro ? "Caută" : "Search"} →</button>
+        </form>
+        <p className="hero-assurance">{ro ? "Selecție independentă. Calcule explicabile. Achiziție la furnizor." : "Independent selection. Clear calculations. Buy from the supplier."}</p>
+      </div>
+      {!marketplace && <figure className="brand-hero-art">
+        <Image src="/hero.png" alt={ro ? "M Air Electro AI: litera M verde și profil uman digital" : "M Air Electro AI: lime M and futuristic digital human profile"} width={1254} height={1254} sizes="(max-width: 768px) 90vw, 45vw" preload />
+        <figcaption>{ro ? "INTELIGENȚĂ. ENERGIE. VIITOR." : "INTELLIGENCE. ENERGY. FUTURE."}</figcaption>
+      </figure>}
+    </section>
+    {requirements && (requirements.batteryKwh || requirements.inverterKw) && <section className="content-panel">
+      <h2>{ro ? "Cerințe primite din calculator" : "Requirements received from calculator"}</h2>
+      <p>{ro ? "Baterie" : "Battery"}: {requirements.batteryKwh ?? "—"} kWh · {ro ? "Invertor" : "Inverter"}: {requirements.inverterKw ?? "—"} kW · {ro ? "Vârf" : "Surge"}: {requirements.surgeKw ?? "—"} kW · {requirements.region ?? "EU"}</p>
+      <p>{ro ? "Estimări pentru sistem, nu confirmare de compatibilitate a unui produs." : "System estimates, not confirmation of product compatibility."}</p>
+      <Link href="/marketplace/batteries">{ro ? "Verifică baterii" : "Review batteries"} →</Link>
+    </section>}
+    <section id="equipment-categories" className="equipment-explorer" aria-labelledby="equipment-heading">
+      <div className="section-line"><div><p className="eyebrow">{ro ? "EXPLORARE DIRECTĂ" : "STRAIGHT TO THE EQUIPMENT"}</p><h2 id="equipment-heading">{ro ? "Ce construiești?" : "What are you building?"}</h2></div><Link href="/search?kind=product">{ro ? "Toate modelele" : "All models"} →</Link></div>
+      <div className="category-tiles">{rootCategories.map(category => <Link key={category.path} href={`/marketplace/${category.path}`}>
+        <EnergySchematic family={visualFamily(`/marketplace/${category.path}`)} className="category-symbol" />
+        <span>{category.title[ro ? "ro" : "en"]}</span><span aria-hidden="true">↗</span>
+      </Link>)}</div>
+    </section>
+    {marketplace ? <CatalogBrowser products={catalog} query={{ kind: "product", ...requirements }} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} /> : <>
+    <section className="application-section" aria-labelledby="application-heading">
+      <div className="section-line"><div><p className="eyebrow">{ro ? "PORNEȘTE DE LA NEVOIE" : "START WITH YOUR EVERYDAY"}</p><h2 id="application-heading">{ro ? "Un sistem pentru felul tău de a trăi." : "A system for the way you live."}</h2></div><Link href="/solutions">{ro ? "Toate soluțiile" : "All solutions"} →</Link></div>
+      <div className="application-grid">{applications.map(([slug, en, romanian, summary, translated]) => <Link key={slug} href={`/marketplace/find-my-solution?application=${slug}`}>
+        <EnergySchematic family={slug === "marine" ? "marine" : slug === "off-grid-cabin" ? "solar" : "backup"} className="application-symbol" />
+        <h3>{ro ? romanian : en}</h3><p>{ro ? translated : summary}</p><span>{ro ? "Configurează necesarul" : "Find your starting point"} →</span>
+      </Link>)}</div>
+    </section>
+    <RenogyFeature ro={ro} />
+    <section aria-labelledby="featured-models">
+      <div className="section-line"><div><p className="eyebrow">{ro ? "SELECȚIE RENOGY EU" : "RENOGY EU SELECTION"}</p><h2 id="featured-models">{ro ? "Mai puține presupuneri. Alegeri mai clare." : "Less guesswork. Better-informed choices."}</h2></div><Link href="/renogy#renogy-products">{ro ? "Vezi selecția Renogy" : "View Renogy selection"} →</Link></div>
+      <div className="product-grid">{products.map(product => <ProductCard key={product.id} product={product} dictionary={dictionary} />)}</div>
+    </section>
+    <section className="planning-editorial" aria-labelledby="planning-heading">
+      <div><p className="eyebrow">{ro ? "ÎNȚELEGE ÎNAINTE SĂ ALEGI" : "UNDERSTAND BEFORE YOU CHOOSE"}</p><h2 id="planning-heading">{ro ? "De la întrebare la un plan clar." : "From a question to a clearer plan."}</h2><p>{ro ? "Puterea, autonomia și compatibilitatea contează împreună. Instrumentele noastre explică ipotezele, nu înlocuiesc proiectarea de către un specialist." : "Power, runtime and compatibility belong together. Our tools explain the assumptions, not replace professional installation design."}</p><Link href="/learn">{ro ? "Explorează ghidurile" : "Explore the guides"} →</Link></div>
+      <div className="planning-links">{[
+        ["/backup-calculator", "What needs to stay on?", "Ce trebuie să rămână alimentat?", "Backup planning", "Planificarea rezervei"],
+        ["/calculators/battery", "How long will it last?", "Cât va dura autonomia?", "Battery sizing", "Dimensionarea bateriei"],
+        ["/calculators/solar", "How much solar do I need?", "De cât solar am nevoie?", "Solar sizing", "Dimensionare solară"],
+        ["/compare", "Which option fits better?", "Ce opțiune se potrivește?", "Product comparison", "Comparație de produse"],
+      ].map(([href, en, romanian, label, translated]) => <Link key={href} href={href}><span>{ro ? translated : label}</span><strong>{ro ? romanian : en}</strong><span aria-hidden="true">↗</span></Link>)}</div>
+    </section>
+    <WaterPromo ro={ro} />
+    </>}
+    <AffiliateDisclosure dictionary={dictionary} />
+  </main>;
 }
