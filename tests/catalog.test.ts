@@ -78,7 +78,7 @@ test("filters intersect and never infer missing feature values", () => {
     voltage: "12",
     capacityAh: "100",
   });
-  assert.ok(results.length >= 2);
+  assert.deepEqual(results.map(product => product.id), ["renogy-mini-100"]);
   assert.ok(
     results.every(
       (p) => p.facets.voltage === "12" && p.facets.capacityAh === "100",
@@ -161,5 +161,5 @@ test("catalog sorting preserves source order and returns only filtered records",
   const firstClass = models.findIndex(p => p.kind !== "product");
   assert.ok(models.slice(firstClass).every(p => p.kind !== "product"));
   assert.deepEqual(catalog.map(p => p.id), before);
-  assert.deepEqual(filterEquipment(catalog, { sort: "unknown" }).map(p => p.id), before);
+  assert.deepEqual(filterEquipment(catalog, { sort: "unknown" }).map(p => p.id), before.filter(id => id !== "battery-lfp-100"));
 });

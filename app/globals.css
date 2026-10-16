@@ -188,6 +188,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .product-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
 .equipment-card { min-width:0; display:flex; flex-direction:column; gap:12px; padding:18px; border-radius:18px; border:1px solid #dae4d1; background:#fcfef8f2; color:#173d34; }
 .equipment-visual { border-radius:12px; background:radial-gradient(ellipse at center,#dbe9c9,#eef4e7); }
+.product-photo-pending { min-height:145px; display:grid; place-items:center; padding:16px; text-align:center; }
 .equipment-visual svg { display:block; width:100%; height:145px; }
 .equipment-visual-photo { overflow:hidden; background:#e5e5e5; }
 .equipment-visual-photo img { display:block; width:100%; height:auto; }

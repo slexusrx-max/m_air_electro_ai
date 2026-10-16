@@ -11,7 +11,8 @@ import {
   LinkGrid,
 } from "@/components/marketplace/shared";
 import { CompareControl } from "@/components/marketplace/compare-control";
-import { EquipmentVisual } from "@/components/marketplace/equipment-visual";
+import { ProductVisual } from "@/components/marketplace/product-visual";
+import { isCatalogListing } from "@/lib/marketplace/product-presentation";
 import { ProductStructuredData } from "@/components/marketplace/structured-data";
 import { ProductCard } from "@/components/marketplace/product-card";
 import { catalog, productBySlug } from "@/lib/affiliate/catalog";
@@ -62,12 +63,12 @@ export default async function Page({ params }: Props) {
         />
         <div className="product-detail">
           <div className="product-illustration">
-            <EquipmentVisual category={p.category} />
-            <p className="small-copy">
+            <ProductVisual product={p} ro={ro} />
+            {p.kind === "equipment-class" && <p className="small-copy">
               {ro
                 ? "Imagine ilustrativă a categoriei; aspectul modelului real poate diferi."
                 : "Illustrative category image; the actual model’s appearance may differ."}
-            </p>
+            </p>}
           </div>
           <article>
             {(p.provider === "renogy" || p.provider === "waterdrop-eu") && <Link className="text-link" href={p.provider === "renogy" ? "/renogy" : "/waterdrop"}>{ro ? "Vezi vitrina" : "Explore storefront"}: {p.brand} →</Link>}
@@ -160,7 +161,7 @@ export default async function Page({ params }: Props) {
         </h2>
         <div className="product-grid">
           {catalog
-            .filter((n) => n.id !== p.id && n.category === p.category)
+            .filter((n) => isCatalogListing(n) && n.id !== p.id && n.category === p.category)
             .slice(0, 3)
             .map((n) => (
               <ProductCard key={n.id} product={n} dictionary={t} />

@@ -1,4 +1,5 @@
 import type { Equipment } from "./catalog-data";
+import { isCatalogListing } from "./product-presentation";
 export type CatalogQuery = Record<string, string | undefined>;
 export const facetLabels: Record<string, [string, string]> = {
   voltage: ["Voltage class (V)", "Clasă tensiune (V)"],
@@ -42,6 +43,7 @@ export function filterEquipment(products: Equipment[], raw: CatalogQuery) {
     .split(/\s+/)
     .filter(Boolean);
   const results = products.filter((p) => {
+    if (!isCatalogListing(p)) return false;
     const names: Record<string, string> = {
       "lithium-batteries": "batteries acumulator acumulatoare baterii",
       inverters: "invertoare invertor",

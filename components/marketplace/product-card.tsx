@@ -2,7 +2,8 @@ import { SupplierLink } from "./supplier-link";
 import Link from "next/link";
 import { specificationLabel } from "@/lib/marketplace/specifications";
 import { CompareControl } from "./compare-control";
-import { EquipmentVisual } from "./equipment-visual";
+import { ProductVisual } from "./product-visual";
+import { isCatalogListing } from "@/lib/marketplace/product-presentation";
 import type { CatalogProduct } from "@/lib/affiliate/types";
 import type { Dictionary } from "@/lib/i18n/types";
 import type { Equipment } from "@/lib/marketplace/catalog-data";
@@ -18,6 +19,7 @@ export function ProductCard({
 }) {
   const p = product as Equipment;
   const ro = t["locale.code"] === "ro";
+  if (!isCatalogListing(p)) return null;
   return (
     <article className="equipment-card">
       <Link
@@ -25,7 +27,7 @@ export function ProductCard({
         tabIndex={-1}
         aria-hidden="true"
       >
-        <EquipmentVisual category={p.category} />
+        <ProductVisual product={p} ro={ro} />
       </Link>
       <p className="eyebrow">
         {p.kind === "product"
