@@ -7,6 +7,7 @@ export const authMessages = {
   role: { ro: "Alege un rol valid.", en: "Choose a valid role." },
   blocked: { ro: "Acest cont este blocat.", en: "This account is blocked." },
   verify: { ro: "Verifică e-mailul pentru confirmarea contului. Dacă ai deja cont, autentifică-te sau resetează parola.", en: "Check your email to confirm your account. If you already have an account, sign in or reset your password." },
+  verifyHelp: { ro: "Deschide linkul de confirmare în același browser în care ai început înregistrarea. Verifică și dosarul Spam. Dacă ai confirmat adresa în alt browser, revino aici și autentifică-te cu e-mailul și parola alese.", en: "Open the confirmation link in the same browser where you started registration. Check your spam folder too. If you confirmed your address in another browser, return here and sign in with the email and password you chose." },
   reset: { ro: "Dacă există un cont pentru această adresă, vei primi un link de resetare.", en: "If an account exists for this address, you will receive a reset link." },
   expired: { ro: "Linkul nu este valid sau a expirat. Solicită un link nou.", en: "The link is invalid or expired. Request a new link." },
   unconfirmed: { ro: "Confirmă adresa de e-mail înainte de autentificare.", en: "Confirm your email address before signing in." },

@@ -2,9 +2,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { load } from "./helpers.mjs";
 const form = (values) => { const data = new FormData(); for (const [k,v] of Object.entries(values)) data.set(k,v); return data; };
-function setup({locale="ro",role="client",blocked=false,configured=true}={}) {
+function setup({locale="ro",role="client",blocked=false,configured=true,session=null,authError=null}={}) {
  const calls=[];
- const auth = new Proxy({}, { get:(_,name)=>async (input)=>{calls.push([name,input]);return {data:{user:{id:"test"}},error:null};} });
+ const auth = new Proxy({}, { get:(_,name)=>async (input)=>{calls.push([name,input]);return {data:{user:{id:"test"},session},error:authError};} });
  const actions=load("app/(auth)/actions.ts",{
   "next/navigation":{redirect:path=>{throw new Error(`REDIRECT:${path}`);}},
   "next/cache":{revalidatePath:()=>{}},
@@ -21,12 +21,28 @@ function setup({locale="ro",role="client",blocked=false,configured=true}={}) {
 test("registration preserves password whitespace, accepts only public roles and sends verification callback",async()=>{
  const {actions,calls}=setup();
  const data={email:"test@example.invalid",password:" secret123 ",confirmation:" secret123 ",role:"expert"};
- assert.match((await actions.signUp({},form(data))).message,/Verifică/);
+ await assert.rejects(actions.signUp({},form(data)),/REDIRECT:\/register\/check-email/);
  assert.equal(calls[0][1].password,data.password);
  assert.match(calls[0][1].options.emailRedirectTo,/auth\/callback\?next=\/dashboard\/expert/);
  assert.ok((await actions.signUp({},form({...data,role:"admin"}))).error);
  assert.equal(calls.length,1);
  assert.ok((await actions.signUp({},form({...data,confirmation:"secret123"}))).error);
+});
+test("registration with a session opens the authenticated role destination and respects blocked accounts",async()=>{
+ const data=form({email:"test@example.invalid",password:"secret123",confirmation:"secret123",role:"client"});
+ for(const role of ["client","expert"]) {
+  const {actions}=setup({role,session:{access_token:"fixture"}});
+  await assert.rejects(actions.signUp({},data),new RegExp(`REDIRECT:/dashboard/${role}`));
+ }
+ const {actions,calls}=setup({blocked:true,session:{access_token:"fixture"}});
+ assert.match((await actions.signUp({},data)).error,/blocat/);
+ assert.equal(calls.at(-1)[0],"signOut");
+});
+test("registration errors stay on the form and never claim a confirmation was sent",async()=>{
+ const {actions}=setup({authError:{code:"over_email_send_rate_limit"},locale:"en"});
+ const result=await actions.signUp({},form({email:"test@example.invalid",password:"secret123",confirmation:"secret123",role:"client"}));
+ assert.match(result.error,/Too many attempts/);
+ assert.equal(result.message,undefined);
 });
 test("login routes clients and experts and signs blocked accounts out",async()=>{
  for(const role of ["client","expert"]) {

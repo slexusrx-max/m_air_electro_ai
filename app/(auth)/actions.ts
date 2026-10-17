@@ -33,8 +33,16 @@ export async function signUp(_: ActionState, formData: FormData): Promise<Action
   const email = value(formData, "email"); const password = passwordValue(formData, "password"); const confirmation = passwordValue(formData, "confirmation"); const role = value(formData, "role");
   if (!validEmail(email)) return error("required");
   if (password.length < 8) return error("password"); if (password !== confirmation) return error("mismatch"); if (!validRole(role)) return error("role");
-  const supabase = await client(); if (!supabase) return error("unavailable"); const { error: authError } = await supabase.auth.signUp({ email, password, options: { data: { role }, emailRedirectTo: absoluteUrl(`/auth/callback?next=${rolePath[role]}`) } });
-  if (authError) return error(authErrorKey(authError.code)); return { message: await message("verify") };
+  const supabase = await client(); if (!supabase) return error("unavailable"); const { data, error: authError } = await supabase.auth.signUp({ email, password, options: { data: { role }, emailRedirectTo: absoluteUrl(`/auth/callback?next=${rolePath[role]}`) } });
+  if (authError) return error(authErrorKey(authError.code));
+  if (data.session) {
+    const profile = await getCurrentProfile();
+    if (profile?.account_status === "blocked") { await supabase.auth.signOut(); return error("blocked"); }
+    redirect(profile ? rolePath[profile.role] : "/dashboard");
+  }
+  // A successful request without a session still requires email confirmation.
+  // Use a durable destination so refresh does not show an empty signup form.
+  redirect("/register/check-email");
 }
 
 export async function requestPasswordReset(_: ActionState, formData: FormData): Promise<ActionState> {
