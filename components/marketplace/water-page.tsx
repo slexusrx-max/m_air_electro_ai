@@ -12,6 +12,7 @@ import { ProductCard } from "./product-card";
 import { getDictionary } from "@/lib/i18n/dictionaries";
 import styles from "./water.module.css";
 
+
 export function WaterPage({ category, locale }: { category: Category; locale: Locale }) {
   const ro = locale === "ro";
   const hub = category.path === "water";
@@ -29,7 +30,7 @@ export function WaterPage({ category, locale }: { category: Category; locale: Lo
     {!hub && <section className="water-section"><p className="water-kicker">{ro ? "ÎNAINTE DE A ALEGE" : "BEFORE YOU CHOOSE"}</p><h2>{ro ? "Criterii pentru sistemul tău" : "Your system checklist"}</h2><p>{local(category.checks, locale)}</p><p>{ro ? "Specificațiile unui model nu confirmă automat reducerea contaminanților. Nu presupunem prețuri, disponibilitate sau certificări." : "Model specifications do not automatically establish contaminant reduction. Prices, availability and certifications are not assumed."}</p><Link href="/learn/choosing-water-system">{ro ? "Citește ghidul de alegere" : "Read the selection guide"} →</Link></section>}
     <section id="water-categories" className="water-section">
       <div className="water-section-heading"><div><p className="water-kicker">{ro ? "ACASĂ / ÎN CĂLĂTORIE / OFF-GRID" : "HOME / ON THE GO / OFF-GRID"}</p><h2>{ro ? "Apa potrivită vieții tale" : "Water for the way you live"}</h2></div><p>{ro ? "Explorează după utilizare și instalare. Verifică performanța separat, pentru fiecare model." : "Explore by use and installation. Verify performance separately for each model."}</p></div>
-      <div className="water-category-grid">{waterCategories.map((c, i) => <Link key={c.slug} href={`/marketplace/water/${c.slug}`} aria-current={category.path === `water/${c.slug}` ? "page" : undefined}><span className="water-number">{String(i + 1).padStart(2, "0")} /</span><h3>{local(c.title, locale)} <span aria-hidden="true">↗</span></h3><p>{local(c.summary, locale)}</p></Link>)}</div>
+      <div className="water-category-grid">{waterCategories.map((c) => <Link key={c.slug} href={`/marketplace/water/${c.slug}`} aria-current={category.path === `water/${c.slug}` ? "page" : undefined}><h3>{local(c.title, locale)} <span aria-hidden="true">↗</span></h3><p>{local(c.summary, locale)}</p></Link>)}</div>
     </section>
     {products.length > 0 && <section className="water-section" aria-labelledby="water-models">
       <h2 id="water-models">{ro ? "Modele documentate din surse oficiale UE" : "Models documented from official EU sources"}</h2>
@@ -42,3 +43,4 @@ export function WaterPage({ category, locale }: { category: Category; locale: Lo
     <Faq ro={ro} question={ro ? "Un filtru reduce automat toți contaminanții?" : "Does a filter automatically reduce every contaminant?"} answer={ro ? "Nu. Contează modelul exact, cartușul și substanțele din documentația oficială și din certificarea sau testul independent disponibil. Capacitatea nedocumentată rămâne necunoscută." : "No. The exact model, cartridge and substances covered by the official documentation and available independent certification or test matter. Undocumented capability remains unknown."} />
   </main></PlatformShell>;
 }
+
