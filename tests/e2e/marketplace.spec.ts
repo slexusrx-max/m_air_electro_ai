@@ -10,7 +10,7 @@ test("RO/EN switching preserves the deep route and desktop menu works by keyboar
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/marketplace/solar/panels/rigid");
   await expect(page.locator("html")).toHaveAttribute("lang", "ro");
-  await page.getByRole("button", { name: "EN", exact: true }).click();
+  await page.getByRole("link", { name: "EN", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(page).toHaveURL(/\/marketplace\/solar\/panels\/rigid$/);
   await page

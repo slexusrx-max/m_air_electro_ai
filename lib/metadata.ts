@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import type { Locale } from "@/lib/i18n/types";
+import { isLocalizedPublicPath, localizedPath } from "@/lib/i18n/routing";
 
 import { absoluteUrl, siteConfig } from "@/lib/site";
 
@@ -18,7 +19,7 @@ export function buildMetadata({
   imagePath = "/opengraph-image",
   locale = "ro",
 }: BuildMetadataInput): Metadata {
-  const url = absoluteUrl(path);
+  const url = absoluteUrl(localizedPath(path, locale));
   const image = absoluteUrl(imagePath);
 
   return {
@@ -26,6 +27,11 @@ export function buildMetadata({
     description,
     alternates: {
       canonical: url,
+      ...(isLocalizedPublicPath(path) ? { languages: {
+        ro: absoluteUrl(localizedPath(path, "ro")),
+        en: absoluteUrl(localizedPath(path, "en")),
+        "x-default": absoluteUrl(localizedPath(path, "ro")),
+      } } : {}),
     },
     openGraph: {
       title,

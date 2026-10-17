@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import Image from "next/image";
 import { rootCategories } from "@/lib/marketplace/content";
 import { catalog } from "@/lib/affiliate/catalog";
@@ -11,6 +11,7 @@ import { WaterPromo } from "./water-promo";
 import { RenogyFeature } from "./renogy-feature";
 import { EquipmentVisual } from "./equipment-visual";
 import { CatalogBrowser } from "./catalog-browser";
+import { localizedPath } from "@/lib/i18n/routing";
 
 const applications = [
   ["home-backup", "Home backup", "Rezervă pentru casă", "Keep essential loads in focus.", "Pornește de la consumatorii esențiali."],
@@ -37,7 +38,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
           <Link className="button-primary" href={marketplace ? "#equipment-categories" : "/marketplace"}>{ro ? "Alege echipamente" : "Browse Equipment"} <span aria-hidden="true">↗</span></Link>
           <Link className="button-outline" href="/marketplace/find-my-solution">{ro ? "Găsește soluția" : "Find My Solution"} <span aria-hidden="true">→</span></Link>
         </div>
-        <form action="/marketplace" className="hero-search" role="search" aria-label={ro ? "Caută echipamente" : "Search equipment"}>
+        <form action={localizedPath("/marketplace", locale)} className="hero-search" role="search" aria-label={ro ? "Caută echipamente" : "Search equipment"}>
           <label className="sr-only" htmlFor="hero-query">{ro ? "Caută echipamente" : "Search equipment"}</label>
           <input id="hero-query" name="q" type="search" placeholder={ro ? "Renogy, 100 Ah, panouri solare…" : "Renogy, 100 Ah, solar panels…"} maxLength={120} />
           <button type="submit">{ro ? "Caută" : "Search"} →</button>
@@ -74,7 +75,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
         <span>{category.title[ro ? "ro" : "en"]}</span><span aria-hidden="true">↗</span>
       </Link>)}</div>
     </section>
-    <CatalogBrowser products={catalog} query={{ kind: "product", ...requirements }} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} />
+    {marketplace && <CatalogBrowser products={catalog} query={{ kind: "product", ...requirements }} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} />}
     {!marketplace && <>
     <section className="application-section" aria-labelledby="application-heading">
       <div className="section-line"><div><p className="eyebrow">{ro ? "PORNEȘTE DE LA NEVOIE" : "START WITH YOUR EVERYDAY"}</p><h2 id="application-heading">{ro ? "Un sistem pentru felul tău de a trăi." : "A system for the way you live."}</h2></div><Link href="/solutions">{ro ? "Toate soluțiile" : "All solutions"} →</Link></div>

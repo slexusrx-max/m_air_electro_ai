@@ -1,6 +1,6 @@
 "use client";
 import { CalculationAnalytics } from "@/components/calculation-analytics";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { useState } from "react";
 import type { Dictionary } from "@/lib/i18n/types";
 import { commercialCopy } from "@/lib/marketplace/copy";

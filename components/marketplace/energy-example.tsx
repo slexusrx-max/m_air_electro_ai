@@ -1,0 +1,24 @@
+import Link from "@/components/localized-link";
+import { energyExamples, exampleEnergy } from "@/lib/marketplace/energy-examples";
+
+export function EnergyExample({ kind, ro }: { kind: "apartment" | "rv"; ro: boolean }) {
+  const loads = energyExamples[kind];
+  const energy = exampleEnergy(loads);
+  const fmt = (n: number, digits = 1) => new Intl.NumberFormat(ro ? "ro-RO" : "en-GB", { maximumFractionDigits: digits }).format(n);
+  return <section className="content-panel energy-example" id="worked-example">
+    <h2>{kind === "apartment" ? (ro ? "Exemplu calculat: internet și lucru de acasă" : "Worked example: internet and home working") : (ro ? "Buget calculat pentru o zi în rulotă" : "Worked one-day RV energy budget")}</h2>
+    <p>{ro ? "Valorile de mai jos sunt ipoteze pentru un exemplu reproductibil, nu măsurători. Înlocuiește puterea și timpul cu datele aparatelor tale. Timpul de funcționare efectivă poate diferi de intervalul în care aparatul rămâne conectat." : "The values below are assumptions for a reproducible example, not measurements. Replace power and time with your appliance data. Actual running time can differ from the period an appliance remains connected."}</p>
+    <p className="small-copy">{ro ? "Pe ecrane mici, derulează tabelul lateral pentru toate valorile." : "On small screens, scroll the table sideways to see all values."}</p>
+    <div className="table-scroll" role="region" tabIndex={0} aria-label={ro ? "Buget energetic" : "Energy budget"}>
+      <table><caption>{ro ? "Energie: W × ore = Wh" : "Energy: W × hours = Wh"}</caption><thead><tr><th scope="col">{ro ? "Consumator" : "Load"}</th><th scope="col">AC/DC</th><th scope="col">W</th><th scope="col">{ro ? "Ore" : "Hours"}</th><th scope="col">Wh</th></tr></thead>
+        <tbody>{loads.map(l => <tr key={l.en}><th scope="row">{ro ? l.ro : l.en}</th><td>{l.circuit}</td><td>{fmt(l.watts)}</td><td>{fmt(l.hours, 2)}</td><td>{fmt(l.watts * l.hours)}</td></tr>)}</tbody>
+        <tfoot><tr><th colSpan={4} scope="row">{ro ? "Total la consumatori" : "Total delivered to loads"}</th><td>{fmt(energy.loadWh)}</td></tr></tfoot>
+      </table>
+    </div>
+    <p>{ro ? "Ipoteze de calcul: fracție utilizabilă a bateriei 80%; randament invertor 92% numai pentru sarcinile AC. Stocarea nominală rezultă din (Wh DC + Wh AC / 0,92) / 0,80." : "Calculation assumptions: 80% usable battery fraction; 92% inverter efficiency for AC loads only. Nominal storage is (DC Wh + AC Wh / 0.92) / 0.80."} <strong>{fmt(energy.nominalWh)} Wh</strong>.</p>
+    <p>{ro ? "Acest prag nu include consumul invertorului în gol, pierderile distribuției DC, îmbătrânirea sau rezerva meteo. De exemplu, un consum suplimentar de 10 W timp de 4 ore adaugă 40 Wh la bugetul DC și 50 Wh la stocarea nominală la fracția 80%. Energia suficientă nu confirmă puterea de pornire, limita BMS ori funcția UPS." : "This threshold excludes inverter idle consumption, DC distribution losses, ageing and weather reserve. For example, an additional 10 W for 4 hours adds 40 Wh to the DC budget and 50 Wh to nominal storage at an 80% usable fraction. Enough energy does not establish startup capability, BMS limits or UPS operation."}</p>
+    <h3>{ro ? "Ce schimbă rezultatul?" : "What changes the result?"}</h3>
+    <p>{kind === "apartment" ? (ro ? "Un laptop de 90 W în loc de 45 W, folosit patru ore, adaugă 180 Wh la sarcina AC: aproximativ 245 Wh în plus de stocare nominală. Un fierbător de 1500 W folosit zece minute cere 250 Wh, dar și 1500 W instantaneu — verificarea puterii poate exclude sistemul chiar dacă energia ar ajunge." : "A 90 W laptop replacing the 45 W example for four hours adds 180 Wh of AC demand: about 245 Wh more nominal storage. A 1500 W kettle running for ten minutes needs 250 Wh but also 1500 W instantly; the power check can rule out a system even when its energy would be sufficient.") : (ro ? "Dacă timpul compresorului crește de la 8 la 12 ore, frigiderul adaugă 180 Wh DC, adică 225 Wh nominali la fracția 80%. Pentru două zile fără reîncărcare, bugetul de energie se dublează; puterea simultană nu se dublează automat. Solarul și alternatorul se evaluează separat de capacitatea bateriei." : "If compressor running time increases from 8 to 12 hours, the refrigerator adds 180 DC Wh, or 225 nominal Wh at an 80% usable fraction. Two days without recharging doubles the energy budget; it does not automatically double simultaneous power. Evaluate solar and alternator charging separately from battery capacity.")}</p>
+    <div className="action-row"><Link href="/calculators/battery">{ro ? "Recalculează cu datele tale" : "Recalculate with your inputs"} →</Link><Link href="/marketplace/products/lfp-battery-12v-100ah-class">{ro ? "Ce înseamnă clasa LiFePO4 100 Ah" : "What the 100 Ah LiFePO4 class means"} →</Link></div>
+  </section>;
+}

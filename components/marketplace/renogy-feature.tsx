@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import styles from "./renogy.module.css";
 
 export function RenogyFeature({ ro, storefront = false }: { ro: boolean; storefront?: boolean }) {

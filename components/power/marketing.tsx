@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { DemoDataBadge, GridStatusBadge, StabilityScore } from "@/components/power/power-badges";
 export function HeroMapPreview() { return <div className="map-grid relative min-h-72 overflow-hidden rounded-[2rem] border border-white/80 p-5 shadow-[0_24px_60px_rgba(10,66,75,0.12)]"><span className="map-dot left-[19%] top-[55%]"/><span className="map-dot left-[45%] top-[36%]"/><span className="map-dot left-[72%] top-[47%]"/><div className="glass-panel absolute bottom-5 right-5 w-64 rounded-3xl p-4"><div className="flex items-center gap-3"><StabilityScore score={82}/><div><p className="font-bold text-slate-950">Constanța</p><GridStatusBadge status="normal"/></div></div><div className="mt-3 flex justify-between text-xs text-slate-600"><span>2 active facilities</span><DemoDataBadge/></div></div></div>; }
 export function DataDisclaimer({ title, text }: { title: string; text: string }) { return <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-slate-700"><strong className="text-slate-950">{title}.</strong> {text}</div>; }

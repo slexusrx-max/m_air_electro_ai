@@ -1,16 +1,17 @@
 import { expectContactState } from "./helpers/contact-state";
 import { test, expect } from "@playwright/test";
+import { localizedPath } from "../../lib/i18n/routing";
 import { publicRoutes } from "../../lib/marketplace/routes";
 
 test("public metadata follows RO/EN, preserving canonicals and indexing rules", async ({ request }) => {
   test.setTimeout(300000);
   for (const path of [...publicRoutes, "/search?q=solar", "/compare?ids=renogy-mini-100,renogy-mini-200", "/marketplace?brand=Renogy"]) {
     const descriptions: string[] = [];
-    for (const locale of ["ro", "en"]) {
-      const response = await request.get(path, { headers: { Cookie: `mr-electro-locale=${locale}` } });
+    for (const locale of ["ro", "en"] as const) {
+      const response = await request.get(localizedPath(path, locale), { headers: { Cookie: `mr-electro-locale=${locale === "ro" ? "en" : "ro"}`, "x-mair-locale": locale === "ro" ? "en" : "ro" } });
       expect(response.status(), `${locale} ${path}`).toBe(200);
       const html = await response.text();
-      expect(html, path).toContain(`lang="${locale}"`);
+      expect(html, path).toMatch(new RegExp(`<html[^>]*lang="${locale}"`));
       const description = html.match(/<meta name="description" content="([^"]+)"/);
       expect(description, path).not.toBeNull();
       descriptions.push(description![1]);
@@ -19,7 +20,7 @@ test("public metadata follows RO/EN, preserving canonicals and indexing rules", 
       expect(html, path).toContain(`<meta property="og:locale" content="${locale === "ro" ? "ro_RO" : "en_GB"}"`);
       const canonical = html.match(/<link rel="canonical" href="([^"]+)"/);
       expect(canonical, path).not.toBeNull();
-      expect(new URL(canonical![1]).href, path).toBe(new URL(path.split("?")[0], "https://mairelectroai.com").href);
+      expect(new URL(canonical![1]).href, path).toBe(new URL(localizedPath(path.split("?")[0], locale), "https://mairelectroai.com").href);
       if (path.includes("?")) expect(html, path).toMatch(/<meta name="robots" content="noindex,\s*follow"/);
     }
     expect(descriptions[0], path).not.toBe(descriptions[1]);
@@ -32,25 +33,25 @@ for (const width of [390, 430, 768, 1366, 1440]) {
     await page.goto("/marketplace/find-my-solution?load=500&hours=4");
     await expect(page).toHaveTitle(/Găsește soluția energetică/);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /^Dimensionează sistemul energetic/);
-    await page.getByRole("button", { name: "EN", exact: true }).click();
+    await page.getByRole("link", { name: "EN", exact: true }).click();
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
     await expect(page).toHaveTitle(/Find My Solution/);
     await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /^Size an energy system/);
     await expect(page.locator('meta[property="og:locale"]')).toHaveAttribute("content", "en_GB");
     const draft = new URL(page.url());
-    expect(draft.pathname).toBe("/marketplace/find-my-solution");
+    expect(draft.pathname).toBe("/en/marketplace/find-my-solution");
     expect(draft.searchParams.get("load")).toBe("500");
     expect(draft.searchParams.get("hours")).toBe("4");
     expect(draft.searchParams.get("peak")).toBe("750");
     expect(draft.searchParams.get("step")).toBe("1");
-    await page.getByRole("button", { name: "RO", exact: true }).click();
+    await page.getByRole("link", { name: "RO", exact: true }).click();
     await expect(page).toHaveTitle(/Găsește soluția energetică/);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
     await page.screenshot({ path: info.outputPath(`finder-${width}.png`) });
   });
 }
 
-for (const locale of ["ro", "en"]) {
+for (const locale of ["ro", "en"] as const) {
   test(`contact address copies without sending messages in ${locale}`, async ({ page, context, baseURL }, info) => {
     await context.addCookies([{ name: "mr-electro-locale", value: locale, url: baseURL! }]);
     await context.grantPermissions(["clipboard-read", "clipboard-write"], { origin: baseURL! });
@@ -60,7 +61,7 @@ for (const locale of ["ro", "en"]) {
       return route.abort();
     });
     await page.setViewportSize({ width: locale === "ro" ? 390 : 1440, height: 900 });
-    await page.goto("/contact");
+    await page.goto(localizedPath("/contact", locale));
     await page.getByRole("button", { name: locale === "ro" ? "Copiază adresa de email" : "Copy email address", exact: true }).click();
     await expect(page.getByRole("status").filter({ hasText: locale === "ro" ? "Adresa a fost copiată" : "Address copied" })).toBeVisible();
     expect(await page.evaluate(() => navigator.clipboard.readText())).toBe("contact@mairelectroai.com");
@@ -75,7 +76,7 @@ for (const locale of ["ro", "en"]) {
     await page.addInitScript(() => {
       Object.defineProperty(navigator, "clipboard", { value: { writeText: async () => { throw new DOMException("Denied", "NotAllowedError"); } } });
     });
-    await page.goto("/contact");
+    await page.goto(localizedPath("/contact", locale));
     await page.getByRole("button", { name: locale === "ro" ? "Copiază adresa de email" : "Copy email address", exact: true }).click();
     await expect(page.getByRole("status").filter({ hasText: locale === "ro" ? "Selectează și copiază" : "Select and copy" })).toBeVisible();
     await expect(page.getByRole("link", { name: locale === "ro" ? "Scrie un email" : "Write an email", exact: true })).toHaveAttribute("href", /^mailto:contact@mairelectroai.com\?/);

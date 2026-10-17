@@ -1,3 +1,4 @@
+import { localizedPath } from "../../lib/i18n/routing";
 import { expect, test } from "@playwright/test";
 import { rootCategories } from "../../lib/marketplace/content";
 
@@ -22,7 +23,7 @@ for (const locale of ["ro", "en"] as const) {
     test.setTimeout(120000);
     await context.addCookies([{ name: "mr-electro-locale", value: locale, url: baseURL! }]);
     for (const path of categoryPaths) {
-      await page.goto(path);
+      await page.goto(localizedPath(path, locale));
       await expect(page.locator("html"), path).toHaveAttribute("lang", locale);
       const faq = page.locator("main section").filter({
         has: page.getByRole("heading", {
@@ -56,7 +57,7 @@ for (const locale of ["ro", "en"] as const) {
     // language explicitly while checking the complete server HTML/headers.
     for (const [paths, noindex] of [[publicCommercialPaths, false], [filteredPaths, true]] as const) {
       for (const path of paths) {
-        const response = await request.get(path, { headers: { Cookie: `mr-electro-locale=${locale}` } });
+        const response = await request.get(localizedPath(path, locale), { headers: { Cookie: `mr-electro-locale=${locale}` } });
         expect(response.status(), path).toBe(200);
         const html = await response.text();
         expect(html, path).toMatch(new RegExp(`<html[^>]*lang="${locale}"`));
@@ -68,7 +69,7 @@ for (const locale of ["ro", "en"] as const) {
         expect(canonical, path).toBeDefined();
         // Next normalizes the root canonical to the bare origin; URL parsing
         // treats that and the equivalent trailing-slash root consistently.
-        expect(new URL(canonical!).href, path).toBe(new URL(path.split("?")[0], "https://mairelectroai.com").href);
+        expect(new URL(canonical!).href, path).toBe(new URL(localizedPath(path.split("?")[0], locale), "https://mairelectroai.com").href);
       }
     }
   });
@@ -145,10 +146,10 @@ for (const width of [390, 1440]) {
       await page.goto(path, { waitUntil: "load" });
       await expect(page.locator("h1")).toBeVisible();
       if (path === "/") {
-        const hero = page.locator(".brand-hero-art img");
+        const hero = page.locator(".hero-equipment-heading img");
         await expect(hero).toBeVisible();
-        await expect(hero).toHaveAttribute("width", "1254");
-        await expect(hero).toHaveAttribute("height", "1254");
+        await expect(hero).toHaveAttribute("width", "36");
+        await expect(hero).toHaveAttribute("height", "36");
         expect(await hero.evaluate((image) => new URL((image as HTMLImageElement).currentSrc).searchParams.get("url"))).toBe("/hero.png");
       }
       await page.evaluate(async () => {
@@ -199,7 +200,7 @@ for (const width of [390, 1440]) {
         return url.searchParams.get("url") ?? url.pathname;
       });
       expect(requestedAssets.filter((asset) => /green-energy-hero\.png|future-space-energy\.png/.test(asset))).toEqual([]);
-      if (path === "/marketplace") expect(requestedAssets).not.toContain("/hero.png");
+      if (path === "/marketplace") await expect(page.locator(".hero-equipment-heading img")).toHaveAttribute("src", /hero/);
       expect(evidence.navigation).toHaveLength(1);
       expect(evidence.resources.length).toBeGreaterThan(0);
     });

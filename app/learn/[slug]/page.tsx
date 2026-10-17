@@ -1,5 +1,6 @@
 import { EditorialRecord } from "@/components/editorial-record";
-import Link from "next/link";
+import { EnergyExample } from "@/components/marketplace/energy-example";
+import Link from "@/components/localized-link";
 import { notFound } from "next/navigation";
 import { PlatformShell } from "@/components/platform-shell";
 import {
@@ -104,6 +105,7 @@ export default async function Page({ params }: Props) {
                 <p>{local(s.body, locale)}</p>
               </section>
             ))}
+            {(["how-to-size-backup-battery", "battery-runtime-calculation", "apartment-backup-system"].includes(slug) || slug === "rv-solar-basics") && <EnergyExample kind={slug === "rv-solar-basics" ? "rv" : "apartment"} ro={ro} />}
             <section>
               <h2>
                 {ro

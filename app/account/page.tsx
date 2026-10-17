@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { PlatformShell } from "@/components/platform-shell";
 import { getCurrentProfile, rolePath } from "@/lib/supabase/auth";
 import { getRequestLocale } from "@/lib/i18n/request";

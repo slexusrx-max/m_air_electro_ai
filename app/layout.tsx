@@ -7,6 +7,7 @@ import { buildMetadata } from "@/lib/metadata";
 import { absoluteUrl, siteConfig, websiteStructuredData } from "@/lib/site";
 import "./globals.css";
 import { getRequestLocale } from "@/lib/i18n/request";
+import { PublicLocaleProvider } from "@/components/localized-link";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -66,10 +67,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getRequestLocale() === "en" ? "en" : "ro";
   const deploymentCommit = process.env.VERCEL_GIT_COMMIT_SHA;
   return (
     <html
-      lang={await getRequestLocale()}
+      lang={locale}
       data-scroll-behavior="smooth"
       className={`${plusJakartaSans.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
@@ -83,9 +85,11 @@ export default async function RootLayout({
         />
       </head>
       <body className="relative isolate flex min-h-full flex-col">
+        <PublicLocaleProvider locale={locale}>
         <PageBackground />
         <script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(websiteStructuredData()).replace(/</g,"\\u003c")}} />
-        <div className="relative z-10 flex min-h-full flex-1 flex-col">{children}<AnalyticsConsent ro={(await getRequestLocale()) === "ro"} /></div>
+        <div className="relative z-10 flex min-h-full flex-1 flex-col">{children}<AnalyticsConsent ro={locale === "ro"} /></div>
+        </PublicLocaleProvider>
       </body>
     </html>
   );

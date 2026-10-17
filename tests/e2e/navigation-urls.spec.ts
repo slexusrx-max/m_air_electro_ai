@@ -1,3 +1,4 @@
+import { localizedPath } from "../../lib/i18n/routing";
 import { test, expect, type Page } from "@playwright/test";
 import { publicRoutes } from "../../lib/marketplace/routes";
 import { isMalformedHttpUrl } from "../../lib/site";
@@ -29,9 +30,9 @@ for (const locale of ["ro", "en"]) test(`every public page has safe internal nav
   });
   let checked = 0;
   for (const path of [...publicRoutes, "/search?q=100ah", "/compare?ids=renogy-mini-100,renogy-mini-200"]) {
-    const response = await page.goto(path);
+    const response = await page.goto(localizedPath(path, locale));
     expect(response?.status(), path).toBe(200);
-    await expect(page.locator(".commerce-header .brand-name")).toHaveAttribute("href", "/");
+    await expect(page.locator(".commerce-header .brand-name")).toHaveAttribute("href", localizedPath("/", locale));
     await expect(page.locator(".deep-footer")).toContainText("Stanislav Zavizion");
     await expect(page.locator("body")).not.toContainText(/M Air Electro AI\s+(?:SRL|LLC|Ltd)\b|\[(?:company name|registered address|tax ID)\]|Your Company Name/i);
     checked += await auditLinks(page);
@@ -45,7 +46,7 @@ for (const width of [390, 430, 1440]) test(`logo, menus and language preserve cl
   await page.goto("/marketplace/solar/panels/rigid");
   await page.locator(".commerce-header .brand-name").click();
   await expect(page).toHaveURL(new URL("/", page.url()).href);
-  await page.getByRole("button", { name: "EN", exact: true }).click();
+  await page.getByRole("link", { name: "EN", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   if (width < 1000) {
     await page.getByRole("button", { name: "Menu", exact: true }).click();
@@ -56,7 +57,7 @@ for (const width of [390, 430, 1440]) test(`logo, menus and language preserve cl
     const marketplace = page.locator('#mobile-menu > details').filter({ has: page.locator(':scope > summary', { hasText: /^Marketplace$/ }) });
     // Named details form an accordion: the last section opened closes Marketplace.
     if (await marketplace.getAttribute("open") === null) await marketplace.locator(':scope > summary').click();
-    await page.locator('#mobile-menu a[href="/marketplace"]').click();
+    await page.locator('#mobile-menu a[href="/en/marketplace"]').click();
   } else {
     for (const trigger of await page.locator("[data-menu-trigger]").all()) {
       if (!await trigger.isVisible()) continue;
@@ -70,5 +71,5 @@ for (const width of [390, 430, 1440]) test(`logo, menus and language preserve cl
   await expect(page).toHaveURL(/\/marketplace$/);
   await auditLinks(page);
   await page.locator(".commerce-header .brand-name").click();
-  await expect(page).toHaveURL(new URL("/", page.url()).href);
+  await expect(page).toHaveURL(new URL("/en", page.url()).href);
 });

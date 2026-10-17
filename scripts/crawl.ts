@@ -1,5 +1,6 @@
 import { writeFileSync, mkdirSync } from "node:fs";
 import { publicRoutes } from "../lib/marketplace/routes";
+import { localizedPath } from "../lib/i18n/routing";
 import { isMalformedHttpUrl } from "../lib/site";
 async function main() {
   const base = (process.env.TEST_BASE_URL ?? "http://localhost:3100").replace(
@@ -17,7 +18,8 @@ async function main() {
       .replaceAll("&amp;", "&")
       .replaceAll("&#x27;", "'")
       .replaceAll("&quot;", '"');
-  while (queue.length && seen.size < 250) {
+  const expectedRoutes = publicRoutes.flatMap(path => [path, localizedPath(path, "en")]);
+  while (queue.length && seen.size < expectedRoutes.length + 150) {
     const path = queue.shift()!;
     if (seen.has(path)) continue;
     seen.add(path);
@@ -70,7 +72,7 @@ async function main() {
       failures.push(`${path}: ${String(e)}`);
     }
   }
-  const orphans = publicRoutes.filter((path) => !seen.has(path));
+  const orphans = expectedRoutes.filter((path) => !seen.has(path));
   const unvisited = [...new Set(queue)].filter(path => !seen.has(path));
   if (unvisited.length) failures.push(`Crawl limit reached with ${unvisited.length} routes still unchecked`);
   const report = {

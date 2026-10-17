@@ -12,6 +12,8 @@ Public contact: `contact@mairelectroai.com`; partnerships: `partnerships@mairele
 
 Architecture, route inventory, repository audit and public deployment results: [marketplace expansion report](docs/marketplace-expansion-report.md).
 
+Public RO/EN URL rules, search-intent priorities, worked energy examples and the outstanding search-data baseline: [SEO growth foundation](docs/seo-growth-foundation.md).
+
 **Need → Calculate → Understand → Discover → Compare → Choose → Visit supplier.** We support independent equipment selection. We do not sell equipment, hold inventory or operate product checkout. AI assistance and future experts support the buying decision.
 
 ## Product modules

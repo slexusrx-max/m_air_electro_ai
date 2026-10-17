@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { PlatformShell } from "@/components/platform-shell";
 import { Intro } from "@/components/marketplace/shared";
 import { getRequestLocale } from "@/lib/i18n/request";

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { AffiliateDisclosure } from "@/components/marketplace/affiliate-disclosure";
 import { ProductCard } from "@/components/marketplace/product-card";
 import { SupplierLink } from "@/components/marketplace/supplier-link";

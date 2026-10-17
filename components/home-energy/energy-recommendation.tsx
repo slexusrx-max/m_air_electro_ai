@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { useEffect, useState } from "react";
 import { calculateHomeEnergy, loadHomeEnergyProfile, type HomeEnergyProfile } from "@/lib/home-energy/profile";
 import { getHomeEnergyCopy } from "@/lib/i18n/home-energy";

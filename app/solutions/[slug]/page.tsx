@@ -1,5 +1,6 @@
 import { EditorialRecord } from "@/components/editorial-record";
-import Link from "next/link";
+import { EnergyExample } from "@/components/marketplace/energy-example";
+import Link from "@/components/localized-link";
 import { notFound } from "next/navigation";
 import { PlatformShell } from "@/components/platform-shell";
 import {
@@ -65,6 +66,7 @@ export default async function Page({ params }: Props) {
             </section>
           ))}
         </div>
+        {(slug === "apartment-backup" || slug === "rv-caravan") && <EnergyExample kind={slug === "apartment-backup" ? "apartment" : "rv"} ro={ro} />}
         <aside className="safety-note">{local(solution.caution, locale)}</aside>
         <div className="action-row">
           <Link

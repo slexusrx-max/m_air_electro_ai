@@ -92,7 +92,7 @@ test("all required searches show accurate counts, preserve queries and handle di
   await page.goto(`/search?${new URLSearchParams({ q })}`);
   await page.getByRole("button", { name: "Aplică filtrele", exact: true }).click();
   expect(new URL(page.url()).searchParams.get("q")).toBe(q);
-  await page.getByRole("button", { name: "EN", exact: true }).click();
+  await page.getByRole("link", { name: "EN", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   expect(new URL(page.url()).searchParams.get("q")).toBe(q);
   await expect(page.locator('.catalog-filters input[name="q"]')).toHaveValue(q);

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { navigation } from "@/lib/marketplace/navigation";
 import type { Locale } from "@/lib/i18n/types";
 import { siteConfig } from "@/lib/site";

@@ -1,5 +1,5 @@
 import { commercialCopy } from "@/lib/marketplace/copy";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import type { Dictionary } from "@/lib/i18n/types";
 export function AffiliateDisclosure({
   dictionary: t,

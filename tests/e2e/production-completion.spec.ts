@@ -1,3 +1,4 @@
+import { localizedPath } from "../../lib/i18n/routing";
 import { test, expect } from "@playwright/test";
 import { publicRoutes } from "../../lib/marketplace/routes";
 import { visualFamily } from "../../lib/visual-system";
@@ -67,7 +68,7 @@ for (const locale of ["ro", "en"]) test(`every calculator responds and validates
   test.setTimeout(120000);
   await context.addCookies([{ name: "mr-electro-locale", value: locale, url: baseURL! }]);
   for (const slug of ["battery", "solar", "cable-sizing", "voltage-drop", "generator", "motor-current", "breaker-selection", "fuse-selection", "transformer"]) {
-    await page.goto(`/calculators/${slug}`);
+    await page.goto(localizedPath(`/calculators/${slug}`, locale));
     const main = page.locator("#main-content");
     const input = main.locator('input[type="number"]').first();
     const original = await input.inputValue();
@@ -93,7 +94,7 @@ for (const width of [390, 430, 768, 1366, 1440]) test(`page-family artwork, bran
     await page.goto(path);
     await expect(page.locator("[data-visual-family]")).toHaveAttribute("data-visual-family", visualFamily(path));
     if (path === "/") {
-      await expect(page.locator(".brand-hero-art img")).toBeVisible();
+      await expect(page.locator(".hero-equipment-heading img")).toBeVisible();
       expect(await page.locator(".discovery-hero").evaluate(el => getComputedStyle(el).animationName)).toBe("none");
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);

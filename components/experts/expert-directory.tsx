@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { useMemo, useState } from "react";
 import type { ExpertProfile } from "@/lib/experts";
 import type { Dictionary } from "@/lib/i18n/types";

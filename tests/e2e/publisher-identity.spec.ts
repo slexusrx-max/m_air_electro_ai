@@ -1,3 +1,4 @@
+import { localizedPath } from "../../lib/i18n/routing";
 import { expectContactState } from "./helpers/contact-state";
 import { test, expect } from "@playwright/test";
 
@@ -12,7 +13,7 @@ for (const locale of ["ro", "en"]) test(`publisher is an individual, not a compa
   await context.addCookies([{ name: "mr-electro-locale", value: locale, url: baseURL! }]);
   await page.setViewportSize({ width: locale === "ro" ? 390 : 1440, height: 900 });
   for (const path of [...identityPages, "/", "/learn/how-to-size-backup-battery", "/marketplace/products/renogy-core-mini-100ah"]) {
-    await page.goto(path);
+    await page.goto(localizedPath(path, locale));
     await expect(page.locator(".deep-footer")).toContainText("Stanislav Zavizion");
     await expect(page.locator('meta[name="publisher"]')).toHaveAttribute("content", "Stanislav Zavizion");
     if (identityPages.includes(path)) {
@@ -37,7 +38,7 @@ for (const locale of ["ro", "en"]) test(`publisher is an individual, not a compa
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), path).toBe(true);
   }
-  await page.goto("/contact");
+  await page.goto(localizedPath("/contact", locale));
   await expect(page.getByRole("link", { name: locale === "ro" ? "Scrie un email" : "Write an email", exact: true })).toHaveAttribute("href", "mailto:contact@mairelectroai.com?subject=M%20Air%20Electro%20AI%20enquiry");
   const emails = await page.locator('a[href^="mailto:"]').evaluateAll(links => links.map(link => link.getAttribute("href")));
   expect(emails.length).toBeGreaterThan(0);
@@ -45,7 +46,7 @@ for (const locale of ["ro", "en"]) test(`publisher is an individual, not a compa
   await expect(page.locator("main")).toContainText(locale === "ro" ? "verificată printr-un test real de livrare" : "verified with a real delivery test");
   await expectContactState(page);
   for (const [path, email] of [["/privacy", "privacy@mairelectroai.com"], ["/partnerships", "partnerships@mairelectroai.com"]]) {
-    await page.goto(path);
+    await page.goto(localizedPath(path, locale));
     expect(await page.locator(`main a[href="mailto:${email}"]`).count()).toBeGreaterThan(0);
   }
 });

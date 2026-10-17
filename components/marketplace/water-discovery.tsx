@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { waterCategories, waterContaminants, documentedWaterClaims } from "@/lib/marketplace/water";
 import type { WaterContaminant } from "@/lib/marketplace/water";
 import type { Equipment } from "@/lib/marketplace/catalog-data";

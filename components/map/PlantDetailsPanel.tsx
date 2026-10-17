@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/localized-link";
 
 import { DataConfidenceBadge, DemoDataBadge, PowerPlantStatusBadge } from "@/components/power/power-badges";
 import type { PowerPlant } from "@/types/power";

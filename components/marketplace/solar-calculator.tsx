@@ -1,7 +1,7 @@
 "use client";
 import { CalculationAnalytics } from "@/components/calculation-analytics";
 import { useState } from "react";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { solarEstimate } from "@/lib/marketplace/query";
 export function SolarCalculator({ ro }: { ro: boolean }) {
   const [daily, setDaily] = useState("3000");

@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { trackEvent } from "@/lib/analytics";
 import { useState, useRef, useEffect } from "react";
 import { ProductCard } from "./product-card";

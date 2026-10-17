@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { BreadcrumbStructuredData } from "./structured-data";
 import { local, type LocalText } from "@/lib/marketplace/content";
 import type { Locale } from "@/lib/i18n/types";

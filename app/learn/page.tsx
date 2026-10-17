@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { PlatformShell } from "@/components/platform-shell";
 import { Intro, LinkGrid } from "@/components/marketplace/shared";
 import { guides, learnHubs } from "@/lib/marketplace/guides";

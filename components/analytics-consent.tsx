@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { analyticsConsent, consentKey, trackEvent } from "@/lib/analytics";

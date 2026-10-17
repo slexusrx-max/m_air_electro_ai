@@ -68,7 +68,7 @@ test("editorial sources stay visible without fabricated bylines or review dates"
   assert.match(recorded, /Human review.*2026-09-02/);
 });
 
-test("structured data separates Person, Brand and WebSite without invented identity or authorship", () => {
+test("structured data separates Person, Brand and WebSite without invented identity or authorship", async () => {
   const site = config();
   const graph = site.websiteStructuredData()["@graph"];
   assert.equal(graph[0]["@type"], "Person");
@@ -78,8 +78,9 @@ test("structured data separates Person, Brand and WebSite without invented ident
   assert.equal(graph[2].publisher["@id"], graph[0]["@id"]);
   assert.equal(graph[0].brand["@id"], graph[1]["@id"]);
   assert.doesNotMatch(JSON.stringify(graph), /Organization|Corporation|address|vatID|taxID|legalName|employee|hasCredential|email|jobTitle/);
-  const { ProductStructuredData } = load("components/marketplace/structured-data.tsx", { "@/lib/site": site });
-  const article = ProductStructuredData({ product: { kind: "equipment-class", name: "Equipment class", description: "Description", category: "solar-panels", slug: "class" } }).props.data;
+  const { ProductStructuredData } = load("components/marketplace/structured-data.tsx", { "@/lib/site": site, "@/lib/i18n/request": { getRequestLocale: async () => "en" } });
+  const article = (await ProductStructuredData({ product: { kind: "equipment-class", name: "Equipment class", description: "Description", category: "solar-panels", slug: "class" } })).props.data;
+  assert.equal(article.url, "https://mairelectroai.com/en/marketplace/products/class");
   assert.equal(article.publisher.name, "Stanislav Zavizion");
   assert.equal(article.publisher["@type"], "Person");
   assert.equal(article.author, undefined);

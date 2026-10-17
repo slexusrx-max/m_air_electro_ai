@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 import { legacyRedirects, legacyProducts } from "./lib/marketplace/legacy";
 import { legacyCategories } from "./lib/marketplace/content";
+import { localizedPath } from "./lib/i18n/routing";
 
 
 const isDevelopment = process.env.NODE_ENV === "development";
@@ -11,9 +12,14 @@ const nextConfig: NextConfig = {
   redirects() {
     return [
       { source: "/:path*", has: [{ type: "host" as const, value: "www.mairelectroai.com" }], destination: "https://mairelectroai.com/:path*", permanent: true },
-      ...Object.entries(legacyRedirects).map(([source, destination]) => ({ source, destination, permanent: true })),
-      ...Object.entries(legacyProducts).map(([source, destination]) => ({ source: "/marketplace/products/" + source, destination: "/marketplace/products/" + destination, permanent: true })),
-      ...Object.entries(legacyCategories).map(([source, destination]) => ({ source: "/marketplace/category/" + source, destination: "/marketplace/" + destination, permanent: true })),
+      ...[
+        ...Object.entries(legacyRedirects),
+        ...Object.entries(legacyProducts).map(([source, destination]) => ["/marketplace/products/" + source, "/marketplace/products/" + destination]),
+        ...Object.entries(legacyCategories).map(([source, destination]) => ["/marketplace/category/" + source, "/marketplace/" + destination]),
+      ].flatMap(([source, destination]) => [
+        { source, destination, permanent: true },
+        { source: `/en${source}`, destination: localizedPath(destination, "en"), permanent: true },
+      ]),
     ];
   },
   poweredByHeader: false,

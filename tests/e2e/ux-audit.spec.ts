@@ -1,3 +1,4 @@
+import { localizedPath } from "../../lib/i18n/routing";
 import { test, expect } from "@playwright/test";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
@@ -13,7 +14,7 @@ for (const width of phase === "before" ? [390, 768, 1440] : [320, 360, 390, 768,
     const directory = path.resolve(".task-work", "ux-redesign", phase, String(width));
     mkdirSync(directory, { recursive: true });
     for (const [index, route] of routes.entries()) {
-      expect((await page.goto(route))?.status(), route).toBe(200);
+      expect((await page.goto(localizedPath(route, "en")))?.status(), route).toBe(200);
       if (process.env.EXPECTED_DEPLOYMENT_SHA) await expect(page.locator('meta[name="deployment-commit"]')).toHaveAttribute("content", process.env.EXPECTED_DEPLOYMENT_SHA);
       await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), route).toBe(true);

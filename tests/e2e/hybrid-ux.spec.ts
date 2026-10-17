@@ -1,3 +1,4 @@
+import { localizedPath } from "../../lib/i18n/routing";
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 
@@ -7,14 +8,14 @@ for (const locale of ["ro", "en"] as const) {
     const ro = locale === "ro";
     await context.addCookies([{ name: "mr-electro-locale", value: locale, url: baseURL! }]);
     await page.setViewportSize({ width: 390, height: 900 });
-    await page.goto("/");
+    await page.goto(localizedPath("/", locale));
     const browse = page.locator(".discovery-hero").getByRole("link", { name: ro ? /Alege echipamente/ : /Browse Equipment/ });
     await expect(browse).toBeVisible();
     expect((await browse.boundingBox())!.y).toBeLessThan(900);
     await expect(page.locator(".application-grid>a")).toHaveCount(4);
     await page.locator('.application-grid>a[href*="rv-caravan"]').click();
     await expect(page.getByRole("combobox", { name: ro ? "Aplicație" : "Application", exact: true })).toHaveValue("rv-caravan");
-    await page.goto("/search?q=Renogy&kind=product&capacityAh=100");
+    await page.goto(localizedPath("/search?q=Renogy&kind=product&capacityAh=100", locale));
     await expect(page.locator(".active-filters>a")).toHaveCount(4);
     await page.locator('.active-filters>a').filter({ hasText: "100" }).click();
     await expect(page).toHaveURL(/q=Renogy&kind=product$/);
@@ -29,14 +30,14 @@ for (const locale of ["ro", "en"] as const) {
     await expect(tray.locator("li")).toHaveCount(2);
     const names = await tray.locator("li>span").allTextContents();
     expect(names.every(name => name.includes("Renogy"))).toBe(true);
-    await page.getByRole("button", { name: ro ? "EN" : "RO", exact: true }).click();
+    await page.getByRole("link", { name: ro ? "EN" : "RO", exact: true }).click();
     await expect(page.locator("html")).toHaveAttribute("lang", ro ? "en" : "ro");
     await expect(page).toHaveURL(/q=Renogy&kind=product$/);
     await expect(tray.locator("li")).toHaveCount(2);
     expect((await new AxeBuilder({ page }).include(".comparison-tray").withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze()).violations).toEqual([]);
     await tray.locator(".comparison-tray-heading>a").click();
     await expect(page.locator(".comparison-scroll table")).toBeVisible();
-    await page.goto("/renogy");
+    await page.goto(localizedPath("/renogy", locale));
     await tray.locator("button").first().click();
     await expect(tray.locator("li")).toHaveCount(1);
     await tray.locator("button").click();
@@ -44,9 +45,9 @@ for (const locale of ["ro", "en"] as const) {
   });
   test(`finder retains draft inputs and step on language switch ${locale}`, async ({ page, context, baseURL }) => {
     await context.addCookies([{ name: "mr-electro-locale", value: locale, url: baseURL! }]);
-    await page.goto("/marketplace/find-my-solution?application=marine&load=750&peak=1200&hours=6&region=EU&solar=yes&step=2");
+    await page.goto(localizedPath("/marketplace/find-my-solution?application=marine&load=750&peak=1200&hours=6&region=EU&solar=yes&step=2", locale));
     await expect(page.locator('input[type="number"]').first()).toHaveValue("750");
-    await page.getByRole("button", { name: locale === "ro" ? "EN" : "RO", exact: true }).click();
+    await page.getByRole("link", { name: locale === "ro" ? "EN" : "RO", exact: true }).click();
     await expect(page.locator("html")).toHaveAttribute("lang", locale === "ro" ? "en" : "ro");
     await expect(page.locator('input[type="number"]').first()).toHaveValue("750");
     await expect(page).toHaveURL(/application=marine/);
@@ -55,7 +56,7 @@ for (const locale of ["ro", "en"] as const) {
   });
 }
 
-test("language control waits for hydration instead of losing early clicks", async ({ page }) => {
+test("public language links are available before hydration", async ({ page }) => {
   let releaseScripts!: () => void;
   const scriptsReady = new Promise<void>(resolve => { releaseScripts = resolve; });
   await page.route("**/_next/static/**/*.js", async route => {
@@ -64,11 +65,11 @@ test("language control waits for hydration instead of losing early clicks", asyn
   });
   try {
     await page.goto("/search?q=100+Ah", { waitUntil: "commit" });
-    await expect(page.getByRole("button", { name: "EN", exact: true })).toBeDisabled();
+    await expect(page.getByRole("link", { name: "EN", exact: true })).toHaveAttribute("href", "/en/search?q=100+Ah");
   } finally {
     releaseScripts();
   }
-  await page.getByRole("button", { name: "EN", exact: true }).click();
+  await page.getByRole("link", { name: "EN", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   expect(new URL(page.url()).searchParams.get("q")).toBe("100 Ah");
 });

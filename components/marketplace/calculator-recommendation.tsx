@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { useCalculatorCopy } from "@/components/calculators/calculator-locale";
 const destinations: Record<string, string> = {
   "lithium-batteries": "batteries",

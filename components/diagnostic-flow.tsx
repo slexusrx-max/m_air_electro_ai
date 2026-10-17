@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { useState } from "react";
 import type { Locale } from "@/lib/i18n/types";
 

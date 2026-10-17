@@ -1,5 +1,5 @@
 import { SupplierLink } from "./supplier-link";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { specificationLabel } from "@/lib/marketplace/specifications";
 import { CompareControl } from "./compare-control";
 import { ProductVisual } from "./product-visual";

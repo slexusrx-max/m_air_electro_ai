@@ -3,7 +3,7 @@ import { WaterPage } from "@/components/marketplace/water-page";
 export const dynamicParams=false;
 export function generateStaticParams(){return categories.map(c=>({path:c.path.split("/")}));}
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { PlatformShell } from "@/components/platform-shell";
 import {
   Breadcrumbs,

@@ -1,7 +1,8 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
+import { isLocalizedPublicPath, localizedPath, stripLocale } from "@/lib/i18n/routing";
 import type { Locale, MarketplaceRole } from "@/lib/i18n/types";
 import type { NavigationGroup } from "@/lib/marketplace/navigation";
 import { signOut } from "@/app/(auth)/actions";
@@ -27,7 +28,9 @@ export function SiteHeader({
   const [switching, setSwitching] = useState(false);
   const hydrated = useSyncExternalStore(subscribeHydration, clientReady, serverReady);
   const ref = useRef<HTMLElement>(null);
-  const pathname = usePathname();
+  const currentPath = usePathname();
+  const pathname = stripLocale(currentPath);
+  const search = useSearchParams().toString();
   const ro = locale === "ro";
   useEffect(() => {
     function close(e: PointerEvent) {
@@ -74,7 +77,14 @@ export function SiteHeader({
   }
   const languages = (
     <div className="language-control" aria-label={ro ? "Limbă" : "Language"}>
-      {(["ro", "en"] as const).map((l) => (
+      {(["ro", "en"] as const).map((l) => isLocalizedPublicPath(currentPath) ? (
+        <a key={l} href={localizedPath(`${currentPath}${search ? `?${search}` : ""}`, l)}
+          hrefLang={l} lang={l} aria-current={locale === l ? "page" : undefined}
+          onClick={event => {
+            document.cookie = `mr-electro-locale=${l}; Path=/; Max-Age=31536000; SameSite=Lax`;
+            event.currentTarget.href = localizedPath(`${window.location.pathname}${window.location.search}${window.location.hash}`, l);
+          }}>{l.toUpperCase()}</a>
+      ) : (
         <button
           key={l}
           disabled={!hydrated || switching}

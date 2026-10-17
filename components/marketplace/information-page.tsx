@@ -2,7 +2,7 @@ import { PublisherDetails } from "@/components/publisher-details";
 import { getRequestDictionary } from "@/lib/i18n/request";
 import { commercialCopy } from "@/lib/marketplace/copy";
 import { siteConfig } from "@/lib/site";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { PlatformShell } from "@/components/platform-shell";
 import { Intro, Breadcrumbs } from "./shared";
 import { information } from "@/lib/marketplace/information";

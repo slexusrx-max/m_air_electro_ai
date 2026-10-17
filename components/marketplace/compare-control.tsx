@@ -1,7 +1,8 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { createContext, useContext, useSyncExternalStore, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
+import { stripLocale } from "@/lib/i18n/routing";
 const Products = createContext<Record<string, string>>({});
 export function ComparisonProvider({ products, children }: { products: Record<string, string>; children: ReactNode }) {
   return <Products.Provider value={products}>{children}</Products.Provider>;
@@ -35,7 +36,7 @@ function useSelection() {
 export function ComparisonTray({ ro }: { ro: boolean }) {
   const { ids, products } = useSelection();
   const [error, setError] = useState("");
-  const pathname = usePathname();
+  const pathname = stripLocale(usePathname());
   if (!ids.length || pathname === "/compare" || /^(\/login|\/register|\/dashboard|\/account)/.test(pathname)) return null;
   function remove(id: string) {
     try { save(ids.filter(value => value !== id)); setError(""); }

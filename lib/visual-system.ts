@@ -6,7 +6,7 @@ export type VisualFamily =
 
 /** Small routing rules only: never ship the catalog just to choose decoration. */
 export function visualFamily(pathname: string): VisualFamily {
-  const path = pathname.replace(/\/$/, "") || "/";
+  const path = pathname.replace(/^\/en(?=\/|$)/, "").replace(/\/$/, "") || "/";
   if (path === "/" || path === "/about") return "brand";
   if (path === "/renogy") return "solar";
   if (path === "/waterdrop" || path === "/marketplace/water" || path.startsWith("/marketplace/water/") || path === "/marketplace/products/water-system-planning") return "water";

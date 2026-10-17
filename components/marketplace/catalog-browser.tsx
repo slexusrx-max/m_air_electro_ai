@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { ProductCard } from "./product-card";
 import {
   filterEquipment,
@@ -8,6 +8,7 @@ import {
 } from "@/lib/marketplace/query";
 import type { Equipment } from "@/lib/marketplace/catalog-data";
 import type { Dictionary } from "@/lib/i18n/types";
+import { localizedPath } from "@/lib/i18n/routing";
 export function CatalogBrowser({
   products,
   query: raw,
@@ -28,7 +29,7 @@ export function CatalogBrowser({
   const active = Object.entries(query).filter(([key, value]) => value && ["q", "kind", "brand", ...Object.keys(facetLabels)].includes(key));
   return (
     <section className="catalog-layout">
-      <form action={path} className="catalog-filters">
+      <form action={localizedPath(path, ro ? "ro" : "en")} className="catalog-filters">
         <h2>{ro ? "Caută și filtrează" : "Search & filter"}</h2>
         <label>
           {ro

@@ -1,5 +1,5 @@
 import { EditorialRecord } from "@/components/editorial-record";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { specificationLabel } from "@/lib/marketplace/specifications";
 import { notFound, permanentRedirect } from "next/navigation";
 import { PlatformShell } from "@/components/platform-shell";
@@ -15,6 +15,7 @@ import { ProductVisual } from "@/components/marketplace/product-visual";
 import { isCatalogListing } from "@/lib/marketplace/product-presentation";
 import { ProductStructuredData } from "@/components/marketplace/structured-data";
 import { ProductCard } from "@/components/marketplace/product-card";
+import { BatteryRuntimeExample } from "@/components/marketplace/battery-runtime-example";
 import { catalog, productBySlug } from "@/lib/affiliate/catalog";
 import { categoryByPath, local } from "@/lib/marketplace/content";
 import { guides } from "@/lib/marketplace/guides";
@@ -22,11 +23,12 @@ import { SupplierLink } from "@/components/marketplace/supplier-link";
 import { buildMetadata } from "@/lib/metadata";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { legacyProducts as oldProducts } from "@/lib/marketplace/legacy";
+import { localizedPath } from "@/lib/i18n/routing";
 type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props) {
   const slug = (await params).slug;
   if (oldProducts[slug])
-    permanentRedirect(`/marketplace/products/${oldProducts[slug]}`);
+    permanentRedirect(localizedPath(`/marketplace/products/${oldProducts[slug]}`, await getRequestLocale()));
   const p = productBySlug(slug);
   if (!p) notFound();
   const locale = await getRequestLocale();
@@ -40,7 +42,7 @@ export async function generateMetadata({ params }: Props) {
 export default async function Page({ params }: Props) {
   const slug = (await params).slug;
   if (oldProducts[slug])
-    permanentRedirect(`/marketplace/products/${oldProducts[slug]}`);
+    permanentRedirect(localizedPath(`/marketplace/products/${oldProducts[slug]}`, await getRequestLocale()));
   const p = productBySlug(slug);
   if (!p) notFound();
   const locale = await getRequestLocale();
@@ -120,6 +122,7 @@ export default async function Page({ params }: Props) {
               ))}
             </dl>
         </section>
+        <BatteryRuntimeExample product={p} ro={ro} />
         <div className="two-columns">
           <section className="content-panel">
             <h2>{ro ? "Potrivit de evaluat pentru" : "Best considered for"}</h2>

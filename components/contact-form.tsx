@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 

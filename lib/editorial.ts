@@ -1,9 +1,10 @@
 import { siteConfig } from "./site";
 import records from "./marketplace/editorial-records.json";
 
-export type EditorialRecord = { author?: string; published?: string; reviewed?: string; evidence?: string; corrections?: { date: string; reason: string }[] };
+export type EditorialRecord = { author?: string; published?: string; updated?: string; reviewed?: string; evidence?: string; corrections?: { date: string; reason: string }[] };
 export function editorialRecord(path: string): EditorialRecord {
-  // Only per-page, owner-confirmed facts belong here. A git commit is not publication or human review.
+  // Attribution and human review require per-page evidence. Updated dates record substantive edits;
+  // a git commit is not evidence of first publication, authorship or human review.
   return (records as Record<string, EditorialRecord>)[path] ?? {};
 }
 export function editorialAuthor(record: EditorialRecord) {

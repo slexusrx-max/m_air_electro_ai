@@ -1,3 +1,4 @@
+import { localizedPath } from "../../lib/i18n/routing";
 import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { waterCategories } from "../../lib/marketplace/water";
@@ -6,7 +7,7 @@ for (const locale of ["ro", "en"] as const) {
   test(`water routes, evidence and finder work in ${locale}`, async ({ page, context, baseURL }) => {
     test.setTimeout(120000);
     await context.addCookies([{ name: "mr-electro-locale", value: locale, url: baseURL! }]);
-    await page.goto("/water");
+    await page.goto(locale === "en" ? "/en/water" : "/water");
     await expect(page).toHaveURL(/\/marketplace\/water$/);
     await expect(page.locator("html")).toHaveAttribute("lang", locale);
     await expect(page.locator('.water-hero-art img')).toHaveAttribute("src", /crystal-hero/);
@@ -21,12 +22,12 @@ for (const locale of ["ro", "en"] as const) {
     await page.locator(".water-plan a").click();
     await expect(page).toHaveURL(/\/marketplace\/water\/gravity$/);
     for (const category of waterCategories) {
-      const response = await page.goto(`/marketplace/water/${category.slug}`);
+      const response = await page.goto(localizedPath(`/marketplace/water/${category.slug}`, locale));
       expect(response?.status()).toBe(200);
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(category.title[locale]);
-      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://mairelectroai.com/marketplace/water/${category.slug}`);
+      await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://mairelectroai.com${localizedPath(`/marketplace/water/${category.slug}`, locale)}`);
     }
-    await page.goto("/learn/choosing-water-system");
+    await page.goto(localizedPath("/learn/choosing-water-system", locale));
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     expect(await page.locator("main").innerText()).not.toContain("undefined");
   });
@@ -45,7 +46,7 @@ test("water is responsive and accessible; original homepage artwork is retained"
     expect(results.violations).toEqual([]);
   }
   await page.goto("/");
-  await expect(page.locator('.brand-hero img')).toHaveAttribute("src", /hero\.png|hero%2Epng/);
+  await expect(page.locator('.hero-equipment-heading img')).toHaveAttribute("src", /hero\.png|hero%2Epng/);
   await expect(page.getByTestId("water-home-promo")).toBeVisible();
   // Equipment and application discovery precede partner promotions; Waterdrop remains secondary.
   expect(await page.locator("#equipment-categories").evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector('[data-testid="renogy-feature"]')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);

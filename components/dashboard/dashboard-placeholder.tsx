@@ -1,5 +1,5 @@
 import { getAccountDetails } from "@/lib/supabase/auth";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { PlatformShell } from "@/components/platform-shell";
 import { SavedComparison } from "@/components/marketplace/compare-control";
 import { signOut } from "@/app/(auth)/actions";

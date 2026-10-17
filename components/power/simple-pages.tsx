@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { DataDisclaimer } from "@/components/power/marketing";
 import { PlatformShell } from "@/components/platform-shell";
 export function SimplePowerPage({ eyebrow, title, children }: { eyebrow: string; title: string; children: React.ReactNode }) { return <PlatformShell><main className="mx-auto w-full max-w-5xl text-slate-800"><p className="eyebrow">{eyebrow}</p><h1 className="mt-3 text-4xl font-bold text-slate-950">{title}</h1><div className="mt-8">{children}</div></main></PlatformShell>; }

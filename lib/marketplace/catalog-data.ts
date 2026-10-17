@@ -74,7 +74,7 @@ export const equipment: Equipment[] = [
     slug: "renogy-core-mini-100ah",
     kind: "product",
     provider: "renogy",
-    sourceCheckedAt: "2026-09-24",
+    sourceCheckedAt: "2026-10-17",
     title: b(
       "Renogy Core Mini 12.8 V 100 Ah",
       "Renogy Core Mini 12,8 V 100 Ah",
@@ -120,7 +120,7 @@ export const equipment: Equipment[] = [
     slug: "renogy-core-mini-200ah",
     kind: "product",
     provider: "renogy",
-    sourceCheckedAt: "2026-09-24",
+    sourceCheckedAt: "2026-10-17",
     title: b("Renogy Core Mini 12 V 200 Ah", "Renogy Core Mini 12 V 200 Ah"),
     category: "lithium-batteries",
     paths: ["batteries", "batteries/lifepo4", "batteries/12v"],

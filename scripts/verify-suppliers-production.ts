@@ -49,7 +49,7 @@ async function main() {
 
     for (const product of products) {
       const response = await page.goto(
-        `https://mairelectroai.com/marketplace/products/${product.slug}`,
+        `https://mairelectroai.com/en/marketplace/products/${product.slug}`,
         {
           waitUntil: "networkidle",
         },
@@ -80,7 +80,7 @@ async function main() {
     }
 
     await page.goto(
-      "https://mairelectroai.com/marketplace/products/bluetti-elite-200-v2",
+      "https://mairelectroai.com/en/marketplace/products/bluetti-elite-200-v2",
       {
         waitUntil: "networkidle",
       },

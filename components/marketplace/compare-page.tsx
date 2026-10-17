@@ -1,11 +1,12 @@
 import { EditorialRecord } from "@/components/editorial-record";
 import { AnalyticsEvent } from "@/components/analytics-event";
-import Link from "next/link";
+import Link from "@/components/localized-link";
 import { specificationLabel } from "@/lib/marketplace/specifications";
 import { catalog } from "@/lib/affiliate/catalog";
 import { parseComparison } from "@/lib/marketplace/query";
 import { RemoveComparison } from "./compare-control";
 import { SupplierLink } from "./supplier-link";
+import { localizedPath } from "@/lib/i18n/routing";
 export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
   const selected = parseComparison(ids, catalog);
   const fields = [
@@ -13,7 +14,7 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
   ];
   return (
     <>
-      <form key={selected.map(p => p.id).join(",")} action="/compare" className="content-panel">
+      <form key={selected.map(p => p.id).join(",")} action={localizedPath("/compare", ro ? "ro" : "en")} className="content-panel">
         <p>
           {ro
             ? "Selectează 2–4 înregistrări. Compară preferabil aceeași categorie; clasele de echipamente nu sunt modele comerciale."

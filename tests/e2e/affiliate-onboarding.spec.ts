@@ -1,3 +1,4 @@
+import { localizedPath } from "../../lib/i18n/routing";
 import { test, expect } from "@playwright/test";
 import { catalog } from "../../lib/affiliate/catalog";
 import { expectSupplierCta } from "../supplier-link-expectations";
@@ -10,7 +11,7 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
     page.on("pageerror", e => errors.push(e.message));
     page.on("request", r => { if (r.url().includes("plausible.io/api/event")) analytics.push(r.url()); });
     for (const path of ["/marketplace", "/marketplace/products/renogy-core-mini-100ah", "/compare?ids=renogy-mini-100,renogy-mini-200"]) {
-      await page.goto(path);
+      await page.goto(localizedPath(path, locale));
       const links = page.locator("a[data-supplier-product]");
       expect(await links.count()).toBeGreaterThan(0);
       for (const link of await links.all()) {
@@ -22,7 +23,7 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBeTruthy();
     }
-    await page.goto("/affiliate-disclosure");
+    await page.goto(localizedPath("/affiliate-disclosure", locale));
     await expect(page.locator("main")).toContainText(locale === "ro" ? "nu garantează și nu implică recomandarea" : "does not guarantee or imply product endorsement");
     await page.screenshot({ path: info.outputPath(`disclosure-${locale}-${width}.png`), fullPage: true });
     expect(analytics).toEqual([]);
