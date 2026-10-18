@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "verifiedAt": "2026-10-18",
-  "integrationStatus": "Original assets staged for catalog integration; catalog/component wiring and deployed UI verification are pending.",
+  "integrationStatus": "Exact existing-model assets are wired locally through product-photos.ts and ProductVisual. Production commit f090e625 retains the previous model placeholders; this separate photo change is not yet published.",
   "sources": [
     {
       "brand": "Renogy",
@@ -38,7 +38,7 @@
     "Supplier award, certification, performance and promotional artwork is preserved in the originals; it is not independent verification or a new site claim.",
     "Waterdrop G3P800 has an original small white edge area; display it on a white opaque image surface.",
     "The Renogy panel image shows front and rear views of one panel; it must not imply a two-panel quantity.",
-    "Catalog wiring and desktop/mobile production rendering still require verification."
+    "Production rendering of the separately wired model photos still requires a later authorized release and verification."
   ],
   "assets": [
     {

@@ -705,3 +705,9 @@ html:has(.comparison-tray) { scroll-padding-bottom:220px; }
 .energy-example th,.energy-example td { text-align:left; padding:10px 8px; border-bottom:1px solid #bdcbd8; }
 .energy-example th[scope="row"] { min-width:140px; }
 .energy-example td,.energy-example th[scope="col"] { white-space:nowrap; }
+
+/* Preserve the complete supplier composition and transparent edges on white. */
+.equipment-visual.product-model-photo { background:#fff; }
+.product-model-photo img { display:block; width:100%; height:180px; padding:8px; object-fit:contain; }
+.product-storefront .product-illustration .product-model-photo img { height:320px; }
+@media(max-width:768px) { .product-storefront .product-illustration .product-model-photo img { height:250px; } }
