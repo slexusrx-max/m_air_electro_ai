@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "verifiedAt": "2026-10-18",
-  "integrationStatus": "Exact existing-model assets are wired locally through product-photos.ts and ProductVisual. Production commit f090e625 retains the previous model placeholders; this separate photo change is not yet published.",
+  "integrationStatus": "Exact existing-model assets are rendered through product-photos.ts and ProductVisual, published in c0aba56. Four reviewed Renogy base-variant purchase URLs are pinned explicitly after merchant defaults were found selecting different bundles; obsolete variant-free affiliate mappings must not be reused for these selections.",
   "sources": [
     {
       "brand": "Renogy",

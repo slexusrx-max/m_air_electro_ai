@@ -113,7 +113,7 @@ export const equipment: Equipment[] = [
       "Maximum discharge": "100 A",
       Chemistry: "LiFePO4",
     },
-    url: "https://eu.renogy.com/products/core-mini-12-8v-100ah-lithium-iron-phosphate-battery",
+    url: "https://eu.renogy.com/products/core-mini-12-8v-100ah-lithium-iron-phosphate-battery?variant=46545423761665",
   }),
   item({
     id: "renogy-mini-200",
@@ -154,7 +154,7 @@ export const equipment: Equipment[] = [
       "Maximum discharge": "200 A continuous",
       Chemistry: "LiFePO4",
     },
-    url: "https://eu.renogy.com/products/core-mini-12-8v-200ah-lifepo4-battery-w-low-temperature-protection",
+    url: "https://eu.renogy.com/products/core-mini-12-8v-200ah-lifepo4-battery-w-low-temperature-protection?variant=46720406716673",
   }),
   item({
     id: "renogy-panel-200",
@@ -281,7 +281,7 @@ export const equipment: Equipment[] = [
       "Solar control": "MPPT",
       Sources: "Alternator + solar",
     },
-    url: "https://eu.renogy.com/products/dcc50s-12v-50a-dc-dc-on-board-battery-charger-with-mppt-new-version",
+    url: "https://eu.renogy.com/products/dcc50s-12v-50a-dc-dc-on-board-battery-charger-with-mppt-new-version?variant=46740803715329",
   }),
 ];
 const classes: [
@@ -593,7 +593,7 @@ equipment.push(
       "Curent / Current": "20 A",
       "Conversie / Conversion": "DC–DC",
     },
-    url: "https://eu.renogy.com/products/12v-20a-dc-to-dc-battery-charger",
+    url: "https://eu.renogy.com/products/12v-20a-dc-to-dc-battery-charger?variant=46435562684673",
   }),
 );
 

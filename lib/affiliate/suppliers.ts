@@ -14,11 +14,22 @@ export function isSupplierId(value: string): value is SupplierId {
   return Object.hasOwn(suppliers, value);
 }
 
-/** Only canonical, untracked European model URLs; region-specific variants need review. */
+// Reviewed base selections: merchant defaults can select a multi-pack or accessory bundle.
+const reviewedRenogyVariants: Record<string, string> = {
+  "/products/core-mini-12-8v-100ah-lithium-iron-phosphate-battery": "46545423761665",
+  "/products/core-mini-12-8v-200ah-lifepo4-battery-w-low-temperature-protection": "46720406716673",
+  "/products/dcc50s-12v-50a-dc-dc-on-board-battery-charger-with-mppt-new-version": "46740803715329",
+  "/products/12v-20a-dc-to-dc-battery-charger": "46435562684673",
+};
+
+/** Canonical, untracked European model URLs, with explicitly reviewed variant selectors. */
 export function validSupplierUrl(href: string, provider?: string): boolean {
   try {
     const url = new URL(href);
-    if (href !== url.href || url.protocol !== "https:" || url.port || url.username || url.password || url.search || url.hash) return false;
+    if (href !== url.href || url.protocol !== "https:" || url.port || url.username || url.password || url.hash) return false;
+    if (url.search && !(url.origin === suppliers.renogy.origin &&
+      Object.hasOwn(reviewedRenogyVariants, url.pathname) &&
+      url.search === `?variant=${reviewedRenogyVariants[url.pathname]}`)) return false;
     const supplier = provider === undefined
       ? Object.values(suppliers).find(entry => entry.origin === url.origin)
       : isSupplierId(provider) ? suppliers[provider] : undefined;

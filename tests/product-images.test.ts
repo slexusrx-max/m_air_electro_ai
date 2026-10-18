@@ -6,6 +6,8 @@ import { isCatalogListing, categoryImagePath } from "../lib/marketplace/product-
 import { rootCategories } from "../lib/marketplace/content";
 import { categoryPhotos } from "../lib/marketplace/category-photos";
 import { productPhoto, productPhotos } from "../lib/marketplace/product-photos";
+import { configuredSupplierLink } from "../lib/affiliate/configuration";
+import { validSupplierUrl } from "../lib/affiliate/suppliers";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import sharp from "sharp";
@@ -71,4 +73,34 @@ test("model photographs match the ten reviewed exact variants and original bytes
     assert.equal(productPhoto(product), undefined, product.id);
   }
   assert.equal(productPhoto({ id: "unverified-model", kind: "product" }), undefined);
+});
+
+test("purchase links select the photographed base variant instead of merchant-default bundles", () => {
+  const expected = {
+    "renogy-mini-100": "46545423761665",
+    "renogy-mini-200": "46720406716673",
+    "renogy-dcc50": "46740803715329",
+    "dc-dc-charger-20a": "46435562684673",
+  };
+  const oldTracked = {
+    "renogy-mini-100": "https://renogy.sjv.io/2RqKQ7",
+    "renogy-mini-200": "https://renogy.sjv.io/R0jRON",
+    "renogy-dcc50": "https://renogy.sjv.io/yZ3re3",
+  };
+  for (const [id, sku] of Object.entries(expected)) {
+    const product = catalog.find(product => product.id === id)!;
+    const url = new URL(product.productUrl);
+    assert.equal(url.searchParams.get("variant"), sku, id);
+    assert.equal(validSupplierUrl(product.productUrl, "renogy"), true);
+    assert.equal(validSupplierUrl(`${product.productUrl}&ref=unreviewed`, "renogy"), false);
+    assert.equal(validSupplierUrl(product.productUrl.replace(sku, "999999999"), "renogy"), false);
+    const oldUrl = `${url.origin}${url.pathname}`;
+    const tracked = oldTracked[id as keyof typeof oldTracked];
+    const result = configuredSupplierLink({ provider: "renogy", network: "impact", programId: "14864",
+      approved: true, trackingEnabled: true, affiliateDisclosureRequired: true,
+      links: tracked ? { [oldUrl]: tracked } : {},
+    }, product.productUrl);
+    assert.equal(result.href, product.productUrl);
+    assert.equal(result.tracked, false, "Do not reuse tracking for a different merchant selection");
+  }
 });
