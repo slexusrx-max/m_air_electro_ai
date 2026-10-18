@@ -711,3 +711,49 @@ html:has(.comparison-tray) { scroll-padding-bottom:220px; }
 .product-model-photo img { display:block; width:100%; height:180px; padding:8px; object-fit:contain; }
 .product-storefront .product-illustration .product-model-photo img { height:320px; }
 @media(max-width:768px) { .product-storefront .product-illustration .product-model-photo img { height:250px; } }
+
+/* Brighter lime identity; product photographs keep their original white surfaces. */
+.marketing-page-background:is([data-visual-family="brand"],[data-visual-family="marketplace"]) { --ambient:#c5f35f; }
+.marketing-page-background[data-visual-family="brand"] .background-veil { background:radial-gradient(ellipse at 90% 4%,#c5f35f55,transparent 58%),linear-gradient(90deg,#f5faec88,transparent 75%); }
+.storefront-home .discovery-hero { background:linear-gradient(125deg,#fffffff2 20%,#e7f9b8de); border-color:#b5ce8b; box-shadow:0 16px 44px #214b2318,inset 0 1px #fff; }
+.storefront-home .hero-equipment-showcase { background:linear-gradient(140deg,#ffffffd9,#e3f4bc9c); border-color:#ffffffeb; }
+.storefront-home .category-tiles>a, .commerce-page .equipment-card { background:linear-gradient(145deg,#fffffff5,#f7fbeeed); border-color:#bfd09d; box-shadow:0 12px 30px #244b2312,inset 0 3px #d0f875,inset 0 4px #ffffffc9; }
+.product-storefront .product-detail>article { background:linear-gradient(145deg,#fffffff5,#f1f8e7eb); border-color:#bfd09d; }
+.storefront-home .button-primary, .commerce-page .equipment-card .product-actions>a[data-supplier-product], .product-storefront .product-detail .button-primary { background-color:#cbf566; background-image:linear-gradient(155deg,#ffffff66,transparent 46%,#ffffff1c); color:#193522; border:1px solid #8eae43; box-shadow:0 6px 18px #55771f20,inset 0 1px #f4ffd4; }
+.storefront-home .button-primary:hover, .commerce-page .equipment-card .product-actions>a[data-supplier-product]:hover, .product-storefront .product-detail .button-primary:hover { background-color:#d9ff83; color:#193522; border-color:#647e28; }
+.storefront-home .button-outline { background-color:#ffffffd9; color:#193522; border-color:#8b9e75; }
+.storefront-home .hero-search { background:#fffffff0; border-color:#9bb879; }
+.brand-mark { background:#d0f875; color:#193522; }
+
+/* Liquid-glass feedback belongs to controls and actual clickable surfaces. */
+.platform-root :is(button,summary,select,input[type="submit"],input[type="button"],.button-primary,.button-outline,a[data-supplier-product],.search-link,.language-control a,nav a,.mega-menu a,.active-filters a,.comparison-tray a,.category-tiles>a,.application-grid>a,.planning-links>a,.hero-equipment-tile) {
+  background-image:linear-gradient(155deg,#ffffff29,transparent 46%,#ffffff14);
+  box-shadow:inset 0 1px 0 #ffffffa8,inset 0 -1px 0 #ffffff28,0 3px 10px #183b3210;
+  -webkit-backdrop-filter:blur(14px) saturate(135%);
+  backdrop-filter:blur(14px) saturate(135%);
+  transition:background-color .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease;
+}
+.platform-root :is(summary,nav a,.mega-menu a,.planning-links>a) { border-radius:8px; }
+.platform-root a:not(.button-primary):not(.button-outline):not([data-supplier-product]):hover { text-decoration:underline; text-underline-offset:.2em; background-image:linear-gradient(155deg,#ffffff29,#ffffff14); box-shadow:inset 0 1px #ffffffa8,0 3px 10px #183b3210; -webkit-backdrop-filter:blur(14px) saturate(135%); backdrop-filter:blur(14px) saturate(135%); }
+.platform-root :is(a,button,summary,input,select,textarea):focus-visible { outline:3px solid #315b21; outline-offset:3px; }
+.platform-root :is(input[type="checkbox"],input[type="radio"]) { accent-color:#426719; }
+@media (hover:hover) and (pointer:fine) {
+  .platform-root :is(button,summary,select,.button-primary,.button-outline,a[data-supplier-product],.search-link,.language-control a,nav a,.mega-menu a,.active-filters a,.comparison-tray a,.category-tiles>a,.application-grid>a,.planning-links>a,.hero-equipment-tile):not(:disabled):hover { box-shadow:inset 0 1px 0 #fff,inset 0 -1px 0 #ffffff88,0 7px 18px #294a2724; }
+  .storefront-home .category-tiles>a:hover, .hero-equipment-tile:hover { background-color:#effbd3; border-color:#7e9b4b; }
+  .commerce-page .equipment-card:is(:hover,:focus-within) { border-color:#809c4e; box-shadow:0 16px 34px #26491e20,inset 0 3px #c5f35f; }
+}
+.platform-root :is(button,.button-primary,.button-outline,a[data-supplier-product],.search-link,.language-control a,nav a,.category-tiles>a,.hero-equipment-tile):not(:disabled):active { transform:scale(.985); box-shadow:inset 0 2px 6px #19352226,inset 0 1px #ffffffa8; }
+@supports not (backdrop-filter:blur(1px)) {
+  .platform-root :is(button,summary,select,.button-outline,a[data-supplier-product],.search-link,.language-control a,nav a,.mega-menu a,.active-filters a,.comparison-tray a,.category-tiles>a,.application-grid>a,.planning-links>a,.hero-equipment-tile) { background-image:linear-gradient(145deg,#ffffff18,#ffffff08); }
+  .storefront-home .discovery-hero, .commerce-page .equipment-card, .product-storefront .product-detail>article { background:#f7fbed; }
+  .commerce-header, .catalog-filters, .comparison-tray, .mega-menu, #mobile-menu, .hero-equipment-tile { background:#f7fbed; }
+}
+@media (prefers-reduced-transparency:reduce) {
+  .platform-root :is(button,summary,select,.button-primary,.button-outline,a[data-supplier-product],.search-link,.language-control a,nav a,.mega-menu a,.active-filters a,.comparison-tray a,.category-tiles>a,.application-grid>a,.planning-links>a,.hero-equipment-tile) { -webkit-backdrop-filter:none; backdrop-filter:none; background-image:none; }
+  .storefront-home .discovery-hero, .commerce-page .equipment-card, .product-storefront .product-detail>article { background:#f7fbed; }
+  .commerce-header, .catalog-filters, .comparison-tray, .mega-menu, #mobile-menu, .hero-equipment-tile { background:#f7fbed; }
+  .platform-root a:hover { -webkit-backdrop-filter:none; backdrop-filter:none; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .platform-root :is(button,summary,select,.button-primary,.button-outline,a[data-supplier-product],.search-link,.language-control a,nav a,.mega-menu a,.active-filters a,.comparison-tray a,.category-tiles>a,.application-grid>a,.planning-links>a,.hero-equipment-tile) { transition:none !important; transform:none !important; }
+}
