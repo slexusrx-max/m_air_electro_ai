@@ -9,6 +9,8 @@ export function local(text: LocalText, locale: Locale) {
 export type Category = {
   path: string;
   title: LocalText;
+  seoTitle?: LocalText;
+  seoDescription?: LocalText;
   summary: LocalText;
   choose: LocalText;
   checks: LocalText;
@@ -431,6 +433,45 @@ for (const [path, parent, en, ro, summary] of subcategories)
     title: bilingual(en, ro),
     summary,
   });
+// Category navigation stays compact; search titles explain the buying task.
+const categoryEditorial: Record<string, Pick<Category, "seoTitle" | "seoDescription" | "summary" | "choose" | "checks">> = {
+  inverters: {
+    seoTitle: bilingual("Battery inverters: sizing and comparison for Romania", "Invertoare pentru baterii: alegere și comparație în România"),
+    seoDescription: bilingual("Compare battery inverters for home backup and caravans: continuous power, starting loads, DC voltage and supplier checks for Romania.", "Compară invertoare pentru baterii: putere continuă, pornirea aparatelor, tensiune DC și verificări înainte de cumpărare pentru casă sau rulotă."),
+    summary: bilingual(
+      "Compare battery inverters for essential home loads, caravans and off-grid systems. Check continuous output, starting power and battery voltage before choosing a model. A battery inverter is not automatically a grid-connected solar inverter.",
+      "Compară invertoare pentru baterii, pentru consumatori esențiali acasă, rulote și sisteme off-grid. Verifică puterea continuă, pornirea aparatelor și tensiunea bateriei. Un invertor pentru baterii nu este automat un invertor fotovoltaic conectat la rețea.",
+    ),
+    choose: bilingual(
+      "Add the power of appliances that run together and check motor starting demand separately. Compare the documented continuous rating, surge duration and waveform. Choose the inverter and battery together: at 2000 W, a 12 V system needs about 167 A before conversion losses and more once losses are included, so battery capacity in Ah alone is not enough.",
+      "Adună puterile aparatelor folosite simultan și verifică separat pornirea motoarelor. Compară puterea continuă, durata suprasarcinii și forma de undă documentate. Alege împreună invertorul și bateria: la 2000 W, un sistem de 12 V cere peste 167 A după includerea pierderilor; capacitatea în Ah nu este suficientă pentru alegere.",
+    ),
+    checks: bilingual(
+      "For a Romanian installation, verify the model's 230 V / 50 Hz output, DC input range, BMS current, cable and fuse sizing, earthing and any transfer function. Do not infer a battery charger or grid-export capability from the word inverter. Fixed home circuits need a qualified installer and suitable transfer protection; never feed house wiring through a socket.",
+      "Pentru o instalație din România, verifică ieșirea de 230 V / 50 Hz a modelului, intervalul DC, curentul BMS, cablurile, siguranțele, împământarea și funcția de transfer. Denumirea invertor nu confirmă un încărcător de baterii sau posibilitatea injectării în rețea. Circuitele fixe necesită instalator calificat și protecție la transfer; nu alimenta instalația casei printr-o priză.",
+    ),
+  },
+  "solar/panels": {
+    seoTitle: bilingual("Solar panels: compare formats and size your system", "Panouri solare fotovoltaice: comparație și dimensionare"),
+    seoDescription: bilingual("Compare rigid, portable and flexible solar panels. Check daily energy, mounting area and controller limits for systems used in Romania.", "Compară panouri solare rigide, portabile și flexibile. Verifică energia zilnică, spațiul de montaj și regulatorul pentru utilizare în România."),
+    summary: bilingual(
+      "Choose solar panels for a caravan, cabin or a planned home system by available mounting space and daily energy use. Compare rigid, portable and flexible formats, then match the documented panel voltage and current to the controller or power station.",
+      "Alege panouri solare fotovoltaice pentru rulotă, cabană sau un sistem planificat pentru casă, în funcție de spațiul de montaj și consumul zilnic. Compară formatele rigide, portabile și flexibile, apoi verifică tensiunea și curentul față de limitele regulatorului sau stației de energie.",
+    ),
+    choose: bilingual(
+      "Start with daily consumption in Wh, usable mounting area and the months you need the system. Rated panel watts describe test conditions, not guaranteed daily energy in Romania. Consider local shading, orientation and winter sunlight. Rigid panels suit planned fixed mounting; portable panels need setup space; flexible panels require the manufacturer's mounting and cooling instructions.",
+      "Începe cu energia zilnică în Wh, suprafața utilă și lunile în care folosești sistemul. Puterea nominală în wați descrie condiții de test, nu energia zilnică garantată în România. Ia în calcul umbrirea, orientarea și soarele de iarnă. Panourile rigide cer montaj fix planificat, cele portabile spațiu de amplasare, iar cele flexibile respectarea instrucțiunilor de fixare și răcire.",
+    ),
+    checks: bilingual(
+      "Check open-circuit voltage at the lowest design temperature, short-circuit current and series/parallel limits against the exact controller or power-station manual. A matching connector alone does not establish compatibility. Check mounting loads, cable protection and the permitted installation method before ordering.",
+      "Verifică tensiunea în gol la temperatura minimă de proiectare, curentul de scurtcircuit și limitele legării serie/paralel în manualul regulatorului sau stației de energie. O mufă potrivită nu dovedește compatibilitatea electrică. Verifică sarcinile de montaj, protecția cablurilor și metoda de instalare permisă înainte de comandă.",
+    ),
+  },
+};
+for (const category of categories) {
+  const editorial = categoryEditorial[category.path];
+  if (editorial) Object.assign(category, editorial);
+}
 const waterRoot: Category = {
   path: "water", title: bilingual("Water & Resilience", "Apă și reziliență"),
   summary: bilingual("Water solutions for home, travel and off-grid living, selected around your source and documented performance.", "Soluții de apă pentru acasă, călătorii și off-grid, alese după sursă și performanța documentată."),

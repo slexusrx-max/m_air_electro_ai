@@ -34,8 +34,8 @@ export async function generateMetadata({ params, searchParams }: Props) {
   return {
     ...buildMetadata({
       locale,
-      title: local(c.title, locale),
-      description: local(c.summary, locale),
+      title: local(c.seoTitle ?? c.title, locale),
+      description: local(c.seoDescription ?? c.summary, locale),
       path: `/marketplace/${c.path}`,
     }),
     robots: Object.values(query).some(Boolean)
@@ -89,6 +89,15 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           dictionary={t}
           ro={ro}
         />
+        <section className="content-panel" aria-label={ro ? "Cum alegi și cumperi" : "How to choose and buy"}>
+          <h2>{ro ? "De la comparație la furnizor" : "From comparison to supplier"}</h2>
+          <p>{ro
+            ? "Modelele reale au specificații și un link către furnizor. Clasele de echipamente sunt ghiduri de dimensionare, fără un produs oferit spre cumpărare. Deschide detaliile, verifică limitele și compară modelele potrivite."
+            : "Real models have specifications and a supplier link. Equipment classes are sizing guides without a product offered for purchase. Open the details, check the limits and compare suitable models."}</p>
+          <p className="small-copy">{ro
+            ? "Prin linkul furnizorului continui pe site-ul comerciantului, într-o filă nouă. Acolo verifici varianta, prețul, stocul și livrarea la adresa ta din România și finalizezi comanda. M Air Electro AI nu încasează plata și nu expediază produse. Linkurile marcate ca afiliate pot genera comision pentru achiziții eligibile."
+            : "The supplier link opens the merchant's website in a new tab. Check the variant, price, stock and delivery to your Romanian address there before placing an order. M Air Electro AI does not take payment or ship products. Marked affiliate links may earn commission on qualifying purchases."}</p>
+        </section>
         <div className="two-columns">
           <section className="content-panel">
             <h2>{ro ? "Cum alegi" : "How to choose"}</h2>

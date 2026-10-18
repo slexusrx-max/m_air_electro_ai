@@ -29,6 +29,9 @@ export function ProductCard({
       >
         <ProductVisual product={p} ro={ro} />
       </Link>
+      {p.kind === "equipment-class" && <p className="small-copy" data-testid="equipment-class-image-note">
+        {ro ? "Imagine ilustrativă a categoriei. Ghid, fără ofertă de cumpărare." : "Illustrative category image. Guide, not a purchase offer."}
+      </p>}
       <p className="eyebrow">
         {p.kind === "product"
           ? p.brand

@@ -26,6 +26,8 @@ export function CatalogBrowser({
 }) {
   const query = cleanQuery(raw);
   const results = filterEquipment(products, query);
+  const modelCount = results.filter(product => product.kind === "product").length;
+  const classCount = results.length - modelCount;
   const active = Object.entries(query).filter(([key, value]) => value && ["q", "kind", "brand", ...Object.keys(facetLabels)].includes(key));
   return (
     <section className="catalog-layout">
@@ -113,6 +115,11 @@ export function CatalogBrowser({
         <p className="result-count" role="status">
           {results.length} {ro ? "rezultate" : "results"}
           {query.q ? ` · “${query.q}”` : ""}
+        </p>
+        <p className="small-copy" data-testid="catalog-record-types">
+          {ro
+            ? `Modele reale: ${modelCount}. Ghiduri de clasă: ${classCount}. Ghidurile explică cerințele și nu reprezintă oferte de cumpărare.`
+            : `Real models: ${modelCount}. Equipment class guides: ${classCount}. Guides explain requirements and are not purchase offers.`}
         </p>
         {results.length ? (
           <div className="product-grid">
