@@ -4,7 +4,9 @@ import { trackEvent } from "@/lib/analytics";
 import { useState, useRef, useEffect } from "react";
 import { ProductCard } from "./product-card";
 import { catalog } from "@/lib/affiliate/catalog";
-import { estimateSystem, matchingSystemCandidates } from "@/lib/marketplace/recommendation";
+import { estimateSystem } from "@/lib/marketplace/recommendation";
+import { starterScenarios, stationCandidates } from "@/lib/marketplace/selection-guidance";
+import { SelectionHelp } from "./selection-help";
 import { categoryByPath, local } from "@/lib/marketplace/content";
 import {
   loadHomeEnergyProfile,
@@ -31,6 +33,10 @@ export function SolutionFinder({
   const ro = t["locale.code"] === "ro";
   const l = (en: string, translated: string) => (ro ? translated : en);
   const resultRef = useRef<HTMLElement>(null);
+  const started = useRef(false);
+  function start() {
+    if (!started.current) { trackEvent("finder_start"); started.current = true; }
+  }
   const [revision, setRevision] = useState(0);
   const [step, setStep] = useState(["1", "2", "3"].includes(initial.step ?? "") ? Number(initial.step) : 1);
   const [form, setForm] = useState({
@@ -54,6 +60,7 @@ export function SolutionFinder({
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
   function update(key: keyof typeof form, value: string) {
+    start();
     setForm((f) => ({ ...f, [key]: value }));
     setReady(false);
     setError("");
@@ -78,8 +85,9 @@ export function SolutionFinder({
                 ? ["solar"]
                 : []),
             ];
-  const matches = result ? matchingSystemCandidates(catalog, paths, form.region, result).slice(0, 6) : [];
+  const matches = result ? stationCandidates(catalog, form.region, result) : [];
   function next() {
+    start();
     if (step === 2 && form.budget && (!Number.isFinite(Number(form.budget)) || Number(form.budget) < 0)) {
       setError(l("Budget must be a finite, non-negative amount.", "Bugetul trebuie să fie o valoare finită, fără semn negativ."));
       return;
@@ -106,6 +114,7 @@ export function SolutionFinder({
       return;
     }
     trackEvent("calculator_complete");
+    trackEvent("finder_result");
     setReady(true);
     setRevision((n) => n + 1);
     setTimeout(() => {
@@ -114,6 +123,7 @@ export function SolutionFinder({
     }, 0);
   }
   function importProfile() {
+    start();
     try {
       const raw = localStorage.getItem(homeEnergyStorageKey);
       const saved = raw ? JSON.parse(raw) : null;
@@ -157,6 +167,19 @@ export function SolutionFinder({
             "Estimare deterministă inițială. Clasele ghidează achiziția; compatibilitatea cere verificarea modelului și instalației.",
           )}
         </p>
+        {step === 1 && <section className="starter-scenarios" aria-label={l("Calculated examples", "Exemple calculate")}>
+          <h2>{l("Start with an everyday task", "Începe cu o nevoie de zi cu zi")}</h2>
+          <p>{l("Editorial examples, not customer cases or factory kits. All listed loads run together for the stated time through 230 V AC outlets/adapters. Edit the assumed loads and startup peak for your devices.", "Exemple editoriale, nu cazuri de clienți sau kituri de fabrică. Toți consumatorii funcționează simultan pe durata indicată, prin prize/adaptoare de 230 V AC. Modifică puterile și vârful de pornire presupuse pentru aparatele tale.")}</p>
+          <div className="discovery-grid">{starterScenarios.map(s => <article className="content-panel" key={s.id}>
+            <h3>{s.title[ro ? "ro" : "en"]}</h3>
+            <p>{s.loads[ro ? "ro" : "en"]} = {s.load} W × {s.hours} h.</p>
+            <p>{l("Assumed startup", "Pornire presupusă")}: {s.peak} W. {s.limit[ro ? "ro" : "en"]}</p>
+            <button className="button-outline" data-scenario={s.id} onClick={() => {
+              start(); setForm(f => ({ ...f, application: s.application, load: String(s.load), peak: String(s.peak), hours: String(s.hours), region: "EU" })); setReady(false); setError(""); setStep(2);
+            }}>{l("Use this example", "Folosește acest exemplu")}</button>
+          </article>)}</div>
+        </section>}
+        <SelectionHelp ro={ro} />
         {step === 1 && (
           <div className="compare-selectors">
             <label>
@@ -275,6 +298,7 @@ export function SolutionFinder({
           <p role="status">
             {l("Calculation revision", "Revizia calculului")} {revision}
           </p>
+          <p>{l("Your inputs", "Datele tale")}: {form.load} W × {form.hours} h = {result.loadWh} Wh; {l("startup peak", "vârf la pornire")}: {form.peak} W. {l("AC load estimate; actual runtime depends on temperature, ageing and device consumption.", "Estimare pentru consumatori AC; autonomia reală depinde de temperatură, uzură și consumul aparatelor.")}</p>
           <h2>
             {l(
               "Recommended system envelope",
@@ -342,35 +366,9 @@ export function SolutionFinder({
               </Link>
             </p>
           )}
-          <h2>
-            {l(
-              "Equipment classes to review",
-              "Clase de echipamente de verificat",
-            )}
-          </h2>
-          <div className="action-row">
-            {paths.map((path) => (
-              <Link
-                className="button-outline"
-                key={path}
-                href={`/marketplace/${path}`}
-              >
-                {categoryByPath(path) ? local(categoryByPath(path)!.title, ro ? "ro" : "en") : path} →
-              </Link>
-            ))}
-          </div>
-          <h2>
-            {l(
-              "Catalog candidates — verify the complete system",
-              "Opțiuni din catalog — verifică sistemul complet",
-            )}
-          </h2>
-          <p>
-            {l(
-              "Known insufficient standalone energy or inverter ratings are excluded. Unknown ratings and equipment classes require manual checking; these are not certified matches.",
-              "Valorile cunoscute insuficiente pentru energia individuală sau invertor sunt excluse. Câmpurile necunoscute și clasele cer verificare manuală; nu sunt potriviri certificate.",
-            )}
-          </p>
+          <h2>{l("Portable stations to check for these AC loads", "Stații portabile de verificat pentru acești consumatori AC")}</h2>
+          <p>{l("These complete stations meet the estimated energy and power thresholds in the documented data. Ordered by nominal energy, then power; commission does not affect selection. An undocumented surge rating is not assumed: continuous output must cover the starting requirement. This does not confirm UPS operation, connector compatibility, delivery to Romania or suitability for fixed wiring.", "Aceste stații complete ating pragurile estimate de energie și putere în datele documentate. Ordine după energia nominală, apoi putere; comisionul nu influențează selecția. Nu presupunem un vârf nedocumentat: puterea continuă trebuie să acopere necesarul de pornire. Nu confirmă funcționarea UPS, conectorii, livrarea în România sau utilizarea în instalația fixă.")}</p>
+          <p><Link href="/methodology">{l("How the estimate and selection work", "Cum funcționează calculul și selecția")}</Link> · {l("Prices and availability: check the seller. Confirm 230 V AC output and your delivery postcode before buying.", "Prețuri și disponibilitate: verifică la vânzător. Confirmă ieșirea de 230 V AC și codul poștal de livrare înainte de cumpărare.")}</p>
           {matches.length ? (
             <div className="product-grid">
               {matches.map((p) => (
@@ -380,17 +378,22 @@ export function SolutionFinder({
           ) : (
             <p className="content-panel">
               {l(
-                "No supplier catalog for this region. Continue with the category requirements and a local installer.",
-                "Nu există catalog de furnizor pentru această regiune. Continuă cu cerințele categoriei și un instalator local.",
+                "No documented station in this region meets all these thresholds. Reduce loads only if appropriate, or review a separately designed system; no compatible kit is inferred.",
+                "Nicio stație documentată din această regiune nu atinge toate pragurile. Redu consumatorii doar dacă este potrivit sau verifică un sistem proiectat separat; nu presupunem un kit compatibil.",
               )}
             </p>
           )}
+          <details className="content-panel component-guidance">
+            <summary>{l("Building a system from separate components?", "Construiești un sistem din componente separate?")}</summary>
+            <p>{l("Batteries, panels, inverters and chargers are not alternatives to a complete station. These category guides require voltage, BMS, current, protection and charging checks; they are not a matched shopping list.", "Bateriile, panourile, invertoarele și încărcătoarele nu înlocuiesc individual o stație completă. Aceste ghiduri cer verificarea tensiunii, BMS, curentului, protecțiilor și încărcării; nu formează o listă de cumpărături compatibilă.")}</p>
+            <div className="action-row">{paths.map(path => <Link className="button-outline" key={path} href={`/marketplace/${path}`}>{categoryByPath(path) ? local(categoryByPath(path)!.title, ro ? "ro" : "en") : path}</Link>)}</div>
+          </details>
           <div className="action-row">
             {matches.length >= 2 && <Link
               className="button-primary"
               href={`/compare?ids=${encodeURIComponent(
                 matches
-                  .slice(0, 2)
+                  .slice(0, 4)
                   .map((p) => p.id)
                   .join(","),
               )}`}

@@ -12,7 +12,7 @@ for (const locale of ["ro", "en"] as const) {
     const browse = page.locator(".discovery-hero").getByRole("link", { name: ro ? /Alege echipamente/ : /Browse Equipment/ });
     await expect(browse).toBeVisible();
     expect((await browse.boundingBox())!.y).toBeLessThan(900);
-    await expect(page.locator(".application-grid>a")).toHaveCount(4);
+    await expect(page.locator(".application-grid>a")).toHaveCount(3);
     await page.locator('.application-grid>a[href*="rv-caravan"]').click();
     await expect(page.getByRole("combobox", { name: ro ? "Aplicație" : "Application", exact: true })).toHaveValue("rv-caravan");
     await page.goto(localizedPath("/search?q=Renogy&kind=product&capacityAh=100", locale));

@@ -44,7 +44,7 @@ export function ProductCard({
           {ro ? (p.title?.ro ?? p.name) : p.name}
         </Link>
       </h3>
-      <p>{ro ? (p.summary?.ro ?? p.description) : p.description}</p>
+      <p className="product-purpose">{ro ? p.bestFor.ro : p.bestFor.en}</p>
       <dl>
         {Object.entries(p.technicalSpecs)
           .slice(0, 3)

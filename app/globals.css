@@ -713,6 +713,20 @@ html:has(.comparison-tray) { scroll-padding-bottom:220px; }
 @media(max-width:768px) { .product-storefront .product-illustration .product-model-photo img { height:250px; } }
 
 /* Brighter lime identity; product photographs keep their original white surfaces. */
+.hero-model-tile .product-model-photo, .hero-model-tile .product-model-photo img { height:118px; background:#fff; }
+.hero-model-tile .product-model-photo img { padding:6px; object-fit:contain; }
+.hero-model-tile>p { padding:0 8px; margin:3px 0; font-size:10px; }
+.starter-scenarios { margin:24px 0; }
+.selection-help { margin:16px 0; }
+.selection-help summary { cursor:pointer; font-weight:650; }
+.selection-help dt { font-weight:700; margin-top:12px; }
+.selection-help dd { margin:4px 0 12px; }
+.battery-candidates li { margin:16px 0; }
+.application-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+@media(max-width:768px) {
+  .hero-model-tile .product-model-photo, .hero-model-tile .product-model-photo img { height:78px; }
+  .application-grid { grid-template-columns:minmax(0,1fr); }
+}
 .marketing-page-background:is([data-visual-family="brand"],[data-visual-family="marketplace"]) { --ambient:#c5f35f; }
 .marketing-page-background[data-visual-family="brand"] .background-veil { background:radial-gradient(ellipse at 90% 4%,#c5f35f55,transparent 58%),linear-gradient(90deg,#f5faec88,transparent 75%); }
 .storefront-home .discovery-hero { background:linear-gradient(125deg,#fffffff2 20%,#e7f9b8de); border-color:#b5ce8b; box-shadow:0 16px 44px #214b2318,inset 0 1px #fff; }

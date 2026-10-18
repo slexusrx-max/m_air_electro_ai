@@ -1,4 +1,5 @@
 "use client";
+import { trackEvent } from "@/lib/analytics";
 import Link from "@/components/localized-link";
 import { createContext, useContext, useSyncExternalStore, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
@@ -76,6 +77,7 @@ export function CompareControl({
     }
     try {
       save(next);
+      if (!active) trackEvent("comparison_add");
       setMessage("");
     } catch {
       setMessage(

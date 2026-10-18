@@ -35,6 +35,16 @@ function analyticsHarness({ choice = "accepted", dnt = "0", webdriver = false, d
   return { api, sent };
 }
 const product = { product: "renogy-mini-100", supplier: "renogy", category: "lithium-batteries", language: "ro" };
+test("finder and comparison events use the existing consent gates and send no calculation inputs", () => {
+  for (const name of ["finder_start", "finder_result", "comparison_add"]) {
+    for (const options of [{ choice: "unset" }, { choice: "rejected" }, { dnt: "1" }, { webdriver: true }, { domain: "" }]) {
+      const { api, sent } = analyticsHarness(options);
+      api.trackEvent(name); assert.equal(sent.length, 0);
+    }
+    const { api, sent } = analyticsHarness(); api.trackEvent(name);
+    assert.deepEqual(JSON.parse(sent[0][1].body), { name, domain: "mairelectroai.com", url: "https://mairelectroai.com/compare" });
+  }
+});
 test("supplier measurement respects consent, DNT, automation, host and private-route exclusions", () => {
   for (const options of [{ choice: "unset" }, { choice: "rejected" }, { dnt: "1" }, { webdriver: true }, { domain: "" }, { domain: "other.example" }, { path: "/account" }]) {
     const { api, sent } = analyticsHarness(options);

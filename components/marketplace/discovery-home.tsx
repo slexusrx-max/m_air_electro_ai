@@ -8,16 +8,11 @@ import { ProductCard } from "./product-card";
 import { AffiliateDisclosure } from "./affiliate-disclosure";
 import { WaterPromo } from "./water-promo";
 import { RenogyFeature } from "./renogy-feature";
+import { ProductVisual } from "./product-visual";
+import { starterScenarios, scenarioUrl } from "@/lib/marketplace/selection-guidance";
 import { EquipmentVisual } from "./equipment-visual";
 import { CatalogBrowser } from "./catalog-browser";
 import { localizedPath } from "@/lib/i18n/routing";
-
-const applications = [
-  ["home-backup", "Home backup", "Rezervă pentru casă", "Keep essential loads in focus.", "Pornește de la consumatorii esențiali."],
-  ["rv-caravan", "RV & camper", "Rulotă și camper", "Energy for the road ahead.", "Energie pentru următoarea călătorie."],
-  ["off-grid-cabin", "Off-grid cabin", "Cabană off-grid", "Plan solar, storage and autonomy.", "Planifică solarul, stocarea și autonomia."],
-  ["marine", "Marine systems", "Sisteme marine", "Start with your onboard loads.", "Începe cu necesarul de la bord."],
-];
 
 export async function DiscoveryHome({ marketplace = false, requirements }: {
   marketplace?: boolean;
@@ -32,10 +27,10 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
       <div className="discovery-hero-copy">
         <p className="eyebrow">M Air Electro AI · România / EU</p>
         <h1>{marketplace ? (ro ? "Catalog de echipamente energetice" : "Energy equipment catalog") : (ro ? "Panouri solare, baterii și invertoare" : "Solar panels, batteries and inverters")}</h1>
-        <p>{ro ? "Descoperă panouri solare, baterii și sisteme de rezervă. Compară specificațiile sau găsește echipamentul potrivit pornind de la nevoile tale." : "Discover solar panels, batteries and backup power. Compare the specifications or find equipment around the way you live."}</p>
+        <p>{ro ? "Alege energie de rezervă pentru router, laptop și lumină, consumatori esențiali acasă sau aparate de camping. Compară stații portabile, baterii, invertoare și panouri solare; cumpărarea se face pe site-ul vânzătorului." : "Choose backup power for a router, laptop and lights, a few home essentials or camping devices. Compare portable stations, batteries, inverters and solar panels; purchases take place on the seller’s website."}</p>
         <div className="action-row">
-          <Link className="button-primary" href={marketplace ? "#equipment-categories" : "/marketplace"}>{ro ? "Alege echipamente" : "Browse Equipment"} <span aria-hidden="true">↗</span></Link>
-          <Link className="button-outline" href="/marketplace/find-my-solution">{ro ? "Găsește soluția" : "Find My Solution"} <span aria-hidden="true">→</span></Link>
+          <Link className="button-primary" href="/marketplace/find-my-solution">{ro ? "Găsește soluția" : "Find My Solution"} →</Link>
+          <Link className="button-outline" href={marketplace ? "#equipment-categories" : "/marketplace"}>{ro ? "Alege echipamente" : "Browse Equipment"} →</Link>
         </div>
         <form action={localizedPath("/marketplace", locale)} className="hero-search" role="search" aria-label={ro ? "Caută echipamente" : "Search equipment"}>
           <label className="sr-only" htmlFor="hero-query">{ro ? "Caută echipamente" : "Search equipment"}</label>
@@ -47,18 +42,12 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
       <div className="hero-equipment-showcase" aria-label={ro ? "Explorează echipamentele" : "Explore the equipment"}>
         <div className="hero-equipment-heading"><span>{ro ? "ENERGIE PENTRU FIECARE ZI" : "POWER FOR EVERY DAY"}</span><Image src="/hero.png" alt="M Air Electro AI" width={36} height={36} /></div>
         <div className="hero-equipment-grid">
-          <Link href="/marketplace/solar" className="hero-equipment-tile hero-equipment-solar">
-            <Image src="/equipment/solar-panel-studio.png" alt={ro ? "Ilustrație de panouri solare" : "Solar panel illustration"} width={1536} height={1024} sizes="(max-width: 768px) 45vw, 28vw" preload />
-            <span>{ro ? "Panouri solare" : "Solar panels"}<b aria-hidden="true">↗</b></span>
-          </Link>
-          <Link href="/marketplace/batteries" className="hero-equipment-tile"><EquipmentVisual category="batteries" /><span>{ro ? "Baterii" : "Batteries"}<b aria-hidden="true">↗</b></span></Link>
-          <Link href="/marketplace/inverters" className="hero-equipment-tile"><EquipmentVisual category="inverters" /><span>{ro ? "Invertoare" : "Inverters"}<b aria-hidden="true">↗</b></span></Link>
-          <Link href="/marketplace/backup-power" className="hero-equipment-tile">
-            <EquipmentVisual category="backup-power" />
-            <span>{ro ? "Stații portabile" : "Portable power"}<b aria-hidden="true">↗</b></span>
-          </Link>
+          {catalog.filter(p => p.provider === "renogy" && ["lithium-batteries", "solar-panels", "inverters"].includes(p.category)).slice(0, 4).map(p => <Link key={p.id} href={`/marketplace/products/${p.slug}`} className="hero-equipment-tile hero-model-tile">
+            <ProductVisual product={p} ro={ro} />
+            <span>{ro ? p.title.ro : p.name}</span>
+          </Link>)}
         </div>
-        <p className="hero-equipment-caption">{ro ? "Ilustrații de categorii · Vezi modelele și specificațiile în catalog" : "Category illustrations · Explore models and specifications in the catalog"}</p>
+        <p className="hero-equipment-caption">{ro ? "Fotografii ale modelelor indicate. Componente individuale, nu un kit compatibil confirmat. Stațiile portabile PECRON și BLUETTI sunt disponibile pentru comparație în catalog." : "Photos of the named models. Individual components, not a confirmed compatible kit. PECRON and BLUETTI portable stations are also listed for comparison in the catalog."}</p>
       </div>
     </section>
     {requirements && (requirements.batteryKwh || requirements.inverterKw) && <section className="content-panel">
@@ -79,10 +68,13 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
     {!marketplace && <>
     <section className="application-section" aria-labelledby="application-heading">
       <div className="section-line"><div><p className="eyebrow">{ro ? "PORNEȘTE DE LA NEVOIE" : "START WITH YOUR EVERYDAY"}</p><h2 id="application-heading">{ro ? "Un sistem pentru felul tău de a trăi." : "A system for the way you live."}</h2></div><Link href="/solutions">{ro ? "Toate soluțiile" : "All solutions"} →</Link></div>
-      <div className="application-grid">{applications.map(([slug, en, romanian, summary, translated]) => <Link key={slug} href={`/marketplace/find-my-solution?application=${slug}`}>
-        <EnergySchematic family={slug === "marine" ? "marine" : slug === "off-grid-cabin" ? "solar" : "backup"} className="application-symbol" />
-        <h3>{ro ? romanian : en}</h3><p>{ro ? translated : summary}</p><span>{ro ? "Configurează necesarul" : "Find your starting point"} →</span>
+      <p>{ro ? "Exemple editoriale calculate, nu cazuri de clienți sau kituri de fabrică. Consum simultan la 230 V AC, cu adaptoarele aparatelor; valorile se pot modifica în configurator." : "Calculated editorial examples, not customer cases or factory kits. Simultaneous 230 V AC loads through device adapters; edit the assumptions in the finder."}</p>
+      <div className="application-grid">{starterScenarios.map(s => <Link key={s.id} href={scenarioUrl(s)}>
+        <EnergySchematic family="backup" className="application-symbol" />
+        <h3>{s.title[ro ? "ro" : "en"]}</h3><p>{s.loads[ro ? "ro" : "en"]} = {s.load} W × {s.hours} h.</p>
+        <p>{s.limit[ro ? "ro" : "en"]}</p><span>{ro ? "Calculează și vezi modelele" : "Calculate and see models"} →</span>
       </Link>)}</div>
+      <p><Link href="/methodology">{ro ? "Ipoteze, criterii și metodologia selecției" : "Assumptions, criteria and selection methodology"}</Link></p>
     </section>
     <RenogyFeature ro={ro} />
     <section aria-labelledby="featured-models">

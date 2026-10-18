@@ -17,7 +17,7 @@ import {
   CalculatorValidationCard,
 } from "@/components/calculators/calculator-primitives";
 import { calculateBattery, formatElectricalNumber, getPositiveNumber } from "@/lib/electrical-calculations";
-import { CalculatorRecommendation } from "@/components/marketplace/calculator-recommendation";
+import { BatteryCandidates } from "@/components/marketplace/battery-candidates";
 
 type FormState = {
   backupHours: string;
@@ -126,7 +126,7 @@ export default function BatteryCalculator({ro=false}:{ro?:boolean}) {
               value={`${formatElectricalNumber(result.recommendedBatteryAh)} Ah`}
               detail={l("Rounded planning value based on common battery-bank capacity steps.")} 
             />
-            <CalculatorRecommendation title="Review battery system categories" copy="Use the calculated capacity as a starting point for selecting a battery bank, inverter and charging components." category="lithium-batteries" />
+            <BatteryCandidates minimumWh={result.minimumNominalWh} voltage={Number(formState.systemVoltage)} ro={ro} />
           </>
         )}
       </CalculatorResultsPanel>

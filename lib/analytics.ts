@@ -1,4 +1,4 @@
-export type AnalyticsEvent = "pageview" | "outbound_click" | "supplier_outbound_click" | "calculator_complete" | "comparison_view";
+export type AnalyticsEvent = "pageview" | "outbound_click" | "supplier_outbound_click" | "calculator_complete" | "comparison_view" | "comparison_add" | "finder_start" | "finder_result";
 export type SupplierClick = { product: string; supplier: string; category: string; language: string };
 
 /** Public catalog identifiers only. Never send query strings, destination URLs or visitor IDs. */
