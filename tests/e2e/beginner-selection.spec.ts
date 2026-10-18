@@ -15,8 +15,14 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
     expect((await primary.boundingBox())!.y).toBeLessThan(900);
     await expect(page.locator(".hero-model-tile img")).toHaveCount(4);
     for (const img of await page.locator(".hero-model-tile img").all()) {
+      await expect.poll(() => img.evaluate((e: HTMLImageElement) => e.complete && e.naturalWidth > 0)).toBe(true);
       await expect(img).toHaveCSS("object-fit", "contain");
       await expect(img).toHaveCSS("filter", "none");
+      expect(await img.evaluate(e => {
+        const image = e.getBoundingClientRect(), frame = e.parentElement!.getBoundingClientRect();
+        const label = e.closest(".hero-model-tile")!.querySelector(":scope > span")!.getBoundingClientRect();
+        return image.bottom <= frame.bottom + 1 && image.bottom <= label.top + 1;
+      })).toBe(true);
     }
     await noOverflow();
     await page.screenshot({ path: info.outputPath(`home-${locale}-${width}.png`) });
