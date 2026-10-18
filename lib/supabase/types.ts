@@ -1,4 +1,5 @@
 import type { MarketplaceRole } from "@/lib/i18n/types";
+import type { EquipmentProject } from "@/lib/marketplace/projects";
 
 export type AccountStatus = "active" | "blocked" | "pending";
 export type Profile = {
@@ -16,10 +17,16 @@ type ClientProfile = { profile_id: string; assistance_type: string | null; creat
 type CompanyProfile = { id: string; profile_id: string; company_name: string; description: string | null; created_at: string; updated_at: string };
 type TechnicalDocument = { id: string; owner_id: string; name: string; storage_path: string; mime_type: string; byte_size: number; created_at: string; updated_at: string };
 type Table<Row> = { Row: Row; Insert: Partial<Row>; Update: Partial<Row>; Relationships: [] };
+type EquipmentProjectTable = {
+  Row: EquipmentProject & { owner_id: string };
+  Insert: Pick<EquipmentProject, "name" | "items"> & { owner_id: string };
+  Update: Partial<Pick<EquipmentProject, "name" | "items">>;
+  Relationships: [];
+};
 
 export type Database = {
   public: {
-    Tables: { profiles: ProfileTable; expert_profiles: Table<ExpertProfile>; client_profiles: Table<ClientProfile>; company_profiles: Table<CompanyProfile>; technical_documents: Table<TechnicalDocument> };
+    Tables: { profiles: ProfileTable; expert_profiles: Table<ExpertProfile>; client_profiles: Table<ClientProfile>; company_profiles: Table<CompanyProfile>; technical_documents: Table<TechnicalDocument>; equipment_projects: EquipmentProjectTable };
     Views: Record<string, never>;
     Functions: {
       consume_ai_request: { Args: Record<string, never>; Returns: boolean };
