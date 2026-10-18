@@ -13,7 +13,9 @@ async function account() {
   if (error || !user) return { response: respond({ error: "unauthenticated" }, 401) };
   const { data: profile, error: profileError } = await supabase.from("profiles").select("account_status").eq("id", user.id).maybeSingle();
   if (profileError) return { response: unavailable() };
-  if (!profile || profile.account_status !== "active") return { response: respond({ error: "account_unavailable" }, 403) };
+  // Pending is the existing account flow's legacy incomplete-profile state.
+  // Authentication is still required; blocked or unexpected states stay denied.
+  if (!profile || !["active", "pending"].includes(profile.account_status)) return { response: respond({ error: "account_unavailable" }, 403) };
   return { supabase, user };
 }
 
