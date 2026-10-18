@@ -1,0 +1,37 @@
+{
+  "verifiedAt": "2026-10-18",
+  "assets": [
+    {
+      "publicPath": "/category-photos/generators.jpg",
+      "sha256": "72a43ca08767651a7f2ef22cc5a99e56c64288f1e55465a675c68d16ac92fc1e",
+      "bytes": 16857,
+      "reusedFromPreparedDeployment": "https://m-air-electro-qh54c1op9-m-air-electro-ai.vercel.app/",
+      "sourceCredits": "lib/marketplace/category-photos.ts",
+      "note": "Existing prepared category photograph; downloaded via browser media from the authenticated preview. No new semantic edits. The source author, licence, and adaptation notice are published at /photo-credits. CC BY-SA adaptations remain under their original licence."
+    },
+    {
+      "publicPath": "/category-photos/ev-charging.jpg",
+      "sha256": "fbd63cee5c19665f0be07d897abf268d8b40572d7b86515b7ab5f9177b8b17d4",
+      "bytes": 18871,
+      "reusedFromPreparedDeployment": "https://m-air-electro-qh54c1op9-m-air-electro-ai.vercel.app/",
+      "sourceCredits": "lib/marketplace/category-photos.ts",
+      "note": "Existing prepared category photograph; downloaded via browser media from the authenticated preview. No new semantic edits. The source author, licence, and adaptation notice are published at /photo-credits. CC BY-SA adaptations remain under their original licence."
+    },
+    {
+      "publicPath": "/category-photos/electrical.jpg",
+      "sha256": "e3e89ac8a5f540b378595624c25e75daca8b0432998d5c0bd41df83b4719c76d",
+      "bytes": 10589,
+      "reusedFromPreparedDeployment": "https://m-air-electro-qh54c1op9-m-air-electro-ai.vercel.app/",
+      "sourceCredits": "lib/marketplace/category-photos.ts",
+      "note": "Existing prepared category photograph; downloaded via browser media from the authenticated preview. No new semantic edits. The source author, licence, and adaptation notice are published at /photo-credits. CC BY-SA adaptations remain under their original licence."
+    },
+    {
+      "publicPath": "/category-photos/industrial.jpg",
+      "sha256": "08eef4bb0083cad4e9605e6622b31afe738f9282d800aec098e659ae921eafd7",
+      "bytes": 14720,
+      "reusedFromPreparedDeployment": "https://m-air-electro-qh54c1op9-m-air-electro-ai.vercel.app/",
+      "sourceCredits": "lib/marketplace/category-photos.ts",
+      "note": "Existing prepared category photograph; downloaded via browser media from the authenticated preview. No new semantic edits. The source author, licence, and adaptation notice are published at /photo-credits. CC BY-SA adaptations remain under their original licence."
+    }
+  ]
+}

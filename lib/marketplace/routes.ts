@@ -24,6 +24,7 @@ export const publicRoutes = [
   "/terms",
   "/affiliate-disclosure",
   "/methodology",
+  "/photo-credits",
   "/calculators",
   "/backup-calculator",
   ...categories.map((c) => `/marketplace/${c.path}`),

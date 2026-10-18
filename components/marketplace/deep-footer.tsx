@@ -30,6 +30,7 @@ export function DeepFooter({ locale }: { locale: Locale }) {
           href: "/affiliate-disclosure",
         },
         { label: ro ? "Metodologie" : "Methodology", href: "/methodology" },
+        { label: ro ? "Surse foto" : "Photo credits", href: "/photo-credits" },
         { label: ro ? "Politica editorială" : "Editorial policy", href: "/editorial-policy" },
         { label: ro ? "Autori" : "Author policy", href: "/author-policy" },
         { label: ro ? "Corecții" : "Corrections", href: "/corrections-policy" },

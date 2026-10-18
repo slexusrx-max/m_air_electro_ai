@@ -10,7 +10,7 @@ export function isLocalizedPublicPath(path: string) {
     ["/", "/search", "/compare", "/backup-calculator", "/renogy", "/waterdrop",
       "/faq", "/about", "/editorial-policy", "/author-policy", "/corrections-policy",
       "/ai-use-policy", "/partnerships", "/business", "/experts", "/contact",
-      "/privacy", "/terms", "/affiliate-disclosure", "/methodology"].includes(pathname);
+      "/privacy", "/terms", "/affiliate-disclosure", "/methodology", "/photo-credits"].includes(pathname);
 }
 export function localizedPath(path: string, locale: string) {
   if (!path.startsWith("/") || path.startsWith("//") || !isLocalizedPublicPath(path)) return path;

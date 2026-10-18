@@ -4,7 +4,6 @@ import { rootCategories } from "@/lib/marketplace/content";
 import { catalog } from "@/lib/affiliate/catalog";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { EnergySchematic } from "@/components/energy-schematic";
-import { visualFamily } from "@/lib/visual-system";
 import { ProductCard } from "./product-card";
 import { AffiliateDisclosure } from "./affiliate-disclosure";
 import { WaterPromo } from "./water-promo";
@@ -71,9 +70,10 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
     <section id="equipment-categories" className="equipment-explorer" aria-labelledby="equipment-heading">
       <div className="section-line"><div><p className="eyebrow">{ro ? "EXPLORARE DIRECTĂ" : "STRAIGHT TO THE EQUIPMENT"}</p><h2 id="equipment-heading">{ro ? "Categorii de echipamente" : "Equipment categories"}</h2></div><Link href="/search?kind=product">{ro ? "Toate modelele" : "All models"} →</Link></div>
       <div className="category-tiles">{rootCategories.map(category => <Link key={category.path} href={`/marketplace/${category.path}`}>
-        <div className="category-preview">{["solar", "batteries", "inverters", "backup-power"].includes(category.path) ? <EquipmentVisual category={category.path} /> : <EnergySchematic family={visualFamily(`/marketplace/${category.path}`)} className="category-symbol" />}</div>
+        <div className="category-preview"><EquipmentVisual category={category.path} /></div>
         <span>{category.title[ro ? "ro" : "en"]}</span><span aria-hidden="true">↗</span>
       </Link>)}</div>
+      <p className="category-photo-credits"><Link href="/photo-credits">{ro ? "Sursele și licențele fotografiilor de categorii" : "Category photo sources and licences"} →</Link></p>
     </section>
     {marketplace && <CatalogBrowser products={catalog} query={{ kind: "product", ...requirements }} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} />}
     {!marketplace && <>

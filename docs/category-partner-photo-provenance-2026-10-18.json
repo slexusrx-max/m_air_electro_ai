@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-18",
+  "integrationStatus": "Original images prepared for the Marine and Backup category cards; component wiring and published-page visual verification are separate tasks.",
+  "source": {
+    "network": "Impact",
+    "brand": "Renogy EU",
+    "catalogId": "28907",
+    "catalogName": "Renogy EU-New Product Catalog",
+    "recordCount": 365,
+    "feedUpdatedAsDisplayed": "2026-10-18 13:42:37",
+    "advertiserInstructionsAsDisplayed": "Not Available",
+    "feedSha256": "9485f622d6e98e5f555948f1553796577ec840077d4d2e69afe5f54998b4f752"
+  },
+  "rightsScope": "Advertiser-supplied product images distributed in the authenticated approved affiliate feed for relevant affiliate promotion. No general, perpetual or unrelated reuse licence or full legal compliance is asserted. Use the originals as category examples, without inventing stock, compatibility, kit contents or a new supplier listing.",
+  "skuNote": "Numeric merchantVariantSku values identify feed records. Manufacturer-part-number fields are empty and remain null; image filenames are not treated as verified MPNs.",
+  "verification": {
+    "assetCount": 2,
+    "uniqueSha256Count": 2,
+    "copiedBytesUnchanged": true,
+    "totalBytes": 50629
+  },
+  "limitations": [
+    "Marine original is 386x386; use a modest card size and avoid hero enlargement.",
+    "Backup original is 600x600. It is the Renogy feed model, not a replacement for Pecron or Bluetti product images.",
+    "No camera provenance is asserted for manufacturer product compositions; they are original advertiser-supplied model images, not images generated or retouched by this site."
+  ],
+  "assets": [
+    {
+      "category": "marine",
+      "publicPath": "/category-photos/renogy-marine-kit.jpg",
+      "brand": "Renogy",
+      "sourceFeedId": "28907",
+      "sourceModelName": "400W 12V Flexible Solar Marine Kit w/ Rover Li 40 Amp MPPT Solar Charge Controller",
+      "merchantVariantSku": "46435567829249",
+      "manufacturerPartNumber": null,
+      "sourceImageUrl": "https://cdn.shopify.com/s/files/1/0758/6519/4753/files/RKIT400FL-R40DB4-UK__03034.1707127349.386.513__99943.1741860884.1280.1280.jpg?v=1751437414",
+      "sourceProductUrl": "https://eu.renogy.com/products/400w-12v-flexible-solar-marine-kit-w-rover-li-40-amp-mppt-solar-charge-controller",
+      "sha256": "e7af2f0e93dfb9ccbf3063c97a0de4f728cd2d9f008306e1a9067c17e4a16547",
+      "width": 386,
+      "height": 386,
+      "bytes": 21752,
+      "format": "jpeg",
+      "visualReview": "passed: original manufacturer composite depicts flexible solar panels, Renogy Rover controller, connectors and cables; no marina scenery or generic yacht",
+      "recommendedDisplay": "Use intact on white/light image surface with object-fit:contain; native386x386 suitable for modest category tile only. Do not enlarge to hero.",
+      "rightsBasis": "Exact advertiser-supplied marine kit image distributed through authenticated Impact Renogy EU catalog28907 for relevant affiliate promotion. Advertiser instructions Not Available; no blanket licence claimed.",
+      "useRestriction": "Marine category example only; do not represent this kit as a verified photograph of another listed model. No quantity, availability or compatibility claims inferred.",
+      "preparedAt": "2026-10-18"
+    },
+    {
+      "category": "backup",
+      "publicPath": "/category-photos/renogy-portable-power.jpg",
+      "brand": "Renogy",
+      "sourceFeedId": "28907",
+      "sourceModelName": "Renogy Portable Power Station Camping, 998Wh Backup Lithium Battery",
+      "merchantVariantSku": "46435554525441",
+      "manufacturerPartNumber": null,
+      "sourceImageUrl": "https://cdn.shopify.com/s/files/1/0758/6519/4753/files/PHX1000-DE-230227_01__15946__09510.1678777403.1280.1280.jpg?v=1764843364",
+      "sourceProductUrl": "https://eu.renogy.com/products/renogy-portable-power-station-camping-998wh-backup-lithium-battery-of-1hour-80-fast-recharging",
+      "sha256": "61cf1b6598730ea422114d6568f5356c2643830c174ed4b7a5897a59e4853379",
+      "width": 600,
+      "height": 600,
+      "bytes": 28877,
+      "format": "jpeg",
+      "visualReview": "passed: original advertiser-supplied product image shows one portable power station, carry handles, display, DC/USB connections and three EU-style sockets; exact product identity comes from the feed row",
+      "recommendedDisplay": "Use intact on white/light image surface with object-fit:contain; native 600x600 sufficient for category cards. Do not substitute for Pecron or Bluetti named-model imagery.",
+      "rightsBasis": "Advertiser-supplied image from authenticated approved Renogy EU Impact catalog 28907, for relevant affiliate promotion only. Advertiser instructions Not Available; no general reuse licence asserted.",
+      "useRestriction": "Backup category example only; never substitute for another catalog model photo or infer stock, certifications, installation compatibility or included accessories.",
+      "preparedAt": "2026-10-18"
+    }
+  ]
+}
