@@ -34,6 +34,8 @@ Subsequent owner glass correction (19 October 2026): after verifying the mobile-
 
 Owner typography/product-scale correction (19 October 2026): slightly enlarge navigation and Marketplace text, use restrained readable blue/cyan heading tones, enlarge the four real homepage product previews and remove unnecessary CSS white backing/padding. Increase background logo visibility without changing its hue or file. Product JPEGs still contain white backgrounds; separate background-removal edits require product-fidelity review before publication. See `docs/type-product-logo-polish.md`.
 
+Owner follow-up (19 October 2026): Home and Marketplace hero/category cards use clear glass with transparent preview wrappers. Keep real JPEGs unchanged; generated cutouts failed fidelity review. Primary navigation displays uppercase and includes a prominent PURE WATER FILTERS link to `/marketplace/water`, also directly accessible in the mobile menu. This local package awaits explicit publication confirmation; do not retry the previously denied push. See `docs/glass-water-navigation.md`.
+
 1. Marketplace-first is authoritative. Do not turn the homepage back into an AI diagnostics landing page.
 2. Do not restore Ukraine outage/address tools to primary navigation. Retained specialist adapters are supporting modules.
 3. Never invent affiliate approval, partnership, dealer status, inventory, prices, reviews, ratings or verified professionals.

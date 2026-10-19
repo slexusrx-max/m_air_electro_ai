@@ -31,7 +31,7 @@ for (const locale of ["ro", "en"] as const) for (const width of [390, 430, 768, 
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect((await new AxeBuilder({ page }).include(desktop ? "#mega-menu" : "#mobile-menu").withTags(["wcag2a", "wcag2aa"]).analyze()).violations).toEqual([]);
     await page.screenshot({ path: info.outputPath(`menu-${locale}-${width}.png`) });
-    const waterLink = menu.locator('a[href$="/marketplace/water"]');
+    const waterLink = desktop ? menu.locator('.mega-water') : menu.locator('details a[href$="/marketplace/water"]');
     await waterLink.focus();
     await page.keyboard.press("Tab");
     await page.keyboard.press("Shift+Tab");

@@ -122,6 +122,7 @@ export function SiteHeader({
             <div key={g.href} className="nav-pair">
               <Link
                 href={g.href}
+                className={g.href === "/marketplace/water" ? "water-nav-link" : undefined}
                 aria-current={pathname === g.href ? "page" : undefined}
                 onClick={() => setOpen(null)}
               >
@@ -257,7 +258,7 @@ export function SiteHeader({
                 )}
               </details>
             ) : (
-              <Link key={g.href} href={g.href} onClick={() => setMobile(false)}>
+              <Link key={g.href} href={g.href} className={`mobile-primary-link${g.href === "/marketplace/water" ? " water-nav-link" : ""}`} onClick={() => setMobile(false)}>
                 {g.label}
               </Link>
             ),

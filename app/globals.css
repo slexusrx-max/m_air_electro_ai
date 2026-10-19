@@ -862,18 +862,23 @@ body:has(.home-brand-first) .brand-background-art { opacity:.38; }
   }
 }
 body:has(.home-brand-first) .brand-background-art { opacity:.48; }
-.home-brand-first .hero-model-tile {
-  background-color:#ffffff40;
+.storefront-home .hero-model-tile {
+  background:linear-gradient(145deg,#ffffff14,#e4f6fe08);
   box-shadow:inset 0 1px #fff,0 6px 16px #19384c10;
+  border-color:#ffffffbd;
+  -webkit-backdrop-filter:blur(3px);
+  backdrop-filter:blur(3px);
 }
-.home-brand-first .hero-model-tile .product-model-photo {
+.storefront-home .hero-model-tile .product-model-photo {
   height:170px;
+  max-width:170px;
+  align-self:center;
   overflow:hidden;
   display:flex;
   justify-content:center;
   background:transparent;
 }
-.home-brand-first .hero-model-tile .product-model-photo img {
+.storefront-home .hero-model-tile .product-model-photo img {
   width:170px;
   max-width:none;
   height:170px;
@@ -881,17 +886,68 @@ body:has(.home-brand-first) .brand-background-art { opacity:.48; }
   background:transparent;
   object-fit:contain;
 }
-.home-brand-first .hero-model-tile [data-product-photo="renogy-mini-100"] img { transform:scale(1.55); }
+.storefront-home .hero-model-tile [data-product-photo="renogy-mini-100"] img { transform:scale(1.55); }
 @media (max-width:768px) {
-  .home-brand-first .hero-model-tile .product-model-photo,
-  .home-brand-first .hero-model-tile .product-model-photo img { height:130px; }
-  .home-brand-first .hero-model-tile .product-model-photo img { width:130px; }
+  .storefront-home .hero-model-tile .product-model-photo { max-width:130px; }
+  .storefront-home .hero-model-tile .product-model-photo,
+  .storefront-home .hero-model-tile .product-model-photo img { height:130px; }
+  .storefront-home .hero-model-tile .product-model-photo img { width:130px; }
 }
 @media (max-width:360px) {
-  .home-brand-first .hero-model-tile .product-model-photo,
-  .home-brand-first .hero-model-tile .product-model-photo img { height:108px; }
-  .home-brand-first .hero-model-tile .product-model-photo img { width:108px; }
+  .storefront-home .hero-model-tile .product-model-photo { max-width:108px; }
+  .storefront-home .hero-model-tile .product-model-photo,
+  .storefront-home .hero-model-tile .product-model-photo img { height:108px; }
+  .storefront-home .hero-model-tile .product-model-photo img { width:108px; }
 }
 @media (forced-colors:active) {
   .commerce-page :is(.discovery-hero h1,.page-intro h1,.section-line h2) { background:none; color:CanvasText; }
+}
+
+/* Clear category glass. Supplier image pixels keep normal compositing: white
+   inside a JPEG is not made transparent by tinting the equipment itself. */
+.storefront-home .category-tiles>a {
+  background:linear-gradient(145deg,#ffffff1f,#e4f6fe0d);
+  border-color:#89b7cb;
+  box-shadow:inset 0 1px #ffffffed,0 8px 24px #19384c12;
+  -webkit-backdrop-filter:blur(3px);
+  backdrop-filter:blur(3px);
+  color:#204c65;
+}
+.storefront-home .category-preview,
+.storefront-home .category-preview .equipment-visual { background:transparent; border:0; }
+.storefront-home .category-preview .equipment-visual img { padding:0; }
+.storefront-home .category-tiles>a>span:not([aria-hidden]) { color:#19384c; }
+@media (hover:hover) and (pointer:fine) {
+  .storefront-home :is(.hero-model-tile,.category-tiles>a):hover { background-color:#b9eef42b; }
+}
+.desktop-nav .nav-pair>a, .mobile-nav>details>summary, .mobile-nav>.mobile-primary-link {
+  text-transform:uppercase;
+  letter-spacing:.035em;
+  font-weight:750;
+}
+.desktop-nav { flex-wrap:wrap; min-width:0; row-gap:2px; }
+.nav-pair { flex-shrink:0; }
+.header-actions { flex-shrink:0; }
+.commerce-header .water-nav-link {
+  padding:10px 12px;
+  border:1px solid #4b8cac;
+  border-radius:10px;
+  background-color:#9fe4ed70;
+  color:#19384c;
+  font-weight:800;
+}
+.commerce-header .water-nav-link:hover { background-color:#b9eef4b3; }
+@media (min-width:1301px) and (max-width:1550px) {
+  .header-bar { flex-wrap:wrap; }
+  .desktop-nav { order:3; flex-basis:100%; justify-content:center; column-gap:16px; }
+}
+@supports not (backdrop-filter:blur(1px)) {
+  .storefront-home :is(.hero-model-tile,.category-tiles>a) { background:#edf7fb; }
+}
+@media (prefers-reduced-transparency:reduce) {
+  .storefront-home :is(.hero-model-tile,.category-tiles>a) {
+    background:#edf7fb;
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+  }
 }

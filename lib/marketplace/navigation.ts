@@ -26,6 +26,11 @@ export function navigation(locale: Locale): NavigationGroup[] {
       }))],
     },
     {
+      label: "Pure water filters",
+      href: "/marketplace/water",
+      children: [],
+    },
+    {
       label: l("Solutions", "Soluții"),
       href: "/solutions",
       children: solutions.map((s) => ({
