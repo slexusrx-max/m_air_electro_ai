@@ -32,6 +32,8 @@ Owner mobile-home correction (19 October 2026): the full approved turquoise artw
 
 Subsequent owner glass correction (19 October 2026): after verifying the mobile-only step, make the homepage hero, inner showcase, disclosure and header more translucent so the existing background artwork remains visible. This authorizes desktop paint changes for this separate step. Preserve mobile logo-first, readable text, opaque neutral product photos, layout/content and other routes; see `docs/home-clear-liquid-glass.md`.
 
+Owner typography/product-scale correction (19 October 2026): slightly enlarge navigation and Marketplace text, use restrained readable blue/cyan heading tones, enlarge the four real homepage product previews and remove unnecessary CSS white backing/padding. Increase background logo visibility without changing its hue or file. Product JPEGs still contain white backgrounds; separate background-removal edits require product-fidelity review before publication. See `docs/type-product-logo-polish.md`.
+
 1. Marketplace-first is authoritative. Do not turn the homepage back into an AI diagnostics landing page.
 2. Do not restore Ukraine outage/address tools to primary navigation. Retained specialist adapters are supporting modules.
 3. Never invent affiliate approval, partnership, dealer status, inventory, prices, reviews, ratings or verified professionals.

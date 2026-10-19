@@ -834,3 +834,64 @@ body:has(.home-brand-first) .brand-background-art { opacity:.38; }
     backdrop-filter:none;
   }
 }
+
+/* Readable blue typography and fuller real-model previews. The JPEG originals
+   remain unchanged; scaling trims only empty margins, never product details. */
+.desktop-nav { font-size:.88rem; color:#204c65; }
+.mobile-nav a, .mega-columns a { font-size:.9rem; color:#204c65; }
+.commerce-page .equipment-card h3 { font-size:1.06rem; }
+.commerce-page .equipment-card>p:not(.eyebrow) { font-size:.88rem; color:#36515f; }
+.commerce-page .equipment-card dl { font-size:.8rem; }
+.commerce-page .catalog-filters label { font-size:.86rem; }
+.commerce-page .result-count { font-size:.94rem; }
+.commerce-page .breadcrumbs { font-size:.8rem; }
+.storefront-home .discovery-hero h1 { font-size:clamp(1.75rem,2.7vw,2.7rem); }
+.storefront-home .discovery-hero-copy>p:not(.eyebrow) { font-size:.94rem; line-height:1.65; }
+.storefront-home .discovery-hero-copy .hero-assurance { font-size:.82rem; }
+.home-brand-first .commercial-notice { font-size:.78rem; }
+.home-brand-first .hero-equipment-heading { font-size:.66rem; color:#36515f; }
+.home-brand-first .discovery-hero .hero-equipment-caption { font-size:.8rem; color:#253f4e; }
+.home-brand-first .hero-equipment-tile>span { font-size:.84rem; line-height:1.45; }
+.home-brand-first .hero-model-tile>p { font-size:.7rem; color:#36515f; }
+@supports (background-clip:text) {
+  .commerce-page :is(.discovery-hero h1,.page-intro h1,.section-line h2) {
+    background-image:linear-gradient(110deg,#183b56 15%,#276583 52%,#1e4c68 90%);
+    background-clip:text;
+    -webkit-background-clip:text;
+    color:transparent;
+  }
+}
+body:has(.home-brand-first) .brand-background-art { opacity:.48; }
+.home-brand-first .hero-model-tile {
+  background-color:#ffffff40;
+  box-shadow:inset 0 1px #fff,0 6px 16px #19384c10;
+}
+.home-brand-first .hero-model-tile .product-model-photo {
+  height:170px;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  background:transparent;
+}
+.home-brand-first .hero-model-tile .product-model-photo img {
+  width:170px;
+  max-width:none;
+  height:170px;
+  padding:0;
+  background:transparent;
+  object-fit:contain;
+}
+.home-brand-first .hero-model-tile [data-product-photo="renogy-mini-100"] img { transform:scale(1.55); }
+@media (max-width:768px) {
+  .home-brand-first .hero-model-tile .product-model-photo,
+  .home-brand-first .hero-model-tile .product-model-photo img { height:130px; }
+  .home-brand-first .hero-model-tile .product-model-photo img { width:130px; }
+}
+@media (max-width:360px) {
+  .home-brand-first .hero-model-tile .product-model-photo,
+  .home-brand-first .hero-model-tile .product-model-photo img { height:108px; }
+  .home-brand-first .hero-model-tile .product-model-photo img { width:108px; }
+}
+@media (forced-colors:active) {
+  .commerce-page :is(.discovery-hero h1,.page-intro h1,.section-line h2) { background:none; color:CanvasText; }
+}
