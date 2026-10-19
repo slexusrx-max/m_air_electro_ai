@@ -30,6 +30,8 @@ Owner-approved brand update (19 October 2026): the exact cyan-turquoise M/profil
 
 Owner mobile-home correction (19 October 2026): the full approved turquoise artwork leads the homepage below navigation on phones (up to 767 px), followed by the visible commercial disclosure. Hide its duplicate large footer placement on that mobile homepage only. Preserve the desktop presentation and all other routes.
 
+Subsequent owner glass correction (19 October 2026): after verifying the mobile-only step, make the homepage hero, inner showcase, disclosure and header more translucent so the existing background artwork remains visible. This authorizes desktop paint changes for this separate step. Preserve mobile logo-first, readable text, opaque neutral product photos, layout/content and other routes; see `docs/home-clear-liquid-glass.md`.
+
 1. Marketplace-first is authoritative. Do not turn the homepage back into an AI diagnostics landing page.
 2. Do not restore Ukraine outage/address tools to primary navigation. Retained specialist adapters are supporting modules.
 3. Never invent affiliate approval, partnership, dealer status, inventory, prices, reviews, ratings or verified professionals.

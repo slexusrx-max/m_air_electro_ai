@@ -791,3 +791,46 @@ html:has(.comparison-tray) { scroll-padding-bottom:220px; }
 @media (prefers-reduced-motion:reduce) {
   .platform-root :is(button,summary,select,.button-primary,.button-outline,a[data-supplier-product],.search-link,.language-control a,nav a,.mega-menu a,.active-filters a,.comparison-tray a,.category-tiles>a,.application-grid>a,.planning-links>a,.hero-equipment-tile) { transition:none !important; transform:none !important; }
 }
+
+/* Owner-requested clear glass on the homepage only. Paint is translucent;
+   text, controls and the supplier photographs retain their own opacity. */
+body:has(.home-brand-first) .brand-background-art { opacity:.38; }
+.home-brand-first .commerce-header {
+  background:linear-gradient(145deg,#ffffff70,#e4f6fe3d);
+  -webkit-backdrop-filter:blur(6px) saturate(115%);
+  backdrop-filter:blur(6px) saturate(115%);
+}
+.home-brand-first .commercial-notice {
+  background:linear-gradient(120deg,#ffffff70,#e4f6fe47);
+  color:#253f4e;
+  border-color:#ffffffc9;
+  box-shadow:inset 0 1px #ffffffdb,0 6px 18px #19384c08;
+  -webkit-backdrop-filter:blur(3px);
+  backdrop-filter:blur(3px);
+}
+.home-brand-first .discovery-hero {
+  background:linear-gradient(125deg,#ffffff75 12%,#e4f6fe29);
+  border-color:#ffffffcf;
+  box-shadow:0 16px 44px #213c4b14,inset 0 1px #fff,inset 0 -1px #ffffff70;
+  -webkit-backdrop-filter:blur(2px);
+  backdrop-filter:blur(2px);
+}
+.home-brand-first .hero-equipment-showcase {
+  background:linear-gradient(140deg,#ffffff33,#e4f6fe1a);
+  border-color:#ffffffc9;
+  -webkit-backdrop-filter:blur(1px);
+  backdrop-filter:blur(1px);
+}
+.home-brand-first .hero-equipment-tile { background-color:#ffffff70; }
+.home-brand-first .discovery-hero-copy>p:not(.eyebrow),
+.home-brand-first .hero-equipment-caption { color:#36515f; }
+@supports not (backdrop-filter:blur(1px)) {
+  .home-brand-first :is(.commerce-header,.commercial-notice,.discovery-hero,.hero-equipment-showcase) { background:#edf7fb; }
+}
+@media (prefers-reduced-transparency:reduce) {
+  .home-brand-first :is(.commerce-header,.commercial-notice,.discovery-hero,.hero-equipment-showcase) {
+    background:#edf7fb;
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+  }
+}
