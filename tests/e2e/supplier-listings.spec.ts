@@ -22,8 +22,8 @@ for (const locale of ["ro", "en"] as const) for (const width of [390, 1440]) {
       await expect(page.locator("main")).not.toContainText("Renogy EU");
       for (const value of Object.values(product.technicalSpecs)) await expect(page.locator(".spec-grid")).toContainText(value);
       const schemas = await page.locator('script[type="application/ld+json"]').allTextContents();
-      const schema = schemas.map(text => JSON.parse(text)).find(data => data["@type"] === "Product");
-      expect(schema?.brand.name).toBe(product.brand);
+      const schema = schemas.map(text => JSON.parse(text)).find(data => data["@type"] === "WebPage");
+      expect(schema?.url).toBe(`https://mairelectroai.com${localizedPath(`/marketplace/products/${product.slug}`, locale)}`);
       expect(schema?.name).toBe(product.name);
       for (const field of ["offers", "aggregateRating", "review"]) expect(schema?.[field]).toBeUndefined();
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);

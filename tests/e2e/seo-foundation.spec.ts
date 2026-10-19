@@ -16,8 +16,8 @@ test("English navigation, filters, schema and language links retain their public
   const canonical = await page.locator('link[rel="canonical"]').getAttribute("href");
   expect(new URL(canonical!).pathname).toBe(new URL(page.url()).pathname);
   const schema = await page.locator('script[type="application/ld+json"]').allTextContents();
-  const product = schema.map(s => JSON.parse(s)).find(s => s["@type"] === "Product");
-  expect(product.url).toBe(canonical);
+  const productPage = schema.map(s => JSON.parse(s)).find(s => s["@type"] === "WebPage");
+  expect(productPage.url).toBe(canonical);
   await page.locator('a[href="#specifications"]').click();
   await page.getByRole("link", { name: "RO", exact: true }).click();
   expect(new URL(page.url()).pathname).not.toMatch(/^\/en/);
@@ -29,7 +29,7 @@ test("English navigation, filters, schema and language links retain their public
 test("language links work without JavaScript and English private routes remain unavailable", async ({ browser, request, baseURL }) => {
   const context = await browser.newContext({ javaScriptEnabled: false, baseURL });
   const page = await context.newPage();
-  await page.goto("/learn/battery-runtime-calculation");
+  await page.goto("/learn/battery-runtime-calculation", { waitUntil: "domcontentloaded" });
   await page.getByRole("link", { name: "EN", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   expect(new URL(page.url()).pathname).toBe("/en/learn/battery-runtime-calculation");

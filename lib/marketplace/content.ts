@@ -434,7 +434,29 @@ for (const [path, parent, en, ro, summary] of subcategories)
     summary,
   });
 // Category navigation stays compact; search titles explain the buying task.
-const categoryEditorial: Record<string, Pick<Category, "seoTitle" | "seoDescription" | "summary" | "choose" | "checks">> = {
+const categoryEditorial: Record<string, Partial<Pick<Category, "title" | "seoTitle" | "seoDescription" | "summary" | "choose" | "checks">>> = {
+  solar: {
+    seoTitle: bilingual("Solar equipment for Romania: panels, kits and controllers", "Echipamente solare pentru România: panouri, kituri și regulatoare"),
+    seoDescription: bilingual("Explore solar panels, kits and charge controllers. Compare system requirements, calculate daily energy and check supplier terms for Romania.", "Explorează panouri solare, kituri și regulatoare. Compară cerințele sistemului, calculează energia zilnică și verifică termenii furnizorului pentru România."),
+  },
+  batteries: {
+    title: bilingual("Batteries for energy storage", "Baterii și acumulatori pentru stocarea energiei"),
+    seoTitle: bilingual("Energy storage batteries: compare and size for Romania", "Baterii pentru stocarea energiei: alegere și comparație în România"),
+    seoDescription: bilingual("Compare storage batteries for home backup, caravans and off-grid systems. Check usable energy, voltage, BMS limits and supplier delivery terms for Romania.", "Compară baterii pentru rezervă acasă, rulote și sisteme off-grid. Verifică energia utilă, tensiunea, limitele BMS și livrarea furnizorului în România."),
+    summary: bilingual(
+      "Choose storage batteries for essential home loads, caravans or off-grid systems by required energy and discharge current. Compare documented model specifications, then check price, delivery to your Romanian address and warranty with the supplier. This platform compares equipment; purchases take place on the supplier's website.",
+      "Alege baterii pentru consumatori esențiali acasă, rulote sau sisteme off-grid după energia necesară și curentul de descărcare. Compară specificațiile documentate, apoi verifică prețul, livrarea la adresa ta din România și garanția la furnizor. Platforma compară echipamente; cumpărarea se face pe site-ul furnizorului.",
+    ),
+  },
+  "batteries/lifepo4": {
+    title: bilingual("LiFePO4 storage batteries", "Baterii LiFePO4 pentru stocarea energiei"),
+    seoTitle: bilingual("LiFePO4 batteries: capacity, BMS and selection for Romania", "Baterii LiFePO4: capacitate, BMS și alegere pentru România"),
+    seoDescription: bilingual("Compare LiFePO4 battery specifications: Wh, Ah, voltage, BMS current and charging limits. Size storage and check supplier conditions before buying in Romania.", "Compară baterii LiFePO4 după Wh, Ah, tensiune, curent BMS și limite de încărcare. Dimensionează stocarea și verifică furnizorul înainte de cumpărare în România."),
+    summary: bilingual(
+      "Compare lithium iron phosphate batteries for backup power, caravans and off-grid storage. Capacity in Ah alone does not determine runtime or inverter compatibility: check voltage, usable energy, BMS current and permitted charging temperatures for the exact model. Confirm delivery to Romania and warranty with the supplier before purchasing.",
+      "Compară baterii litiu-fier-fosfat pentru energie de rezervă, rulote și stocare off-grid. Capacitatea în Ah nu stabilește singură autonomia sau compatibilitatea cu invertorul: verifică tensiunea, energia utilă, curentul BMS și temperaturile de încărcare ale modelului exact. Confirmă livrarea în România și garanția la furnizor înainte de cumpărare.",
+    ),
+  },
   inverters: {
     seoTitle: bilingual("Battery inverters: sizing and comparison for Romania", "Invertoare pentru baterii: alegere și comparație în România"),
     seoDescription: bilingual("Compare battery inverters for home backup and caravans: continuous power, starting loads, DC voltage and supplier checks for Romania.", "Compară invertoare pentru baterii: putere continuă, pornirea aparatelor, tensiune DC și verificări înainte de cumpărare pentru casă sau rulotă."),

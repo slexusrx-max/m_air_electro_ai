@@ -1,5 +1,5 @@
 import type { CatalogProduct } from "@/lib/affiliate/types";
-import { absoluteUrl, publisherStructuredData } from "@/lib/site";
+import { absoluteUrl } from "@/lib/site";
 import { getRequestLocale } from "@/lib/i18n/request";
 import { localizedPath } from "@/lib/i18n/routing";
 import type { Equipment } from "@/lib/marketplace/catalog-data";
@@ -15,7 +15,9 @@ function JsonLd({ data }: { data: Record<string, unknown> }) {
   );
 }
 
-export async function ProductStructuredData({
+// These editorial listings have no verified offer or qualifying review/rating.
+// Describe the page without claiming Product rich-result eligibility.
+export async function ProductPageStructuredData({
   product,
 }: {
   product: CatalogProduct & Partial<Pick<Equipment, "title" | "summary">>;
@@ -25,16 +27,9 @@ export async function ProductStructuredData({
     <JsonLd
       data={{
         "@context": "https://schema.org",
-        "@type": product.kind === "product" ? "Product" : "Article",
+        "@type": "WebPage",
         name: product.title?.[locale === "ro" ? "ro" : "en"] ?? product.name,
-        ...(product.kind === "product"
-          ? { brand: { "@type": "Brand", name: product.brand } }
-          : {
-              headline: product.name,
-              publisher: publisherStructuredData(),
-            }),
         description: product.summary?.[locale === "ro" ? "ro" : "en"] ?? product.description,
-        category: product.category.replaceAll("-", " "),
         url: absoluteUrl(localizedPath(`/marketplace/products/${product.slug}`, locale)),
         inLanguage: locale,
       }}

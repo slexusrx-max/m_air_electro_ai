@@ -62,6 +62,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
         <div className="category-preview"><EquipmentVisual category={category.path} /></div>
         <span>{category.title[ro ? "ro" : "en"]}</span><span aria-hidden="true">↗</span>
       </Link>)}</div>
+      <p><Link href="/marketplace/solar/panels">{ro ? "Panouri solare fotovoltaice" : "Photovoltaic solar panels"}</Link> · <Link href="/marketplace/batteries/lifepo4">{ro ? "Baterii LiFePO4" : "LiFePO4 batteries"}</Link></p>
       <p className="category-photo-credits"><Link href="/photo-credits">{ro ? "Sursele și licențele fotografiilor de categorii" : "Category photo sources and licences"} →</Link></p>
     </section>
     {marketplace && <CatalogBrowser products={catalog} query={{ kind: "product", ...requirements }} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} />}

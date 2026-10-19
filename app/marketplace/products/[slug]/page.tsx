@@ -13,7 +13,7 @@ import {
 import { CompareControl } from "@/components/marketplace/compare-control";
 import { ProductVisual } from "@/components/marketplace/product-visual";
 import { isCatalogListing } from "@/lib/marketplace/product-presentation";
-import { ProductStructuredData } from "@/components/marketplace/structured-data";
+import { ProductPageStructuredData } from "@/components/marketplace/structured-data";
 import { ProductCard } from "@/components/marketplace/product-card";
 import { BatteryRuntimeExample } from "@/components/marketplace/battery-runtime-example";
 import { catalog, productBySlug } from "@/lib/affiliate/catalog";
@@ -52,7 +52,7 @@ export default async function Page({ params }: Props) {
   return (
     <PlatformShell>
       <main className="commerce-page product-storefront">
-        {p.kind === "product" && <ProductStructuredData product={p} />}
+        {p.kind === "product" && <ProductPageStructuredData product={p} />}
         <Breadcrumbs
           items={[
             { name: "Marketplace", path: "/marketplace" },
