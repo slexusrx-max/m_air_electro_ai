@@ -34,7 +34,7 @@ export function ModulePreviewPage({
     <PlatformShell>
       <section className="mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center gap-8">
         <div className={`${glassPanelClassName} p-6 sm:p-8 lg:p-10`}>
-          <div className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-lime-100/82">
+          <div className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-sky-100/82">
             {eyebrow}
           </div>
           <h1 className="mt-6 max-w-4xl text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
@@ -70,7 +70,7 @@ export function ModulePreviewPage({
           {highlights.map((highlight, index) => (
             <article key={highlight} className={moduleCardClassName}>
               <div className="mb-4 flex items-center gap-3">
-                <span className="inline-flex rounded-full border border-lime-100/20 bg-white/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-lime-100/82">
+                <span className="inline-flex rounded-full border border-sky-100/20 bg-white/8 px-3 py-1 text-[0.68rem] font-semibold uppercase tracking-[0.28em] text-sky-100/82">
                   0{index + 1}
                 </span>
                 <span className="h-px flex-1 bg-[linear-gradient(90deg,rgba(190,242,100,0.4),transparent)]" />

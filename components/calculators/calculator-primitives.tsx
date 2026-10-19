@@ -65,7 +65,7 @@ export function CalculatorNumberInput(props: CalculatorNumberInputProps) {
     <input
       {...props}
       type="number"
-      className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-lime-100/60 focus:ring-2 focus:ring-lime-100/20"
+      className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-100/60 focus:ring-2 focus:ring-sky-100/20"
     />
   );
 }
@@ -74,7 +74,7 @@ export function CalculatorSelect(props: CalculatorSelectProps) {
   return (
     <select
       {...props}
-      className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-lime-100/60 focus:ring-2 focus:ring-lime-100/20"
+      className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-100/60 focus:ring-2 focus:ring-sky-100/20"
     />
   );
 }
@@ -88,8 +88,8 @@ export function CalculatorAssumptions({
 }) {
   const l = useCalculatorCopy();
   return (
-    <div className="mt-6 rounded-[1.5rem] border border-lime-100/16 bg-lime-100/[0.06] p-4 text-sm leading-7 text-white/78">
-      <p className="font-semibold text-lime-50">{l(title)}</p>
+    <div className="mt-6 rounded-[1.5rem] border border-sky-100/16 bg-sky-100/[0.06] p-4 text-sm leading-7 text-white/78">
+      <p className="font-semibold text-sky-50">{l(title)}</p>
       <div className="mt-3">{children}</div>
     </div>
   );
@@ -107,7 +107,7 @@ export function CalculatorResultCard({
   const l = useCalculatorCopy();
   return (
     <article className={moduleCardClassName}>
-      <p className="text-xs font-semibold uppercase tracking-[0.26em] text-lime-100/75">
+      <p className="text-xs font-semibold uppercase tracking-[0.26em] text-sky-100/75">
         {l(label)}
       </p>
       <p className="mt-4 text-3xl font-semibold text-white">{l(value)}</p>

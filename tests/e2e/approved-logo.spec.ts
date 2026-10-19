@@ -32,7 +32,7 @@ for (const locale of ["ro", "en"]) for (const width of [320, 390, 1440]) {
     expect(Number(delivered.searchParams.get("w"))).toBeLessThanOrEqual(256);
     await expect(mark).toHaveCSS("overflow", "hidden");
     await expect(image).toHaveCSS("filter", "none");
-    await expect(page.locator(".discovery-hero .button-primary")).toHaveCSS("background-color", "rgb(203, 245, 102)");
+    await expect(page.locator(".discovery-hero .button-primary")).toHaveCSS("background-color", "rgb(159, 228, 237)");
     await expect(page.locator(".hero-model-tile img")).toHaveCount(4);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
     await page.evaluate(async () => { await document.fonts.ready; await new Promise<void>(r => requestAnimationFrame(() => requestAnimationFrame(() => r()))); });

@@ -96,7 +96,7 @@ function ResultCard({
   const l = useCalculatorCopy();
   return (
     <article className={moduleCardClassName}>
-      <p className="text-xs font-semibold uppercase tracking-[0.26em] text-lime-100/75">
+      <p className="text-xs font-semibold uppercase tracking-[0.26em] text-sky-100/75">
         {l(label)}
       </p>
       <p className="mt-4 text-3xl font-semibold text-white">{l(value)}</p>
@@ -133,7 +133,7 @@ export default function MotorCurrentCalculator() {
               onChange={(event) =>
                 updateField("systemType", event.target.value as MotorSystemType)
               }
-              className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-lime-100/60 focus:ring-2 focus:ring-lime-100/20"
+              className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-100/60 focus:ring-2 focus:ring-sky-100/20"
             >
               <option value="three-phase">{l("Three-phase AC motor")}</option>
               <option value="single-phase">{l("Single-phase AC motor")}</option>
@@ -148,7 +148,7 @@ export default function MotorCurrentCalculator() {
               step="0.1"
               value={formState.voltage}
               onChange={(event) => updateField("voltage", event.target.value)}
-              className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-lime-100/60 focus:ring-2 focus:ring-lime-100/20"
+              className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-100/60 focus:ring-2 focus:ring-sky-100/20"
             />
           </label>
 
@@ -160,7 +160,7 @@ export default function MotorCurrentCalculator() {
               step="0.1"
               value={formState.powerKw}
               onChange={(event) => updateField("powerKw", event.target.value)}
-              className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-lime-100/60 focus:ring-2 focus:ring-lime-100/20"
+              className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-100/60 focus:ring-2 focus:ring-sky-100/20"
             />
           </label>
 
@@ -175,7 +175,7 @@ export default function MotorCurrentCalculator() {
               onChange={(event) =>
                 updateField("powerFactor", event.target.value)
               }
-              className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-lime-100/60 focus:ring-2 focus:ring-lime-100/20"
+              className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-100/60 focus:ring-2 focus:ring-sky-100/20"
             />
           </label>
 
@@ -190,7 +190,7 @@ export default function MotorCurrentCalculator() {
               onChange={(event) =>
                 updateField("efficiencyPercent", event.target.value)
               }
-              className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-lime-100/60 focus:ring-2 focus:ring-lime-100/20"
+              className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-100/60 focus:ring-2 focus:ring-sky-100/20"
             />
           </label>
 
@@ -204,13 +204,13 @@ export default function MotorCurrentCalculator() {
               onChange={(event) =>
                 updateField("startCurrentMultiplier", event.target.value)
               }
-              className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-lime-100/60 focus:ring-2 focus:ring-lime-100/20"
+              className="w-full rounded-2xl border border-white/18 bg-slate-950/45 px-4 py-3 text-sm text-white outline-none transition focus:border-sky-100/60 focus:ring-2 focus:ring-sky-100/20"
             />
           </label>
         </div>
 
-        <div className="mt-6 rounded-[1.5rem] border border-lime-100/16 bg-lime-100/[0.06] p-4 text-sm leading-7 text-white/78">
-          <p className="font-semibold text-lime-50">{l("Assumptions used by this calculator")}</p>
+        <div className="mt-6 rounded-[1.5rem] border border-sky-100/16 bg-sky-100/[0.06] p-4 text-sm leading-7 text-white/78">
+          <p className="font-semibold text-sky-50">{l("Assumptions used by this calculator")}</p>
           <ul className="mt-3 list-disc space-y-2 pl-5">
             <li>{l("Motor power is treated as shaft output power, then converted to estimated electrical input using efficiency.")}</li>
             <li>{l("Power factor and efficiency are assumed constant at rated load.")}</li>
