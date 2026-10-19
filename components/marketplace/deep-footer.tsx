@@ -1,4 +1,5 @@
 import Link from "@/components/localized-link";
+import { BrandArtwork } from "@/components/brand-artwork";
 import { navigation } from "@/lib/marketplace/navigation";
 import type { Locale } from "@/lib/i18n/types";
 import { siteConfig } from "@/lib/site";
@@ -43,7 +44,7 @@ export function DeepFooter({ locale }: { locale: Locale }) {
     <footer className="deep-footer">
       <div className="footer-heading">
         <Link href="/" className="brand-name">
-          M Air Electro AI
+          <BrandArtwork footer />
         </Link>
         <p>
           {ro

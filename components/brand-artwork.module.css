@@ -1,0 +1,9 @@
+.mark { position:relative; display:inline-block; width:42px; height:36px; flex-shrink:0; overflow:hidden; border-radius:7px; background:#eef2f3; }
+/* Viewport into the exact artwork: source rectangle x=340,y=190,w=700,h=600.
+   No recolouring, generated substitute or miniature tagline in compact placements. */
+.mark .image { position:absolute; display:block; width:179.142857%; max-width:none; height:auto; left:-48.571429%; top:-31.666667%; filter:none; opacity:1; border-radius:0; }
+.artwork { width:min(100%,480px); margin:0 auto; }
+.artwork img { display:block; width:100%; height:auto; object-fit:contain; border-radius:16px; }
+.footerArtwork { display:block; width:min(240px,100%); flex-shrink:0; }
+.footerArtwork img { display:block; width:100%; height:auto; object-fit:contain; border-radius:12px; }
+@media(max-width:480px) { .mark { width:35px; height:30px; } }

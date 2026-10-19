@@ -1,5 +1,6 @@
 "use client";
 import Image from "next/image";
+import { brandArtwork } from "@/lib/brand";
 import { usePathname } from "next/navigation";
 import { visualFamily } from "@/lib/visual-system";
 import { EnergySchematic } from "./energy-schematic";
@@ -13,7 +14,7 @@ export function PageBackground() {
       className="marketing-page-background pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
       {family === "brand" ? <Image
-        src="/hero.png"
+        src={brandArtwork.src}
         alt=""
         fill
         preload

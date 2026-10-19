@@ -1,4 +1,5 @@
 "use client";
+import { BrandMark } from "./brand-artwork";
 import Link from "@/components/localized-link";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
@@ -108,7 +109,7 @@ export function SiteHeader({
             setMobile(false);
           }}
         >
-          <span className="brand-mark">M</span>
+          <BrandMark />
           <span>
             M Air <small>Electro AI</small>
           </span>

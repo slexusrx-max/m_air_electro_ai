@@ -26,6 +26,8 @@ Official public domain: https://mairelectroai.com. Keep canonicals, robots, site
 
 Read PROJECT_BLUEPRINT.md and README.md. M Air Electro AI is a marketplace-first energy and electrical equipment discovery, calculation, comparison and recommendation platform for Romania / EU. Romanian is the primary commercial language; English is supported.
 
+Owner-approved brand update (19 October 2026): the exact cyan-turquoise M/profile artwork is now `public/brand/m-air-electro-ai-turquoise.png` (provenance: `docs/approved-turquoise-logo.md`). The owner approved its appearance and publication. Use it for the current brand placements; the older instruction to display `hero.png` is superseded, while that original file is retained for history. Preserve the existing palette, Liquid Glass interactions and product imagery. Compact marks may show the approved symbol viewport without unreadable artwork text; do not regenerate or recolour the artwork.
+
 1. Marketplace-first is authoritative. Do not turn the homepage back into an AI diagnostics landing page.
 2. Do not restore Ukraine outage/address tools to primary navigation. Retained specialist adapters are supporting modules.
 3. Never invent affiliate approval, partnership, dealer status, inventory, prices, reviews, ratings or verified professionals.

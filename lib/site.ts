@@ -63,7 +63,7 @@ export function websiteStructuredData() {
     "@context": "https://schema.org",
     "@graph": [
       publisherStructuredData(),
-      { "@type": "Brand", "@id": absoluteUrl("/#brand"), name: siteConfig.name, url: absoluteUrl() },
+      { "@type": "Brand", "@id": absoluteUrl("/#brand"), name: siteConfig.name, url: absoluteUrl(), logo: absoluteUrl("/brand/m-air-electro-ai-turquoise.png") },
       {
         "@type": "WebSite", "@id": absoluteUrl("/#website"), name: siteConfig.name,
         url: absoluteUrl(), description: siteConfig.description, inLanguage: ["ro", "en"],

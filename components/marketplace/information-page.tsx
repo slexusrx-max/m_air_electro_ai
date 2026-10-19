@@ -1,4 +1,5 @@
 import { PublisherDetails } from "@/components/publisher-details";
+import { BrandArtwork } from "@/components/brand-artwork";
 import { getRequestDictionary } from "@/lib/i18n/request";
 import { commercialCopy } from "@/lib/marketplace/copy";
 import { siteConfig } from "@/lib/site";
@@ -51,6 +52,7 @@ export async function InformationPage({ slug }: { slug: string }) {
           title={local(p.title, locale)}
           description={local(p.intro, locale)}
         />
+        {slug === "about" && <BrandArtwork />}
         {sections.map((s) => (
           <section className="content-panel" key={s.title.en}>
             <h2>{local(s.title, locale)}</h2>

@@ -13,17 +13,7 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#edf5e9",
     categories: ["business", "productivity", "utilities"],
     icons: [
-      {
-        src: "/manifest-icon.svg",
-        sizes: "any",
-        type: "image/svg+xml",
-      },
-      {
-        src: "/maskable-icon.svg",
-        sizes: "any",
-        type: "image/svg+xml",
-        purpose: "maskable",
-      },
+      { src: "/icon", sizes: "512x512", type: "image/png", purpose: "any" },
     ],
   };
 }

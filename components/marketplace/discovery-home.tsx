@@ -1,5 +1,5 @@
 import Link from "@/components/localized-link";
-import Image from "next/image";
+import { BrandMark } from "@/components/brand-artwork";
 import { rootCategories } from "@/lib/marketplace/content";
 import { catalog } from "@/lib/affiliate/catalog";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
@@ -40,7 +40,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
         <p className="hero-assurance">{ro ? "Selecție independentă. Calcule explicabile. Achiziție la furnizor." : "Independent selection. Clear calculations. Buy from the supplier."}</p>
       </div>
       <div className="hero-equipment-showcase" aria-label={ro ? "Explorează echipamentele" : "Explore the equipment"}>
-        <div className="hero-equipment-heading"><span>{ro ? "ENERGIE PENTRU FIECARE ZI" : "POWER FOR EVERY DAY"}</span><Image src="/hero.png" alt="M Air Electro AI" width={36} height={36} /></div>
+        <div className="hero-equipment-heading"><span>{ro ? "ENERGIE PENTRU FIECARE ZI" : "POWER FOR EVERY DAY"}</span><BrandMark /></div>
         <div className="hero-equipment-grid">
           {catalog.filter(p => p.provider === "renogy" && ["lithium-batteries", "solar-panels", "inverters"].includes(p.category)).slice(0, 4).map(p => <Link key={p.id} href={`/marketplace/products/${p.slug}`} className="hero-equipment-tile hero-model-tile">
             <ProductVisual product={p} ro={ro} />
