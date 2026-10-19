@@ -39,9 +39,14 @@ for (const locale of ["ro", "en"]) for (const width of [320, 390, 1440]) {
     expect(await page.evaluate(() => (window as unknown as { logoShifts: number }).logoShifts)).toBeLessThan(0.1);
     await page.screenshot({ path: info.outputPath(`logo-home-${locale}-${width}.png`) });
     const footer = page.locator("footer [data-brand-artwork]");
-    await footer.scrollIntoViewIfNeeded(); await expect(footer.locator("img")).toBeVisible();
-    await expect.poll(() => footer.locator("img").evaluate((e: HTMLImageElement) => e.complete && e.naturalWidth > 0)).toBe(true);
-    await footer.screenshot({ path: info.outputPath(`logo-footer-${locale}-${width}.png`) });
+    if (width < 768) {
+      await expect(footer).toBeHidden();
+      await expect(page.locator("[data-mobile-brand-intro] [data-brand-artwork]")).toBeVisible();
+    } else {
+      await footer.scrollIntoViewIfNeeded(); await expect(footer.locator("img")).toBeVisible();
+      await expect.poll(() => footer.locator("img").evaluate((e: HTMLImageElement) => e.complete && e.naturalWidth > 0)).toBe(true);
+      await footer.screenshot({ path: info.outputPath(`logo-footer-${locale}-${width}.png`) });
+    }
     await page.goto(localizedPath("/about", locale));
     const full = page.locator("main [data-brand-artwork]");
     await full.scrollIntoViewIfNeeded();

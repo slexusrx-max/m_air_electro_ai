@@ -8,13 +8,16 @@ import { supplierLink } from "@/lib/affiliate/providers";
 import { catalog } from "@/lib/affiliate/catalog";
 import { CommercialNotice } from "@/components/marketplace/commercial-notice";
 import { ComparisonProvider, ComparisonTray } from "@/components/marketplace/compare-control";
+import { BrandArtwork } from "@/components/brand-artwork";
 type PlatformShellProps = {
   children: React.ReactNode;
   contentClassName?: string;
+  mobileBrandIntro?: boolean;
 };
 export async function PlatformShell({
   children,
   contentClassName = "flex-1 px-4 pb-12 pt-8 sm:px-6 lg:px-8",
+  mobileBrandIntro = false,
 }: PlatformShellProps) {
   const [profile, user, locale] = await Promise.all([
     getCurrentProfile(),
@@ -26,7 +29,7 @@ export async function PlatformShell({
     return [p.id, { href, tracked }];
   }));
   return (
-    <div className="platform-root">
+    <div className={mobileBrandIntro ? "platform-root home-brand-first" : "platform-root"}>
       <a className="skip-link" href="#main-content">
         {locale === "ro" ? "Salt la conținut" : "Skip to content"}
       </a>
@@ -43,6 +46,7 @@ export async function PlatformShell({
         locale={locale}
         groups={navigation(locale)}
       />
+      {mobileBrandIntro && <div className="mobile-home-brand" data-mobile-brand-intro><BrandArtwork eager /></div>}
       <CommercialNotice ro={locale === "ro"} />
       <div id="main-content" tabIndex={-1} className={contentClassName}>
         <SupplierLinksProvider links={supplierLinks}>

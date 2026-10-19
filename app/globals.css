@@ -1,6 +1,20 @@
 @import "tailwindcss";
 @import "maplibre-gl/dist/maplibre-gl.css";
 
+/* Homepage only: the full approved artwork leads the phone layout.
+   Intrinsic square dimensions reserve its space before the image loads. */
+.mobile-home-brand { display:none; }
+@media (max-width:767px) {
+  .home-brand-first .mobile-home-brand {
+    display:block;
+    width:min(calc(100% - 32px),360px,calc(100svh - 160px));
+    aspect-ratio:1;
+    flex-shrink:0;
+    margin:16px auto 0;
+  }
+  .home-brand-first .deep-footer .footer-heading > .brand-name { display:none; }
+}
+
 :root {
   --background: #07101d;
   --foreground: #f8fafc;

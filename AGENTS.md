@@ -28,6 +28,8 @@ Read PROJECT_BLUEPRINT.md and README.md. M Air Electro AI is a marketplace-first
 
 Owner-approved brand update (19 October 2026): the exact cyan-turquoise M/profile artwork is now `public/brand/m-air-electro-ai-turquoise.png` (provenance: `docs/approved-turquoise-logo.md`). The owner approved its appearance and publication. Use it for the current brand placements; the older instruction to display `hero.png` is superseded, while that original file is retained for history. Preserve Liquid Glass interactions and product imagery. Owner correction (19 October 2026): replace the site-wide lime/olive/forest decorative palette with very light sky-blue and soft turquoise surfaces, blue-slate text and accessible focus/hover states. This explicitly supersedes preserving the previous green palette; preserve the exact approved artwork and real product photographs. Compact marks may show the approved symbol viewport without unreadable artwork text; do not regenerate or recolour the artwork.
 
+Owner mobile-home correction (19 October 2026): the full approved turquoise artwork leads the homepage below navigation on phones (up to 767 px), followed by the visible commercial disclosure. Hide its duplicate large footer placement on that mobile homepage only. Preserve the desktop presentation and all other routes.
+
 1. Marketplace-first is authoritative. Do not turn the homepage back into an AI diagnostics landing page.
 2. Do not restore Ukraine outage/address tools to primary navigation. Retained specialist adapters are supporting modules.
 3. Never invent affiliate approval, partnership, dealer status, inventory, prices, reviews, ratings or verified professionals.

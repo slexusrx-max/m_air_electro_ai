@@ -8,8 +8,8 @@ export function BrandMark() {
   </span>;
 }
 
-export function BrandArtwork({ footer = false }: { footer?: boolean }) {
+export function BrandArtwork({ footer = false, eager = false }: { footer?: boolean; eager?: boolean }) {
   return <div className={footer ? styles.footerArtwork : styles.artwork} data-brand-artwork>
-    <Image src={brandArtwork.src} alt="M Air Electro AI — Intelligence. Energy. Future." width={brandArtwork.width} height={brandArtwork.height} sizes={footer ? "240px" : "(max-width: 540px) 85vw, 480px"} />
+    <Image src={brandArtwork.src} alt="M Air Electro AI — Intelligence. Energy. Future." width={brandArtwork.width} height={brandArtwork.height} loading={eager ? "eager" : "lazy"} sizes={footer ? "240px" : "(max-width: 540px) 85vw, 480px"} />
   </div>;
 }
