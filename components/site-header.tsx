@@ -133,6 +133,7 @@ export function SiteHeader({
               {g.children.length > 0 && (
                 <button
                   data-menu-trigger
+                  disabled={!hydrated}
                   aria-label={`${g.label} menu`}
                   aria-expanded={open === g.href}
                   aria-controls="mega-menu"
@@ -158,6 +159,7 @@ export function SiteHeader({
           </div>
           <button
             className="mobile-menu-toggle"
+            disabled={!hydrated}
             aria-label={ro ? "Meniu" : "Menu"}
             data-menu-trigger
             aria-expanded={mobile}
