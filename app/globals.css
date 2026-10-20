@@ -417,7 +417,6 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   .commerce-header .mobile-nav { position:absolute; top:calc(100% + 8px); left:0; right:0; max-height:58dvh; padding:16px; border:1px solid #719fb3; border-radius:16px; background:#eaf3f7f2; backdrop-filter:blur(18px); box-shadow:0 16px 35px #142f3e2b; }
   .mobile-nav summary { color:#16303f; font-weight:750; }
   .mobile-nav details[open]>summary { background:#c9dfe8; border-radius:8px; }
-  .mobile-nav a[href="/marketplace/water"] { background:#8fdbe7; border-radius:8px; color:#112835; font-weight:750; }
 }
 .category-symbol { width: 36px; height: 36px; flex-shrink: 0; color: #355262; }
 .discovery-hero { background: var(--glass-surface); box-shadow: var(--glass-shadow); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
@@ -957,15 +956,17 @@ body:has(.home-brand-first) .brand-background-art { opacity:.48; }
 .desktop-nav { flex-wrap:wrap; min-width:0; row-gap:2px; }
 .nav-pair { flex-shrink:0; }
 .header-actions { flex-shrink:0; }
-.commerce-header .water-nav-link {
-  padding:10px 12px;
-  border:1px solid #4b8cac;
-  border-radius:10px;
+/* A single route-derived current style; water uses the same neutral glass as
+   every other section until it is the current destination. */
+.commerce-header .desktop-nav .nav-pair>a[aria-current],
+.commerce-header #mobile-menu [data-primary-section][aria-current] {
   background-color:#9fe4ed70;
   color:#19384c;
-  font-weight:800;
+  box-shadow:inset 0 0 0 1px #4b8cac,inset 0 1px #ffffffa8;
+  text-decoration:underline;
+  text-underline-offset:8px;
+  border-radius:10px;
 }
-.commerce-header .water-nav-link:hover { background-color:#b9eef4b3; }
 @media (min-width:1301px) and (max-width:1550px) {
   .header-bar { flex-wrap:wrap; }
   .desktop-nav { order:3; flex-basis:100%; justify-content:center; column-gap:16px; }

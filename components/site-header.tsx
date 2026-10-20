@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { isLocalizedPublicPath, localizedPath, stripLocale } from "@/lib/i18n/routing";
 import type { Locale, MarketplaceRole } from "@/lib/i18n/types";
+import { currentNavigationSection } from "@/lib/marketplace/navigation-current";
 import type { NavigationGroup } from "@/lib/marketplace/navigation";
 import { signOut } from "@/app/(auth)/actions";
 import { EnergySchematic } from "./energy-schematic";
@@ -31,6 +32,7 @@ export function SiteHeader({
   const ref = useRef<HTMLElement>(null);
   const currentPath = usePathname();
   const pathname = stripLocale(currentPath);
+  const currentSection = currentNavigationSection(pathname, groups);
   const search = useSearchParams().toString();
   const ro = locale === "ro";
   useEffect(() => {
@@ -123,7 +125,7 @@ export function SiteHeader({
               <Link
                 href={g.href}
                 className={g.href === "/marketplace/water" ? "water-nav-link" : undefined}
-                aria-current={pathname === g.href ? "page" : undefined}
+                aria-current={currentSection === g.href ? (pathname === g.href ? "page" : "location") : undefined}
                 onClick={() => setOpen(null)}
               >
                 {g.label}
@@ -225,7 +227,7 @@ export function SiteHeader({
           {groups.map((g) =>
             g.children.length ? (
               <details name="mobile-section" key={g.href}>
-                <summary>{g.label}</summary>
+                <summary data-primary-section={g.href} aria-current={currentSection === g.href ? "location" : undefined}>{g.label}</summary>
                 <Link href={g.href} onClick={() => setMobile(false)}>
                   {ro ? "Explorează" : "Explore"} {g.label} →
                 </Link>
@@ -258,7 +260,7 @@ export function SiteHeader({
                 )}
               </details>
             ) : (
-              <Link key={g.href} href={g.href} className={`mobile-primary-link${g.href === "/marketplace/water" ? " water-nav-link" : ""}`} onClick={() => setMobile(false)}>
+              <Link key={g.href} href={g.href} data-primary-section={g.href} aria-current={currentSection === g.href ? (pathname === g.href ? "page" : "location") : undefined} className={`mobile-primary-link${g.href === "/marketplace/water" ? " water-nav-link" : ""}`} onClick={() => setMobile(false)}>
                 {g.label}
               </Link>
             ),
