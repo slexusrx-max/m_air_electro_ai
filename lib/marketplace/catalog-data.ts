@@ -2,6 +2,7 @@ import type { CatalogProduct, ProductCategory } from "@/lib/affiliate/types";
 import { bilingual as b, type LocalText } from "@/lib/marketplace/content";
 import { suppliers, assertSupplierUrl, type SupplierId } from "@/lib/affiliate/suppliers";
 import { supplierProducts } from "./supplier-products";
+import { renogyProducts } from "./renogy-products";
 
 export type Equipment = CatalogProduct & {
   kind: "product" | "equipment-class";
@@ -284,6 +285,8 @@ export const equipment: Equipment[] = [
     url: "https://eu.renogy.com/products/dcc50s-12v-50a-dc-dc-on-board-battery-charger-with-mppt-new-version?variant=46740803715329",
   }),
 ];
+
+equipment.push(...renogyProducts.map(item));
 const classes: [
   string,
   string,

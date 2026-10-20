@@ -36,6 +36,8 @@ Owner typography/product-scale correction (19 October 2026): slightly enlarge na
 
 Owner follow-up (19 October 2026): Home and Marketplace hero/category cards use clear glass with transparent preview wrappers. Keep real JPEGs unchanged; generated cutouts failed fidelity review. Primary navigation displays uppercase and includes a prominent PURE WATER FILTERS link to `/marketplace/water`, also directly accessible in the mobile menu. This local package awaits explicit publication confirmation; do not retry the previously denied push. See `docs/glass-water-navigation.md`.
 
+Owner release authorization (20 October 2026, relayed by the coordinating task): integrate the reviewed Renogy EU expansion and pending clear-glass / typography changes into the existing site, test and deploy. This supersedes the 19 October hold for that visual package. Preserve SEO commit e6771ac, the exact approved artwork, existing affiliate mappings and all activation gates. Use only verified exact variants and unchanged official photographs; do not publish prices, stock or Romania shipping promises without evidence. See `docs/renogy-catalog-release-2026-10-20.md`.
+
 1. Marketplace-first is authoritative. Do not turn the homepage back into an AI diagnostics landing page.
 2. Do not restore Ukraine outage/address tools to primary navigation. Retained specialist adapters are supporting modules.
 3. Never invent affiliate approval, partnership, dealer status, inventory, prices, reviews, ratings or verified professionals.

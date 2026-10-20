@@ -14,12 +14,22 @@ import { EnergySchematic } from "@/components/energy-schematic";
 import { visualFamily } from "@/lib/visual-system";
 
 const products = catalog.filter((product) => product.provider === "renogy");
+const groups = [
+  ["batteries", "lithium-batteries", "Batteries", "Acumulatoare"],
+  ["panels", "solar-panels", "Solar panels", "Panouri solare"],
+  ["inverters", "inverters", "Pure sine inverters", "Invertoare sinus pur"],
+  ["controllers", "charge-controllers", "MPPT controllers", "Regulatoare MPPT"],
+  ["chargers", "chargers", "DC-DC chargers", "Încărcătoare DC-DC"],
+  ["kits", "solar-kits", "Backup kits", "Kituri de rezervă"],
+  ["monitoring", "electrical-accessories", "Monitoring", "Monitorizare"],
+];
 const categories = [
   ["/marketplace/solar/panels", "Solar panels", "Panouri solare"],
   ["/marketplace/batteries/lifepo4", "LiFePO4 batteries", "Acumulatoare LiFePO4"],
   ["/marketplace/inverters/pure-sine", "Pure sine inverters", "Invertoare sinus pur"],
   ["/marketplace/solar/controllers", "MPPT controllers", "Regulatoare MPPT"],
   ["/marketplace/chargers/dc-dc", "DC-DC chargers", "Încărcătoare DC-DC"],
+  ["/marketplace/solar/kits", "Solar kits", "Kituri solare"],
   ["/marketplace/electrical-components", "System components", "Componente de sistem"],
 ];
 
@@ -27,7 +37,7 @@ export async function generateMetadata() {
   const locale = await getRequestLocale();
   return buildMetadata({ locale, path: "/renogy",
     title: locale === "ro" ? "Renogy România: solar, LiFePO4 și invertoare | Partener afiliat independent" : "Renogy Romania & EU: solar, LiFePO4 and inverters | Independent affiliate partner",
-    description: locale === "ro" ? "Compară 7 modele Renogy EU, verifică limitele și compatibilitatea și dimensionează sistemul cu calculatoare independente. Achiziția se face la comerciant." : "Compare 7 Renogy EU models, check limitations and compatibility, and size your system with independent calculators. Purchase directly from the merchant.",
+    description: locale === "ro" ? "Compară modele Renogy EU, verifică limitele și compatibilitatea și dimensionează sistemul cu calculatoare independente. Achiziția se face la comerciant." : "Compare Renogy EU models, check limitations and compatibility, and size your system with independent calculators. Purchase directly from the merchant.",
   });
 }
 
@@ -53,8 +63,14 @@ export default async function RenogyPage() {
     </section>
     <section id="renogy-products" className={styles.section} aria-labelledby="renogy-products-title">
       <div className={styles.heading}><div><p className={styles.eyebrow}>{ro ? "SELECȚIE DOCUMENTATĂ" : "DOCUMENTED SELECTION"}</p><h2 id="renogy-products-title">{ro ? "Compară specificații. Înțelege limitele." : "Compare specifications. Understand limitations."}</h2></div></div>
-      <p className={styles.intro}>{ro ? "Șapte modele din catalogul nostru, cu surse oficiale Renogy EU. Specificațiile provin de la producător, nu din teste practice proprii. Imaginile sunt ilustrative, nu fotografii autorizate ale modelelor." : "Seven models from our catalog, with official Renogy EU sources. Specifications are manufacturer-stated, not our hands-on test results. Images are illustrative, not licensed photographs of these models."}</p>
-      <div className="product-grid">{products.map((product) => <ProductCard key={product.id} product={product} dictionary={dictionary} extended />)}</div>
+      <p className={styles.intro}>{ro ? `${products.length} modele și pachete distincte, cu variante și fotografii verificate din surse oficiale Renogy EU. Datele producătorului sunt informații de catalog, nu rezultate ale unor teste practice proprii.` : `${products.length} distinct models and packs, with variants and photographs checked against official Renogy EU sources. Manufacturer data is catalog information, not our hands-on test results.`}</p>
+      <nav className={styles.catalogNav} aria-label={ro ? "Grupe de produse Renogy" : "Renogy product groups"}>
+        {groups.map(([id, category, en, romanian]) => <Link key={id} href={`#renogy-${id}`}>{ro ? romanian : en} <span>({products.filter(p => p.category === category).length})</span></Link>)}
+      </nav>
+      {groups.map(([id, category, en, romanian]) => <section key={id} id={`renogy-${id}`} className={styles.productGroup} aria-labelledby={`renogy-${id}-title`}>
+        <h3 id={`renogy-${id}-title`}>{ro ? romanian : en}</h3>
+        <div className="product-grid">{products.filter(p => p.category === category).map((product) => <ProductCard key={product.id} product={product} dictionary={dictionary} extended />)}</div>
+      </section>)}
     </section>
     <section className={styles.section} aria-labelledby="renogy-planning">
       <div className={styles.heading}><div><p className={styles.eyebrow}>{ro ? "PLANIFICĂ ÎNAINTE DE CUMPĂRARE" : "PLAN BEFORE PURCHASE"}</p><h2 id="renogy-planning">{ro ? "Începe cu energia de care ai nevoie." : "Start with the energy you need."}</h2></div></div>

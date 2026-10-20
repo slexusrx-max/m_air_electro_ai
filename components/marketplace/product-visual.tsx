@@ -9,6 +9,7 @@ export function ProductVisual({ product, ro }: { product: CatalogProduct; ro: bo
   if (photo) return <>
     <div className="equipment-visual product-model-photo" data-product-photo={product.id}>
       <Image src={photo.src} alt={product.name} width={photo.width} height={photo.height}
+        unoptimized={photo.src.startsWith("https://")}
         sizes="(max-width: 768px) 85vw, 420px" />
     </div>
     {photo.multipleViews && <p className="small-copy" data-testid="product-photo-views-note">

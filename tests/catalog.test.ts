@@ -78,7 +78,7 @@ test("filters intersect and never infer missing feature values", () => {
     voltage: "12",
     capacityAh: "100",
   });
-  assert.deepEqual(results.map(product => product.id), ["renogy-mini-100"]);
+  assert.deepEqual(results.map(product => product.id), ["renogy-mini-100", "renogy-duoheat-core-mini-100ah"]);
   assert.ok(
     results.every(
       (p) => p.facets.voltage === "12" && p.facets.capacityAh === "100",

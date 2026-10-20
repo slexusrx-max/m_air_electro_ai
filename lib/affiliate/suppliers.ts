@@ -1,4 +1,5 @@
 import { waterSuppliers } from "./providers/water";
+import reviewedRenogy from "@/data/renogy-reviewed-products.json";
 
 const waterdrop = waterSuppliers.find(supplier => supplier.id === "waterdrop-eu")!;
 
@@ -16,6 +17,7 @@ export function isSupplierId(value: string): value is SupplierId {
 
 // Reviewed base selections: merchant defaults can select a multi-pack or accessory bundle.
 const reviewedRenogyVariants: Record<string, string> = {
+  ...Object.fromEntries(reviewedRenogy.map(record => [new URL(record.url).pathname, record.variantId])),
   "/products/core-mini-12-8v-100ah-lithium-iron-phosphate-battery": "46545423761665",
   "/products/core-mini-12-8v-200ah-lifepo4-battery-w-low-temperature-protection": "46720406716673",
   "/products/dcc50s-12v-50a-dc-dc-on-board-battery-charger-with-mppt-new-version": "46740803715329",

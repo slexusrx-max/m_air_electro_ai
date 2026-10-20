@@ -913,6 +913,35 @@ body:has(.home-brand-first) .brand-background-art { opacity:.48; }
   backdrop-filter:blur(3px);
   color:#204c65;
 }
+
+/* Product surfaces: clear glass with dark, readable type. Manufacturer image
+   pixels remain unchanged; transparency belongs to the surrounding interface. */
+.commerce-page .equipment-card {
+  background:linear-gradient(145deg,#ffffff52,#e3f6fc1f);
+  border-color:#85abbf;
+  box-shadow:inset 0 1px #ffffffed,0 12px 32px #19384c12;
+  -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:blur(18px);
+  color:#19384c;
+}
+.commerce-page .equipment-card:hover { background:linear-gradient(145deg,#ffffff6b,#e3f6fc30); }
+.commerce-page .equipment-card :is(.button,.button-outline),
+.commerce-page .equipment-card .product-actions>a[data-supplier-product] {
+  background:linear-gradient(145deg,#ffffff70,#e3f6fc24);
+  border:1px solid #597f95;
+  color:#173b50;
+  box-shadow:inset 0 1px #fff,0 4px 12px #19384c0d;
+}
+.commerce-page .equipment-card :is(.button,.button-outline):hover,
+.commerce-page .equipment-card .product-actions>a[data-supplier-product]:hover { background:#ffffffb3; color:#102f42; }
+.commerce-page .equipment-card h3 { font-size:clamp(21px,1.6vw,25px); line-height:1.3; letter-spacing:-.025em; }
+.commerce-page .equipment-card :is(p,dd,.product-context) { color:#28495c; }
+@supports not (backdrop-filter:blur(1px)) {
+  .commerce-page .equipment-card { background:#edf7fb; }
+}
+@media (prefers-reduced-transparency:reduce) {
+  .commerce-page .equipment-card { background:#edf7fb; backdrop-filter:none; -webkit-backdrop-filter:none; }
+}
 .storefront-home .category-preview,
 .storefront-home .category-preview .equipment-visual { background:transparent; border:0; }
 .storefront-home .category-preview .equipment-visual img { padding:0; }

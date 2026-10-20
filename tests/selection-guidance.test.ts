@@ -30,8 +30,8 @@ test("station screening excludes unknown power/energy, excessive starts and unsu
 });
 
 test("battery calculation candidates respect energy and voltage without inventing a bank", () => {
-  assert.equal(batteryCandidates(catalog, 1000, 12).length, 2);
-  assert.deepEqual(batteryCandidates(catalog, 1500, 12).map(p => p.id), ["renogy-mini-200"]);
+  assert.equal(batteryCandidates(catalog, 1000, 12).length, 3);
+  assert.deepEqual(batteryCandidates(catalog, 1500, 12).map(p => p.id), ["renogy-mini-200", "renogy-pro-smart-200ah"]);
   for (const voltage of [24, 48]) assert.deepEqual(batteryCandidates(catalog, 1000, voltage), []);
   for (const wh of [NaN, Infinity, -1, 3000]) assert.deepEqual(batteryCandidates(catalog, wh, 12), []);
 });

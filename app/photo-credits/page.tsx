@@ -3,6 +3,7 @@ import { Intro } from "@/components/marketplace/shared";
 import { getRequestLocale } from "@/lib/i18n/request";
 import { buildMetadata } from "@/lib/metadata";
 import { categoryPhotos } from "@/lib/marketplace/category-photos";
+import reviewedRenogy from "@/data/renogy-reviewed-products.json";
 
 export async function generateMetadata() {
   const locale = await getRequestLocale();
@@ -14,6 +15,11 @@ export default async function Page() {
   return <PlatformShell><main className="commerce-page">
     <Intro title={ro ? "Surse și licențe foto" : "Photo sources and licences"}
       description={ro ? "Fotografiile de categorie arată exemple de echipamente. Nu confirmă modelul, disponibilitatea sau compatibilitatea unui produs din catalog." : "Category photos show examples of equipment. They do not confirm the model, availability or compatibility of a catalog product."} />
+    <section className="content-panel">
+      <h2>{ro ? "Fotografii ale modelelor Renogy" : "Renogy model photographs"}</h2>
+      <p>{ro ? "Fotografiile de mai jos provin din resursele oficiale ale producătorului pentru promovarea produselor în programul afiliat. Sunt afișate fără modificarea imaginii, de pe CDN-ul producătorului. Drepturile aparțin titularilor; nu acordăm o licență generală de reutilizare." : "These photographs come from the manufacturer's official resources for product promotion in the affiliate program. They are displayed unchanged from the manufacturer's CDN. Rights remain with their holders; we do not grant a general reuse licence."}</p>
+      <ul>{reviewedRenogy.map(p => <li key={p.id}><a href={p.url} target="_blank" rel="noopener noreferrer">{p.officialName} — {p.option}</a></li>)}</ul>
+    </section>
     {Object.entries(categoryPhotos).map(([category, photo]) => <section className="content-panel" key={category}>
       <h2>{photo.subject[ro ? "ro" : "en"]}</h2><p>{photo.credit}</p>
       <p><a href={photo.source} target="_blank" rel="noopener noreferrer">{ro ? "Sursa fotografiei" : "Photo source"} ↗</a></p>

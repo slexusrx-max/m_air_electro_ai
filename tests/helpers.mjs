@@ -19,7 +19,9 @@ export function load(file, deps = {}, globals = {}) {
   vm.runInNewContext(code, {
     module: compiledModule,
     exports: compiledModule.exports,
-    require: (name) => deps[name] ?? require(name),
+    require: (name) => deps[name] ?? (name.startsWith("@/data/")
+      ? { default: require(`../data/${name.slice(7)}`) }
+      : require(name)),
     URL,
     Response,
     Request,

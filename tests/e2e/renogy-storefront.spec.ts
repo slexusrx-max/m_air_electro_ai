@@ -20,15 +20,17 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
     const disclosure = page.getByTestId("affiliate-disclosure-before-content");
     await expect(disclosure).toBeVisible();
     expect(await disclosure.evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector("main")!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
-    await expect(page.getByTestId("renogy-tracking-status")).toContainText(locale === "ro" ? "fără urmărire afiliată" : "without affiliate tracking");
-    await expect(page.locator(".equipment-card")).toHaveCount(7);
+    await expect(page.getByTestId("renogy-tracking-status")).toContainText(new URL(baseURL!).hostname === "mairelectroai.com"
+      ? (locale === "ro" ? "18 linkuri Renogy" : "18 marked Renogy")
+      : (locale === "ro" ? "fără urmărire afiliată" : "without affiliate tracking"));
+    await expect(page.locator(".equipment-card")).toHaveCount(19);
     for (const product of renogy) {
       const card = page.locator(".equipment-card").filter({ has: page.locator(`a[data-supplier-product="${product.id}"]`) });
       await expect(card.locator(".product-context")).toContainText(locale === "ro" ? "Compatibilitate" : "Compatibility");
       await expectSupplierCta(card.locator(`a[data-supplier-product="${product.id}"]`), product, new URL(baseURL!).hostname === "mairelectroai.com");
     }
     const schemas = (await page.locator('script[type="application/ld+json"]').allTextContents()).map(s => JSON.parse(s));
-    expect(schemas.find(s => s["@type"] === "ItemList")?.itemListElement).toHaveLength(7);
+    expect(schemas.find(s => s["@type"] === "ItemList")?.itemListElement).toHaveLength(19);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
     const accessibility = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa"]).analyze();
     expect(accessibility.violations).toEqual([]);
@@ -44,7 +46,7 @@ test("all Renogy model pages preserve source URLs, disclosure and ordinary links
   for (const product of renogy) {
     expect((await page.goto(localizedPath(`/marketplace/products/${product.slug}`, "en")))?.status()).toBe(200);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(product.name);
-    await expectSupplierCta(page.locator(`.product-detail a[data-supplier-product="${product.id}"]`), product, false);
+    await expectSupplierCta(page.locator(`.product-detail a[data-supplier-product="${product.id}"]`), product, new URL(baseURL!).hostname === "mairelectroai.com");
     await expect(page.getByTestId("affiliate-disclosure-before-content")).toBeVisible();
     await expect(page.locator('main a[href="/en/renogy"]')).toBeVisible();
     await expect(page.getByRole("link", { name: "Renogy EU · official model page ↗", exact: true })).toHaveAttribute("href", product.productUrl);
@@ -55,16 +57,16 @@ test("commercial journey preserves homepage artwork, search, comparison, calcula
   test.setTimeout(180000);
   await context.addCookies([{ name: "mr-electro-locale", value: "en", url: baseURL! }]);
   await page.goto(localizedPath("/", "en"));
-  await expect(page.locator('.hero-equipment-heading img')).toHaveAttribute("src", /hero\.png|hero%2Epng/);
+  await expect(page.locator('.hero-equipment-heading img')).toHaveAttribute("src", /m-air-electro-ai-turquoise/);
   await expect(page.getByRole("heading", { name: "Considered energy. Freedom to build." })).toBeVisible();
   await expect(page.getByTestId("water-home-promo")).toBeVisible();
   await page.screenshot({ path: info.outputPath("homepage-commercial.png"), fullPage: true });
   await page.getByRole("link", { name: "Explore Renogy", exact: false }).click();
   await expect(page).toHaveURL(/\/renogy$/);
   await page.goto(localizedPath("/search?q=Renogy", "en"));
-  await expect(page.locator(".equipment-card")).toHaveCount(7);
+  await expect(page.locator(".equipment-card")).toHaveCount(19);
   await page.goto(localizedPath("/compare?ids=renogy-mini-100,renogy-mini-200", "en"));
-  for (const id of ["renogy-mini-100", "renogy-mini-200"]) await expectSupplierCta(page.locator(`table a[data-supplier-product="${id}"]`), renogy.find(p => p.id === id)!, false);
+  for (const id of ["renogy-mini-100", "renogy-mini-200"]) await expectSupplierCta(page.locator(`table a[data-supplier-product="${id}"]`), renogy.find(p => p.id === id)!, new URL(baseURL!).hostname === "mairelectroai.com");
   for (const route of ["/calculators/solar", "/calculators/battery", "/backup-calculator"]) {
     expect((await page.goto(localizedPath(route, "en")))?.status()).toBe(200);
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();

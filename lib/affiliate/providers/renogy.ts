@@ -4,6 +4,7 @@ import { configuredSupplierLink, parseApprovedLinks, type AffiliateConfiguration
 import type { AffiliateProvider } from "@/lib/affiliate/types";
 import { assertSupplierUrl } from "../suppliers";
 import { renogyProgram, verifiedImpactLinks } from "../renogy-policy";
+import reviewedLinks from "@/data/renogy-reviewed-links.json";
 export const renogyEu: AffiliateProvider = {
   id: "renogy",
   region: "EU",
@@ -23,7 +24,9 @@ export function renogyConfiguration(): AffiliateConfiguration {
       && process.env.RENOGY_IMPACT_EU_VERIFIED === "true"
       && (!process.env.RENOGY_IMPACT_PROGRAM_ID || process.env.RENOGY_IMPACT_PROGRAM_ID === renogyProgram.programId),
     affiliateDisclosureRequired: true,
-    links: verifiedImpactLinks(parseApprovedLinks(process.env.RENOGY_IMPACT_LINKS_JSON), process.env.RENOGY_IMPACT_VERIFIED_ORIGINS_JSON),
+    // Reviewed deep links use the existing issued ad and exact EU variant.
+    // Explicit deployment configuration takes precedence; all activation gates remain.
+    links: verifiedImpactLinks({ ...reviewedLinks, ...parseApprovedLinks(process.env.RENOGY_IMPACT_LINKS_JSON) }, process.env.RENOGY_IMPACT_VERIFIED_ORIGINS_JSON),
   };
 }
 export function renogyLink(productUrl: string) {

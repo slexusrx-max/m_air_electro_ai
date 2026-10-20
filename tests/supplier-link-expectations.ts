@@ -1,5 +1,8 @@
 import { expect, type Locator } from "@playwright/test";
 import type { CatalogProduct } from "../lib/affiliate/types";
+import reviewedRenogyLinks from "../data/renogy-reviewed-links.json";
+import existingRenogyLinks from "./fixtures/renogy-existing-production-links.json";
+const renogyLinks: Record<string, string> = { ...existingRenogyLinks, ...reviewedRenogyLinks };
 
 // Actual issued Waterdrop URLs recorded in the 2026-10-13 launch evidence.
 const waterdropIssued: Record<string, string> = {
@@ -9,8 +12,10 @@ const waterdropIssued: Record<string, string> = {
 };
 
 export async function expectSupplierCta(link: Locator, product: CatalogProduct, production: boolean) {
-  const tracked = production && product.provider === "waterdrop-eu";
-  const href = tracked ? waterdropIssued[product.id] : product.productUrl;
+  const candidate = product.provider === "waterdrop-eu" ? waterdropIssued[product.id]
+    : product.provider === "renogy" ? renogyLinks[product.productUrl] : undefined;
+  const tracked = production && Boolean(candidate);
+  const href = tracked ? candidate! : product.productUrl;
   expect(href, `Known destination for ${product.id}`).toBeTruthy();
   await expect(link).toHaveAttribute("href", href);
   await expect(link).toHaveAttribute("data-supplier", product.provider);

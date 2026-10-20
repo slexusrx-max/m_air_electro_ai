@@ -19,7 +19,7 @@ for (const locale of ["ro", "en"] as const) {
     await expect(page.locator(".active-filters>a")).toHaveCount(4);
     await page.locator('.active-filters>a').filter({ hasText: "100" }).click();
     await expect(page).toHaveURL(/q=Renogy&kind=product$/);
-    await expect(page.locator(".equipment-card")).toHaveCount(7);
+    await expect(page.locator(".equipment-card")).toHaveCount(19);
     await page.locator(".filter-options summary").click();
     await expect(page.locator('.catalog-filters select[name="capacityAh"]')).toBeVisible();
     await page.locator(".filter-options summary").click();

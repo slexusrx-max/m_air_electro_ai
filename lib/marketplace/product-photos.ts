@@ -1,9 +1,13 @@
 import type { CatalogProduct } from "../affiliate/types";
+import reviewedRenogy from "@/data/renogy-reviewed-products.json";
 
 // Exact existing variants reviewed in docs/product-photo-provenance-2026-10-18.json.
 // Never fall back to a category photograph for an unidentified model.
 type ProductPhoto = { src: string; width: number; height: number; multipleViews?: boolean };
 export const productPhotos: Record<string, ProductPhoto> = {
+  ...Object.fromEntries(reviewedRenogy.map(record => [record.id, {
+    src: record.imageUrl, width: record.width, height: record.height,
+  }])),
   "renogy-mini-100": { src: "/product-photos/renogy-mini-100.jpg", width: 1280, height: 1280 },
   "renogy-mini-200": { src: "/product-photos/renogy-mini-200.jpg", width: 1280, height: 1280 },
   "renogy-panel-200": { src: "/product-photos/renogy-panel-200.jpg", width: 1280, height: 1280, multipleViews: true },

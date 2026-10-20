@@ -51,7 +51,7 @@ test("category artwork does not choose a named model photograph", () => {
 
 test("model photographs match the ten reviewed exact variants and original bytes", async () => {
   const provenance = JSON.parse(readFileSync(new URL("../docs/product-photo-provenance-2026-10-18.json", import.meta.url), "utf8"));
-  assert.equal(Object.keys(productPhotos).length, 10);
+  assert.equal(Object.keys(productPhotos).length, 22);
   const hashes = new Set<string>();
   for (const asset of provenance.assets) {
     const product = catalog.find(product => product.id === asset.catalogId)!;

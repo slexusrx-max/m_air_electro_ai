@@ -24,9 +24,9 @@ test("Renogy requires explicit exact verified origins and rejects unsafe candida
     assert.deepEqual(verifiedImpactLinks({ [source]: link }, origins), {});
   }
 });
-test("Renogy storefront uses the seven existing EU models with no fabricated commercial data", () => {
+test("Renogy storefront has nineteen distinct EU selections with no fabricated commercial data", () => {
   const products = equipment.filter(p => p.provider === "renogy");
-  assert.equal(products.length, 7);
+  assert.equal(products.length, 19);
   assert.ok(publicRoutes.includes("/renogy"));
   for (const p of products) {
     assert.equal(p.brand, "Renogy");

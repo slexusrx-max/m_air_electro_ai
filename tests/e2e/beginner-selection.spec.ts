@@ -60,10 +60,10 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
     await expect(page.locator(".battery-candidates [data-supplier-product]")).toHaveCount(0);
     const inputs = page.locator('input[type="number"]');
     await inputs.nth(0).fill("100"); await inputs.nth(2).fill("12");
-    await expect(page.locator(".battery-candidates [data-supplier-product]")).toHaveCount(2);
+    await expect(page.locator(".battery-candidates [data-supplier-product]")).toHaveCount(3);
     await inputs.nth(0).fill("300");
-    await expect(page.locator(".battery-candidates [data-supplier-product]")).toHaveCount(1);
-    await expect(page.locator(".battery-candidates [data-supplier-product]")).toHaveAttribute("data-supplier-product", "renogy-mini-200");
+    await expect(page.locator(".battery-candidates [data-supplier-product]")).toHaveCount(2);
+    expect(await page.locator(".battery-candidates [data-supplier-product]").evaluateAll(nodes => nodes.map(n => n.getAttribute("data-supplier-product")))).toEqual(["renogy-mini-200", "renogy-pro-smart-200ah"]);
     await noOverflow();
     expect(errors).toEqual([]);
   });

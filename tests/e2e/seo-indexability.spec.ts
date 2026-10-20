@@ -1,5 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { catalog } from "../../lib/affiliate/catalog";
+import { publicRoutes } from "../../lib/marketplace/routes";
 
 const origin = "https://mairelectroai.com";
 const categories = ["solar", "solar/panels", "batteries", "batteries/lifepo4", "inverters"];
@@ -31,6 +32,7 @@ for (const locale of ["ro", "en"] as const) {
   });
 
   test(`${locale}: every real model describes an editorial page without invented commercial schema`, async ({ page }) => {
+    test.setTimeout(180000);
     for (const product of catalog.filter(p => p.kind === "product")) {
       const path = `${prefix}/marketplace/products/${product.slug}`;
       expect((await page.goto(path, { waitUntil: "domcontentloaded" }))?.status()).toBe(200);
@@ -48,6 +50,7 @@ for (const locale of ["ro", "en"] as const) {
     const context = await browser.newContext({ javaScriptEnabled: false, baseURL, viewport: { width, height: 900 } });
     const page = await context.newPage();
     await page.goto(prefix || "/", { waitUntil: "domcontentloaded" });
+    await expect.poll(() => page.evaluate(() => Array.from(document.querySelectorAll<HTMLLinkElement>('link[rel="stylesheet"]')).every(link => Boolean(link.sheet)) && document.fonts.status === "loaded")).toBe(true);
     const section = page.locator("#equipment-categories");
     const panelLink = section.getByRole("link", { name: locale === "ro" ? "Panouri solare fotovoltaice" : "Photovoltaic solar panels", exact: true });
     await expect(panelLink).toHaveAttribute("href", `${prefix}/marketplace/solar/panels`);
@@ -66,7 +69,10 @@ test("sitemap and robots preserve clean localized discovery and filtered pages r
   const xml = await sitemap.text();
   const locations = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]);
   expect(new Set(locations).size).toBe(locations.length);
-  expect(locations.length).toBe(270);
+  expect(locations.length).toBe(new Set(publicRoutes).size * 2);
+  for (const product of catalog.filter(p => p.provider === "renogy")) for (const prefix of ["", "/en"]) {
+    expect(locations).toContain(`${origin}${prefix}/marketplace/products/${product.slug}`);
+  }
   expect(locations.every(url => url.startsWith(origin) && !url.includes("?"))).toBe(true);
   for (const category of categories) for (const prefix of ["", "/en"]) {
     expect(locations).toContain(`${origin}${prefix}/marketplace/${category}`);

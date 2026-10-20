@@ -1,4 +1,6 @@
 import Image from "next/image";
+import reviewedRenogy from "@/data/renogy-reviewed-products.json";
+const kitPhoto = reviewedRenogy.find(p => p.id === "renogy-backup-800w-300ah-2000w")!;
 import Link from "@/components/localized-link";
 import styles from "./renogy.module.css";
 
@@ -20,9 +22,9 @@ export function RenogyFeature({ ro, storefront = false }: { ro: boolean; storefr
         <p className={styles.fine}>{ro ? "Selecție independentă · Specificații documentate · Achiziție la comerciant" : "Independent selection · Documented specifications · Merchant checkout"}</p>
       </div>
       <figure className={styles.visual}>
-        <Image src="/equipment/solar-panel-studio.png" alt={ro ? "Ilustrație de categorie: panou solar, nu fotografie de produs Renogy" : "Category illustration: solar panel, not a Renogy product photograph"} width={1536} height={1024} sizes="(max-width: 800px) 90vw, 48vw" preload={storefront} />
+        <Image src={kitPhoto.imageUrl} alt={ro ? "Kit Renogy: două valize solare de 400 W, baterie Core 300 Ah, invertor 2000 W și regulator" : "Renogy kit: two 400 W solar suitcases, Core 300 Ah battery, 2000 W inverter and controller"} width={kitPhoto.width} height={kitPhoto.height} sizes="(max-width: 800px) 90vw, 48vw" unoptimized preload={storefront} />
         <div className={styles.flow} aria-hidden="true"><span>SOLAR</span><span>→</span><span>{ro ? "STOCARE" : "STORAGE"}</span><span>→</span><span>AC</span></div>
-        <figcaption>{ro ? "Vizual ilustrativ M Air. Modelul real poate diferi." : "M Air illustrative visual. Actual models may differ."}</figcaption>
+        <figcaption>{ro ? "Fotografie oficială Renogy · Kit 3840 Wh / 800 W / 2000 W" : "Official Renogy photograph · 3840 Wh / 800 W / 2000 W kit"}</figcaption>
       </figure>
     </section>
   );
