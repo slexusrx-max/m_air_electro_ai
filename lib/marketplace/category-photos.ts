@@ -9,9 +9,9 @@ const partner = (src: string, size: number, en: string, ro: string, brand: strin
   src, width: size, height: size, subject: { en, ro }, credit: brand, source,
 });
 export const categoryPhotos: Record<string, CategoryPhoto> = {
-  solar: partner("/product-photos/renogy-panel-200.jpg", 1280, "Renogy 200 W solar panel", "Panou solar Renogy de 200 W", "Renogy", "https://eu.renogy.com/products/renogy-16bb-n-type-200-watt-24v-solar-panel?variant=46435567796481"),
-  batteries: partner("/product-photos/renogy-mini-100.jpg", 1280, "Renogy Core Mini 100 Ah battery", "Baterie Renogy Core Mini de 100 Ah", "Renogy", "https://eu.renogy.com/products/core-mini-12-8v-100ah-lithium-iron-phosphate-battery?variant=46545423761665"),
-  inverters: partner("/product-photos/renogy-inverter-1000.jpg", 1600, "Renogy 1000 W inverter", "Invertor Renogy de 1000 W", "Renogy", "https://eu.renogy.com/products/1000w-12v-pure-sine-wave-inverter-with-ups-function"),
+  solar: partner("/product-photos/renogy-panel-200.png", 1280, "Renogy 200 W solar panel", "Panou solar Renogy de 200 W", "Renogy", "https://eu.renogy.com/products/renogy-16bb-n-type-200-watt-24v-solar-panel?variant=46435567796481"),
+  batteries: partner("/product-photos/renogy-mini-100.png", 1280, "Renogy Core Mini 100 Ah battery", "Baterie Renogy Core Mini de 100 Ah", "Renogy", "https://eu.renogy.com/products/core-mini-12-8v-100ah-lithium-iron-phosphate-battery?variant=46545423761665"),
+  inverters: partner("/product-photos/renogy-inverter-1000.png", 1600, "Renogy 1000 W inverter", "Invertor Renogy de 1000 W", "Renogy", "https://eu.renogy.com/products/1000w-12v-pure-sine-wave-inverter-with-ups-function"),
   chargers: partner("/product-photos/renogy-dcc50.jpg", 600, "Renogy 50 A DC-DC charger", "Încărcător Renogy DC-DC de 50 A", "Renogy", "https://eu.renogy.com/products/dcc50s-12v-50a-dc-dc-on-board-battery-charger-with-mppt-new-version?variant=46740803715329"),
   "backup-power": partner("/category-photos/renogy-portable-power.jpg", 600, "Renogy portable power station", "Stație portabilă Renogy", "Renogy", "https://eu.renogy.com/products/renogy-portable-power-station-camping-998wh-backup-lithium-battery-of-1hour-80-fast-recharging"),
   marine: partner("/category-photos/renogy-marine-kit.jpg", 386, "Renogy flexible solar marine kit", "Kit solar flexibil Renogy pentru aplicații navale", "Renogy", "https://eu.renogy.com/products/400w-12v-flexible-solar-marine-kit-w-rover-li-40-amp-mppt-solar-charge-controller"),

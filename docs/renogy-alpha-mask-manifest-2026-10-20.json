@@ -1,0 +1,50 @@
+[
+  {
+    "name": "mini100",
+    "source_url": "https://cdn.shopify.com/s/files/1/0758/6519/4753/files/1-1__01018.1745803999.1280.1280.jpg?v=1766131565",
+    "original_sha256": "ebf31d29d47aba3d90f297ebafad1ab045ce6aeba16abc62d3c7277c60945b56",
+    "output_file": "mini100.png",
+    "output_sha256": "5f08ca17a0ed6edca20668b8ee222fb50a5cdb70466f9b677a5b1ae084ab98fc",
+    "dimensions": [
+      1280,
+      1280
+    ],
+    "RGB_exactly_matches_decoded_original": true
+  },
+  {
+    "name": "mini200",
+    "source_url": "https://cdn.shopify.com/s/files/1/0758/6519/4753/files/1-1__48154.1745723843.1280.1280.jpg?v=1773818387",
+    "original_sha256": "830aa2ac01e8a29603035748c6127eea08a1217598a1f9199dab3d70c41987ea",
+    "output_file": "mini200.png",
+    "output_sha256": "a2628f978f062ba25d1158472e277e31e81c5c6f02009edab3455ea18ad9e117",
+    "dimensions": [
+      1280,
+      1280
+    ],
+    "RGB_exactly_matches_decoded_original": true
+  },
+  {
+    "name": "panel200",
+    "source_url": "https://cdn.shopify.com/s/files/1/0758/6519/4753/files/1-1__47984.1744772049.1280.1280.jpg?v=1764818486",
+    "original_sha256": "cb97a155e1dda47fdf6cb35abd7a9c17d12fb29da80b168e031302f33c2b3c6f",
+    "output_file": "panel200.png",
+    "output_sha256": "4e7dd1946f8aa3a61a7f37e9489784deb6f56f040277fe5ded793acaaf0a97b0",
+    "dimensions": [
+      1280,
+      1280
+    ],
+    "RGB_exactly_matches_decoded_original": true
+  },
+  {
+    "name": "inverter1000",
+    "source_url": "https://cdn.shopify.com/s/files/1/0758/6519/4753/files/R-INVT-PUH1-101235_inverter1000w__27345.1731463768.1280.1280.jpg?v=1766122478",
+    "original_sha256": "7ea6f0406248baaae9f796e5504fbff90685ef308d1bf0a7cc6b8dad11c18bf4",
+    "output_file": "inverter1000.png",
+    "output_sha256": "bc4b56c79cfc06c38a62a5e9245f6e0f18889f6c1adf8c21bf21290e50fef08d",
+    "dimensions": [
+      1600,
+      1600
+    ],
+    "RGB_exactly_matches_decoded_original": true
+  }
+]

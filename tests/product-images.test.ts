@@ -42,7 +42,7 @@ test("every root category has a distinct decodable photo with correct dimensions
 test("category artwork does not choose a named model photograph", () => {
   for (const id of ["renogy-mini-100", "renogy-mini-200"]) {
     const product = catalog.find(product => product.id === id)!;
-    assert.equal(categoryImagePath(product.category), "/product-photos/renogy-mini-100.jpg");
+    assert.equal(categoryImagePath(product.category), "/product-photos/renogy-mini-100.png");
     assert.equal(product.image, null);
   }
   assert.ok(catalog.filter(product => product.kind === "product").every(product => product.image === null));

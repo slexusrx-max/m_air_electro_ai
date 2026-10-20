@@ -980,3 +980,6 @@ body:has(.home-brand-first) .brand-background-art { opacity:.48; }
     backdrop-filter:none;
   }
 }
+/* Owner-approved alpha masks: expose existing glass behind these four photos. */
+.equipment-visual.product-model-photo:is([data-product-photo="renogy-mini-100"],[data-product-photo="renogy-mini-200"],[data-product-photo="renogy-panel-200"],[data-product-photo="renogy-inverter-1000"]),
+.equipment-visual.product-model-photo:is([data-product-photo="renogy-mini-100"],[data-product-photo="renogy-mini-200"],[data-product-photo="renogy-panel-200"],[data-product-photo="renogy-inverter-1000"]) img { background:transparent; }
