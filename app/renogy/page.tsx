@@ -6,6 +6,7 @@ import { Breadcrumbs } from "@/components/marketplace/shared";
 import { ItemListStructuredData } from "@/components/marketplace/structured-data";
 import { AffiliateDisclosure } from "@/components/marketplace/affiliate-disclosure";
 import { catalog } from "@/lib/affiliate/catalog";
+import { renogyFeedProducts } from "@/data/renogy-extra-feed-products";
 import { supplierLink } from "@/lib/affiliate/providers";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { buildMetadata } from "@/lib/metadata";
@@ -64,6 +65,7 @@ export default async function RenogyPage() {
     <section id="renogy-products" className={styles.section} aria-labelledby="renogy-products-title">
       <div className={styles.heading}><div><p className={styles.eyebrow}>{ro ? "SELECȚIE DOCUMENTATĂ" : "DOCUMENTED SELECTION"}</p><h2 id="renogy-products-title">{ro ? "Compară specificații. Înțelege limitele." : "Compare specifications. Understand limitations."}</h2></div></div>
       <p className={styles.intro}>{ro ? `${products.length} modele și pachete distincte, cu variante și fotografii verificate din surse oficiale Renogy EU. Datele producătorului sunt informații de catalog, nu rezultate ale unor teste practice proprii.` : `${products.length} distinct models and packs, with variants and photographs checked against official Renogy EU sources. Manufacturer data is catalog information, not our hands-on test results.`}</p>
+      <p><Link className="button-outline" href="/renogy/catalog">{ro ? `Explorează încă ${renogyFeedProducts.length} de pagini de produse` : `Explore ${renogyFeedProducts.length} more product pages`} →</Link></p>
       <nav className={styles.catalogNav} aria-label={ro ? "Grupe de produse Renogy" : "Renogy product groups"}>
         {groups.map(([id, category, en, romanian]) => <Link key={id} href={`#renogy-${id}`}>{ro ? romanian : en} <span>({products.filter(p => p.category === category).length})</span></Link>)}
       </nav>

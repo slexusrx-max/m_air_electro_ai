@@ -7,7 +7,7 @@ export function stripLocale(path: string) {
 export function isLocalizedPublicPath(path: string) {
   const pathname = stripLocale(path).split(/[?#]/)[0] || "/";
   return /^\/(?:marketplace|solutions|learn|calculators)(?:\/|$)/.test(pathname) ||
-    ["/", "/search", "/compare", "/backup-calculator", "/renogy", "/waterdrop",
+    ["/", "/search", "/compare", "/backup-calculator", "/renogy", "/renogy/catalog", "/waterdrop",
       "/faq", "/about", "/editorial-policy", "/author-policy", "/corrections-policy",
       "/ai-use-policy", "/partnerships", "/business", "/experts", "/contact",
       "/privacy", "/terms", "/affiliate-disclosure", "/methodology", "/photo-credits"].includes(pathname);
