@@ -18,6 +18,8 @@ Public RO/EN URL rules, search-intent priorities, worked energy examples and the
 
 ## Product modules
 
+The [extended Renogy feed index](docs/renogy-feed-catalog-2026-10-24.md) adds 72 ordinary official EU parent-page links at `/renogy/catalog` (also in English). These feed listings remain separate from the individually documented selections and may contain multiple variants; no new tracking, prices, stock or images are introduced.
+
 The [15 October UX redesign](docs/ux-redesign-2026-10-15.md) makes equipment browsing and guided selection the two homepage entry points. Marketplace opens a filterable catalog, Renogy categories have no decorative numbering, and a shared comparison tray preserves selections across RO/EN switching. Finder drafts use bounded, non-sensitive URL parameters; filtered/draft URLs remain noindex. Existing supplier gates and Waterdrop configuration are unchanged.
 
 - Marketplace: ten main families and 22 category/subcategory routes with buying advice, technical checks and working filters.
