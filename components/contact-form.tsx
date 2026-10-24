@@ -2,6 +2,7 @@
 import Link from "@/components/localized-link";
 import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
+import { trackEvent } from "@/lib/analytics";
 
 type Turnstile = {
   render: (node: HTMLElement, options: object) => string;
@@ -52,7 +53,10 @@ export function ContactForm({ ro, enabled, siteKey }: { ro: boolean; enabled: bo
           name: data.get("name"), email: data.get("email"), message: data.get("message"), website: data.get("website"), consent: data.get("consent") === "on", token,
         }) });
         const result = await response.json();
-        if (response.ok && result.code === "accepted") { setStatus(l("Your message was accepted for delivery. Delivery to the mailbox is not yet confirmed.", "Mesajul a fost acceptat pentru livrare. Primirea în căsuța poștală nu este încă confirmată.")); form.reset(); }
+        if (response.ok && result.code === "accepted") {
+          trackEvent("contact_accepted");
+          setStatus(l("Your message was accepted for delivery. Delivery to the mailbox is not yet confirmed.", "Mesajul a fost acceptat pentru livrare. Primirea în căsuța poștală nu este încă confirmată.")); form.reset();
+        }
         else setStatus(l("Message not sent. Check the fields and complete a fresh spam check, or use the verified email address.", "Mesajul nu a fost trimis. Verifică datele și repetă verificarea anti-spam sau folosește adresa verificată."));
       } catch { setStatus(l("Connection failed. Please try again later.", "Conexiune eșuată. Încearcă mai târziu.")); }
       finally { setBusy(false); setToken(""); setChallengeStatus("pending"); setAttempt(a => a + 1); }

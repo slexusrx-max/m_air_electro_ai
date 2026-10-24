@@ -15,6 +15,10 @@ const cases: [string,string|undefined][] = [
 ];
 for(const locale of ['ro','en'] as const) test(`exactly one owning navigation section ${locale}`,()=>{
  const groups=navigation(locale);
+ const water=groups.filter(group=>group.href==='/marketplace/water');
+ assert.equal(water.length,1);
+ assert.equal(water[0].label,locale==='ro'?'Apă și reziliență':'Water & Resilience');
+ assert.ok(groups.every(group=>group.label!=='Pure water filters'));
  for(const [path,expected] of cases)assert.equal(currentNavigationSection((locale==='en'?'/en':'')+path,groups),expected,path);
  function check(items:typeof groups[number]['children']) { for(const item of items){assert.ok(currentNavigationSection(item.href,groups),item.href); if(item.children)check(item.children);} }
  check(groups);

@@ -26,7 +26,7 @@ export function navigation(locale: Locale): NavigationGroup[] {
       }))],
     },
     {
-      label: "Pure water filters",
+      label: l("Water & Resilience", "Apă și reziliență"),
       href: "/marketplace/water",
       children: [],
     },

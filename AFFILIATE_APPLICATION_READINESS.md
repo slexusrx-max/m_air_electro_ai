@@ -1,6 +1,16 @@
 # Renogy EU / Impact application readiness
 
-## Current affiliate status - 14 October 2026
+## Current public commercial state - 24 October 2026
+
+Production baseline `d6e4442` publishes 28 real models: nineteen Renogy, three Waterdrop, three PECRON and three BLUETTI. A fresh read-only product-page and handoff audit verified eighteen marked Renogy Impact links and three marked Waterdrop links against the recorded issued mappings. Each reached HTTP 200 at its exact merchant product path; Renogy variant selections and publisher `7767803` were preserved. The remaining Renogy 20 A charger and PECRON/BLUETTI listings remain ordinary links. No tracking settings were changed. The 20 October feed, image and link evidence in `docs/renogy-catalog-release-2026-10-20.md` supersedes the earlier missing-feed/missing-link statements below.
+
+This verifies public routing, not Impact click-report ingestion or commissions. The current Impact session requires owner sign-in. Read-only Gmail browser inspection reconfirmed Renogy's 12 October EU/Romania eligibility response and located the 20 October feed response. BLUETTI's 19 October eligibility reply, PECRON's registration link, Awin account activation and EcoFlow's invitation do not establish active merchant tracking; no other supplier was activated. Current network action configuration and reporting remain unverified. All 28 ordinary official source URLs also returned HTTP 200 on the expected regional origins.
+
+Plausible is **not configured on the inspected production baseline**. Code supports consent-gated supplier, calculator, comparison and finder events; this change adds `contact_accepted` only after server acceptance, never as proof of inbox receipt or a sale. Activation needs a real configured analytics account/domain and a consented ingestion check. Contact delivery evidence from 1 October remains historical and unchanged; automated tests send no real messages.
+
+See [commercial journey verification](docs/commercial-readiness-2026-10-24.md) for scope, fixes, release checks and remaining owner/network evidence.
+
+## Historical affiliate status - 14 October 2026
 
 The owner confirms Renogy Impact approval on 14 October 2026, program `14864`, advertiser `3086767`. This supersedes historical pending-approval statements below, but does not confirm EU campaign eligibility, active tracking, commissions or dealer status. Waterdrop Germany was independently launched on 13 October; its exact existing links and activation settings must remain intact. PECRON EU and BLUETTI EU remain unapproved, ordinary-link suppliers.
 

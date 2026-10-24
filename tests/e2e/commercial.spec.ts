@@ -1,4 +1,6 @@
 import { test, expect } from "@playwright/test";
+import { catalog } from "../../lib/affiliate/catalog";
+import { expectSupplierCta } from "../supplier-link-expectations";
 test("backup edits power/quantity/hours, adds custom device and transfers valid requirements", async ({
   page,
 }) => {
@@ -43,6 +45,7 @@ test("backup edits power/quantity/hours, adds custom device and transfers valid 
 test("legacy product URLs preserve models, schema and supplier disclosure", async ({
   page,
   request,
+  baseURL,
 }) => {
   for (const [old, current] of [
     ["lfp-battery-12v-100ah", "renogy-core-mini-100ah"],
@@ -58,12 +61,9 @@ test("legacy product URLs preserve models, schema and supplier disclosure", asyn
     );
   }
   await page.goto("/marketplace/products/renogy-core-mini-100ah");
-  const supplier = page.locator(
-    'main a.button-primary[href^="https://eu.renogy.com/"]',
-  );
+  const supplier = page.locator('.product-detail a[data-supplier-product="renogy-mini-100"]');
   await expect(supplier).toBeVisible();
-  expect(new URL((await supplier.getAttribute("href"))!).search).toBe("");
-  expect(await supplier.getAttribute("rel")).not.toContain("sponsored");
+  await expectSupplierCta(supplier, catalog.find(product => product.id === "renogy-mini-100")!, new URL(baseURL!).hostname === "mairelectroai.com");
   for (const raw of await page
     .locator('script[type="application/ld+json"]')
     .allTextContents()) {

@@ -18,6 +18,10 @@ for (const [width,height] of sizes) test(`responsive pages and images ${width}x$
       const issues: string[] = [];
       if (document.documentElement.scrollWidth > innerWidth + 1) issues.push(`page overflow ${document.documentElement.scrollWidth}`);
       for (const el of document.querySelectorAll("input:not([type=hidden]),select,textarea,img")) {
+        // Responsive brand variants intentionally hide an ancestor, not a broken image.
+        let ancestor: Element | null = el;
+        while (ancestor && getComputedStyle(ancestor).display !== "none") ancestor = ancestor.parentElement;
+        if (ancestor) continue;
         const rect = el.getBoundingClientRect();
         if (!rect.width && !rect.height) { if (el instanceof HTMLImageElement) issues.push("zero-size image"); continue; }
         if (rect.left < -1 || rect.right > innerWidth + 1) issues.push(`${el.tagName} overflow`);

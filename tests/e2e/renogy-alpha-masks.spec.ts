@@ -1,7 +1,7 @@
 import {catalog} from '../../lib/affiliate/catalog';
 import {test,expect} from '@playwright/test';
 const models=['renogy-mini-100','renogy-mini-200','renogy-panel-200','renogy-inverter-1000'];
-for(const width of [390,1440]) for(const locale of ['ro','en']) test(`approved transparent photos ${locale} ${width}`,async({page,request},info)=>{
+for(const width of [390,1440]) for(const locale of ['ro','en']) test(`approved transparent photos ${locale} ${width}`,async({page},info)=>{
  await page.setViewportSize({width,height:1000});const prefix=locale==='en'?'/en':'';
  await page.goto(prefix+'/renogy');
  if(process.env.EXPECTED_DEPLOYMENT_SHA)await expect(page.locator('meta[name="deployment-commit"]')).toHaveAttribute('content',process.env.EXPECTED_DEPLOYMENT_SHA);

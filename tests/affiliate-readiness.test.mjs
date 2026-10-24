@@ -23,12 +23,12 @@ test("configuration preserves ordinary links until approval, tracking and disclo
   assert.equal(configuration.configuredSupplierLink({ ...base, links: { [ordinary]: "http://tracking.example" } }, ordinary).tracked, false);
 });
 
-function analyticsHarness({ choice = "accepted", dnt = "0", webdriver = false, domain = "mairelectroai.com", path = "/compare" } = {}) {
+function analyticsHarness({ choice = "accepted", dnt = "0", gpc = false, webdriver = false, domain = "mairelectroai.com", path = "/compare", at = Date.now() } = {}) {
   const sent = [];
   const api = load("lib/analytics.ts", {}, {
-    localStorage: { getItem: () => JSON.stringify({ choice, at: Date.now() }) },
+    localStorage: { getItem: () => JSON.stringify({ choice, at }) },
     window: { location: { hostname: "mairelectroai.com", origin: "https://mairelectroai.com", pathname: path } },
-    navigator: { doNotTrack: dnt, webdriver },
+    navigator: { doNotTrack: dnt, globalPrivacyControl: gpc, webdriver },
     process: { env: { NEXT_PUBLIC_PLAUSIBLE_DOMAIN: domain } },
     fetch: (...args) => { sent.push(args); return Promise.resolve(); },
   });
@@ -64,4 +64,26 @@ test("supplier events send only public identifiers and source path; invalid data
   api.trackEvent("supplier_outbound_click", { ...product, product: "private@example.org" });
   api.trackEvent("supplier_outbound_click");
   assert.equal(sent.length, 1);
+});
+
+test("all commercial events respect privacy signals and localized private routes", () => {
+  for (const name of ["pageview", "calculator_complete", "comparison_view", "comparison_add", "finder_start", "finder_result", "contact_accepted", "supplier_outbound_click"]) {
+    for (const options of [{ gpc: true }, { choice: "rejected" }, { dnt: "1" }, { webdriver: true }, { domain: "" }, { at: Date.now() + 60000 }, { at: "invalid" }, { at: 0 }, { path: "/en/account" }, { path: "/ro/dashboard/client" }, { path: "/en/reset-password" }]) {
+      const { api, sent } = analyticsHarness(options);
+      api.trackEvent(name, product);
+      assert.equal(sent.length, 0, `${name}: ${JSON.stringify(options)}`);
+    }
+  }
+});
+
+test("accepted enquiries are anonymous contact-only events, not delivery or sales claims", () => {
+  for (const path of ["/contact", "/en/contact"]) {
+    const { api, sent } = analyticsHarness({ path });
+    api.trackEvent("contact_accepted");
+    assert.equal(sent.length, 1);
+    assert.deepEqual(JSON.parse(sent[0][1].body), { name: "contact_accepted", domain: "mairelectroai.com", url: `https://mairelectroai.com${path}` });
+  }
+  const { api, sent } = analyticsHarness();
+  api.trackEvent("contact_accepted");
+  assert.equal(sent.length, 0);
 });

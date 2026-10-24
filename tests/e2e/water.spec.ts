@@ -46,7 +46,7 @@ test("water is responsive and accessible; original homepage artwork is retained"
     expect(results.violations).toEqual([]);
   }
   await page.goto("/");
-  await expect(page.locator('.hero-equipment-heading img')).toHaveAttribute("src", /hero\.png|hero%2Epng/);
+  await expect(page.locator('.hero-equipment-heading img')).toHaveAttribute("src", /m-air-electro-ai-turquoise/);
   await expect(page.getByTestId("water-home-promo")).toBeVisible();
   // Equipment and application discovery precede partner promotions; Waterdrop remains secondary.
   expect(await page.locator("#equipment-categories").evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector('[data-testid="renogy-feature"]')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
