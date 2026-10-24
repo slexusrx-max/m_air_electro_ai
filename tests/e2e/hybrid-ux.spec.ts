@@ -79,7 +79,7 @@ for (const width of [320, 360, 390, 768, 1024, 1440]) test(`Renogy clean categor
   await page.setViewportSize({ width, height: 900 });
   await page.goto("/renogy");
   const tiles = page.getByTestId("renogy-category-tiles");
-  await expect(tiles.locator("a")).toHaveCount(6);
+  await expect(tiles.locator("a")).toHaveCount(7);
   expect(await tiles.innerText()).not.toMatch(/\b0[1-9]\b/);
   await expect(tiles.locator('a[href="/compare"]')).toHaveCount(0);
   await tiles.screenshot({ path: info.outputPath(`renogy-categories-${width}.png`) });

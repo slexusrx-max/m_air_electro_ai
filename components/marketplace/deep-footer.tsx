@@ -6,7 +6,7 @@ import { siteConfig } from "@/lib/site";
 export function DeepFooter({ locale }: { locale: Locale }) {
   const ro = locale === "ro";
   const groups = [
-    ...navigation(locale).slice(0, 4),
+    ...navigation(locale).filter(group => ["/marketplace", "/solutions", "/calculators", "/learn"].includes(group.href)),
     {
       label: ro ? "Despre platformă" : "About the platform",
       href: "/about",

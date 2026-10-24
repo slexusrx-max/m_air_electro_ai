@@ -233,7 +233,7 @@ export function SiteHeader({
                 <Link href={g.href} onClick={() => setMobile(false)}>
                   {ro ? "Explorează" : "Explore"} {g.label} →
                 </Link>
-                {g.children.map((c) =>
+                {g.children.filter((c) => c.href !== "/marketplace/water").map((c) =>
                   c.children?.length ? (
                     <details name={`mobile-category-${g.href}`} key={c.href}>
                       <summary>{c.label}</summary>

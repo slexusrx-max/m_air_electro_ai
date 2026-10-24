@@ -4,12 +4,20 @@ import { readFileSync } from "node:fs";
 
 test("isolated contact form validates, reports failure and provider acceptance without external requests", async ({ page }) => {
   const result = await build({ stdin: { contents: `import React from 'react';import{createRoot}from'react-dom/client';import{ContactForm}from'./components/contact-form';createRoot(document.getElementById('root')).render(<ContactForm ro={false} enabled={true} siteKey="dummy"/>);`, resolveDir: process.cwd(), loader: "tsx" }, bundle: true, write: false, jsx: "automatic", define: { "process.env.NODE_ENV": '"production"' }, plugins: [{ name: "contact-isolation", setup(b) {
+    b.onResolve({ filter: /^@\/lib\/analytics$/ }, () => ({ path: "analytics", namespace: "analytics-fixture" }));
+    b.onLoad({ filter: /.*/, namespace: "analytics-fixture" }, () => ({ contents: `export function trackEvent(name){ window.dispatchEvent(new CustomEvent('fixture-analytics',{detail:name})); }` }));
     b.onResolve({ filter: /^next\/(link|script)$/ }, args => ({ path: args.path, namespace: "fixture" }));
     b.onLoad({ filter: /.*/, namespace: "fixture" }, args => ({ loader: "jsx", resolveDir: process.cwd(), contents: args.path === "next/link" ? `import React from'react';export default function Link(props){return <a {...props}/>}` : `import{useEffect}from'react';export default function Script({onReady}){useEffect(()=>{onReady()},[]);return null}` }));
   } }] });
   await page.setViewportSize({ width: 375, height: 900 });
   const requests: string[] = []; const tokens: string[] = []; let succeeds = false;
   await page.addInitScript(() => {
+    const events: string[] = [];
+    document.addEventListener("DOMContentLoaded", () => { document.documentElement.dataset.analyticsEvents = JSON.stringify(events); });
+    window.addEventListener("fixture-analytics", event => {
+      events.push((event as CustomEvent).detail);
+      document.documentElement.dataset.analyticsEvents = JSON.stringify(events);
+    });
     // Isolated widget double only: no Cloudflare or SMTP request is possible.
     let sequence = 0;
     const widgets = new Map<string, HTMLElement>();
@@ -62,6 +70,7 @@ test("isolated contact form validates, reports failure and provider acceptance w
   await page.getByRole("button", { name: "Mock success", exact: true }).click();
   await submit.click();
   await expect(page.getByRole("status")).toContainText("Message not sent");
+  await expect(page.locator("html")).toHaveAttribute("data-analytics-events", "[]");
   await expect(submit).toBeDisabled();
   await expect(page.getByLabel("Email", { exact: true })).toHaveValue("fixture@example.invalid");
   await expect(page.getByRole("button", { name: "Mock success", exact: true })).toHaveCount(1);
@@ -69,6 +78,7 @@ test("isolated contact form validates, reports failure and provider acceptance w
   await page.getByRole("button", { name: "Mock success", exact: true }).click();
   await submit.click();
   await expect(page.getByRole("status")).toContainText("accepted for delivery");
+  await expect(page.locator("html")).toHaveAttribute("data-analytics-events", '["contact_accepted"]');
   await expect(page.getByLabel("Email", { exact: true })).toHaveValue("");
   await expect(submit).toBeDisabled();
   expect(tokens).toHaveLength(2);

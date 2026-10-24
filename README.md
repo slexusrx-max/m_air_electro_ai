@@ -69,6 +69,8 @@ Public page titles, descriptions and Open Graph locales follow the selected RO/E
 
 ## Environment and affiliate state
 
+Current public routing and analytics status, including the 24 October check of 18 Renogy and 3 Waterdrop issued links: [commercial journey verification](docs/commercial-readiness-2026-10-24.md). Successful merchant redirects do not establish network-recorded clicks or commissions. Plausible remains unconfigured on the inspected baseline; the consent-gated event implementation alone is not an active analytics service.
+
 The official public origin is `https://mairelectroai.com`; `www` redirects permanently to the apex. This is also the safe canonical default when no site URL is configured. Use an explicit `NEXT_PUBLIC_SITE_URL=http://localhost:3100` only when testing local-origin contact delivery. Legacy Vercel-host values are normalized to the official public domain.
 
 The original `public/hero.png` M/head image is preserved and prominent on the homepage. `lib/visual-system.ts` selects lightweight SVG energy diagrams per page family, without fetching unrelated background images. Search spans equipment, categories, solutions and guides. Engineering calculator copy shares a tested RO/EN translation layer.

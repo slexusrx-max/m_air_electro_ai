@@ -47,8 +47,9 @@ test("language links work without JavaScript and English private routes remain u
 
 for (const width of [320, 390, 768, 1440]) test(`homepage and energy examples remain usable at ${width}px`, async ({ page }, info) => {
   await page.setViewportSize({ width, height: 900 });
-  await page.goto("/en");
-  expect((await page.locator("h1").boundingBox())!.y).toBeLessThan(600);
+  await page.goto("/en", { waitUntil: "domcontentloaded" });
+  await expect(page.locator("h1")).toBeInViewport();
+  await expect(page.locator(".discovery-hero .button-primary")).toBeInViewport();
   await expect(page.locator("main .catalog-filters")).toHaveCount(0);
   await expect(page.locator("main .equipment-card")).toHaveCount(3);
   await page.screenshot({ path: info.outputPath(`home-${width}.png`) });

@@ -64,7 +64,9 @@ test("search, filters, no results and comparison flow", async ({ page }) => {
   await expect(page.locator(".equipment-card")).toHaveCount(2);
   await page.getByLabel("Tip înregistrare").selectOption("product");
   await page.getByRole("button", { name: "Aplică filtrele" }).click();
-  await expect(page.locator(".equipment-card")).toHaveCount(1);
+  await expect(page.locator(".equipment-card")).toHaveCount(2);
+  await expect(page.locator('.equipment-card [data-supplier-product="renogy-mini-100"]')).toHaveCount(1);
+  await expect(page.locator('.equipment-card [data-supplier-product="renogy-duoheat-core-mini-100ah"]')).toHaveCount(1);
   await page.goto("/marketplace/batteries");
   const cards = page.locator(".equipment-card");
   await cards

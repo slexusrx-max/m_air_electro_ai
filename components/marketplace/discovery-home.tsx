@@ -27,11 +27,11 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
       <div className="discovery-hero-copy">
         <p className="eyebrow">M Air Electro AI · România / EU</p>
         <h1>{marketplace ? (ro ? "Catalog de echipamente energetice" : "Energy equipment catalog") : (ro ? "Panouri solare, baterii și invertoare" : "Solar panels, batteries and inverters")}</h1>
-        <p>{ro ? "Alege energie de rezervă pentru router, laptop și lumină, consumatori esențiali acasă sau aparate de camping. Compară stații portabile, baterii, invertoare și panouri solare; cumpărarea se face pe site-ul vânzătorului." : "Choose backup power for a router, laptop and lights, a few home essentials or camping devices. Compare portable stations, batteries, inverters and solar panels; purchases take place on the seller’s website."}</p>
         <div className="action-row">
           <Link className="button-primary" href="/marketplace/find-my-solution">{ro ? "Găsește soluția" : "Find My Solution"} →</Link>
           <Link className="button-outline" href={marketplace ? "#equipment-categories" : "/marketplace"}>{ro ? "Alege echipamente" : "Browse Equipment"} →</Link>
         </div>
+        <p>{ro ? "Alege energie de rezervă pentru router, laptop și lumină, consumatori esențiali acasă sau aparate de camping. Compară stații portabile, baterii, invertoare și panouri solare; cumpărarea se face pe site-ul vânzătorului." : "Choose backup power for a router, laptop and lights, a few home essentials or camping devices. Compare portable stations, batteries, inverters and solar panels; purchases take place on the seller’s website."}</p>
         <form action={localizedPath("/marketplace", locale)} className="hero-search" role="search" aria-label={ro ? "Caută echipamente" : "Search equipment"}>
           <label className="sr-only" htmlFor="hero-query">{ro ? "Caută echipamente" : "Search equipment"}</label>
           <input id="hero-query" name="q" type="search" placeholder={ro ? "Renogy, 100 Ah, panouri solare…" : "Renogy, 100 Ah, solar panels…"} maxLength={120} />

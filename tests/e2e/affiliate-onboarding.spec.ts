@@ -11,8 +11,9 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
     page.on("pageerror", e => errors.push(e.message));
     page.on("request", r => { if (r.url().includes("plausible.io/api/event")) analytics.push(r.url()); });
     for (const path of ["/marketplace", "/marketplace/products/renogy-core-mini-100ah", "/compare?ids=renogy-mini-100,renogy-mini-200"]) {
-      await page.goto(localizedPath(path, locale));
+      await page.goto(localizedPath(path, locale), { waitUntil: "domcontentloaded" });
       const links = page.locator("a[data-supplier-product]");
+      await expect(links.first()).toBeVisible();
       expect(await links.count()).toBeGreaterThan(0);
       for (const link of await links.all()) {
         const id = await link.getAttribute("data-supplier-product");

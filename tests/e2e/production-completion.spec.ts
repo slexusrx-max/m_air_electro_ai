@@ -2,6 +2,8 @@ import { localizedPath } from "../../lib/i18n/routing";
 import { test, expect } from "@playwright/test";
 import { publicRoutes } from "../../lib/marketplace/routes";
 import { visualFamily } from "../../lib/visual-system";
+import { catalog } from "../../lib/affiliate/catalog";
+import { expectSupplierCta } from "../supplier-link-expectations";
 
 test("all requested searches include equipment and related content", async ({ page }) => {
   test.setTimeout(120000);
@@ -17,13 +19,14 @@ test("all requested searches include equipment and related content", async ({ pa
   await expect(page.locator("h1")).toContainText("Pagina nu a fost găsită");
 });
 
-test("comparison removal persists and supplier links remain ordinary EU links", async ({ page }) => {
+test("comparison removal persists and supplier links preserve exact variants and activation", async ({ page, baseURL }) => {
   await page.goto("/marketplace/batteries");
   for (const n of [0, 1]) await page.locator(".equipment-card").nth(n).getByRole("button", { name: /Compară/ }).click();
   await page.locator(".equipment-card").nth(1).getByRole("link", { name: "Vezi (2) →" }).click();
-  await expect(page.locator("table a[href^='https://eu.renogy.com/']")).toHaveCount(2);
-  for (const a of await page.locator("table a[href^='https://eu.renogy.com/']").all()) {
-    expect(new URL((await a.getAttribute("href"))!).search).toBe("");
+  await expect(page.locator("table [data-supplier-product]")).toHaveCount(2);
+  for (const a of await page.locator("table [data-supplier-product]").all()) {
+    const id = await a.getAttribute("data-supplier-product");
+    await expectSupplierCta(a, catalog.find(product => product.id === id)!, new URL(baseURL!).hostname === "mairelectroai.com");
     await expect(a).toHaveAttribute("target", "_blank");
   }
   await page.getByRole("link", { name: "Elimină", exact: true }).first().click();
@@ -47,7 +50,7 @@ test("finder back, budget validation, recalculation and no-region empty state", 
   await page.getByRole("button", { name: "Calculează sistemul", exact: true }).click();
   await expect(page.locator(".finder-results")).toBeFocused();
   await expect(page.locator(".finder-results")).toContainText("1400 Wh");
-  await expect(page.locator(".finder-results a[href='/marketplace/batteries']")).toContainText("Acumulatoare");
+  await expect(page.locator(".finder-results a[href='/marketplace/batteries']")).toContainText("Baterii și acumulatori");
   await page.getByRole("button", { name: "Înapoi", exact: true }).click();
   await page.getByLabel("Ore de rezervă").fill("8");
   await expect(page.locator(".finder-results")).toHaveCount(0);
@@ -61,7 +64,8 @@ test("finder back, budget validation, recalculation and no-region empty state", 
   await page.getByRole("button", { name: "Continuă", exact: true }).click();
   await page.getByRole("button", { name: "Calculează sistemul", exact: true }).click();
   await expect(page.getByRole("link", { name: "Compară opțiunile" })).toHaveCount(0);
-  await expect(page.locator(".finder-results")).toContainText("Nu există catalog");
+  await expect(page.locator(".finder-results")).toContainText("Nicio stație documentată din această regiune");
+  await expect(page.locator(".finder-results [data-supplier-product]")).toHaveCount(0);
 });
 
 for (const locale of ["ro", "en"]) test(`every calculator responds and validates in ${locale}`, async ({ page, context, baseURL }) => {
@@ -116,7 +120,7 @@ test("canonical host, structured data, robots and manifest agree", async ({ requ
   }
   expect(await (await request.get("/robots.txt")).text()).toContain(`${origin}/sitemap.xml`);
   const manifest = await (await request.get("/manifest.webmanifest")).json();
-  expect(manifest.theme_color).toBe("#edf5e9");
+  expect(manifest.theme_color).toBe("#f3fbff");
   const www = await request.get(baseURL?.startsWith("http://localhost") ? "/marketplace/solar?q=test" : "https://www.mairelectroai.com/marketplace/solar?q=test", {
     maxRedirects: 0,
     ...(baseURL?.startsWith("http://localhost") ? { headers: { host: "www.mairelectroai.com" } } : {}),

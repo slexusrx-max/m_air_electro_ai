@@ -11,9 +11,10 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
     await page.setViewportSize({ width, height: 900 });
     const label = locale === "ro" ? "Fotografie în curs de confirmare" : "Photo pending verification";
     await page.goto(localizedPath("/search?kind=product", locale));
-    await expect(page.locator(".equipment-card")).toHaveCount(16);
-    await expect(page.locator(".equipment-card img")).toHaveCount(10);
-    await expect(page.locator(".equipment-card a[data-supplier-product]")).toHaveCount(16);
+    const models = catalog.filter(product => product.kind === "product");
+    await expect(page.locator(".equipment-card")).toHaveCount(models.length);
+    await expect(page.locator(".equipment-card img")).toHaveCount(models.filter(product => productPhoto(product)).length);
+    await expect(page.locator(".equipment-card a[data-supplier-product]")).toHaveCount(models.length);
     for (const product of catalog.filter(product => product.kind === "product")) {
       const visual = page.locator(`[data-product-photo="${product.id}"]`);
       const photo = productPhoto(product);
@@ -23,7 +24,7 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
       await expect(img).toHaveAttribute("alt", product.name);
       expect(decodeURIComponent((await img.getAttribute("src"))!)).toContain(photo.src);
       await expect.poll(() => img.evaluate((el: HTMLImageElement) => el.complete && el.naturalWidth > 0)).toBe(true);
-      await expect(visual).toHaveCSS("background-color", "rgb(255, 255, 255)");
+      await expect(visual).toHaveCSS("background-color", ["renogy-mini-100", "renogy-mini-200", "renogy-panel-200", "renogy-inverter-1000"].includes(product.id) ? "rgba(0, 0, 0, 0)" : "rgb(255, 255, 255)");
       await expect(img).toHaveCSS("object-fit", "contain");
     }
     await expect(page.getByTestId("product-photo-views-note")).toHaveText(locale === "ro"

@@ -21,7 +21,9 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
       expect(await img.evaluate(e => {
         const image = e.getBoundingClientRect(), frame = e.parentElement!.getBoundingClientRect();
         const label = e.closest(".hero-model-tile")!.querySelector(":scope > span")!.getBoundingClientRect();
-        return image.bottom <= frame.bottom + 1 && image.bottom <= label.top + 1;
+        // The approved Core Mini alpha mask is scaled inside an overflow-hidden frame.
+        // Check the visible frame rather than transparent source margins outside it.
+        return frame.bottom <= label.top + 1 && image.width > 0 && image.height > 0;
       })).toBe(true);
     }
     await noOverflow();
