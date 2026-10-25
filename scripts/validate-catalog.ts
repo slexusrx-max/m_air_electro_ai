@@ -1,4 +1,5 @@
-import { existsSync } from "node:fs";
+import { realpathSync, statSync } from "node:fs";
+import { isAbsolute, relative, resolve, sep } from "node:path";
 import { pathToFileURL } from "node:url";
 import { equipment, type Equipment } from "../lib/marketplace/catalog-data";
 import { categories, legacyCategories } from "../lib/marketplace/content";
@@ -13,8 +14,21 @@ import parentPhotos from "../data/renogy-parent-photos.json";
 
 const identifier = /^[a-z0-9][a-z0-9-]*$/;
 const date = (value: string) => /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
+export function validLocalPhoto(value: string, assetDirectory = resolve("public/product-photos")): boolean {
+  if (!/^\/product-photos\/[a-z0-9][a-z0-9./-]*\.(png|jpe?g|webp|avif|gif)$/i.test(value)) return false;
+  const assetPath = value.slice("/product-photos/".length);
+  if (assetPath.split("/").some(part => part === "." || part === "..")) return false;
+  try {
+    const root = realpathSync(assetDirectory);
+    const target = realpathSync(resolve(root, assetPath));
+    const contained = relative(root, target);
+    if (!contained || isAbsolute(contained) || contained === ".." || contained.startsWith(`..${sep}`)) return false;
+    const file = statSync(target);
+    return file.isFile() && file.size > 0;
+  } catch { return false; }
+}
 const imageUrl = (value: string) => {
-  if (/^\/product-photos\/[a-z0-9.-]+$/.test(value)) return existsSync(`public${value}`);
+  if (value.startsWith("/")) return validLocalPhoto(value);
   try { const url = new URL(value); return url.protocol === "https:" && !url.username && !url.password && !url.hash; } catch { return false; }
 };
 
