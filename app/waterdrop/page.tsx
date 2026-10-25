@@ -20,12 +20,8 @@ export async function generateMetadata() {
   const ro = locale === "ro";
   return buildMetadata({
     locale,
-    title: ro
-      ? "Waterdrop România — compară sisteme de osmoză inversă"
-      : "Waterdrop Romania — compare reverse-osmosis systems",
-    description: ro
-      ? "Compară Waterdrop G3P600, G3P800 și X12 pentru debit, raportul apă purificată/evacuată, instalare și compatibilitate în România și UE."
-      : "Compare Waterdrop G3P600, G3P800 and X12 for output, purified-water-to-drain ratio, installation and compatibility in Romania and the EU.",
+    title: ro ? "Waterdrop Romania - sisteme pentru apa din locuinta" : "Waterdrop Romania - domestic water systems",
+    description: ro ? "Compara modelele Waterdrop documentate dupa instalare si specificatii cunoscute. Confirma configuratia si livrarea in Romania la comerciant." : "Compare documented Waterdrop domestic systems by installation and known specifications. Confirm exact configuration and Romanian delivery with the merchant.",
     path: "/waterdrop",
   });
 }
@@ -59,12 +55,12 @@ export default async function WaterdropPage() {
             </h1>
             <p className={styles.lead}>
               {ro
-                ? "Comparație independentă a trei sisteme electrice de osmoză inversă fără rezervor. Verifică debitul, consumul de apă, spațiul, presiunea și filtrele de schimb înainte de cumpărare."
-                : "An independent comparison of three electric tankless reverse-osmosis systems. Check output, water use, cabinet space, inlet pressure and replacement filters before purchase."}
+                ? "Compară modele Waterdrop pentru locuință. Instalarea diferă; specificațiile lipsă rămân necunoscute. Nu sunt sisteme verificate pentru urgențe."
+                : "Compare documented domestic Waterdrop models. Installation types differ; missing specifications remain unknown. These are not verified emergency-water systems."}
             </p>
             <div className={styles.actions}>
               <a href="#waterdrop-models" className={styles.primary}>
-                {ro ? "Compară cele 3 modele" : "Compare the 3 models"} ↓
+                {ro ? `Compara ${waterdropProducts.length} modele` : `Compare ${waterdropProducts.length} models`} ↓
               </a>
               <Link href="/learn/choosing-water-system">
                 {ro ? "Ghid de alegere" : "Selection guide"} →
@@ -98,27 +94,6 @@ export default async function WaterdropPage() {
           </p>
         </section>
 
-        <section className={styles.section} aria-labelledby="waterdrop-quick-choice">
-          <p className={styles.kicker}>{ro ? "ALEGERE RAPIDĂ" : "QUICK CHOICE"}</p>
-          <h2 id="waterdrop-quick-choice">{ro ? "Ce model merită verificat primul?" : "Which model should you check first?"}</h2>
-          <div className={styles.choiceGrid}>
-            <article>
-              <span>600 GPD · 2:1</span>
-              <h3>Waterdrop G3P600</h3>
-              <p>{ro ? "Punct de pornire pentru un sistem sub chiuvetă cu debit nominal mai redus dintre cele trei modele comparate." : "A starting point for an under-sink system with the lowest nominal output of the three compared models."}</p>
-            </article>
-            <article>
-              <span>800 GPD · 3:1</span>
-              <h3>Waterdrop G3P800</h3>
-              <p>{ro ? "Opțiune intermediară când vrei un debit nominal mai mare și ai verificat spațiul și racordurile necesare." : "A middle option when you want higher nominal output and have checked the required cabinet space and connections."}</p>
-            </article>
-            <article>
-              <span>1200 GPD · 3:1</span>
-              <h3>Waterdrop X12</h3>
-              <p>{ro ? "Cel mai mare debit nominal din această comparație; confirmă cerințele electrice, presiunea și dimensiunile modelului exact." : "The highest nominal output in this comparison; confirm the exact model’s electrical, pressure and dimensional requirements."}</p>
-            </article>
-          </div>
-        </section>
 
         <section id="waterdrop-models" className={styles.section} aria-labelledby="waterdrop-models-title">
           <p className={styles.kicker}>{ro ? "MODELE DOCUMENTATE" : "DOCUMENTED MODELS"}</p>
@@ -152,9 +127,9 @@ export default async function WaterdropPage() {
                 {waterdropProducts.map((product) => (
                   <tr key={product.id}>
                     <th scope="row"><Link href={`/marketplace/products/${product.slug}`}>{product.name}</Link></th>
-                    <td>{product.technicalSpecs["Nominal production"]}</td>
-                    <td>{product.technicalSpecs["Purified water to drain"]}</td>
-                    <td>{ro ? "RO fără rezervor, sub chiuvetă" : "Tankless under-sink RO"}</td>
+                    <td>{product.technicalSpecs["Nominal production"] ?? (ro ? "Necunoscut" : "Unknown")}</td>
+                    <td>{product.technicalSpecs["Purified water to drain"] ?? (ro ? "Necunoscut" : "Unknown")}</td>
+                    <td>{product.technicalSpecs["Installation"] ?? (ro ? "Sub chiuvetă" : "Under-sink")}</td>
                     <td><SupplierLink product={product} ro={ro}>{ro ? "Vezi modelul" : "View model"}</SupplierLink></td>
                   </tr>
                 ))}

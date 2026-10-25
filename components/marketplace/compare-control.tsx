@@ -38,6 +38,8 @@ export function ComparisonTray({ ro }: { ro: boolean }) {
   const { ids, products } = useSelection();
   const [error, setError] = useState("");
   const pathname = stripLocale(usePathname());
+  const [expanded, setExpanded] = useState(false);
+  const compact = pathname.startsWith("/marketplace/water") && !expanded;
   if (!ids.length || pathname === "/compare" || /^(\/login|\/register|\/dashboard|\/account)/.test(pathname)) return null;
   function remove(id: string) {
     try { save(ids.filter(value => value !== id)); setError(""); }
@@ -45,8 +47,9 @@ export function ComparisonTray({ ro }: { ro: boolean }) {
   }
   return <aside className="comparison-tray" aria-label={ro ? "Produse pentru comparație" : "Products to compare"}>
     <div className="comparison-tray-heading"><strong aria-live="polite">{ro ? "Comparația ta" : "Your comparison"} <span>{ids.length}/4</span></strong><Link href={`/compare?ids=${encodeURIComponent(ids.join(","))}`}>{ro ? "Compară" : "Compare"} →</Link></div>
-    <ul>{ids.map(id => <li key={id}><span>{products[id]}</span><button onClick={() => remove(id)} aria-label={`${ro ? "Elimină" : "Remove"} ${products[id]}`}>×</button></li>)}</ul>
-    {ids.length === 1 && <p>{ro ? "Adaugă încă un produs pentru comparație." : "Add one more product to compare."}</p>}
+    {pathname.startsWith("/marketplace/water") && <button type="button" aria-expanded={!compact} onClick={() => setExpanded(!expanded)}>{ro ? (compact ? "Arată selecția" : "Restrânge selecția") : (compact ? "Show selection" : "Collapse selection")}</button>}
+    <ul hidden={compact}>{ids.map(id => <li key={id}><span>{products[id]}</span><button onClick={() => remove(id)} aria-label={`${ro ? "Elimină" : "Remove"} ${products[id]}`}>×</button></li>)}</ul>
+    {!compact && ids.length === 1 && <p>{ro ? "Adaugă încă un produs pentru comparație." : "Add one more product to compare."}</p>}
     {error && <p role="alert">{error}</p>}
   </aside>;
 }

@@ -5,7 +5,7 @@ import { expectSupplierCta } from "../supplier-link-expectations";
 
 const additions = catalog.filter(p => ["waterdrop-eu", "pecron-eu", "bluetti-eu"].includes(p.provider));
 for (const locale of ["ro", "en"] as const) for (const width of [390, 1440]) {
-  test(`nine supplier models, sources, schema and ordinary CTAs in ${locale} at ${width}`, async ({ page, context, baseURL }, info) => {
+  test(`supplier models, sources, schema and gated CTAs in ${locale} at ${width}`, async ({ page, context, baseURL }, info) => {
     test.setTimeout(180000);
     await context.addCookies([{ name: "mr-electro-locale", value: locale, url: baseURL! }]);
     await page.setViewportSize({ width, height: 900 });
@@ -40,7 +40,7 @@ test("new models can be found, compared and browsed in the correct Water subcate
   for (const brand of ["Waterdrop", "PECRON", "BLUETTI"]) {
     await page.goto(localizedPath(`/search?q=${brand}`, "en"));
     const cards = page.locator(".equipment-card");
-    await expect(cards).toHaveCount(3);
+    await expect(cards).toHaveCount(additions.filter(p => p.brand === brand).length);
     for (const product of additions.filter(p => p.brand === brand))
       await expect(cards.locator(`h3 a[href="/en/marketplace/products/${product.slug}"]`)).toBeVisible();
   }
@@ -50,7 +50,7 @@ test("new models can be found, compared and browsed in the correct Water subcate
   }
   for (const path of ["water", "water/reverse-osmosis", "water/under-sink", "water/home-purification"]) {
     await page.goto(localizedPath(`/marketplace/${path}`, "en"));
-    for (const product of additions.filter(p => p.category === "water"))
+    for (const product of additions.filter(p => p.category === "water" && p.paths.includes(path)))
       await expect(page.locator(`main h3 a[href="/en/marketplace/products/${product.slug}"]`)).toBeVisible();
   }
   await page.goto(localizedPath("/marketplace/water/gravity", "en"));
