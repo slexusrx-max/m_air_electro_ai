@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { renogyParentLinks } from "../../lib/affiliate/renogy-parent-links";
 import AxeBuilder from "@axe-core/playwright";
 import { renogyFeedProducts } from "../../data/renogy-extra-feed-products";
 
@@ -18,8 +19,9 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
     await expect(cards).toHaveCount(renogyFeedProducts.length);
     for (const product of renogyFeedProducts) {
       const card = cards.filter({ has: page.getByRole("heading", { name: product.name, exact: true }) });
-      await expect(card.locator("a")).toHaveAttribute("href", product.url);
-      await expect(card.locator("a")).toHaveAttribute("rel", "noopener noreferrer");
+      const active = process.env.TEST_PARENT_TRACKING === "true";
+      await expect(card.locator("a")).toHaveAttribute("href", active ? renogyParentLinks[product.url] : product.url);
+      await expect(card.locator("a")).toHaveAttribute("rel", active ? "sponsored noopener noreferrer" : "noopener noreferrer");
     }
     await page.locator('main nav a[href="#systems-and-kits"]').click();
     await expect(page).toHaveURL(/#systems-and-kits$/);

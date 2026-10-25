@@ -25,3 +25,13 @@ Contact recipient is siteConfig.contactEmail = verifiedMailbox(NEXT_PUBLIC_CONTA
 Routing evidence does not prove network click registration. Neither conversions nor payout were tested or inferred. Current Impact authentication/report evidence belongs to the separate controlled-click task.
 
 Production-mode local UI: all four RO/EN 390/1440 cases passed (21.8s), including exact ordinary hrefs, canonical/hreflang, no horizontal overflow and axe checks. English mobile/desktop screenshots inspected; no UI changes made.
+
+## Follow-up — parent destinations and current configuration
+
+The earlier parent-link limitation above is superseded: parent-level mapping does not require selecting a variant. Added a separate allowlisted mapping derived only from the existing 72 exact EU parent URLs, using documented issued ad /c/7767803/3394229/14864 and u, never prodsku. Existing approval, EU verification, global tracking and origin gates remain; deployment overrides retain precedence. Cards now say View variants and label only activated affiliate links. No reviewed-model claim, price, commission guarantee or external traversal.
+
+Read-only Vercel project environment inventory on October 25: NEXT_PUBLIC_PLAUSIBLE_DOMAIN absent, hiddenProductionEnvCount=0. CONTACT_FORM_ENABLED, CONTACT_EMAIL_VERIFIED, CONTACT_FROM_EMAIL, NEXT_PUBLIC_CONTACT_EMAIL, BREVO_SMTP_LOGIN, BREVO_SMTP_KEY, NEXT_PUBLIC_TURNSTILE_SITE_KEY and TURNSTILE_SECRET_KEY present for production. Presence does not prove validity. Retrieved only the public recipient variable individually: NEXT_PUBLIC_CONTACT_EMAIL=contact@mairelectroai.com. No credentials decrypted, changed or copied into this report.
+
+Fresh origin/main remains 56b9eecc7114c647561e6ee25f5852c84a0f8a7b, authored/committed by slexusrx-max on 25 October 2026 15:17:50 +0200, subject Fix water category browsing flow on current production. No conflict with that baseline. Full unit suite after parent changes: 118 passed, zero failed/skipped. Initial integration JSX and isolated test dependency errors were fixed before successful rerun.
+
+Final parent implementation: lint, types, production build passed; activated local production UI 4/4 RO/EN at 390/1440 passed in 29.2s. Unit suite 118/118. No external CTA clicks.
