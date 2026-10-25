@@ -22,6 +22,10 @@ export function verifiedImpactLinks(links: Record<string, string>, originsJson: 
   return Object.fromEntries(Object.entries(links).filter(([source, target]) => {
     try {
       const url = new URL(target);
+      // Opaque issued short links remain supported. Explicit deep links must
+      // preserve the exact reviewed product and variant, without ambiguous u values.
+      const destinations = url.searchParams.getAll("u");
+      if (destinations.length && (destinations.length !== 1 || destinations[0] !== source)) return false;
       return target !== source && url.protocol === "https:" && !url.username && !url.password && !url.port && !url.hash && allowed.has(url.origin);
     } catch { return false; }
   }));
