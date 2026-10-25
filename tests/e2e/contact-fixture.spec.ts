@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 import { build } from "esbuild";
 import { readFileSync } from "node:fs";
 
-test("isolated contact form validates, reports failure and provider acceptance without external requests", async ({ page }) => {
+for (const failureMode of ["server", "network"]) test(`isolated contact form handles ${failureMode} uncertainty without external requests`, async ({ page }) => {
   const result = await build({ stdin: { contents: `import React from 'react';import{createRoot}from'react-dom/client';import{ContactForm}from'./components/contact-form';createRoot(document.getElementById('root')).render(<ContactForm ro={false} enabled={true} siteKey="dummy"/>);`, resolveDir: process.cwd(), loader: "tsx" }, bundle: true, write: false, jsx: "automatic", define: { "process.env.NODE_ENV": '"production"' }, plugins: [{ name: "contact-isolation", setup(b) {
     b.onResolve({ filter: /^@\/lib\/analytics$/ }, () => ({ path: "analytics", namespace: "analytics-fixture" }));
     b.onLoad({ filter: /.*/, namespace: "analytics-fixture" }, () => ({ contents: `export function trackEvent(name){ window.dispatchEvent(new CustomEvent('fixture-analytics',{detail:name})); }` }));
@@ -10,7 +10,7 @@ test("isolated contact form validates, reports failure and provider acceptance w
     b.onLoad({ filter: /.*/, namespace: "fixture" }, args => ({ loader: "jsx", resolveDir: process.cwd(), contents: args.path === "next/link" ? `import React from'react';export default function Link(props){return <a {...props}/>}` : `import{useEffect}from'react';export default function Script({onReady}){useEffect(()=>{onReady()},[]);return null}` }));
   } }] });
   await page.setViewportSize({ width: 375, height: 900 });
-  const requests: string[] = []; const tokens: string[] = []; let succeeds = false;
+  const requests: string[] = []; const tokens: string[] = []; let succeeds = false; let ambiguous = false;
   await page.addInitScript(() => {
     const events: string[] = [];
     document.addEventListener("DOMContentLoaded", () => { document.documentElement.dataset.analyticsEvents = JSON.stringify(events); });
@@ -43,6 +43,7 @@ test("isolated contact form validates, reports failure and provider acceptance w
     requests.push(url);
     if (url.endsWith("/api/contact")) {
       tokens.push(route.request().postDataJSON().token);
+      if (ambiguous) return failureMode === "network" ? route.abort("failed") : route.fulfill({status:504,contentType:"application/json",body:JSON.stringify({code:"uncertain"})});
       return route.fulfill({ status: succeeds ? 200 : 502, contentType: "application/json", body: JSON.stringify({ code: succeeds ? "accepted" : "failed" }) });
     }
     return route.abort();
@@ -85,4 +86,19 @@ test("isolated contact form validates, reports failure and provider acceptance w
   expect(tokens.every(Boolean)).toBe(true);
   expect(tokens[1]).not.toBe(tokens[0]);
   expect(requests).toEqual(["http://localhost:3100/api/contact", "http://localhost:3100/api/contact"]);
+  ambiguous = true;
+  await page.getByLabel("Name", {exact:true}).fill("Fixture user");
+  await page.getByLabel("Email", {exact:true}).fill("fixture@example.invalid");
+  await page.getByRole("textbox", {name:/^Message/}).fill("Mock-only uncertain enquiry, never delivered.");
+  await page.getByRole("checkbox").check();
+  await page.getByRole("button", {name:"Mock success",exact:true}).click();
+  await submit.click();
+  await expect(page.getByRole("status")).toContainText("Delivery outcome is unknown");
+  await expect(page.getByRole("status")).toContainText("Do not resend");
+  await expect(page.getByLabel("Email", {exact:true})).toHaveValue("fixture@example.invalid");
+  await page.getByRole("button", {name:"Mock success",exact:true}).click();
+  await expect(submit).toBeDisabled();
+  await page.locator("form").evaluate(form=>(form as HTMLFormElement).requestSubmit());
+  expect(tokens).toHaveLength(3);
+
 });

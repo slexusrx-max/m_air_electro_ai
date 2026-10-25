@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { getSiteUrl, isSingleMailbox, siteConfig, verifiedMailbox } from "./site";
 import nodemailer from "nodemailer";
 
@@ -7,7 +8,7 @@ export function contactReady() {
     process.env.CONTACT_FORM_ENABLED === "true");
 }
 
-export async function deliverContactMail({ name, email, message }: { name: string; email: string; message: string }) {
+export async function deliverContactMail({ name, email, message, requestId }: { name: string; email: string; message: string; requestId?: string }) {
   const transport = nodemailer.createTransport({
     host: "smtp-relay.brevo.com", port: 587, secure: false, requireTLS: true,
     auth: { user: process.env.BREVO_SMTP_LOGIN, pass: process.env.BREVO_SMTP_KEY },
@@ -18,7 +19,7 @@ export async function deliverContactMail({ name, email, message }: { name: strin
     to: { address: siteConfig.contactEmail!, name: "M Air Electro AI" },
     replyTo: { address: email, name: "" },
     subject: "M Air Electro AI — website enquiry",
-    text: `Name: ${name.trim()}\nEmail: ${email}\n\n${message.trim()}`,
+    text: `Reference: ${requestId ?? "not supplied"}\nName: ${name.trim()}\nEmail: ${email}\n\n${message.trim()}`,
   });
   return result.accepted.includes(siteConfig.contactEmail!);
 }
@@ -56,7 +57,15 @@ export async function handleContact(request: Request, send: typeof fetch = fetch
     });
     const challenge = await verification.json();
     if (!verification.ok || !challenge.success || challenge.hostname !== new URL(getSiteUrl()).hostname || challenge.action !== "contact") return reply(403, "challenge");
-    try { return await deliver({ name, email, message }) ? reply(200, "accepted") : reply(502, "failed"); }
-    catch { return reply(502, "failed"); }
+    const requestId = typeof data.requestId === "string" && /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/i.test(data.requestId) ? data.requestId : randomUUID();
+    const outcome = (status: number, code: string) => Response.json({ code, requestId }, { status });
+    try { return await deliver({ name, email, message, requestId }) ? outcome(200, "accepted") : outcome(502, "failed"); }
+    catch (error) {
+      const { responseCode, command } = (error ?? {}) as { responseCode?: unknown; command?: unknown };
+      const rejectedSendStage = typeof command === "string" && (["CONN", "EHLO", "HELO", "STARTTLS", "MAIL FROM", "RCPT TO", "DATA"].includes(command) || command.startsWith("AUTH"));
+      // An explicit SMTP rejection is definite; a timeout can follow DATA acceptance.
+      return rejectedSendStage && typeof responseCode === "number" && responseCode >= 400 && responseCode <= 599
+        ? outcome(502, "failed") : outcome(504, "uncertain");
+    }
   } catch { return reply(400, "failed"); }
 }
