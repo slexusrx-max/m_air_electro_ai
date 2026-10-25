@@ -45,3 +45,6 @@
 .water :global(a:focus-visible),.water :global(button:focus-visible),.water :global(select:focus-visible) { outline: 3px solid #1f4962; outline-offset: 4px; }
 @media(max-width:760px) { .water :global(.water-section-heading),.water :global(.water-finder),.water :global(.water-suppliers) { grid-template-columns: 1fr; gap: 20px; } .water :global(.water-section) { margin: 42px 0; } .water :global(.water-category-grid) { grid-template-columns: 1fr; } .water :global(.water-proof) { padding: 25px; } }
 @media(prefers-reduced-motion:reduce) { .water :global(.water-category-grid) > a { transition: none; } }
+
+.water .categoryHero { padding-block: 24px; min-height: 0; }
+.water .categoryHero h1 { font-size: clamp(1.8rem, 4vw, 3rem); line-height: 1.15; }
