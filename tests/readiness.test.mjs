@@ -80,7 +80,7 @@ test("contact requires successful hostname/action challenge and reports provider
     assert.equal(calls[1].message, "A sufficiently detailed test message.");
     assert.equal((await response.json()).code, accepted ? "accepted" : "failed");
   }
-  assert.equal((await handler(request(), async () => Response.json({ success: true, hostname: "energy.example.org", action: "contact" }), async () => { throw Error("SMTP unavailable"); })).status, 502);
+  assert.equal((await handler(request(), async () => Response.json({ success: true, hostname: "energy.example.org", action: "contact" }), async () => { throw Error("SMTP unavailable"); })).status, 504);
 });
 test("Brevo transport uses STARTTLS and the verified sender without exposing a visitor as From", async () => {
   let transportOptions, mailOptions;
@@ -136,4 +136,15 @@ test("analytics needs current consent, excludes private/query data, bots, local 
   nav.webdriver = false; nav.doNotTrack = "1"; analytics.trackEvent("pageview"); assert.equal(calls.length, 1);
   nav.doNotTrack = "0"; location.pathname = "/dashboard/client"; analytics.trackEvent("pageview"); assert.equal(calls.length, 1);
   location.pathname = "/"; saved = JSON.stringify({ choice: "accepted", at: 0 }); analytics.trackEvent("pageview"); assert.equal(calls.length, 1);
+});
+
+test('contact separates SMTP rejection from ambiguous post-DATA failure and correlates without PII', async () => {
+ const handler=load('lib/contact.ts',{'./site':config()},{process:{env},TextDecoder}).handleContact;
+ const requestId='12345678-1234-4123-8123-123456789abc';
+ const request=()=>new Request(env.NEXT_PUBLIC_SITE_URL+'/api/contact',{method:'POST',headers:{origin:env.NEXT_PUBLIC_SITE_URL,'Content-Type':'application/json'},body:JSON.stringify({name:'Test',email:'fixture@example.invalid',message:'Mock-only sufficiently detailed enquiry.',consent:true,website:'',token:'dummy',requestId})});
+ const verify=async()=>Response.json({success:true,hostname:'energy.example.org',action:'contact'});
+ for(const [error,code,status] of [[Object.assign(new Error('rejected'),{responseCode:550,command:'DATA'}),'failed',502],[Object.assign(new Error('timeout after DATA'),{code:'ETIMEDOUT',command:'DATA'}),'uncertain',504],[Object.assign(new Error('QUIT failed after acceptance'),{responseCode:500,command:'QUIT'}),'uncertain',504],[new Error('socket closed'),'uncertain',504]]){
+  let calls=0;const response=await handler(request(),verify,async mail=>{calls++;assert.equal(mail.requestId,requestId);throw error;});
+  assert.equal(calls,1);assert.equal(response.status,status);assert.deepEqual(await response.json(),{code,requestId});
+ }
 });
