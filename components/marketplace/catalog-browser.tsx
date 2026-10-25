@@ -2,6 +2,8 @@ import Link from "@/components/localized-link";
 import { ProductCard } from "./product-card";
 import {
   filterEquipment,
+  normalizeFacet,
+  facetValueLabel,
   cleanQuery,
   facetLabels,
   type CatalogQuery,
@@ -26,6 +28,7 @@ export function CatalogBrowser({
 }) {
   const query = cleanQuery(raw);
   const results = filterEquipment(products, query);
+  const facetProducts = filterEquipment(products, { q: query.q, kind: query.kind, brand: query.brand });
   const modelCount = results.filter(product => product.kind === "product").length;
   const classCount = results.length - modelCount;
   const active = Object.entries(query).filter(([key, value]) => value && ["q", "kind", "brand", ...Object.keys(facetLabels)].includes(key));
@@ -75,16 +78,17 @@ export function CatalogBrowser({
           <summary>{ro ? "Filtre tehnice" : "Technical filters"}</summary>
           <div>{facets.map((key) => {
           const values = [
-            ...new Set(products.map((p) => p.facets[key]).filter(Boolean)),
+            ...new Set(facetProducts.map((p) => p.facets[key]).filter(Boolean).map(value => normalizeFacet(key, value))),
           ].sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+          if (query[key] && !values.includes(normalizeFacet(key, query[key]!))) values.push(normalizeFacet(key, query[key]!));
           return values.length ? (
             <label key={key}>
               {facetLabels[key]?.[ro ? 1 : 0] ?? key}
-              <select name={key} defaultValue={query[key] ?? ""}>
+              <select name={key} defaultValue={normalizeFacet(key, query[key] ?? "")}>
                 <option value="">{ro ? "Toate" : "All"}</option>
                 {values.map((v) => (
                   <option key={v} value={v}>
-                    {v}
+                    {facetValueLabel(key, v, ro)}
                   </option>
                 ))}
               </select>
