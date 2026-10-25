@@ -16,7 +16,7 @@ const waterdropIssued: Record<string, string> = {
 export async function expectSupplierCta(link: Locator, product: CatalogProduct, production: boolean) {
   const candidate = product.provider === "waterdrop-eu" ? waterdropIssued[product.id]
     : product.provider === "renogy" ? renogyLinks[product.productUrl] : undefined;
-  const tracked = production && Boolean(candidate);
+  const tracked = production && product.availability !== "unavailable" && Boolean(candidate);
   const href = tracked ? candidate! : product.productUrl;
   expect(href, `Known destination for ${product.id}`).toBeTruthy();
   await expect(link).toHaveAttribute("href", href);

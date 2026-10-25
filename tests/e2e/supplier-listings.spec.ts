@@ -1,3 +1,4 @@
+import { specificationValue } from "../../lib/marketplace/specifications";
 import { localizedPath } from "../../lib/i18n/routing";
 import { test, expect } from "@playwright/test";
 import { catalog } from "../../lib/affiliate/catalog";
@@ -16,11 +17,11 @@ for (const locale of ["ro", "en"] as const) for (const width of [390, 1440]) {
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(product.name);
       const cta = page.locator(`.product-detail a[data-supplier-product="${product.id}"]`);
       await expectSupplierCta(cta, product, new URL(baseURL!).hostname === "mairelectroai.com");
-      await expect(cta).toContainText(product.merchant);
+      if (product.availability !== "unavailable") await expect(cta).toContainText(product.merchant);
       const source = page.getByRole("link", { name: `${product.merchant} · ${locale === "ro" ? "pagina oficială a modelului" : "official model page"} ↗`, exact: true });
       await expect(source).toHaveAttribute("href", product.productUrl);
       await expect(page.locator("main")).not.toContainText("Renogy EU");
-      for (const value of Object.values(product.technicalSpecs)) await expect(page.locator(".spec-grid")).toContainText(value);
+      for (const value of Object.values(product.technicalSpecs)) await expect(page.locator(".spec-grid")).toContainText(specificationValue(value, locale === "ro"));
       const schemas = await page.locator('script[type="application/ld+json"]').allTextContents();
       const schema = schemas.map(text => JSON.parse(text)).find(data => data["@type"] === "WebPage");
       expect(schema?.url).toBe(`https://mairelectroai.com${localizedPath(`/marketplace/products/${product.slug}`, locale)}`);

@@ -1,4 +1,5 @@
 const labels: Record<string, string> = {
+  Technology: "Tehnologie", Installation: "Instalare", "Feed SKU": "Cod furnizor",
   "Variant ID": "Identificator variantă",
   "Heating power": "Putere de încălzire",
   "Ingress protection": "Protecție la pătrundere",
@@ -50,3 +51,9 @@ export const specificationLabel = (key: string, ro: boolean) => {
   if (key.includes(" / ")) return key.split(" / ")[ro ? 0 : 1];
   return ro ? labels[key] ?? key : key;
 };
+
+export function specificationValue(value: string, ro: boolean) {
+ if (value.endsWith(" / Under-sink, indoor") || value.endsWith(" / Required")) return value.split(" / ")[ro ? 0 : 1];
+ const values: Record<string,string> = { "Countertop": "Pe blat", "Under-sink": "Sub chiuveta", "Check manual": "Verifica manualul" };
+ return ro ? values[value] ?? value : value;
+}

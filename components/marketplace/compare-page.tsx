@@ -1,7 +1,7 @@
 import { EditorialRecord } from "@/components/editorial-record";
 import { AnalyticsEvent } from "@/components/analytics-event";
 import Link from "@/components/localized-link";
-import { specificationLabel } from "@/lib/marketplace/specifications";
+import { specificationLabel, specificationValue } from "@/lib/marketplace/specifications";
 import { catalog } from "@/lib/affiliate/catalog";
 import { parseComparison } from "@/lib/marketplace/query";
 import { RemoveComparison } from "./compare-control";
@@ -11,6 +11,7 @@ import { SelectionHelp } from "./selection-help";
 import { stationCandidates, batteryCandidates } from "@/lib/marketplace/selection-guidance";
 export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
   const selected = parseComparison(ids, catalog);
+  const waterOnly = selected.length > 0 && selected.every(p => p.category === "water");
   const mixed = new Set(selected.map(p => `${p.kind}/${p.category}`)).size > 1;
   const starterGroups = [
     { title: ro ? "Stații portabile: PECRON și BLUETTI" : "Portable stations: PECRON and BLUETTI", items: stationCandidates(catalog, "EU", { batteryWh: 1, loadWh: 1, inverterW: 1, surgeW: 1 }) },
@@ -21,12 +22,12 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
   ];
   return (
     <>
-      <section className="content-panel">
+      {!waterOnly && <section className="content-panel">
         <h2>{ro ? "Compară produse cu același rol" : "Compare products with the same role"}</h2>
         <p>{ro ? "Selecții editoriale din modelele documentate, nu kituri sau oferte de preț. Pentru consumatorii tăi, începe cu configuratorul." : "Editorial selections of documented models, not kits or price offers. For your own loads, start with the finder."}</p>
         <div className="action-row">{starterGroups.filter(g => g.items.length >= 2).map(g => <Link key={g.title} className="button-outline" href={`/compare?ids=${encodeURIComponent(g.items.map(p => p.id).join(","))}`}>{g.title}</Link>)}<Link href="/marketplace/find-my-solution">{ro ? "Calculează necesarul" : "Calculate requirements"}</Link></div>
-      </section>
-      <SelectionHelp ro={ro} />
+      </section>}
+      {!waterOnly && <SelectionHelp ro={ro} />}
       <form key={selected.map(p => p.id).join(",")} action={localizedPath("/compare", ro ? "ro" : "en")} className="content-panel">
         <p>
           {ro
@@ -68,7 +69,7 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
         <>
           <AnalyticsEvent name="comparison_view" eventKey={selected.map(p => p.id).join(",")} />
           {mixed && <p className="safety-note" role="status">{ro ? "Selecția conține roluri diferite. O baterie, un panou și o stație completă nu sunt alternative interschimbabile; tabelul nu confirmă compatibilitatea dintre ele." : "This selection contains different roles. A battery, a panel and a complete station are not interchangeable alternatives; this table does not confirm compatibility between them."}</p>}
-          <p>{ro ? "Prețurile, stocul și livrarea în România se confirmă la vânzător. O valoare Wh descrie energia, nu o autonomie garantată; W descrie puterea, nu energia stocată." : "Confirm prices, stock and delivery to Romania with the seller. Wh describes energy, not guaranteed runtime; W describes power, not stored energy."}</p>
+          <p>{waterOnly ? (ro ? "Verifica instalarea, analiza apei si manualul modelului. Livrarea in Romania nu este confirmata." : "Check installation, source-water analysis and the exact manual. Romanian delivery is not confirmed.") : ro ? "Prețurile, stocul și livrarea în România se confirmă la vânzător. O valoare Wh descrie energia, nu o autonomie garantată; W descrie puterea, nu energia stocată." : "Confirm prices, stock and delivery to Romania with the seller. Wh describes energy, not guaranteed runtime; W describes power, not stored energy."}</p>
           <EditorialRecord path="/compare" title={ro ? "Comparație factuală de echipamente" : "Factual equipment comparison"} ro={ro} sources={[...new Set(selected.flatMap(p => p.sourceUrls))]} />
           <p className="small-copy">
             {ro
@@ -117,7 +118,7 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
                     </td>
                   ))}
                 </tr>
-                {[
+                {!waterOnly && [
                   [ro ? "Energie nominală (Wh)" : "Nominal energy (Wh)", "capacityWh"],
                   [ro ? "Putere (W; rolul diferă după categorie)" : "Power (W; role depends on category)", "power"],
                   [ro ? "Clasa de tensiune (V)" : "Voltage class (V)", "voltage"],
@@ -145,7 +146,7 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
                     <th scope="row">{specificationLabel(field, ro)}</th>
                     {selected.map((p) => (
                       <td key={p.id}>
-                        {p.technicalSpecs[field] ??
+                        {(p.technicalSpecs[field] ? specificationValue(p.technicalSpecs[field], ro) : undefined) ??
                           (ro ? "Nedocumentat" : "Not documented")}
                       </td>
                     ))}

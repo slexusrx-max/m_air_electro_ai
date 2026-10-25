@@ -3,6 +3,7 @@ import records from "@/data/waterdrop-reviewed-expansion.json";
 import { bilingual as b } from "./content";
 export const waterdropExpansion: Entry[] = records.map(r => ({
  id:r.id, slug:r.id, kind:"product", provider:"waterdrop-eu", sourceCheckedAt:"2026-10-25",
+ availability:r.id === "waterdrop-k19h" ? "unavailable" : "partner-check",
  title:b("Waterdrop " + r.model,"Waterdrop " + r.model), category:"water", url:r.url,
  paths:["water","water/home-purification",...(r.technology === "RO" ? ["water/reverse-osmosis"] : []),...(r.installation === "Countertop" ? ["water/countertop"] : r.installation === "Under-sink" ? ["water/under-sink"] : [])],
  summary:b("Manufacturer-listed " + r.technology + " system. Installation: " + r.installation + ". Compare the exact model and supplied configuration.","Sistem " + r.technology + " listat de producator. Verifica instalarea si configuratia exacta in manual."),

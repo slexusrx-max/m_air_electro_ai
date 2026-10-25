@@ -57,7 +57,7 @@ export const supplierProducts: Entry[] = [
     compatibility: b("Check source-water analysis, inlet pressure and temperature, cabinet dimensions, faucet, power adapter and drain requirements in the exact model manual. Confirm replacement-cartridge codes and Romania availability with the merchant before purchase.", "Verifică analiza apei, presiunea și temperatura de intrare, dimensiunile dulapului, robinetul, adaptorul electric și evacuarea în manualul modelului exact. Confirmă codurile cartușelor de schimb și disponibilitatea în România la comerciant înainte de cumpărare."),
     facets: {},
     specs: { "Nominal production": `${p.gpd} GPD`, "Purified water to drain": p.ratio,
-      "Tehnologie / Technology": "RO", "Electricitate / Electricity": "Necesară / Required",
-      "Instalare / Installation": "Sub chiuvetă, interior / Under-sink, indoor" },
+      "Technology": "RO", "Electricitate / Electricity": "Necesară / Required",
+      "Installation": "Sub chiuvetă, interior / Under-sink, indoor" },
   })),
 ];
