@@ -1,0 +1,30 @@
+name: Verify
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run validate:catalog
+      - run: npm test
+      # Build generates Next route types; no production env or credentials.
+      # next/font downloads public Google fonts, so network access is required.
+      - run: npm run build -- --webpack
+      - run: npm run typecheck
