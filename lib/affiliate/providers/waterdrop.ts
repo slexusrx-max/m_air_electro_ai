@@ -3,6 +3,7 @@ import "server-only";
 import { configuredSupplierLink, parseApprovedLinks, type AffiliateConfiguration } from "@/lib/affiliate/configuration";
 import type { AffiliateProvider } from "@/lib/affiliate/types";
 import { assertSupplierUrl } from "../suppliers";
+import { verifiedWaterdropLinks } from "../waterdrop-policy";
 
 export const waterdropEu: AffiliateProvider = {
   id: "waterdrop-eu",
@@ -22,7 +23,7 @@ export function waterdropConfiguration(): AffiliateConfiguration {
     approved: process.env.WATERDROP_AFFILIATE_APPROVED === "true",
     trackingEnabled: process.env.AFFILIATE_TRACKING_ENABLED === "true",
     affiliateDisclosureRequired: true,
-    links: { ...Object.fromEntries(reviewed.map(r=>[r.url,r.issued])), ...parseApprovedLinks(process.env.WATERDROP_IMPACT_LINKS_JSON) },
+    links: verifiedWaterdropLinks({ ...Object.fromEntries(reviewed.map(r=>[r.url,r.issued])), ...parseApprovedLinks(process.env.WATERDROP_IMPACT_LINKS_JSON) }),
   };
 }
 
