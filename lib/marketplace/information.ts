@@ -104,16 +104,14 @@ export const information: Record<string, InformationPage> = {
     ),
     sections: [
       s(
-        "Current status",
-        "Starea actuală",
-        "M Air Electro AI is an independent Renogy and Waterdrop Germany affiliate partner through Impact. The owner confirmed Renogy approval on 14 October 2026. Approval does not establish dealership, EU campaign eligibility or active tracking. Marked affiliate links may earn commission on qualifying purchases at no additional cost to you, only after exact network-issued URLs and tracking are activated. Ordinary unmarked supplier links are not affiliate tracked. PECRON EU and BLUETTI EU remain unapproved prospective programs. The merchant controls price, stock, payment, shipping, warranty and returns. We do not claim dealership or stock ownership.",
-        "M Air Electro AI este partener afiliat independent Renogy și Waterdrop Germany prin Impact. Proprietarul a confirmat aprobarea Renogy la 14 octombrie 2026. Aprobarea nu stabilește statut de dealer, eligibilitatea campaniei EU sau urmărire activă. Linkurile marcate ca afiliate pot genera comision pentru achiziții eligibile, fără cost suplimentar pentru tine, numai după activarea adreselor exacte emise de rețea. Linkurile obișnuite nemarcate nu au urmărire afiliată. PECRON EU și BLUETTI EU rămân programe vizate, neaprobate. Comerciantul controlează prețul, stocul, plata, livrarea, garanția și retururile. Nu pretindem statut de dealer sau proprietate asupra stocului.",
+        "Approved programmes", "Programe aprobate",
+        "M Air Electro AI is an independent publisher approved for Renogy Impact and Waterdrop Germany Impact. Renogy EU/Romania eligibility is confirmed. PECRON EU and BLUETTI EU listings remain ordinary supplier listings; we do not claim approval for their programmes. Affiliate approval is not dealership, inventory ownership or proof of commission payment.",
+        "M Air Electro AI este editor independent aprobat pentru Renogy Impact și Waterdrop Germany Impact. Eligibilitatea Renogy pentru EU/România este confirmată. Listările PECRON EU și BLUETTI EU rămân linkuri obișnuite; nu afirmăm aprobarea programelor lor. Aprobarea afiliată nu înseamnă statut de dealer, proprietate asupra stocului sau dovada plății comisioanelor."
       ),
       s(
-        "After approval",
-        "După aprobare",
-        `If an affiliate program is approved and activated, qualifying purchases through marked affiliate links may earn ${siteConfig.operatorName}, the individual publisher of M Air Electro AI, a commission. Activation requires explicit approval status and exact links issued by the approved program's network, with the appropriate disclosure active. The disclosure must be updated at activation. Editorial descriptions and factual comparisons remain separate from tracking configuration.`,
-        `Dacă programul este aprobat și activat, achizițiile eligibile prin linkuri marcate ca afiliate pot aduce comision lui ${siteConfig.operatorName}, editorul independent al platformei M Air Electro AI. Activarea cere statut explicit de aprobare și linkuri exacte emise de rețeaua programului aprobat, cu informarea corespunzătoare activă. Politica trebuie actualizată la activare. Descrierile și comparațiile rămân separate de urmărire.`,
+        "How marked links work", "Cum funcționează linkurile marcate",
+        "Only links explicitly marked as affiliate links use the approved network mappings and active configuration. Qualifying purchases may earn the publisher a commission at no additional cost to the buyer. Unmarked links, including archived-product documentation, are ordinary links. Tracking, recorded conversions and paid commissions are separate outcomes. Product facts remain independent of tracking configuration; merchants control price, availability, payment, shipping, warranty and returns.",
+        "Doar linkurile marcate explicit ca afiliate folosesc adresele aprobate și configurația activă. Achizițiile eligibile pot aduce editorului un comision fără cost suplimentar pentru cumpărător. Linkurile nemarcate, inclusiv documentația produselor retrase, sunt obișnuite. Urmărirea, conversiile înregistrate și comisioanele plătite sunt rezultate distincte. Datele produselor sunt separate de tracking; comercianții controlează prețul, disponibilitatea, plata, livrarea, garanția și retururile."
       ),
       s(
         "Buying and verification",
