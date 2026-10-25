@@ -1,5 +1,14 @@
 # Renogy EU / Impact application readiness
 
+## Current catalog snapshot — 25 October 2026
+
+41 canonical model records: 19 Renogy, 16 Waterdrop, 3 PECRON and 3 BLUETTI. This is not an in-stock offer count: Waterdrop K19H is archived/unavailable with ordinary documentation links. The 32-row Waterdrop feed represents 16 device models, 14 bundle/cartridge configurations and two extra-year offers excluded from device counts (one has conflicting title evidence). No full merchant-assortment claim is made.
+
+Renogy and Waterdrop Germany are the two approved programmes. Renogy EU/Romania eligibility is confirmed; Waterdrop delivery to Romania remains unverified. PECRON/BLUETTI remain ordinary listings. Renogy's separate 72 parent-page index represents 186 feed rows: 31 summaries, 114 variants and 41 single options, or 155 selections/options. It does not add 72 reviewed canonical models. See [count/disclosure audit](docs/disclosure-feed-accuracy-2026-10-25.md) and [image audit](docs/renogy-parent-photos-2026-10-25.md). Original 19/core 18 Renogy mappings are preserved.
+
+Current tests inspect routing and hrefs without generating external affiliate clicks. Network click registration, conversions and payout remain separate and unproven by these site tests. Earlier dated counts and route traversals below are historical, not instructions to repeat tracking tests.
+
+
 ## Current public commercial state - 24 October 2026
 
 Production baseline `d6e4442` publishes 28 real models: nineteen Renogy, three Waterdrop, three PECRON and three BLUETTI. A fresh read-only product-page and handoff audit verified eighteen marked Renogy Impact links and three marked Waterdrop links against the recorded issued mappings. Each reached HTTP 200 at its exact merchant product path; Renogy variant selections and publisher `7767803` were preserved. The remaining Renogy 20 A charger and PECRON/BLUETTI listings remain ordinary links. No tracking settings were changed. The 20 October feed, image and link evidence in `docs/renogy-catalog-release-2026-10-20.md` supersedes the earlier missing-feed/missing-link statements below.

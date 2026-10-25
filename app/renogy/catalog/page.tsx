@@ -1,3 +1,5 @@
+import Image from "next/image";
+import parentPhotos from "@/data/renogy-parent-photos.json";
 import rowTypes from "@/data/renogy-parent-row-types.json";
 import { renogyLink } from "@/lib/affiliate/providers/renogy";
 import Link from "@/components/localized-link";
@@ -62,8 +64,12 @@ export default async function RenogyCatalogPage() {
       return <section key={en} id={en.toLowerCase().replaceAll(" ", "-")} className={styles.group}>
         <h2>{ro ? romanian : en}</h2>
         <div className={styles.grid}>
-          {items.map((product) => { const link = renogyLink(product.url); const counts = rowTypes[product.url]; return <article key={product.url} className={styles.card}>
-            <div className={styles.cardTop}><span aria-hidden="true">RENOGY EU</span><span>{ro ? `${counts.variantRows + counts.singleOptions} opțiuni / ${counts.feedRows} rânduri` : `${counts.variantRows + counts.singleOptions} options / ${counts.feedRows} rows`}</span></div>
+          {items.map((product) => { const link = renogyLink(product.url); const counts = rowTypes[product.url]; const options = counts.variantRows + counts.singleOptions; const photo = parentPhotos.entries[product.url]; return <article key={product.url} className={styles.card}>
+            <div className={styles.cardTop}><span aria-hidden="true">RENOGY EU</span><span>{ro ? `${options} ${options === 1 ? "opțiune" : "opțiuni"} / ${counts.feedRows} ${counts.feedRows === 1 ? "rând" : "rânduri"}` : `${options} ${options === 1 ? "option" : "options"} / ${counts.feedRows} ${counts.feedRows === 1 ? "row" : "rows"}`}</span></div>
+            {"src" in photo && <figure className={styles.photo} data-parent-photo={product.url}>
+              <Image src={photo.src} width={photo.width} height={photo.height} unoptimized loading="lazy" alt={ro ? `Imagine reprezentativă a paginii Renogy: ${product.name}` : `Representative Renogy page image: ${product.name}`} />
+              <figcaption>{ro ? "Imagine de prezentare. Varianta și conținutul pachetului se confirmă la Renogy." : "Representative image. Confirm the selected variant and included items at Renogy."}</figcaption>
+            </figure>}
             <h3>{product.name}</h3>
             <a href={link.href} target="_blank" rel={link.tracked ? "sponsored noopener noreferrer" : "noopener noreferrer"} data-tracking-status={link.tracked ? "active" : "ordinary"}>
               {ro ? "Vezi variantele la Renogy" : "View variants at Renogy"} <span aria-hidden="true">↗</span>

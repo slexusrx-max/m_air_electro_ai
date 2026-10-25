@@ -17,3 +17,6 @@
 .back { margin: 34px 0; }
 @media (max-width: 850px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } .card { min-height: 180px; } .header { border-radius: 20px; } }
+.photo { margin: 18px 0 0; }
+.photo img { display: block; width: 100%; height: 220px; object-fit: contain; border-radius: 10px; background: #fff; }
+.photo figcaption { margin-top: 8px; font-size: 12px; line-height: 1.5; color: #45606d; }
