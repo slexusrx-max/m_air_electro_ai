@@ -1,6 +1,6 @@
 import { EditorialRecord } from "@/components/editorial-record";
 import Link from "@/components/localized-link";
-import { specificationLabel } from "@/lib/marketplace/specifications";
+import { specificationLabel, specificationValue } from "@/lib/marketplace/specifications";
 import { notFound, permanentRedirect } from "next/navigation";
 import { PlatformShell } from "@/components/platform-shell";
 import { AffiliateDisclosure } from "@/components/marketplace/affiliate-disclosure";
@@ -89,7 +89,7 @@ export default async function Page({ params }: Props) {
               {ro ? "Verificare sursă (asistată AI)" : "Source check (AI-assisted)"}: {p.lastUpdated} · EU
             </p>}
             <EditorialRecord path={`/marketplace/products/${slug}`} title={local(p.title, locale)} ro={ro} sources={p.sourceUrls} schema={p.kind !== "product"} />
-            <div className="product-key-specs">{Object.entries(p.technicalSpecs).slice(0, 3).map(([key, value]) => <div key={key}><span>{specificationLabel(key, ro)}</span><strong>{value}</strong></div>)}</div>
+            <div className="product-key-specs">{Object.entries(p.technicalSpecs).filter(([key]) => key !== "Feed SKU").slice(0, 3).map(([key, value]) => <div key={key}><span>{specificationLabel(key, ro)}</span><strong>{specificationValue(value, ro)}</strong></div>)}</div>
             <a className="text-link" href="#specifications">{ro ? "Toate caracteristicile" : "All specifications"} ↓</a>
             <CompareControl id={p.id} ro={ro} />
             {p.productUrl ? (
@@ -117,7 +117,7 @@ export default async function Page({ params }: Props) {
               {Object.entries(p.technicalSpecs).map(([k, v]) => (
                 <div key={k}>
                   <dt>{specificationLabel(k, ro)}</dt>
-                  <dd>{v}</dd>
+                  <dd>{specificationValue(v, ro)}</dd>
                 </div>
               ))}
             </dl>
@@ -146,15 +146,10 @@ export default async function Page({ params }: Props) {
           <p>{local(p.compatibility, locale)}</p>
           <p>{local(c.checks, locale)}</p>
           <div className="action-row">
-            <Link href={c.calculator}>
+            {p.category !== "water" && <Link href={c.calculator}>
               {ro ? "Verifică prin calcul" : "Check with calculator"} →
-            </Link>
-            <Link href={`/solutions/${c.solution}`}>
-              {ro ? "Soluție de sistem" : "System solution"} →
-            </Link>
-            <Link href="/marketplace/electrical-components">
-              {ro ? "Cabluri și protecție" : "Wiring & protection"} →
-            </Link>
+            </Link>}
+            {p.category === "water" ? <><Link href="/marketplace/water#finder">{ro ? "Alege sistemul de apa" : "Find your water system"}</Link><Link href="/marketplace/water/countertop">{ro ? "Sisteme pe blat" : "Countertop systems"}</Link></> : <><Link href={`/solutions/${c.solution}`}>{ro ? "Solutie de sistem" : "System solution"}</Link><Link href="/marketplace/electrical-components">{ro ? "Cabluri si protectie" : "Wiring & protection"}</Link></>}
           </div>
         </section>
         <h2>
@@ -164,7 +159,7 @@ export default async function Page({ params }: Props) {
         </h2>
         <div className="product-grid">
           {catalog
-            .filter((n) => isCatalogListing(n) && n.id !== p.id && n.category === p.category)
+            .filter((n) => isCatalogListing(n) && n.id !== p.id && n.category === p.category && n.availability !== "unavailable" && (p.category !== "water" || !p.technicalSpecs.Installation || p.technicalSpecs.Installation === "Check manual" || n.technicalSpecs.Installation === p.technicalSpecs.Installation))
             .slice(0, 3)
             .map((n) => (
               <ProductCard key={n.id} product={n} dictionary={t} />

@@ -1,6 +1,6 @@
 import { SupplierLink } from "./supplier-link";
 import Link from "@/components/localized-link";
-import { specificationLabel } from "@/lib/marketplace/specifications";
+import { specificationLabel, specificationValue } from "@/lib/marketplace/specifications";
 import { CompareControl } from "./compare-control";
 import { ProductVisual } from "./product-visual";
 import { isCatalogListing } from "@/lib/marketplace/product-presentation";
@@ -47,11 +47,12 @@ export function ProductCard({
       <p className="product-purpose">{ro ? p.bestFor.ro : p.bestFor.en}</p>
       <dl>
         {Object.entries(p.technicalSpecs)
+          .filter(([key]) => key !== "Feed SKU")
           .slice(0, 3)
           .map(([k, v]) => (
             <div key={k}>
               <dt>{specificationLabel(k, ro)}</dt>
-              <dd>{v}</dd>
+              <dd>{specificationValue(v, ro)}</dd>
             </div>
           ))}
       </dl>
@@ -66,8 +67,8 @@ export function ProductCard({
       </Link>
       <CompareControl id={p.id} ro={ro} />
       <div className="product-actions">
-        <Link href={categoryByPath(p.paths?.[0] ?? "")?.calculator ?? "/marketplace/find-my-solution"}>
-          {ro ? "Calculează necesarul" : "Calculate requirements"} →
+        <Link href={p.category === "water" ? "/marketplace/water#finder" : categoryByPath(p.paths?.[0] ?? "")?.calculator ?? "/marketplace/find-my-solution"}>
+          {p.category === "water" ? (ro ? "Alege sistemul de apa" : "Find your water system") : (ro ? "Calculeaza necesarul" : "Calculate requirements")} →
         </Link>
         <SupplierLink product={p} ro={ro} />
       </div>

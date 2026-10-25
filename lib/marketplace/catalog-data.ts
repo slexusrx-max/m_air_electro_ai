@@ -29,6 +29,7 @@ export type Entry = {
   compatibility: LocalText;
   facets: Record<string, string>;
   specs?: Record<string, string>;
+  availability?: CatalogProduct["availability"];
   waterPerformance?: CatalogProduct["waterPerformance"];
 } & (
   | { kind: "product"; url: string; sourceCheckedAt: string; provider: SupplierId }
@@ -49,7 +50,7 @@ function item(e: Entry): Equipment {
     price: null,
     currency: "EUR",
     originalPrice: null,
-    availability: "partner-check",
+    availability: e.availability ?? "partner-check",
     provider: e.kind === "product" ? e.provider : "other",
     merchant: supplier?.name ?? "No supplier selected",
     merchantRegion: "EU",
