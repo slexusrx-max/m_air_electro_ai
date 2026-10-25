@@ -34,7 +34,8 @@ export function CatalogBrowser({
   const active = Object.entries(query).filter(([key, value]) => value && ["q", "kind", "brand", ...Object.keys(facetLabels)].includes(key));
   return (
     <section className="catalog-layout">
-      <form action={localizedPath(path, ro ? "ro" : "en")} className="catalog-filters">
+      {/* Reset uncontrolled fields when client navigation changes the applied URL query. */}
+      <form key={JSON.stringify(query)} action={localizedPath(path, ro ? "ro" : "en")} className="catalog-filters">
         <h2>{ro ? "Caută și filtrează" : "Search & filter"}</h2>
         <label>
           {ro
