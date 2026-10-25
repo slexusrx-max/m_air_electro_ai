@@ -1,3 +1,4 @@
+import reviewed from "@/data/waterdrop-reviewed-expansion.json";
 import "server-only";
 import { configuredSupplierLink, parseApprovedLinks, type AffiliateConfiguration } from "@/lib/affiliate/configuration";
 import type { AffiliateProvider } from "@/lib/affiliate/types";
@@ -21,7 +22,7 @@ export function waterdropConfiguration(): AffiliateConfiguration {
     approved: process.env.WATERDROP_AFFILIATE_APPROVED === "true",
     trackingEnabled: process.env.AFFILIATE_TRACKING_ENABLED === "true",
     affiliateDisclosureRequired: true,
-    links: parseApprovedLinks(process.env.WATERDROP_IMPACT_LINKS_JSON),
+    links: { ...Object.fromEntries(reviewed.map(r=>[r.url,r.issued])), ...parseApprovedLinks(process.env.WATERDROP_IMPACT_LINKS_JSON) },
   };
 }
 

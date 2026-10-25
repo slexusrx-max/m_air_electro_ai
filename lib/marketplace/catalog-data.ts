@@ -1,3 +1,4 @@
+import { waterdropExpansion } from "./waterdrop-expansion";
 import type { CatalogProduct, ProductCategory } from "@/lib/affiliate/types";
 import { bilingual as b, type LocalText } from "@/lib/marketplace/content";
 import { suppliers, assertSupplierUrl, type SupplierId } from "@/lib/affiliate/suppliers";
@@ -70,6 +71,7 @@ const batteryCompat = b(
 );
 export const equipment: Equipment[] = [
   ...supplierProducts.map(item),
+  ...waterdropExpansion.map(item),
   item({
     id: "renogy-mini-100",
     slug: "renogy-core-mini-100ah",

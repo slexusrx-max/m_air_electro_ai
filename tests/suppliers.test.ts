@@ -93,7 +93,7 @@ test("EU URL policy rejects cross-supplier, non-EU variants, tracking, encoded o
 
 test("all nine additions are searchable and comparable without assumed prices", () => {
   const added = catalog.filter(p => ["waterdrop-eu", "pecron-eu", "bluetti-eu"].includes(p.provider));
-  assert.equal(added.length, 9);
+  assert.equal(added.length, 22);
   for (const p of added) {
     assert.ok(filterEquipment(catalog, { q: p.name }).some(result => result.id === p.id), p.name);
     assert.equal(parseComparison(`${p.id},renogy-mini-100`, catalog)[0], p);

@@ -17,7 +17,7 @@ for (const locale of ["ro", "en"] as const) {
     await expect(page.locator('.water-hero-art img')).toHaveAttribute("src", /crystal-hero/);
     expect(await page.locator('.water-hero-art img').evaluate(async (img: HTMLImageElement) => { await img.decode(); return img.naturalWidth > 0; })).toBe(true);
     await expect(page.getByRole("heading", { level: 1 })).toHaveText(locale === "ro" ? "Apă pură.Un viitor mai luminos." : "Pure Water.Brighter Tomorrow.");
-    await expect(page.locator('.product-grid > article')).toHaveCount(3);
+    await expect(page.locator('.product-grid > article')).toHaveCount(catalog.filter(p => p.kind === "product" && p.category === "water").length);
     expect(await page.locator('#water-models').evaluate(el => Boolean(el.compareDocumentPosition(document.querySelector('#water-categories')!) & Node.DOCUMENT_POSITION_FOLLOWING))).toBe(true);
     await page.getByRole("button", { name: "PFAS", exact: true }).click();
     await expect(page.getByRole("button", { name: "PFAS", exact: true })).toHaveAttribute("aria-pressed", "true");
@@ -38,7 +38,8 @@ for (const locale of ["ro", "en"] as const) {
       await expect(page.locator('.water-empty-state')).toHaveCount(count === 0 ? 1 : 0);
       if (count === 0) {
         await expect(page.locator('.water-empty-state a').first()).toHaveAttribute('href', localizedPath('/learn/choosing-water-system', locale));
-        await expect(page.locator('.water-empty-state a').filter({ hasText: 'Waterdrop' })).toHaveAttribute('href', localizedPath('/waterdrop', locale));
+        await expect(page.locator('.water-empty-state a')).toHaveCount(1);
+        await expect(page.locator('.water-suppliers')).toHaveCount(0);
       }
       await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://mairelectroai.com${localizedPath(`/marketplace/water/${category.slug}`, locale)}`);
     }

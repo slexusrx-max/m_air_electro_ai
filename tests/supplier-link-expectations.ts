@@ -1,3 +1,4 @@
+import expansion from "../data/waterdrop-reviewed-expansion.json";
 import { expect, type Locator } from "@playwright/test";
 import type { CatalogProduct } from "../lib/affiliate/types";
 import reviewedRenogyLinks from "../data/renogy-reviewed-links.json";
@@ -6,6 +7,7 @@ const renogyLinks: Record<string, string> = { ...existingRenogyLinks, ...reviewe
 
 // Actual issued Waterdrop URLs recorded in the 2026-10-13 launch evidence.
 const waterdropIssued: Record<string, string> = {
+  ...Object.fromEntries(expansion.map(r=>[r.id,r.issued])),
   "waterdrop-g3p600": "https://dewaterdropfilter.pxf.io/OYJAjQ",
   "waterdrop-g3p800": "https://dewaterdropfilter.pxf.io/vDrd7d",
   "waterdrop-x12": "https://dewaterdropfilter.pxf.io/4aYV19",
