@@ -14,6 +14,10 @@
 .water :global(.water-button) { display: inline-flex; align-items: center; padding: 14px 22px; border-radius: 999px; background: #132c3b; color: #e1f4fd; font-weight: 700; text-decoration: none; }
 .water :global(.water-secondary) { color: #122c3b; font-weight: 700; text-underline-offset: 5px; }
 .water :global(.water-section) { margin: 64px 0; scroll-margin-top: 115px; }
+.water :global(.water-back-link) { display: inline-flex; margin: 18px 0 0; color: #122c3b; font-weight: 700; text-underline-offset: 4px; }
+.water :global(.water-empty-state) { padding: clamp(24px,4vw,44px); border: 1px solid #8bb6c9; border-radius: 24px; background: #f1fafe; }
+.water :global(.water-empty-state) h2 { max-width: 760px; }
+.water :global(.water-empty-state) :global(.water-actions) a { color: #122c3b; font-weight: 700; text-underline-offset: 4px; }
 .water h2 { font-size: clamp(1.8rem,3.4vw,2.7rem); letter-spacing: -.035em; line-height: 1.15; margin: 0 0 22px; color: #132d3c; text-wrap: balance; }
 .water h3 { font-size: 1.15rem; line-height: 1.4; color: #132d3c; }
 .water p { line-height: 1.75; }
