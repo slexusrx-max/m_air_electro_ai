@@ -29,7 +29,7 @@ export async function InformationPage({ slug }: { slug: string }) {
   const p = information[slug];
   const t = await getRequestDictionary();
   const active = t["affiliate.active"] === "true";
-  const sections = active
+  const sections = active && slug !== "affiliate-disclosure"
     ? p.sections.map((s) =>
         ["Current status", "Commercial role", "After approval", "External sites and requests"].includes(
           s.title.en,

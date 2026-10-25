@@ -1,0 +1,23 @@
+import { test, expect } from '@playwright/test';
+for (const locale of ['ro', 'en']) for (const height of [700, 747]) test(`short viewport filters ${locale} ${height}`, async ({page}, info) => {
+ const prefix = locale === 'en' ? '/en' : '';
+ await page.setViewportSize({width:1165,height});
+ await page.goto(prefix+'/search?kind=product&brand=Waterdrop');
+ await page.locator('.filter-options summary').click();
+ await page.locator('select[name=technology]').selectOption('UF');
+ const apply=page.locator('.catalog-filters button[type=submit]');
+ await apply.scrollIntoViewIfNeeded();
+ await expect(apply).toBeInViewport({ratio:1});
+ await apply.click({timeout:5000});
+ await expect(page).toHaveURL(/technology=UF/);
+ await expect(page.locator('.equipment-card')).toHaveCount(1);
+ await expect(page.locator('.equipment-card h3')).toContainText('UA-UF');
+ await page.goto(prefix+'/search?kind=product');
+ await page.locator('.filter-options summary').click();
+ await page.locator('select[name=format]').selectOption('portable');
+ await apply.scrollIntoViewIfNeeded(); await expect(apply).toBeInViewport({ratio:1});
+ await apply.focus(); await page.keyboard.press('Enter');
+ await expect(page).toHaveURL(/format=portable/); await expect(page.locator('.equipment-card')).toHaveCount(2);
+ await page.locator('.catalog-filters > a').scrollIntoViewIfNeeded(); await expect(page.locator('.catalog-filters > a')).toBeInViewport({ratio:1});
+ await page.screenshot({path:info.outputPath('reachable-filters.png'),fullPage:true});
+});

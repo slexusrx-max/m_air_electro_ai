@@ -45,7 +45,7 @@ export function buildMetadata({
           url: image,
           width: 1200,
           height: 630,
-          alt: `${title} | ${siteConfig.name}`,
+          alt: imagePath === "/opengraph-image" ? `${siteConfig.name} - independent equipment discovery` : `${title} | ${siteConfig.name}`,
         },
       ],
     },

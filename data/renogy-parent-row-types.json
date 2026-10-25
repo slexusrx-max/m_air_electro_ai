@@ -1,0 +1,434 @@
+{
+  "https://eu.renogy.com/products/renogy-300-watt-12-volt-monocrystalline-solar-starter-kit": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/12v-60a-dc-to-dc-on-board-battery-charger": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-solar-adaptor-kit": {
+    "variantRows": 10,
+    "feedRows": 11,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/renogy-solar-mc4-y-branch-connectors-mffff-fmmmm-pair": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-solar-mc4y2-branch-connectors-mmfffm-pair": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/20a-240v-ac-to-dc-lithium-iron-phosphate-battery-charger": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/bt-1-bluetooth-module-for-rs232-port": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-mc4-assembly-tool": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-solar-panel-flat-roof-tilt-mount": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/400w-12v-24v-solar-premium-kit-w-rover-40a-charger-controller": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-branch-connectors-solar-mc4-connectors-y-connector-in-pair-mmfffm": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-20a30a40a60a100a-anl-fuse-set-w-fuse": {
+    "variantRows": 5,
+    "feedRows": 6,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/wiring-and-mounting-kit-for-single-solar-panel-setup": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/10a-16a-32a-50a-63a-1p-dc-miniature-circuit-breaker": {
+    "variantRows": 5,
+    "feedRows": 6,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/100w-lightweight-monocrystalline-solar-panel": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/rv-tilt-mount-brackets": {
+    "variantRows": 2,
+    "feedRows": 3,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/wiring-and-mounting-kit-for-three-solar-panels-setup": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/200w-12v-24v-solar-premium-kit-with-w-rover-20a-charger-controller": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-adventurer-30a-pwm-flush-mount-charge-controller-w-lcd-display": {
+    "variantRows": 2,
+    "feedRows": 3,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/renogy-single-side-pole-mount-support-for-solar-panel": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/bt-2-bluetooth-module-for-renogy-products-w-rs485-port": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-solar-panel-mounting-z-bracket-set-of-4": {
+    "variantRows": 3,
+    "feedRows": 4,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/renogy-rover-20-amp-mppt-solar-charge-controller": {
+    "variantRows": 2,
+    "feedRows": 3,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/renogy-mc4-malefemale-solar-panel-cable-connectors-5-pair": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-wanderer-li-30a-pwm-charge-controller": {
+    "variantRows": 2,
+    "feedRows": 3,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/renogy-cable-entry-housing": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/battery-to-charge-controller-tray-cables": {
+    "variantRows": 6,
+    "feedRows": 7,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/rover-li-60-amp-mppt-solar-charge-controller": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/new-edition-voyager-20a-pwm-waterproof-solar-charge-controller": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/rover-li-100-amp-mppt-solar-charge-controller": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/12in-30-5cm-1awg-50mm-copper-battery-interconnect-cable-for-5-16in-lugs": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/dcc30s-12v-30a-dual-input-dc-dc-on-board-battery-charger-with-mppt": {
+    "variantRows": 2,
+    "feedRows": 3,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/12v-100ah-pro-deep-cycle-lithium-iron-phosphate-battery-self-heating-w-bluetooth": {
+    "variantRows": 3,
+    "feedRows": 4,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/core-12v-100ah-trolling-motor-group-24-lifepo4-battery-w-bluetooth": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/12v-20ah-trolling-motor-lithium-iron-phosphate-battery": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-portable-power-station-camping-998wh-backup-lithium-battery-of-1hour-80-fast-recharging": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/220w-lightweight-portable-solar-suitcase": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-battery-shunt-300": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-mounting-brackets-for-12v-200ah-pro-lifepo4-batteries-set-of-4": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/12v-40a-dc-to-dc-battery-charger": {
+    "variantRows": 4,
+    "feedRows": 5,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/renogy-16bb-n-type-175-watt-12v-solar-panel": {
+    "variantRows": 2,
+    "feedRows": 3,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/48v-50ah-lifepo4-lithium-battery": {
+    "variantRows": 3,
+    "feedRows": 4,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/special-offer-41-off-200-watt-12-volt-flexible-monocrystalline-solar-panel": {
+    "variantRows": 6,
+    "feedRows": 7,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/renogy-one-core": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/120w-shadowflux-anti-shading-n-type-solar-panel": {
+    "variantRows": 4,
+    "feedRows": 5,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/renogy-150watt-cigs-flexible-solar-panel": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/member-price-renogy-200w-portable-solar-panel": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-mounting-brackets-for-12v-100ah-pro-lifepo4-batteries-set-of-4": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/12v-300ah-core-series-deep-cycle-lithium-iron-phosphate-battery-w-self-heating-new-version": {
+    "variantRows": 4,
+    "feedRows": 5,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/12v-24v-ip67-50a-dc-dc-battery-charger-with-mppt": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/core-mini-12-8v-300ah-lithium-iron-phosphate-battery-w-low-temperature-protection": {
+    "variantRows": 8,
+    "feedRows": 9,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/400w-12v-flexible-solar-marine-kit-w-rover-li-40-amp-mppt-solar-charge-controller": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/core-12v-200ah-lithium-iron-phosphate-battery-w-bluetooth": {
+    "variantRows": 4,
+    "feedRows": 5,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/100w-12v-monocrystalline-solar-starter-kit-w-wanderer-10a-charge-controller": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/100-watts-12-volts-solar-bundle-kits-with-wanderer-10-amp-charge-controller": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/pro-12v-3000w-hf-inverter-charger": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/pro-12v-2000w-hf-inverter-charger": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renoy-30w-portable-solar-panel": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/pro-s1-12v-120ah-240ah-lifepo4-battery": {
+    "variantRows": 2,
+    "feedRows": 3,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/renogy-300ah-lithium-power-kit": {
+    "variantRows": 4,
+    "feedRows": 5,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/renogy-15-36kwh-off-grid-power-kit-3000w-inverter-60a-mppt": {
+    "variantRows": 2,
+    "feedRows": 3,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/my-solar-plan-motorhome-solution-kit": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/renogy-400ah-lithium-power-kit": {
+    "variantRows": 2,
+    "feedRows": 3,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/1-28kwh-caravan-power-system-2000w-inverter-100ah-lithium-battery": {
+    "variantRows": 0,
+    "feedRows": 1,
+    "singleOptions": 1,
+    "parentRows": 0
+  },
+  "https://eu.renogy.com/products/1-28kwh-caravan-power-system-2000w-inverter-100ah-lithium-battery-1": {
+    "variantRows": 4,
+    "feedRows": 5,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/7-68kwh-off-grid-power-system-3000w-inverter-300ah-lithium-battery-x2": {
+    "variantRows": 2,
+    "feedRows": 3,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/n-type-bifacial-solar-panel": {
+    "variantRows": 3,
+    "feedRows": 4,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/320w-n-type-bifacial-solar-panel-2-pack": {
+    "variantRows": 4,
+    "feedRows": 5,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/core-3000w-12v-pure-sine-wave-high-frequency-hf-inverter-charger": {
+    "variantRows": 6,
+    "feedRows": 7,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/core-2000w-12v-pure-sine-wave-high-frequency-hf-inverter-charger": {
+    "variantRows": 2,
+    "feedRows": 3,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/3-84kwh-caravan-power-system-2000w-inverter-charger-50a-battery-charger": {
+    "variantRows": 2,
+    "feedRows": 3,
+    "singleOptions": 0,
+    "parentRows": 1
+  },
+  "https://eu.renogy.com/products/flex-shadowflux-100w-200w-flexible-solar-panel": {
+    "variantRows": 4,
+    "feedRows": 5,
+    "singleOptions": 0,
+    "parentRows": 1
+  }
+}

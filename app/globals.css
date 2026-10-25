@@ -528,7 +528,8 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .active-filters { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px; }
 .active-filters>a { display:inline-flex; align-items:center; gap:12px; min-height:44px; padding:8px 13px; font-size:12px; border-radius:30px; border:1px solid #8cb1c1; background:#d3e7f0; }
 .active-filters>a:hover { background:#bcd7e3; }
-.catalog-filters { position:sticky; top:110px; border:1px solid #c5d8e0; box-shadow:none; }
+/* Filters can exceed the viewport when expanded: keep Apply/reset in normal page flow. */
+.catalog-filters { position:static; border:1px solid #c5d8e0; box-shadow:none; }
 .filter-options { grid-column:1/-1; min-width:0; }
 .filter-options summary { display:flex; align-items:center; justify-content:space-between; font-size:13px; font-weight:700; cursor:pointer; }
 .filter-options summary::after { content:'+'; }
