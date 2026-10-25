@@ -2,6 +2,8 @@ import type { Equipment } from "./catalog-data";
 import { isCatalogListing } from "./product-presentation";
 export type CatalogQuery = Record<string, string | undefined>;
 export const facetLabels: Record<string, [string, string]> = {
+  technology: ["Water technology", "Tehnologie apa"],
+  installation: ["Water installation", "Instalare apa"],
   voltage: ["Voltage class (V)", "Clasă tensiune (V)"],
   power: ["Power (W)", "Putere (W)"],
   surgePower: ["Surge (W)", "Vârf (W)"],
@@ -17,6 +19,16 @@ export const facetLabels: Record<string, [string, string]> = {
   current: ["Current (A)", "Curent (A)"],
   controllerType: ["Controller type", "Tip regulator"],
 };
+export function normalizeFacet(key: string, value: string) {
+ const normalized = value.trim().toLowerCase().replace(/[\s_]+/g, "-");
+ if (key === "format" && ["portable", "rigid", "flexible"].includes(normalized)) return normalized;
+ if (key === "waveform" && normalized === "pure-sine") return normalized;
+ return value;
+}
+export function facetValueLabel(key: string, value: string, ro: boolean) {
+ const labels: Record<string, [string,string]> = { portable:["Portable","Portabil"],rigid:["Rigid","Rigid"],flexible:["Flexible","Flexibil"],"pure-sine":["Pure sine","Sinus pur"],countertop:["Countertop","Pe blat"],"under-sink":["Under-sink","Sub chiuveta"] };
+ return ["format","waveform","installation"].includes(key) ? labels[value]?.[ro ? 1 : 0] ?? value : value;
+}
 export function normalizeSearch(value: string) {
   return value
     .normalize("NFKD")
@@ -74,7 +86,7 @@ export function filterEquipment(products: Equipment[], raw: CatalogQuery) {
     return (
       terms.every((term) => haystack.includes(term)) &&
       Object.keys(facetLabels).every(
-        (key) => !query[key] || p.facets[key] === query[key],
+        (key) => !query[key] || (p.facets[key] !== undefined && normalizeFacet(key, p.facets[key]) === normalizeFacet(key, query[key]!)),
       ) &&
       (!query.kind || p.kind === query.kind) &&
       (!query.brand || p.brand === query.brand)

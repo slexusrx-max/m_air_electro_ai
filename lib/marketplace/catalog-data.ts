@@ -57,6 +57,10 @@ function item(e: Entry): Equipment {
     productUrl: e.url ?? "",
     affiliateUrl: e.url ?? "",
     technicalSpecs: e.specs ?? {},
+    facets: { ...e.facets, ...(e.category === "water" ? {
+      ...(e.specs?.Technology ? { technology:e.specs.Technology } : {}),
+      ...(e.specs?.Installation === "Countertop" ? { installation:"countertop" } : e.paths.includes("water/under-sink") ? { installation:"under-sink" } : {}),
+    } : {}) },
     tags: [...e.paths, ...Object.values(e.facets)],
     featured: true,
     lastUpdated: e.sourceCheckedAt ?? "2026-09-13",
