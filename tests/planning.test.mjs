@@ -116,6 +116,7 @@ test("Renogy approval is separate from both activation flags, EU verification an
     "lib/affiliate/providers/renogy.ts",
     {
       "server-only": {},
+      "../renogy-parent-links": { renogyParentLinks: {} },
       "../renogy-policy": load("lib/affiliate/renogy-policy.ts"),
       "../suppliers": load("lib/affiliate/suppliers.ts", { "./providers/water": load("lib/affiliate/providers/water.ts") }),
       "@/lib/affiliate/catalog": {
