@@ -2,6 +2,7 @@ import { chromium, expect } from "@playwright/test";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { catalog } from "../lib/affiliate/catalog";
 import { expectSupplierCta } from "../tests/supplier-link-expectations";
+import waterdropReviewedExpansion from "../data/waterdrop-reviewed-expansion.json";
 
 async function main() {
   mkdirSync(".task-work", { recursive: true });
@@ -41,9 +42,10 @@ async function main() {
       targetProviders.includes(product.provider),
     );
 
-    if (products.length !== 9) {
+    const expectedCount = 3 + waterdropReviewedExpansion.length + 3 + 3;
+    if (products.length !== expectedCount) {
       throw new Error(
-        `Expected 9 Waterdrop/PECRON/BLUETTI products, found ${products.length}`,
+        `Expected ${expectedCount} reviewed Waterdrop/PECRON/BLUETTI products, found ${products.length}`,
       );
     }
 
