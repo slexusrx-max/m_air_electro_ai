@@ -3,13 +3,12 @@ import { BrandMark } from "@/components/brand-artwork";
 import { rootCategories } from "@/lib/marketplace/content";
 import { catalog } from "@/lib/affiliate/catalog";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
-import { EnergySchematic } from "@/components/energy-schematic";
 import { ProductCard } from "./product-card";
 import { AffiliateDisclosure } from "./affiliate-disclosure";
 import { WaterPromo } from "./water-promo";
 import { RenogyFeature } from "./renogy-feature";
 import { ProductVisual } from "./product-visual";
-import { starterScenarios, scenarioUrl } from "@/lib/marketplace/selection-guidance";
+import { QuickSolutionStarter } from "./quick-solution-starter";
 import { EquipmentVisual } from "./equipment-visual";
 import { CatalogBrowser } from "./catalog-browser";
 import { localizedPath } from "@/lib/i18n/routing";
@@ -75,12 +74,8 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
     <PublisherTrust ro={ro} compact />
     <section className="application-section" aria-labelledby="application-heading">
       <div className="section-line"><div><p className="eyebrow">{ro ? "PORNEȘTE DE LA NEVOIE" : "START WITH YOUR EVERYDAY"}</p><h2 id="application-heading">{ro ? "Un sistem pentru felul tău de a trăi." : "A system for the way you live."}</h2></div><Link href="/solutions">{ro ? "Toate soluțiile" : "All solutions"} →</Link></div>
-      <p className="small-copy">{ro ? "Exemple calculate, nu kituri sau cazuri de clienți. Modifică valorile pentru aparatele tale." : "Calculated examples, not kits or customer cases. Adjust the inputs for your devices."}</p>
-      <div className="application-grid">{starterScenarios.map(s => <Link key={s.id} href={scenarioUrl(s)}>
-        <EnergySchematic family="backup" className="application-symbol" />
-        <h3>{s.title[ro ? "ro" : "en"]}</h3><p>{s.loads[ro ? "ro" : "en"]} = {s.load} W × {s.hours} h.</p>
-        <span>{ro ? "Calculează și vezi modelele" : "Calculate and see models"} →</span>
-      </Link>)}</div>
+      <p className="small-copy">{ro ? "Alege un exemplu, adaptează consumul și autonomia, apoi vezi ce modele acoperă cerința." : "Choose an example, adjust the load and runtime, then see which models meet the requirement."}</p>
+      <QuickSolutionStarter ro={ro} />
       <p><Link href="/methodology">{ro ? "Ipoteze, criterii și metodologia selecției" : "Assumptions, criteria and selection methodology"}</Link></p>
     </section>
     <section aria-labelledby="featured-models">
