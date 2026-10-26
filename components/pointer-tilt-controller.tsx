@@ -6,6 +6,7 @@ const TILT_SELECTOR = [
   "[data-pointer-tilt]",
   ".equipment-card",
   ".supplier-entry-card",
+  "[data-feed-sku]",
   ".discovery-card",
   ".info-card",
   ".finder-recommendation",
@@ -25,14 +26,18 @@ export function PointerTiltController() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     function update(event: PointerEvent) {
+      if (event.pointerType === "touch") return;
       const target = (event.target as Element | null)?.closest<HTMLElement>(TILT_SELECTOR);
       if (!target) return;
       target.setAttribute("data-pointer-tilt", "");
       const bounds = target.getBoundingClientRect();
       const x = (event.clientX - bounds.left) / bounds.width;
       const y = (event.clientY - bounds.top) / bounds.height;
-      target.style.setProperty("--tilt-x", `${((0.5 - y) * 12).toFixed(2)}deg`);
-      target.style.setProperty("--tilt-y", `${((x - 0.5) * 14).toFixed(2)}deg`);
+      // Reach a visible tilt before the edge, capped at seven degrees per axis.
+      const tiltX = Math.max(-7, Math.min(7, (0.5 - y) * 20));
+      const tiltY = Math.max(-7, Math.min(7, (x - 0.5) * 20));
+      target.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
+      target.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
       target.style.setProperty("--tilt-lift", "-3px");
       target.style.setProperty("--tilt-light-x", `${(x * 100).toFixed(1)}%`);
       target.style.setProperty("--tilt-light-y", `${(y * 100).toFixed(1)}%`);
