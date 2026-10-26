@@ -27,6 +27,8 @@ Public RO/EN URL rules, search-intent priorities, worked energy examples and the
 
 ## Product modules
 
+The 26 October UX/CRO update brings all 365 Renogy feed identities into main search and category discovery where the official feed title supports a classification. Exact canonical SKU matches appear once; raw supplier entries remain labelled and are not eligible for technical filters or comparison. `/renogy/catalog` retains the complete index. Main discovery is paginated; reviewed-only and guide-only filters remain available. Current prices still require a fresh official feed, independently of affiliate tracking. See [implementation and verification notes](docs/ux-cro-2026-10-26.md).
+
 The [full Renogy feed catalog](docs/renogy-365-price-catalog-2026-10-26.md) exposes all 365 exact SKU identities at `/renogy/catalog` (also in English), with 48 entries per page and model/SKU search. These entries remain separate from individually reviewed selections. Only a fresh official feed may supply the current EUR price; no original price, discount or stock is displayed.
 
 The [15 October UX redesign](docs/ux-redesign-2026-10-15.md) makes equipment browsing and guided selection the two homepage entry points. Marketplace opens a filterable catalog, Renogy categories have no decorative numbering, and a shared comparison tray preserves selections across RO/EN switching. Finder drafts use bounded, non-sensitive URL parameters; filtered/draft URLs remain noindex. Existing supplier gates and Waterdrop configuration are unchanged.

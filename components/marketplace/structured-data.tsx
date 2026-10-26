@@ -29,7 +29,7 @@ export async function ProductPageStructuredData({
         "@context": "https://schema.org",
         "@type": "WebPage",
         name: product.title?.[locale === "ro" ? "ro" : "en"] ?? product.name,
-        description: product.summary?.[locale === "ro" ? "ro" : "en"] ?? product.description,
+        description: `${product.title?.[locale === "ro" ? "ro" : "en"] ?? product.name}. ${product.summary?.[locale === "ro" ? "ro" : "en"] ?? product.description}`,
         url: absoluteUrl(localizedPath(`/marketplace/products/${product.slug}`, locale)),
         inLanguage: locale,
       }}

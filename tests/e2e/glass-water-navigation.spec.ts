@@ -11,16 +11,14 @@ for (const locale of ["ro", "en"] as const) for (const width of [320, 390, 768, 
     const header = page.locator(".commerce-header");
     const desktop = width > 1300;
     if (!desktop) await page.getByRole("button", { name: locale === "ro" ? "Meniu" : "Menu", exact: true }).click();
-    const navigation = page.locator(desktop ? ".desktop-nav" : "#mobile-menu");
-    const water = navigation.locator(".water-nav-link");
+    else await page.getByRole('button',{name:'Marketplace menu',exact:true}).click();
+    const navigation = page.locator(desktop ? "#mega-menu" : "#mobile-menu");
+    const water = navigation.locator(desktop ? '.mega-water' : ".water-nav-link");
     await expect(water).toBeVisible();
     await expect(water).toHaveAttribute("href", localizedPath("/marketplace/water", locale));
-    await expect(water).toHaveCSS("text-transform", "uppercase");
-    for (const label of await navigation.locator(desktop ? ".nav-pair>a" : ":scope>details>summary,:scope>.mobile-primary-link").all()) {
-      await expect(label).toHaveCSS("text-transform", "uppercase");
-    }
+    await expect(page.locator(desktop ? '.desktop-nav .nav-pair>a' : '#mobile-menu>details>summary')).toHaveCount(4);
     if (desktop) {
-      const nav = (await navigation.boundingBox())!;
+      const nav = (await page.locator('.desktop-nav').boundingBox())!;
       const actions = (await page.locator(".header-actions").boundingBox())!;
       expect(nav.x + nav.width <= actions.x + 1 || nav.y >= actions.y + actions.height - 1).toBe(true);
     }
@@ -40,12 +38,12 @@ for (const locale of ["ro", "en"] as const) for (const width of [320, 390, 768, 
         await expect(card).toHaveCSS("background-color", "rgba(0, 0, 0, 0)");
         await expect(card).toHaveCSS("opacity", "1");
       }
-      for (const card of [page.locator(".hero-model-tile").first(), page.locator(".category-tiles>a").first()]) {
+      for (const card of await page.locator('.hero-model-tile:visible,.category-tiles>a').all()) {
         await card.hover();
         await expect.poll(() => card.evaluate(el => Number(getComputedStyle(el).backgroundColor.match(/,\s*([.\d]+)\)$/)?.[1] ?? 1))).toBeLessThan(.3);
         await page.mouse.move(0, 0);
       }
-      const photos = page.locator(".hero-model-tile img,.category-preview img");
+      const photos = page.locator(".hero-model-tile:visible img,.category-preview img");
       for (const photo of await photos.all()) {
         await photo.scrollIntoViewIfNeeded();
         await expect.poll(() => photo.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
@@ -56,7 +54,7 @@ for (const locale of ["ro", "en"] as const) for (const width of [320, 390, 768, 
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
       const name = route === "/" ? "home" : "marketplace";
-      await page.locator(".discovery-hero").screenshot({ path: info.outputPath(`${name}-hero-${locale}-${width}.png`) });
+      await page.locator(route==='/'?'.discovery-hero':'.marketplace-intro').screenshot({ path: info.outputPath(`${name}-hero-${locale}-${width}.png`) });
       await page.locator("#equipment-categories").screenshot({ path: info.outputPath(`${name}-categories-${locale}-${width}.png`) });
     }
   });

@@ -91,6 +91,7 @@ test("equipment classes never claim a dated supplier verification", async ({ pag
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBeTruthy();
     }
     await page.goto(`/compare?ids=renogy-mini-100,${classes[0].id}`);
-    await expect(page.getByRole("cell", { name: "Nu se aplică — clasă de echipament", exact: true })).toBeVisible();
+    await expect(page.locator(".safety-note")).toContainText("Selecția combină categorii diferite sau ghiduri de clasă");
+    await expect(page.locator(".comparison-scroll")).toHaveCount(0);
   }
 });

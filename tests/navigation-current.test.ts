@@ -15,11 +15,14 @@ const cases: [string,string|undefined][] = [
 ];
 for(const locale of ['ro','en'] as const) test(`exactly one owning navigation section ${locale}`,()=>{
  const groups=navigation(locale);
- const water=groups.filter(group=>group.href==='/marketplace/water');
- assert.equal(water.length,1);
- assert.equal(water[0].label,locale==='ro'?'Apă și reziliență':'Water & Resilience');
+ assert.deepEqual(groups.map(group=>group.href), ['/marketplace','/marketplace/find-my-solution','/learn','/about']);
+ const water=groups[0].children.find(group=>group.href==='/marketplace/water');
+ assert.ok(water);
  assert.ok(groups.every(group=>group.label!=='Pure water filters'));
- for(const [path,expected] of cases)assert.equal(currentNavigationSection((locale==='en'?'/en':'')+path,groups),expected,path);
+ for(const [path,previous] of cases) {
+  const expected = path==='/about' || path==='/partnerships' ? '/about' : previous==='/marketplace/water' ? '/marketplace' : ['/solutions','/calculators'].includes(previous??'') || path==='/compare' ? '/marketplace/find-my-solution' : ['/experts','/business'].includes(previous??'') ? '/about' : previous;
+  assert.equal(currentNavigationSection((locale==='en'?'/en':'')+path,groups),expected,path);
+ }
  function check(items:typeof groups[number]['children']) { for(const item of items){assert.ok(currentNavigationSection(item.href,groups),item.href); if(item.children)check(item.children);} }
  check(groups);
 });

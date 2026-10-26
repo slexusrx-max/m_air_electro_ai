@@ -14,8 +14,8 @@ export async function generateMetadata() {
       locale,
       title: ro ? "Caută echipamente" : "Search equipment",
       description: ro
-        ? "Caută în catalog după nume, marcă, caracteristici, tensiune, putere, capacitate și utilizare."
-        : "Search names, brands, specifications, voltage, power, capacity and applications in the curated catalog.",
+        ? "Caută modele documentate și poziții din catalogul furnizorului după nume, marcă sau SKU. Filtrează numai caracteristici cunoscute."
+        : "Search documented models and supplier catalog entries by name, brand or SKU. Filter only known specifications.",
       path: "/search",
     }),
     robots: { index: false, follow: true },
@@ -27,7 +27,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<Cat
   const query = cleanQuery(await searchParams);
   const related = searchContent(query.q ?? "");
   return <PlatformShell><main className="commerce-page">
-    <Intro title={ro ? "Caută în catalog și ghiduri" : "Search equipment and knowledge"} description={ro ? "Modele, categorii, soluții și ghiduri. Încearcă: 100 Ah, 2000 W, Renogy, RV sau MPPT." : "Models, categories, solutions and guides. Try: 100 Ah, 2000 W, Renogy, RV or MPPT."} />
+    <Intro title={ro ? "Caută în catalog și ghiduri" : "Search equipment and knowledge"} description={ro ? "Modele documentate, SKU-uri din feed și ghiduri. Caută un nume, o marcă sau codul exact al furnizorului." : "Documented models, feed SKUs and guides. Search a name, brand or exact supplier code."} />
     <CatalogBrowser products={catalog} query={query} path="/search" facets={Object.keys(facetLabels)} dictionary={await getRequestDictionary()} ro={ro} />
     {query.q && <section className="search-content" aria-label={ro ? "Rezultate în conținut" : "Content results"}>
       <h2>{ro ? "Categorii, soluții și ghiduri" : "Categories, solutions and guides"} ({related.length})</h2>

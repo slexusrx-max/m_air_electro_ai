@@ -26,7 +26,7 @@ test("visual families stay distinct, including nested categories and products", 
   assert.equal(visualFamily("/marketplace/products/renogy-core-mini-100ah"), "batteries");
   assert.equal(visualFamily("/marketplace/products/renogy-n-type-200w"), "solar");
   assert.equal(visualFamily("/about"), "brand");
-  for (const locale of ["ro", "en"] as const) assert.deepEqual(navigation(locale).map(g => g.href), ["/marketplace", "/marketplace/water", "/solutions", "/calculators", "/learn", "/experts", "/business"]);
+  for (const locale of ["ro", "en"] as const) assert.deepEqual(navigation(locale).map(g => g.href), ["/marketplace", "/marketplace/find-my-solution", "/learn", "/about"]);
 });
 test("solar calculator rejects overflow and unsafe numeric precision", () => {
   assert.equal(solarEstimate(Number.MAX_VALUE, .1, .01), null);

@@ -11,7 +11,10 @@ import {
 import type { Equipment } from "@/lib/marketplace/catalog-data";
 import type { Dictionary } from "@/lib/i18n/types";
 import { localizedPath } from "@/lib/i18n/routing";
-export function CatalogBrowser({
+import { discoverEquipment, supplierSkuCount } from "@/lib/marketplace/supplier-discovery";
+import { getPublicRenogyFeedPrices } from "@/lib/affiliate/price-feed";
+import { SupplierEntryCard } from "./supplier-entry-card";
+export async function CatalogBrowser({
   products,
   query: raw,
   path,
@@ -27,7 +30,15 @@ export function CatalogBrowser({
   ro: boolean;
 }) {
   const query = cleanQuery(raw);
-  const results = filterEquipment(products, query);
+  const allResults = discoverEquipment(products, query, path);
+  const results = allResults.flatMap(result => result.type === "reviewed" ? [result.product] : []);
+  const pageSize = query.kind === "product" || query.kind === "equipment-class" ? 48 : 24;
+  const pages = Math.max(1, Math.ceil(allResults.length / pageSize));
+  const page = Math.max(1, Math.min(pages, Number.parseInt(query.page ?? "1", 10) || 1));
+  const visible = allResults.slice((page - 1) * pageSize, page * pageSize);
+  const prices = visible.some(result => result.type === "supplier") ? await getPublicRenogyFeedPrices() : {};
+  const supplierCount = allResults.length - results.length;
+  const pageHref = (value: number) => `${path}?${new URLSearchParams(Object.entries({ ...query, page: String(value) }).filter((entry): entry is [string, string] => Boolean(entry[1])))}`;
   const facetProducts = filterEquipment(products, { q: query.q, kind: query.kind, brand: query.brand });
   const modelCount = results.filter(product => product.kind === "product").length;
   const classCount = results.length - modelCount;
@@ -51,13 +62,14 @@ export function CatalogBrowser({
         <label>
           {ro ? "Tip înregistrare" : "Record type"}
           <select name="kind" defaultValue={query.kind ?? ""}>
-            <option value="">{ro ? "Toate" : "All"}</option>
+            <option value="">{ro ? "Modele și catalog furnizor" : "Models and supplier catalog"}</option>
             <option value="product">
               {ro ? "Modele reale" : "Real models"}
             </option>
             <option value="equipment-class">
               {ro ? "Clase de echipamente" : "Equipment classes"}
             </option>
+            <option value="supplier-entry">{ro ? "Doar catalog furnizor" : "Supplier catalog only"}</option>
           </select>
         </label>
         <label>
@@ -112,25 +124,24 @@ export function CatalogBrowser({
           {active.map(([key, value]) => {
             const params = new URLSearchParams([...active, ...(query.sort ? [["sort", query.sort]] : [])].filter(([other]) => other !== key).map(([k, v]) => [k, v!]));
             const label = key === "q" ? (ro ? "Căutare" : "Search") : key === "kind" ? (ro ? "Tip" : "Type") : key === "brand" ? (ro ? "Marcă" : "Brand") : facetLabels[key]?.[ro ? 1 : 0] ?? key;
-            const display = value === "product" ? (ro ? "Modele reale" : "Real models") : value === "equipment-class" ? (ro ? "Clase de echipamente" : "Equipment classes") : value;
+            const display = value === "product" ? (ro ? "Modele reale" : "Real models") : value === "equipment-class" ? (ro ? "Clase de echipamente" : "Equipment classes") : value === "supplier-entry" ? (ro ? "Catalog furnizor" : "Supplier catalog") : value;
             return <Link key={key} href={`${path}${params.size ? `?${params}` : ""}`} aria-label={`${ro ? "Elimină filtrul" : "Remove filter"}: ${label} ${display}`}>{label}: {display} <span aria-hidden="true">×</span></Link>;
           })}
           <Link href={path}>{ro ? "Șterge toate" : "Clear all"}</Link>
         </nav>}
         <p className="result-count" role="status">
-          {results.length} {ro ? "rezultate" : "results"}
+          {allResults.length} {ro ? "rezultate" : "results"}
           {query.q ? ` · “${query.q}”` : ""}
         </p>
+        <p className="small-copy catalog-source-summary">{ro ? `${supplierCount} poziții din catalogul furnizorului. Index Renogy: ${supplierSkuCount} SKU-uri, nu ${supplierSkuCount} modele evaluate.` : `${supplierCount} supplier catalog entries. Renogy index: ${supplierSkuCount} SKUs, not ${supplierSkuCount} reviewed models.`} <Link href="/renogy/catalog">{ro ? "Index complet" : "Complete index"} →</Link></p>
         <p className="small-copy" data-testid="catalog-record-types">
           {ro
             ? `Modele reale: ${modelCount}. Ghiduri de clasă: ${classCount}. Ghidurile explică cerințele și nu reprezintă oferte de cumpărare.`
             : `Real models: ${modelCount}. Equipment class guides: ${classCount}. Guides explain requirements and are not purchase offers.`}
         </p>
-        {results.length ? (
+        {allResults.length ? (
           <div className="product-grid">
-            {results.map((p) => (
-              <ProductCard key={p.id} product={p} dictionary={dictionary} />
-            ))}
+            {visible.map(result => result.type === "reviewed" ? <ProductCard key={result.product.id} product={result.product} dictionary={dictionary} /> : <SupplierEntryCard key={result.entry.sku} entry={result.entry} price={prices[result.entry.sku]} ro={ro} />)}
           </div>
         ) : (
           <div className="content-panel">
@@ -145,6 +156,11 @@ export function CatalogBrowser({
             </Link>
           </div>
         )}
+        {pages > 1 && <nav className="catalog-pagination" aria-label={ro ? "Pagini rezultate" : "Result pages"}>
+          {page > 1 && <Link href={pageHref(page - 1)}>← {ro ? "Anterior" : "Previous"}</Link>}
+          <span>{ro ? "Pagina" : "Page"} {page}/{pages}</span>
+          {page < pages && <Link href={pageHref(page + 1)}>{ro ? "Următor" : "Next"} →</Link>}
+        </nav>}
       </div>
     </section>
   );

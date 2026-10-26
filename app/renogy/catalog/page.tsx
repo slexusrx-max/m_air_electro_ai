@@ -7,6 +7,7 @@ import { buildMetadata } from "@/lib/metadata";
 import { getPublicRenogyFeedPrices } from "@/lib/affiliate/price-feed";
 import feed from "@/data/renogy-feed-variants.json";
 import { localizedPath } from "@/lib/i18n/routing";
+import { supplierEntryName } from "@/lib/marketplace/supplier-discovery";
 import styles from "./catalog.module.css";
 
 const PAGE_SIZE = 48;
@@ -78,7 +79,7 @@ export default async function RenogyCatalogPage({ searchParams }: Props) {
           const price = prices[product.sku];
           return <article key={product.sku} className={styles.card} data-feed-sku={product.sku} data-price-status={price ? "fresh" : "unavailable"}>
             <div className={styles.cardTop}><span>RENOGY EU</span><span>SKU {product.sku}</span></div>
-            <h2>{product.name}</h2>
+            <h2>{supplierEntryName(product)}</h2>
             <p className={styles.variant}>{product.kind === "variant" ? (ro ? "Variantă feed" : "Feed variant") : product.kind === "parent" ? (ro ? "Poziție principală feed" : "Feed parent entry") : (ro ? "Poziție unică feed" : "Single feed entry")}</p>
             {price ? <div className={styles.price}>
               <strong>{new Intl.NumberFormat(ro ? "ro-RO" : "en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 2 }).format(price.amount)}</strong>

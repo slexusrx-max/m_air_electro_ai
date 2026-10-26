@@ -40,10 +40,14 @@ export function SiteHeader({
       if (ref.current && !ref.current.contains(e.target as Node)) {
         setOpen(null);
         setMobile(false);
+        const account = ref.current.querySelector<HTMLDetailsElement>('.account-menu');
+        if (account) account.open = false;
       }
     }
     function escape(e: KeyboardEvent) {
       if (e.key === "Escape") {
+        const account = ref.current?.querySelector<HTMLDetailsElement>('.account-menu[open]');
+        if (account) { account.open = false; account.querySelector<HTMLElement>('summary')?.focus(); }
         setOpen(null);
         setMobile(false);
         ref.current
@@ -154,9 +158,9 @@ export function SiteHeader({
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg><span>{ro ? "Caută" : "Search"}</span>
           </Link>
           {languages}
-          <div className="desktop-account-actions">
+          <details className="desktop-account-actions account-menu"><summary>{ro ? "Cont" : "Account"}</summary><div>
             {profile ? <><Link href={dashboardHref}>{ro ? "Cont" : "Account"}</Link><form action={signOut}><button>{ro ? "Deconectare" : "Sign out"}</button></form></> : <><Link href="/login">{ro ? "Autentificare" : "Log in"}</Link><Link className="register-link" href="/register">{ro ? "Creează cont" : "Create account"}</Link></>}
-          </div>
+          </div></details>
           <button
             className="mobile-menu-toggle"
             disabled={!hydrated}
@@ -223,9 +227,6 @@ export function SiteHeader({
           className="mobile-nav"
           aria-label={ro ? "Navigație mobilă" : "Mobile navigation"}
         >
-          <div className="mobile-account-actions">
-            {profile ? <Link href={dashboardHref} onClick={() => setMobile(false)}>{ro ? "Contul meu" : "My account"}</Link> : <><Link href="/login" onClick={() => setMobile(false)}>{ro ? "Autentificare" : "Log in"}</Link><Link href="/register" onClick={() => setMobile(false)}>{ro ? "Creează cont" : "Create account"}</Link></>}
-          </div>
           {groups.map((g) =>
             g.children.length ? (
               <details name="mobile-section" key={g.href}>
@@ -270,9 +271,12 @@ export function SiteHeader({
           <Link href="/compare" onClick={() => setMobile(false)}>
             {ro ? "Compară echipamente" : "Compare equipment"}
           </Link>
-          <Link href="/about" onClick={() => setMobile(false)}>
-            {ro ? "Despre noi" : "About"}
+          <Link href="/marketplace/water" className="water-nav-link" onClick={() => setMobile(false)}>
+            {ro ? "Apă și reziliență" : "Water & Resilience"}
           </Link>
+          <div className="mobile-account-actions">
+            {profile ? <Link href={dashboardHref} onClick={() => setMobile(false)}>{ro ? "Contul meu" : "My account"}</Link> : <><Link href="/login" onClick={() => setMobile(false)}>{ro ? "Autentificare" : "Log in"}</Link><Link href="/register" onClick={() => setMobile(false)}>{ro ? "Creează cont" : "Create account"}</Link></>}
+          </div>
           {profile && (
             <form action={signOut}>
               <button>{ro ? "Deconectare" : "Sign out"}</button>

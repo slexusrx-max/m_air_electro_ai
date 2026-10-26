@@ -4,7 +4,7 @@ import styles from "./brand-artwork.module.css";
 
 export function BrandMark() {
   return <span className={styles.mark} data-brand-mark aria-hidden="true">
-    <Image className={styles.image} src={brandArtwork.src} alt="" width={1254} height={1254} sizes="96px" />
+    <Image className={styles.image} src={brandArtwork.src} alt="" width={1254} height={1254} sizes="96px" loading="eager" />
   </span>;
 }
 

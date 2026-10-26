@@ -4,8 +4,9 @@ import Link from "@/components/localized-link";
 import { createContext, useContext, useSyncExternalStore, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { stripLocale } from "@/lib/i18n/routing";
-const Products = createContext<Record<string, string>>({});
-export function ComparisonProvider({ products, children }: { products: Record<string, string>; children: ReactNode }) {
+type ComparisonProduct = { name: string; category: string };
+const Products = createContext<Record<string, ComparisonProduct>>({});
+export function ComparisonProvider({ products, children }: { products: Record<string, ComparisonProduct>; children: ReactNode }) {
   return <Products.Provider value={products}>{children}</Products.Provider>;
 }
 const key = "mair-compare";
@@ -31,7 +32,8 @@ function save(ids: string[]) {
 function useSelection() {
   const saved = useSyncExternalStore(subscribe, snapshot, () => "");
   const products = useContext(Products);
-  const ids = [...new Set(saved.split(","))].filter(id => Object.hasOwn(products, id)).slice(0, 4);
+  const valid = [...new Set(saved.split(","))].filter(id => Object.hasOwn(products, id));
+  const ids = valid.filter(id => products[id].category === products[valid[0]]?.category).slice(0, 4);
   return { ids, products };
 }
 export function ComparisonTray({ ro }: { ro: boolean }) {
@@ -48,7 +50,7 @@ export function ComparisonTray({ ro }: { ro: boolean }) {
   return <aside className="comparison-tray" aria-label={ro ? "Produse pentru comparație" : "Products to compare"}>
     <div className="comparison-tray-heading"><strong aria-live="polite">{ro ? "Comparația ta" : "Your comparison"} <span>{ids.length}/4</span></strong><Link href={`/compare?ids=${encodeURIComponent(ids.join(","))}`}>{ro ? "Compară" : "Compare"} →</Link></div>
     {pathname.startsWith("/marketplace/water") && <button type="button" aria-expanded={!compact} onClick={() => setExpanded(!expanded)}>{ro ? (compact ? "Arată selecția" : "Restrânge selecția") : (compact ? "Show selection" : "Collapse selection")}</button>}
-    <ul hidden={compact}>{ids.map(id => <li key={id}><span>{products[id]}</span><button onClick={() => remove(id)} aria-label={`${ro ? "Elimină" : "Remove"} ${products[id]}`}>×</button></li>)}</ul>
+    <ul hidden={compact}>{ids.map(id => <li key={id}><span>{products[id].name}</span><button onClick={() => remove(id)} aria-label={`${ro ? "Elimină" : "Remove"} ${products[id].name}`}>×</button></li>)}</ul>
     {!compact && ids.length === 1 && <p>{ro ? "Adaugă încă un produs pentru comparație." : "Add one more product to compare."}</p>}
     {error && <p role="alert">{error}</p>}
   </aside>;
@@ -64,11 +66,15 @@ export function CompareControl({
   id: string;
   ro?: boolean;
 }) {
-  const { ids } = useSelection();
-  const saved = ids.join(",");
+  const { ids, products } = useSelection();
   const active = ids.includes(id);
   const [message, setMessage] = useState("");
   function toggle() {
+    if (!products[id]) return;
+    if (!active && ids.length && products[ids[0]].category !== products[id].category) {
+      setMessage(ro ? "Compară aceeași categorie. Elimină selecția curentă din bara de comparație pentru a începe alta." : "Compare within one category. Remove the current tray selection to start another.");
+      return;
+    }
     const next = active ? ids.filter((v) => v !== id) : [...ids, id];
     if (next.length > 4) {
       setMessage(
@@ -90,17 +96,13 @@ export function CompareControl({
       );
     }
   }
+  if (!products[id]) return null;
   return (
     <div className="compare-control">
       <button type="button" aria-pressed={active} onClick={toggle}>
         {active ? "✓ " : "+ "}
         {ro ? "Compară" : "Compare"}
       </button>
-      {ids.length > 0 && (
-        <Link href={`/compare?ids=${encodeURIComponent(saved)}`}>
-          {ro ? "Vezi" : "View"} ({ids.length}) →
-        </Link>
-      )}
       {message && <p role="status">{message}</p>}
     </div>
   );

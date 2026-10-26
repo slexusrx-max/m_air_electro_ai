@@ -36,3 +36,15 @@ export function batteryCandidates(products: Equipment[], minimumWh: number, volt
     Number(p.facets.capacityWh) >= minimumWh && Number(p.facets.voltage) === voltage)
     .sort((a, b) => Number(a.facets.capacityWh) - Number(b.facets.capacityWh)).slice(0, 4);
 }
+
+/** The tightest adequate capacity is the best match; reserve is not a price claim. */
+export function stationRecommendations(products: Equipment[], region: string, requirements: NonNullable<ReturnType<typeof estimateSystem>>) {
+  const candidates = stationCandidates(products, region, requirements);
+  return candidates.map((product, index) => ({
+    product,
+    role: index === 0 ? "best" as const : index === candidates.length - 1 && Number(product.facets.capacityWh) > Number(candidates[0].facets.capacityWh) ? "reserve" as const : "alternative" as const,
+    reserveWh: Math.round(Number(product.facets.capacityWh) - requirements.batteryWh),
+    reservePercent: Math.floor((Number(product.facets.capacityWh) / requirements.batteryWh - 1) * 100),
+    powerReserveW: Math.round(Number(product.facets.power) - requirements.inverterW),
+  }));
+}

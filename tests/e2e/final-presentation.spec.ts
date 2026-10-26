@@ -146,7 +146,7 @@ for (const width of [390, 1440]) {
       await page.goto(path, { waitUntil: "load" });
       await expect(page.locator("h1")).toBeVisible();
       if (path === "/") {
-        const hero = page.locator(".hero-equipment-heading img");
+        const hero = page.locator("header [data-brand-mark] img");
         await expect(hero).toBeVisible();
         await expect(hero).toHaveAttribute("width", "1254");
         await expect(hero).toHaveAttribute("height", "1254");
@@ -200,7 +200,7 @@ for (const width of [390, 1440]) {
         return url.searchParams.get("url") ?? url.pathname;
       });
       expect(requestedAssets.filter((asset) => /green-energy-hero\.png|future-space-energy\.png/.test(asset))).toEqual([]);
-      if (path === "/marketplace") await expect(page.locator(".hero-equipment-heading img")).toHaveAttribute("src", /m-air-electro-ai-turquoise/);
+      if (path === "/marketplace") await expect(page.locator("header [data-brand-mark] img")).toHaveAttribute("src", /m-air-electro-ai-turquoise/);
       expect(evidence.navigation).toHaveLength(1);
       expect(evidence.resources.length).toBeGreaterThan(0);
     });

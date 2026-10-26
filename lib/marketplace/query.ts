@@ -1,5 +1,6 @@
 import type { Equipment } from "./catalog-data";
 import { isCatalogListing } from "./product-presentation";
+import { productFeedIdentity } from "@/lib/affiliate/pricing";
 export type CatalogQuery = Record<string, string | undefined>;
 export const facetLabels: Record<string, [string, string]> = {
   technology: ["Water technology", "Tehnologie apa"],
@@ -70,6 +71,7 @@ export function filterEquipment(products: Equipment[], raw: CatalogQuery) {
         p.name,
         p.title.ro,
         p.brand,
+        productFeedIdentity(p)?.merchantSku ?? "",
         p.category,
         p.summary.en,
         p.summary.ro,

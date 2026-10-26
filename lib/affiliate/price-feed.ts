@@ -2,6 +2,7 @@ import "server-only";
 
 import { gunzipSync } from "node:zlib";
 import { catalog } from "./catalog";
+import renogyFeed from "@/data/renogy-feed-variants.json";
 import {
   pricesFromSnapshots,
   pricesBySkuFromSnapshots,
@@ -74,8 +75,8 @@ function parseOfficialFeed(
     const merchantSku = row[skuIndex]?.trim();
     const rawAmount = row[priceIndex]?.trim();
     const currency = row[currencyIndex]?.trim();
-    if (!/^\d+$/.test(merchantSku ?? "") || !/^\d+(?:\.\d{1,2})?$/.test(rawAmount ?? "")) return [];
-    return [{ merchantSku, amount: Number(rawAmount), currency }];
+    if (!/^\d+$/.test(merchantSku ?? "")) return [];
+    return [{ merchantSku, amount: /^\d+(?:\.\d{1,2})?$/.test(rawAmount ?? "") ? Number(rawAmount) : Number.NaN, currency }];
   });
   return records.length ? { provider, catalogId, retrievedAt, records } : null;
 }
@@ -139,6 +140,7 @@ export async function getPublicSupplierPrices(): Promise<Record<string, PublicSu
 }
 
 export async function getPublicRenogyFeedPrices(): Promise<Record<string, PublicSupplierPrice>> {
-  return pricesBySkuFromSnapshots(await freshSnapshots(), "renogy");
+  const prices = pricesBySkuFromSnapshots(await freshSnapshots(), "renogy");
+  return Object.fromEntries(renogyFeed.products.flatMap(entry => prices[entry.sku] ? [[entry.sku, prices[entry.sku]]] : []));
 }
 

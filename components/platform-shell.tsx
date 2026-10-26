@@ -8,7 +8,6 @@ import { supplierLink } from "@/lib/affiliate/providers";
 import { catalog } from "@/lib/affiliate/catalog";
 import { CommercialNotice } from "@/components/marketplace/commercial-notice";
 import { ComparisonProvider, ComparisonTray } from "@/components/marketplace/compare-control";
-import { BrandArtwork } from "@/components/brand-artwork";
 import { getPublicSupplierPrices } from "@/lib/affiliate/price-feed";
 type PlatformShellProps = {
   children: React.ReactNode;
@@ -48,11 +47,10 @@ export async function PlatformShell({
         locale={locale}
         groups={navigation(locale)}
       />
-      {mobileBrandIntro && <div className="mobile-home-brand" data-mobile-brand-intro><BrandArtwork eager /></div>}
       <CommercialNotice ro={locale === "ro"} />
       <div id="main-content" tabIndex={-1} className={contentClassName}>
         <SupplierLinksProvider links={supplierLinks} prices={supplierPrices}>
-          <ComparisonProvider products={Object.fromEntries(catalog.map(p => [p.id, locale === "ro" ? p.title.ro : p.name]))}>
+          <ComparisonProvider products={Object.fromEntries(catalog.filter(p => p.kind === "product").map(p => [p.id, { name: locale === "ro" ? p.title.ro : p.name, category: p.category }]))}>
           {children}
           <ComparisonTray ro={locale === "ro"} />
           </ComparisonProvider>

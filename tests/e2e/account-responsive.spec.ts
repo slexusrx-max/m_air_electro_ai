@@ -57,6 +57,7 @@ for (const width of [320,360,390,430,1440]) test(`account navigation ${width}`, 
   await page.goto("/");
   const nav = width < 1301 ? page.locator("#mobile-menu") : page.locator(".desktop-account-actions");
   if (width < 1301) await page.getByRole("button",{name:"Meniu",exact:true}).click();
+  else await page.locator('.account-menu>summary').click();
   await expect(nav.getByRole("link",{name:"Autentificare",exact:true})).toBeVisible();
   await page.screenshot({path:info.outputPath(`account-menu-${width}.png`)});
   await nav.getByRole("link",{name:"Creează cont",exact:true}).click();

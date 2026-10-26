@@ -4,6 +4,7 @@ import { Intro, LinkGrid } from "@/components/marketplace/shared";
 import { guides, learnHubs } from "@/lib/marketplace/guides";
 import { getRequestLocale } from "@/lib/i18n/request";
 import { buildMetadata } from "@/lib/metadata";
+import { catalog } from "@/lib/affiliate/catalog";
 export async function generateMetadata() {
   const ro = (await getRequestLocale()) === "ro";
   return buildMetadata({
@@ -59,6 +60,13 @@ export default async function Page() {
             summary: g.intro,
           }))}
         />
+        <details className="content-panel finder-help" data-testid="equipment-class-guides">
+          <summary>{ro ? "Ghiduri pentru clase de echipamente" : "Equipment class guides"}</summary>
+          <p>{ro ? "Referințe de planificare, nu modele comerciale sau oferte de cumpărare." : "Planning references, not commercial models or purchase offers."}</p>
+          <ul>{catalog.filter(product => product.kind === "equipment-class").map(product => <li key={product.id}>
+            <Link href={`/marketplace/products/${product.slug}`}>{ro ? product.title.ro : product.name}</Link>
+          </li>)}</ul>
+        </details>
       </main>
     </PlatformShell>
   );

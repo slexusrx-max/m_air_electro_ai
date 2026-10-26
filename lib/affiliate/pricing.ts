@@ -70,6 +70,7 @@ export function isFreshPriceTimestamp(
   retrievedAt: string,
   now = Date.now(),
 ): boolean {
+  if (typeof retrievedAt !== "string") return false;
   const timestamp = Date.parse(retrievedAt);
   return Number.isFinite(timestamp) && timestamp <= now + 5 * 60 * 1000 &&
     now - timestamp <= SUPPLIER_PRICE_MAX_AGE_MS;
@@ -81,35 +82,11 @@ export function pricesFromSnapshots(
   now = Date.now(),
 ): Record<string, PublicSupplierPrice> {
   const result: Record<string, PublicSupplierPrice> = {};
-  for (const snapshot of snapshots) {
-    if ((snapshot.provider !== "renogy" && snapshot.provider !== "waterdrop-eu") ||
-      !Array.isArray(snapshot.records) ||
-      snapshot.catalogId !== catalogIds[snapshot.provider] ||
-      !isFreshPriceTimestamp(snapshot.retrievedAt, now)) continue;
-
-    const recordsBySku = new Map<string, SupplierPriceSnapshot["records"]>();
-    for (const record of snapshot.records) {
-      if (!record || typeof record.merchantSku !== "string") continue;
-      const records = recordsBySku.get(record.merchantSku) ?? [];
-      records.push(record);
-      recordsBySku.set(record.merchantSku, records);
-    }
-
-    for (const product of products) {
-      const identity = productFeedIdentity(product);
-      if (!identity || identity.provider !== snapshot.provider) continue;
-      const matches = recordsBySku.get(identity.merchantSku);
-      if (matches?.length !== 1) continue;
-      const match = matches[0];
-      if (match.currency !== "EUR" || !Number.isFinite(match.amount) || match.amount <= 0) continue;
-      result[product.id] = {
-        amount: Math.round(match.amount * 100) / 100,
-        currency: "EUR",
-        provider: identity.provider,
-        merchantSku: identity.merchantSku,
-        retrievedAt: snapshot.retrievedAt,
-      };
-    }
+  const byProvider = { renogy: pricesBySkuFromSnapshots(snapshots, "renogy", now), "waterdrop-eu": pricesBySkuFromSnapshots(snapshots, "waterdrop-eu", now) };
+  for (const product of products) {
+    const identity = productFeedIdentity(product);
+    const price = identity && byProvider[identity.provider][identity.merchantSku];
+    if (price) result[product.id] = price;
   }
   return result;
 }
@@ -120,22 +97,24 @@ export function pricesBySkuFromSnapshots(
   now = Date.now(),
 ): Record<string, PublicSupplierPrice> {
   const result: Record<string, PublicSupplierPrice> = {};
-  for (const snapshot of snapshots) {
-    if (snapshot.provider !== provider || snapshot.catalogId !== catalogIds[provider] ||
-      !Array.isArray(snapshot.records) || !isFreshPriceTimestamp(snapshot.retrievedAt, now)) continue;
-    const counts = new Map<string, number>();
-    for (const record of snapshot.records) counts.set(record.merchantSku, (counts.get(record.merchantSku) ?? 0) + 1);
-    for (const record of snapshot.records) {
+  const valid = snapshots.filter(snapshot => snapshot && snapshot.provider === provider && snapshot.catalogId === catalogIds[provider] && Array.isArray(snapshot.records) && isFreshPriceTimestamp(snapshot.retrievedAt, now));
+  const latest = Math.max(...valid.map(snapshot => Date.parse(snapshot.retrievedAt)));
+  // Never resurrect a value omitted or invalidated by the newest snapshot.
+  const current = valid.filter(snapshot => Date.parse(snapshot.retrievedAt) === latest);
+  const records = current.flatMap(snapshot => snapshot.records).filter(record => record && typeof record.merchantSku === "string");
+  const counts = new Map<string, number>();
+  for (const record of records) counts.set(record.merchantSku, (counts.get(record.merchantSku) ?? 0) + 1);
+  for (const record of records) {
+      const cents = Math.round(record.amount * 100);
       if (counts.get(record.merchantSku) !== 1 || record.currency !== "EUR" ||
-        !/^\d+$/.test(record.merchantSku) || !Number.isFinite(record.amount) || record.amount <= 0) continue;
+        !/^\d+$/.test(record.merchantSku) || !Number.isFinite(record.amount) || record.amount <= 0 || !Number.isSafeInteger(cents) || cents === 0 || Math.abs(record.amount * 100 - cents) > 0.000001) continue;
       result[record.merchantSku] = {
-        amount: Math.round(record.amount * 100) / 100,
+        amount: cents / 100,
         currency: "EUR",
         provider,
         merchantSku: record.merchantSku,
-        retrievedAt: snapshot.retrievedAt,
+        retrievedAt: new Date(latest).toISOString(),
       };
-    }
   }
   return result;
 }

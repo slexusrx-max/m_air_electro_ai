@@ -9,7 +9,7 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
     test.setTimeout(180000);
     await context.addCookies([{ name: "mr-electro-locale", value: locale, url: baseURL! }]);
     await page.setViewportSize({ width, height: 900 });
-    const label = locale === "ro" ? "Fotografie în curs de confirmare" : "Photo pending verification";
+    const label = locale === "ro" ? "Imaginea produsului așteaptă verificarea" : "Product image awaiting verification";
     await page.goto(localizedPath("/search?kind=product", locale));
     const models = catalog.filter(product => product.kind === "product");
     await expect(page.locator(".equipment-card")).toHaveCount(models.length);

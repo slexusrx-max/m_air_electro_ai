@@ -23,6 +23,7 @@ for (const role of ["client","expert"]) for (const width of [320,390,430,1440]) 
   await page.route("**/header-fixture",route=>route.fulfill({contentType:"text/html",body:`<!doctype html><html><head><style>${css}</style></head><body><div id="root"></div><script>window.fixtureProfile=${JSON.stringify({role,email:"test@example.invalid"})}</script><script>${bundle.replace(/<\/script/gi,"<\\/script")}</script></body></html>`}));
   await page.goto("http://localhost:3100/header-fixture");
   if(width<1301) await page.getByRole("button",{name:"Meniu",exact:true}).click();
+  else await page.locator('.account-menu>summary').click();
   const nav=page.locator(width<1301?"#mobile-menu":".desktop-account-actions");
   await expect(nav.getByRole("link",{name:width<1301?"Contul meu":"Cont",exact:true})).toHaveAttribute("href",`/dashboard/${role}`);
   await expect(nav.getByRole("link",{name:"Autentificare",exact:true})).toHaveCount(0);

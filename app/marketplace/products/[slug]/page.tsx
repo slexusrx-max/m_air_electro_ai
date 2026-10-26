@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props) {
   return buildMetadata({
     locale,
     title: local(p.title, locale),
-    description: local(p.summary, locale),
+    description: p.kind === "product" ? `${local(p.title, locale)}. ${local(p.summary, locale)}` : local(p.summary, locale),
     path: `/marketplace/products/${p.slug}`,
   });
 }

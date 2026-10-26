@@ -14,7 +14,7 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
     await expect(primary).toHaveAttribute("href", localizedPath("/marketplace/find-my-solution", locale));
     expect((await primary.boundingBox())!.y).toBeLessThan(900);
     await expect(page.locator(".hero-model-tile img")).toHaveCount(4);
-    for (const img of await page.locator(".hero-model-tile img").all()) {
+    for (const img of await page.locator(".hero-model-tile:visible img").all()) {
       await expect.poll(() => img.evaluate((e: HTMLImageElement) => e.complete && e.naturalWidth > 0)).toBe(true);
       await expect(img).toHaveCSS("object-fit", "contain");
       await expect(img).toHaveCSS("filter", "none");

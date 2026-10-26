@@ -71,6 +71,14 @@ export default async function CategoryPage({ params, searchParams }: Props) {
           title={local(c.title, locale)}
           description={local(c.summary, locale)}
         />
+        <CatalogBrowser
+          products={catalog.filter((p) => p.paths.includes(c.path))}
+          query={query}
+          path={`/marketplace/${c.path}`}
+          facets={c.facets}
+          dictionary={t}
+          ro={ro}
+        />
         <LinkGrid
           locale={locale}
           items={categoryChildren(c.path).map((n) => ({
@@ -81,14 +89,6 @@ export default async function CategoryPage({ params, searchParams }: Props) {
         />
         <p className="category-topics">{local(c.topics, locale)}</p>
         {catalog.some(p => p.provider === "renogy" && p.paths.includes(c.path)) && <p className="small-copy"><Link className="text-link" href="/renogy">Renogy · {ro ? "partener afiliat independent: modele, limite și dimensionare" : "independent affiliate partner: models, limitations and sizing"} →</Link></p>}
-        <CatalogBrowser
-          products={catalog.filter((p) => p.paths.includes(c.path))}
-          query={query}
-          path={`/marketplace/${c.path}`}
-          facets={c.facets}
-          dictionary={t}
-          ro={ro}
-        />
         <section className="content-panel" aria-label={ro ? "Cum alegi și cumperi" : "How to choose and buy"}>
           <h2>{ro ? "De la comparație la furnizor" : "From comparison to supplier"}</h2>
           <p>{ro

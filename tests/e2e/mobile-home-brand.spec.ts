@@ -4,7 +4,7 @@ import { localizedPath } from "../../lib/i18n/routing";
 import { brandArtwork } from "../../lib/brand";
 
 for (const locale of ["ro", "en"] as const) for (const [width, height] of [[320,568],[390,844],[430,932],[390,568]]) {
-  test(`logo leads mobile home ${locale} ${width}x${height}`, async ({ page }, info) => {
+  test(`compact brand preserves mobile hero ${locale} ${width}x${height}`, async ({ page }, info) => {
     await page.setViewportSize({width,height});
     const errors: string[] = []; page.on("pageerror", e => errors.push(e.message));
     await page.addInitScript(() => {
@@ -15,18 +15,18 @@ for (const locale of ["ro", "en"] as const) for (const [width, height] of [[320,
       }}).observe({type:"layout-shift",buffered:true});
     });
     await page.goto(localizedPath("/",locale));
-    const intro=page.locator("[data-mobile-brand-intro]"); const image=intro.locator("img");
-    await expect(intro).toBeVisible();
+    await expect(page.locator("[data-mobile-brand-intro]")).toHaveCount(0);
+    const image=page.locator("header [data-brand-mark] img");
+    await expect(image).toBeVisible();
     await expect.poll(()=>image.evaluate((e:HTMLImageElement)=>e.complete&&e.naturalWidth>0)).toBe(true);
     expect(decodeURIComponent((await image.getAttribute("src"))!)).toContain(brandArtwork.src);
-    await expect(image).toHaveCSS("object-fit","contain"); await expect(image).toHaveCSS("filter","none");
-    const box=(await image.boundingBox())!; const header=(await page.locator("header").boundingBox())!;
-    expect(box.width).toBeGreaterThanOrEqual(280); expect(Math.abs(box.height-box.width)).toBeLessThan(1);
-    expect(box.y).toBeGreaterThanOrEqual(header.y+header.height); expect(box.y+box.height).toBeLessThan(height);
-    expect(await page.locator("[data-brand-artwork]:visible").count()).toBe(1);
-    await expect(page.locator("footer [data-brand-artwork]")).toBeHidden();
+    await expect(image).toHaveCSS("filter","none");
+    await expect(page.locator('.discovery-hero h1')).toBeInViewport({ratio:1});
+    await expect(page.locator('.discovery-hero .button-primary')).toBeInViewport({ratio:1});
+    const mark=(await page.locator('header [data-brand-mark]').boundingBox())!;
+    expect(mark.width).toBeLessThanOrEqual(42);
     const notice=page.getByTestId("affiliate-disclosure-before-content"); await expect(notice).toBeVisible();
-    expect((await notice.boundingBox())!.y).toBeGreaterThanOrEqual(box.y+box.height);
+    expect((await notice.boundingBox())!.height).toBeLessThan(100);
     expect(await page.evaluate(()=>{
       const notice=document.querySelector('[data-testid="affiliate-disclosure-before-content"]')!;
       return [...document.querySelectorAll('[data-supplier-product]')].every(link=>Boolean(notice.compareDocumentPosition(link)&Node.DOCUMENT_POSITION_FOLLOWING));

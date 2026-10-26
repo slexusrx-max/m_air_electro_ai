@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 import { ProductCard } from "./product-card";
 import { catalog } from "@/lib/affiliate/catalog";
 import { estimateSystem } from "@/lib/marketplace/recommendation";
-import { starterScenarios, stationCandidates } from "@/lib/marketplace/selection-guidance";
+import { starterScenarios, stationRecommendations } from "@/lib/marketplace/selection-guidance";
 import { SelectionHelp } from "./selection-help";
 import { categoryByPath, local } from "@/lib/marketplace/content";
 import {
@@ -85,7 +85,8 @@ export function SolutionFinder({
                 ? ["solar"]
                 : []),
             ];
-  const matches = result ? stationCandidates(catalog, form.region, result) : [];
+  const recommendations = result ? stationRecommendations(catalog, form.region, result) : [];
+  const matches = recommendations.map(item => item.product);
   function next() {
     start();
     if (step === 2 && form.budget && (!Number.isFinite(Number(form.budget)) || Number(form.budget) < 0)) {
@@ -179,7 +180,7 @@ export function SolutionFinder({
             }}>{l("Use this example", "Folosește acest exemplu")}</button>
           </article>)}</div>
         </section>}
-        <SelectionHelp ro={ro} />
+        <details className="finder-help"><summary>{l("New to energy equipment?", "La început cu echipamentele energetice?")}</summary><SelectionHelp ro={ro} /></details>
         {step === 1 && (
           <div className="compare-selectors">
             <label>
@@ -326,7 +327,7 @@ export function SolutionFinder({
               </div>
             ))}
           </div>
-          <p className="content-panel">
+          <details className="content-panel finder-assumptions"><summary>{l("Calculation assumptions and budget", "Ipoteze de calcul și buget")}</summary><p>
             {l(
               "Assumptions: 80% usable battery depth, 92% inverter efficiency, 25% continuous-power margin and 10% starting margin. Surge duration is not inferred. Existing equipment is not subtracted because its ratings and condition are unknown.",
               "Ipoteze: 80% utilizare baterie, 92% randament invertor, rezervă de putere continuă 25% și pornire 10%. Durata vârfului nu este dedusă. Echipamentul existent nu se scade deoarece valorile și starea nu sunt cunoscute.",
@@ -336,7 +337,7 @@ export function SolutionFinder({
                 `Budget recorded: €${form.budget}. No price filtering is applied because supplier prices are not verified.`,
                 `Buget notat: €${form.budget}. Nu filtrăm după preț deoarece prețurile furnizorului nu sunt verificate.`,
               )}
-          </p>
+          </p></details>
           {form.battery === "yes" && (
             <p className="safety-note">
               {l(
@@ -366,13 +367,20 @@ export function SolutionFinder({
               </Link>
             </p>
           )}
-          <h2>{l("Portable stations to check for these AC loads", "Stații portabile de verificat pentru acești consumatori AC")}</h2>
-          <p>{l("These complete stations meet the estimated energy and power thresholds in the documented data. Ordered by nominal energy, then power; commission does not affect selection. An undocumented surge rating is not assumed: continuous output must cover the starting requirement. This does not confirm UPS operation, connector compatibility, delivery to Romania or suitability for fixed wiring.", "Aceste stații complete ating pragurile estimate de energie și putere în datele documentate. Ordine după energia nominală, apoi putere; comisionul nu influențează selecția. Nu presupunem un vârf nedocumentat: puterea continuă trebuie să acopere necesarul de pornire. Nu confirmă funcționarea UPS, conectorii, livrarea în România sau utilizarea în instalația fixă.")}</p>
+          <h2>{l("Your best match and alternatives", "Opțiunea potrivită și alternativele tale")}</h2>
+          <p>{l("Best match means the smallest documented station that covers your energy, continuous and startup requirements. Commission does not affect selection. No price ranking is made without fresh comparable prices.", "Opțiunea potrivită este cea mai mică stație documentată care acoperă energia, puterea continuă și pornirea necesare. Comisionul nu influențează selecția. Fără prețuri proaspete comparabile, nu facem un clasament de preț.")}</p>
+          <p className="safety-note">{l("Confirm the exact 230 V model, surge duration and connectors with the supplier. These results do not guarantee UPS operation, delivery to Romania or suitability for fixed wiring.", "Confirmă modelul exact de 230 V, durata vârfului și conectorii la furnizor. Rezultatul nu garantează funcționarea UPS, livrarea în România sau utilizarea în instalația fixă.")}</p>
           <p><Link href="/methodology">{l("How the estimate and selection work", "Cum funcționează calculul și selecția")}</Link> · {l("Prices and availability: check the seller. Confirm 230 V AC output and your delivery postcode before buying.", "Prețuri și disponibilitate: verifică la vânzător. Confirmă ieșirea de 230 V AC și codul poștal de livrare înainte de cumpărare.")}</p>
           {matches.length ? (
             <div className="product-grid">
-              {matches.map((p) => (
-                <ProductCard key={p.id} product={p} dictionary={t} />
+              {recommendations.map(({ product, role, reserveWh, reservePercent, powerReserveW }) => (
+                <div className={`finder-recommendation finder-recommendation-${role}`} key={product.id} data-recommendation={role}>
+                  <div className="recommendation-reason"><p className="eyebrow">{role === "best" ? l("Best match · smallest adequate capacity", "Opțiunea potrivită · capacitate minimă suficientă") : role === "reserve" ? l("Higher energy reserve", "Mai multă energie de rezervă") : l("Also meets your requirements", "Îndeplinește și cerințele tale")}</p>
+                    <p>{l("Energy reserve above your estimate", "Rezervă de energie peste estimare")}: <strong>{reserveWh} Wh ({reservePercent}%)</strong>. {l("Continuous power margin", "Rezervă de putere continuă")}: {powerReserveW} W.</p>
+                    {role === "best" && <p>{l("The smaller-capacity choice among qualifying models; not a claim that it costs less.", "Alegerea cu capacitate mai mică dintre modelele potrivite; nu afirmăm că este mai ieftină.")}</p>}
+                  </div>
+                  <ProductCard product={product} dictionary={t} />
+                </div>
               ))}
             </div>
           ) : (

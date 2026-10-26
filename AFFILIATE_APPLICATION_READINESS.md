@@ -1,5 +1,11 @@
 # Renogy EU / Impact application readiness
 
+## Customer-first discovery update - 26 October 2026
+
+The UX/CRO update integrates all 365 Renogy SKU identities into main search: 41 canonical models plus 346 additional supplier rows, with 19 exact-SKU canonical matches deduplicated. Supplier rows are not independently reviewed models. Technical filters apply only to documented model values. Latest fresh provider/catalog/SKU EUR prices fail closed after 48 hours or on invalid/duplicate data; a newer snapshot cannot resurrect an older price. This does not activate affiliate tracking or scheduled refresh.
+
+Compact pre-content disclosures, category-first comparison, explained capacity-based Finder recommendations and independent publisher identity are preserved in RO/EN. Existing Renogy and Waterdrop activation gates are unchanged. PECRON/BLUETTI remain ordinary listings with neutral image placeholders pending exact-model image permission. No current feed credential, image licence, commission or delivery evidence is invented. See [implementation and verification scope](docs/ux-cro-2026-10-26.md); production release is confirmed separately against the deployed SHA.
+
 ## Current catalog snapshot — 25 October 2026
 
 41 canonical model records: 19 Renogy, 16 Waterdrop, 3 PECRON and 3 BLUETTI. This is not an in-stock offer count: Waterdrop K19H is archived/unavailable with ordinary documentation links. The 32-row Waterdrop feed represents 16 device models, 14 bundle/cartridge configurations and two extra-year offers excluded from device counts (one has conflicting title evidence). No full merchant-assortment claim is made.

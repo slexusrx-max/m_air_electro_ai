@@ -10,6 +10,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # Official product direction
 
+Owner UX/CRO direction (26 October 2026): mobile value proposition and primary CTA precede artwork; remove the separate logo-first mobile block. Preserve the approved turquoise artwork file and background. Primary navigation is Marketplace, Find My Solution, Learn and About; supporting tools, solutions, water, business and account destinations remain available. Marketplace starts with compact heading and filters, then results; categories follow. All 365 Renogy feed identities participate in search, with exact-SKU deduplication against reviewed models and conservative title-based classification. Raw feed entries never acquire inferred specifications or model imagery. Compare only actual models of the same category. This supersedes the historical mobile-logo-first and seven-primary-link layouts below.
+
 Owner-confirmed identity: M Air Electro AI is a brand/platform, owned and published by Stanislav Zavizion, an individual / independent publisher operating in Romania for Romania / European Union. There is no incorporated company. Do not invent company/registration/tax/address/credential details, or treat ownership as article authorship or human technical approval.
 
 Historical owner-confirmed email status (24 September 2026): Cloudflare Email Routing is active for contact@mairelectroai.com, partnerships@mairelectroai.com and privacy@mairelectroai.com. Real inbound receipt is verified for contact@mairelectroai.com only. Use domain addresses publicly. Outbound send-as/SMTP and website-form delivery are not verified; retain the separate form gate until configuration and an authorized delivery test are complete.

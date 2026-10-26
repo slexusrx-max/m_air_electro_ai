@@ -8,7 +8,7 @@ export type NavigationLink = {
   children?: NavigationLink[];
 };
 export type NavigationGroup = NavigationLink & { children: NavigationLink[] };
-export function navigation(locale: Locale): NavigationGroup[] {
+function fullNavigation(locale: Locale): NavigationGroup[] {
   const l = (en: string, ro: string) => local(b(en, ro), locale);
   return [
     {
@@ -84,5 +84,23 @@ export function navigation(locale: Locale): NavigationGroup[] {
       href: "/business",
       children: [],
     },
+  ];
+}
+
+export function navigation(locale: Locale): NavigationGroup[] {
+  const ro = locale === "ro";
+  const full = fullNavigation(locale);
+  const find = (href: string) => full.find(group => group.href === href)!;
+  return [
+    find("/marketplace"),
+    { label: ro ? "Găsește soluția" : "Find My Solution", href: "/marketplace/find-my-solution", children: [
+      find("/solutions"), find("/calculators"), { label: ro ? "Compară echipamente" : "Compare equipment", href: "/compare" },
+    ] },
+    find("/learn"),
+    { label: ro ? "Despre" : "About", href: "/about", children: [
+      { label: "Contact", href: "/contact" }, find("/experts"), find("/business"),
+      { label: ro ? "Parteneriate" : "Partnerships", href: "/partnerships" },
+      { label: ro ? "Metodologie" : "Methodology", href: "/methodology" },
+    ] },
   ];
 }

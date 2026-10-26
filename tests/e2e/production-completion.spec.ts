@@ -9,7 +9,7 @@ test("all requested searches include equipment and related content", async ({ pa
   test.setTimeout(120000);
   for (const q of ["battery", "12v", "100ah", "2000w", "solar", "inverter", "backup", "RV", "marine", "generator", "MPPT"]) {
     await page.goto(`/search?q=${q}`);
-    await expect(page.locator(".equipment-card").first(), q).toBeVisible();
+    await expect(page.locator(".equipment-card,.supplier-entry-card").first(), q).toBeVisible();
     await expect(page.locator(".search-content .discovery-card").first(), q).toBeVisible();
   }
   await page.goto("/search?q=solar&power=nonexistent");
@@ -22,7 +22,7 @@ test("all requested searches include equipment and related content", async ({ pa
 test("comparison removal persists and supplier links preserve exact variants and activation", async ({ page, baseURL }) => {
   await page.goto("/marketplace/batteries");
   for (const n of [0, 1]) await page.locator(".equipment-card").nth(n).getByRole("button", { name: /Compară/ }).click();
-  await page.locator(".equipment-card").nth(1).getByRole("link", { name: "Vezi (2) →" }).click();
+  await page.locator('.comparison-tray-heading>a').click();
   await expect(page.locator("table [data-supplier-product]")).toHaveCount(2);
   for (const a of await page.locator("table [data-supplier-product]").all()) {
     const id = await a.getAttribute("data-supplier-product");
@@ -98,7 +98,7 @@ for (const width of [390, 430, 768, 1366, 1440]) test(`page-family artwork, bran
     await page.goto(path);
     await expect(page.locator("[data-visual-family]")).toHaveAttribute("data-visual-family", visualFamily(path));
     if (path === "/") {
-      await expect(page.locator(".hero-equipment-heading img")).toBeVisible();
+      await expect(page.locator("header [data-brand-mark] img")).toBeVisible();
       expect(await page.locator(".discovery-hero").evaluate(el => getComputedStyle(el).animationName)).toBe("none");
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);

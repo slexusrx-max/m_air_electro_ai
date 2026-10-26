@@ -25,7 +25,8 @@ for (const width of [320, 768, 1440]) test(`exact Renogy photos, grouped navigat
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
   const card = page.locator(".equipment-card").first();
   expect(await card.evaluate(el => getComputedStyle(el).backgroundColor)).toBe("rgba(0, 0, 0, 0)");
-  await expect(card.locator("[data-supplier-product]")).toHaveCSS("color", "rgb(23, 59, 80)");
+  await expect(card.locator("[data-supplier-product]")).toHaveClass("button-primary");
+  await expect(card.locator("[data-supplier-product]")).toHaveCSS("color", "rgb(25, 43, 53)");
   await page.locator('#renogy-products nav a[href="#renogy-panels"]').click();
   await expect(page.locator("#renogy-panels-title")).toBeInViewport();
   await page.locator("#renogy-panels").screenshot({ path: info.outputPath(`renogy-panels-${width}.png`) });

@@ -77,7 +77,7 @@ test("search, filters, no results and comparison flow", async ({ page }) => {
     .nth(1)
     .getByRole("button", { name: "Compară", exact: false })
     .click();
-  await cards.nth(1).getByRole("link", { name: "Vezi (2) →" }).click();
+  await page.locator('.comparison-tray-heading>a').click();
   await expect(page.locator("table")).toBeVisible();
   await expect(page.locator("thead th")).toHaveCount(3);
   await page.goto("/search?q=impossible987654");

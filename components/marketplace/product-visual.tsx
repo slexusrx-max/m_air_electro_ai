@@ -18,6 +18,7 @@ export function ProductVisual({ product, ro }: { product: CatalogProduct; ro: bo
   </>;
   // Unverified models keep their explicit placeholder; never substitute another model.
   return <div className="equipment-visual product-photo-pending" data-product-photo={product.id}>
-    <span>{ro ? "Fotografie în curs de confirmare" : "Photo pending verification"}</span>
+    <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="8" y="8" width="32" height="32" rx="8"/><circle cx="19" cy="19" r="3"/><path d="m10 34 10-10 7 7 5-5 7 8"/></svg>
+    <span>{ro ? "Imaginea produsului așteaptă verificarea" : "Product image awaiting verification"}</span>
   </div>;
 }

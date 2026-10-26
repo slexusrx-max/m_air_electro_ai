@@ -13,6 +13,7 @@ import { starterScenarios, scenarioUrl } from "@/lib/marketplace/selection-guida
 import { EquipmentVisual } from "./equipment-visual";
 import { CatalogBrowser } from "./catalog-browser";
 import { localizedPath } from "@/lib/i18n/routing";
+import { PublisherTrust } from "./publisher-trust";
 
 export async function DiscoveryHome({ marketplace = false, requirements }: {
   marketplace?: boolean;
@@ -22,16 +23,29 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
   const dictionary = await getRequestDictionary();
   const ro = locale === "ro";
   const products = catalog.filter(p => p.provider === "renogy").slice(0, 3);
+  const categorySection = <section id="equipment-categories" className="equipment-explorer" aria-labelledby="equipment-heading">
+    <div className="section-line"><h2 id="equipment-heading">{ro ? "Categorii de echipamente" : "Equipment categories"}</h2><Link href="/search?kind=product">{ro ? "Toate modelele" : "All models"} →</Link></div>
+    <div className="category-tiles">{rootCategories.map(category => <Link key={category.path} href={`/marketplace/${category.path}`}>
+      <div className="category-preview"><EquipmentVisual category={category.path} /></div>
+      <span>{category.title[ro ? "ro" : "en"]}</span><span aria-hidden="true">↗</span>
+    </Link>)}</div>
+    <p><Link href="/marketplace/solar/panels">{ro ? "Panouri solare fotovoltaice" : "Photovoltaic solar panels"}</Link> · <Link href="/marketplace/batteries/lifepo4">{ro ? "Baterii LiFePO4" : "LiFePO4 batteries"}</Link></p>
+    <p className="category-photo-credits"><Link href="/photo-credits">{ro ? "Sursele și licențele fotografiilor de categorii" : "Category photo sources and licences"} →</Link></p>
+  </section>;
   return <main className="commerce-page discovery-home storefront-home">
-    <section className={`discovery-hero ${marketplace ? "marketplace-hero" : "brand-hero"}`}>
+    {marketplace ? <header className="page-intro marketplace-intro">
+      <p className="eyebrow">Marketplace · România / EU</p>
+      <h1>{ro ? "Alege echipamentul potrivit." : "Find the right equipment."}</h1>
+      <p>{ro ? "Caută modele și SKU-uri, compară datele documentate și cumpără la furnizor." : "Search models and SKUs, compare documented specifications and buy from the supplier."} <Link href="/marketplace/find-my-solution">{ro ? "Ai nevoie de ajutor?" : "Need help choosing?"} →</Link></p>
+    </header> : <section className="discovery-hero brand-hero">
       <div className="discovery-hero-copy">
         <p className="eyebrow">M Air Electro AI · România / EU</p>
         <h1>{marketplace ? (ro ? "Catalog de echipamente energetice" : "Energy equipment catalog") : (ro ? "Panouri solare, baterii și invertoare" : "Solar panels, batteries and inverters")}</h1>
+        <p className="hero-promise">{ro ? "Găsește energia de rezervă potrivită pentru casă sau călătorii. Compară, calculează și cumpără direct la furnizor." : "Find backup power for home or life on the move. Compare, calculate and buy directly from the supplier."}</p>
         <div className="action-row">
           <Link className="button-primary" href="/marketplace/find-my-solution">{ro ? "Găsește soluția" : "Find My Solution"} →</Link>
           <Link className="button-outline" href={marketplace ? "#equipment-categories" : "/marketplace"}>{ro ? "Alege echipamente" : "Browse Equipment"} →</Link>
         </div>
-        <p>{ro ? "Alege energie de rezervă pentru router, laptop și lumină, consumatori esențiali acasă sau aparate de camping. Compară stații portabile, baterii, invertoare și panouri solare; cumpărarea se face pe site-ul vânzătorului." : "Choose backup power for a router, laptop and lights, a few home essentials or camping devices. Compare portable stations, batteries, inverters and solar panels; purchases take place on the seller’s website."}</p>
         <form action={localizedPath("/marketplace", locale)} className="hero-search" role="search" aria-label={ro ? "Caută echipamente" : "Search equipment"}>
           <label className="sr-only" htmlFor="hero-query">{ro ? "Caută echipamente" : "Search equipment"}</label>
           <input id="hero-query" name="q" type="search" placeholder={ro ? "Renogy, 100 Ah, panouri solare…" : "Renogy, 100 Ah, solar panels…"} maxLength={120} />
@@ -49,39 +63,31 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
         </div>
         <p className="hero-equipment-caption">{ro ? "Fotografii ale modelelor indicate. Componente individuale, nu un kit compatibil confirmat. Stațiile portabile PECRON și BLUETTI sunt disponibile pentru comparație în catalog." : "Photos of the named models. Individual components, not a confirmed compatible kit. PECRON and BLUETTI portable stations are also listed for comparison in the catalog."}</p>
       </div>
-    </section>
+    </section>}
     {requirements && (requirements.batteryKwh || requirements.inverterKw) && <section className="content-panel">
       <h2>{ro ? "Cerințe primite din calculator" : "Requirements received from calculator"}</h2>
       <p>{ro ? "Baterie" : "Battery"}: {requirements.batteryKwh ?? "—"} kWh · {ro ? "Invertor" : "Inverter"}: {requirements.inverterKw ?? "—"} kW · {ro ? "Vârf" : "Surge"}: {requirements.surgeKw ?? "—"} kW · {requirements.region ?? "EU"}</p>
       <p>{ro ? "Estimări pentru sistem, nu confirmare de compatibilitate a unui produs." : "System estimates, not confirmation of product compatibility."}</p>
       <Link href="/marketplace/batteries">{ro ? "Verifică baterii" : "Review batteries"} →</Link>
     </section>}
-    <section id="equipment-categories" className="equipment-explorer" aria-labelledby="equipment-heading">
-      <div className="section-line"><div><p className="eyebrow">{ro ? "EXPLORARE DIRECTĂ" : "STRAIGHT TO THE EQUIPMENT"}</p><h2 id="equipment-heading">{ro ? "Categorii de echipamente" : "Equipment categories"}</h2></div><Link href="/search?kind=product">{ro ? "Toate modelele" : "All models"} →</Link></div>
-      <div className="category-tiles">{rootCategories.map(category => <Link key={category.path} href={`/marketplace/${category.path}`}>
-        <div className="category-preview"><EquipmentVisual category={category.path} /></div>
-        <span>{category.title[ro ? "ro" : "en"]}</span><span aria-hidden="true">↗</span>
-      </Link>)}</div>
-      <p><Link href="/marketplace/solar/panels">{ro ? "Panouri solare fotovoltaice" : "Photovoltaic solar panels"}</Link> · <Link href="/marketplace/batteries/lifepo4">{ro ? "Baterii LiFePO4" : "LiFePO4 batteries"}</Link></p>
-      <p className="category-photo-credits"><Link href="/photo-credits">{ro ? "Sursele și licențele fotografiilor de categorii" : "Category photo sources and licences"} →</Link></p>
-    </section>
-    {marketplace && <CatalogBrowser products={catalog} query={{ kind: "product", ...requirements }} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} />}
+    {marketplace && <><CatalogBrowser products={catalog} query={requirements ?? {}} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} />{categorySection}</>}
     {!marketplace && <>
+    <PublisherTrust ro={ro} compact />
     <section className="application-section" aria-labelledby="application-heading">
       <div className="section-line"><div><p className="eyebrow">{ro ? "PORNEȘTE DE LA NEVOIE" : "START WITH YOUR EVERYDAY"}</p><h2 id="application-heading">{ro ? "Un sistem pentru felul tău de a trăi." : "A system for the way you live."}</h2></div><Link href="/solutions">{ro ? "Toate soluțiile" : "All solutions"} →</Link></div>
-      <p>{ro ? "Exemple editoriale calculate, nu cazuri de clienți sau kituri de fabrică. Consum simultan la 230 V AC, cu adaptoarele aparatelor; valorile se pot modifica în configurator." : "Calculated editorial examples, not customer cases or factory kits. Simultaneous 230 V AC loads through device adapters; edit the assumptions in the finder."}</p>
+      <p className="small-copy">{ro ? "Exemple calculate, nu kituri sau cazuri de clienți. Modifică valorile pentru aparatele tale." : "Calculated examples, not kits or customer cases. Adjust the inputs for your devices."}</p>
       <div className="application-grid">{starterScenarios.map(s => <Link key={s.id} href={scenarioUrl(s)}>
         <EnergySchematic family="backup" className="application-symbol" />
         <h3>{s.title[ro ? "ro" : "en"]}</h3><p>{s.loads[ro ? "ro" : "en"]} = {s.load} W × {s.hours} h.</p>
-        <p>{s.limit[ro ? "ro" : "en"]}</p><span>{ro ? "Calculează și vezi modelele" : "Calculate and see models"} →</span>
+        <span>{ro ? "Calculează și vezi modelele" : "Calculate and see models"} →</span>
       </Link>)}</div>
       <p><Link href="/methodology">{ro ? "Ipoteze, criterii și metodologia selecției" : "Assumptions, criteria and selection methodology"}</Link></p>
     </section>
-    <RenogyFeature ro={ro} />
     <section aria-labelledby="featured-models">
       <div className="section-line"><div><p className="eyebrow">{ro ? "SELECȚIE RENOGY EU" : "RENOGY EU SELECTION"}</p><h2 id="featured-models">{ro ? "Mai puține presupuneri. Alegeri mai clare." : "Less guesswork. Better-informed choices."}</h2></div><Link href="/renogy#renogy-products">{ro ? "Vezi selecția Renogy" : "View Renogy selection"} →</Link></div>
       <div className="product-grid">{products.map(product => <ProductCard key={product.id} product={product} dictionary={dictionary} />)}</div>
     </section>
+    {categorySection}
     <section className="planning-editorial" aria-labelledby="planning-heading">
       <div><p className="eyebrow">{ro ? "ÎNȚELEGE ÎNAINTE SĂ ALEGI" : "UNDERSTAND BEFORE YOU CHOOSE"}</p><h2 id="planning-heading">{ro ? "De la întrebare la un plan clar." : "From a question to a clearer plan."}</h2><p>{ro ? "Puterea, autonomia și compatibilitatea contează împreună. Instrumentele noastre explică ipotezele, nu înlocuiesc proiectarea de către un specialist." : "Power, runtime and compatibility belong together. Our tools explain the assumptions, not replace professional installation design."}</p><Link href="/learn">{ro ? "Explorează ghidurile" : "Explore the guides"} →</Link></div>
       <div className="planning-links">{[
@@ -91,6 +97,8 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
         ["/compare", "Which option fits better?", "Ce opțiune se potrivește?", "Product comparison", "Comparație de produse"],
       ].map(([href, en, romanian, label, translated]) => <Link key={href} href={href}><span>{ro ? translated : label}</span><strong>{ro ? romanian : en}</strong><span aria-hidden="true">↗</span></Link>)}</div>
     </section>
+    <RenogyFeature ro={ro} />
+    <PublisherTrust ro={ro} />
     <WaterPromo ro={ro} />
     </>}
     <AffiliateDisclosure dictionary={dictionary} />

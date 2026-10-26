@@ -25,7 +25,7 @@ for (const locale of ["ro", "en"] as const) for (const width of [390, 1440]) {
       await expect(purchase).toContainText(locale === "ro" ? "nu încasează plata" : "does not take payment");
       const models = catalog.filter(product => product.kind === "product" && product.paths.includes(category));
       await expect(page.getByTestId("catalog-record-types")).toContainText(`${locale === "ro" ? "Modele reale" : "Real models"}: ${models.length}`);
-      await expect(page.getByTestId("equipment-class-image-note")).toHaveCount(category === "inverters" ? 1 : 2);
+      await expect(page.getByTestId("equipment-class-image-note")).toHaveCount(0);
       const supplier = page.locator(".equipment-card a[data-supplier-product]");
       await expect(supplier).toHaveCount(models.length);
       for (const product of models) await expectSupplierCta(supplier.and(page.locator(`[data-supplier-product="${product.id}"]`)), product, new URL(baseURL!).hostname === "mairelectroai.com");
@@ -43,6 +43,7 @@ for (const locale of ["ro", "en"] as const) for (const width of [390, 1440]) {
       await page.getByLabel(locale === "ro" ? "Tip înregistrare" : "Record type").selectOption("equipment-class");
       await page.getByRole("button", { name: locale === "ro" ? "Aplică filtrele" : "Apply filters", exact: true }).click();
       await expect(page.getByTestId("catalog-record-types")).toContainText(locale === "ro" ? "Modele reale: 0" : "Real models: 0");
+      await expect(page.getByTestId("equipment-class-image-note")).toHaveCount(category === "inverters" ? 1 : 2);
       await expect(page.locator(".equipment-card a[data-supplier-product]")).toHaveCount(0);
       await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
       await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", `https://mairelectroai.com${path}`);

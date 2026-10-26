@@ -2,6 +2,14 @@
 
 Version 4 · Official marketplace-first direction · 24 September 2026
 
+## Current UX/CRO direction — 26 October 2026
+
+The customer-first homepage places its heading, explanation and Find My Solution action in the first mobile viewport. Compact pre-content affiliate disclosure remains visible. Homepage order: hero, value strip, use-case examples, featured equipment, categories, calculators, publisher/partner content. Marketplace uses a compact introduction and results before category exploration.
+
+The four primary sections are Marketplace, Find My Solution, Learn and About. Secondary destinations remain in grouped menus and the compact footer. Search combines exact Renogy feed SKUs with reviewed models, deduplicating only exact provider/SKU identities. Supplier entries are identified separately, classified only from explicit feed title nouns, and excluded from technical facets and comparison because their specifications have not been individually reviewed. All 365 rows remain searchable, including service/promotion rows without an equipment category; this is not a count of reviewed models.
+
+Finder identifies the smallest adequate documented station and higher-reserve alternatives, with energy/power margins and limitations. It never implies that smaller capacity means lower price. Comparison is limited to 2–4 actual models from one category. These requirements supersede the historical layout/navigation/comparison guidance below.
+
 This specification supersedes earlier positioning across production, source, metadata, documentation and coding-agent instructions.
 
 ## Product Vision

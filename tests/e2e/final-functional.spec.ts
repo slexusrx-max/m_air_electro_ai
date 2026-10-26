@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 import { catalog } from "../../lib/affiliate/catalog";
-import { filterEquipment } from "../../lib/marketplace/query";
+import { discoverEquipment } from "../../lib/marketplace/supplier-discovery";
 
 const calculators = ["battery", "solar", "cable-sizing", "voltage-drop", "generator", "motor-current", "transformer", "breaker-selection", "fuse-selection"];
 
@@ -82,8 +82,8 @@ test("all required searches show accurate counts, preserve queries and handle di
   test.setTimeout(120000);
   for (const q of ["battery", "12v", "100ah", "2000w", "solar", "inverter", "backup", "rv", "marine", "generator", "mppt", "renogy", "încărcare", "protecție", '<script>missing-123456789</script>']) {
     await page.goto(`/search?${new URLSearchParams({ q })}`);
-    const count = filterEquipment(catalog, { q }).length;
-    await expect(page.locator(".equipment-card")).toHaveCount(count);
+    const count = discoverEquipment(catalog, { q }).length;
+    await expect(page.locator(".equipment-card,.supplier-entry-card")).toHaveCount(Math.min(count,24));
     await expect(page.locator(".result-count")).toContainText(`${count} rezultate`);
     await expect(page.locator('.catalog-filters input[name="q"]')).toHaveValue(q);
     for (const link of await page.locator('.equipment-card a[href^="/marketplace/products/"]').all()) await expect(link).toHaveAttribute("href", /^\/marketplace\/products\/[a-z0-9-]+$/);
@@ -99,15 +99,15 @@ test("all required searches show accurate counts, preserve queries and handle di
 });
 
 test("comparison supports 2–4 records, maximum selection, shareable URL, removal and back navigation", async ({ page }) => {
-  await page.goto("/search");
+  await page.goto("/marketplace/backup-power?kind=product");
   const controls = page.locator(".equipment-card .compare-control");
   for (let i = 0; i < 4; i++) {
     await controls.nth(i).getByRole("button").click();
-    await expect(controls.nth(i).getByRole("link")).toHaveText(`Vezi (${i + 1}) →`);
+    await expect(page.locator('.comparison-tray li')).toHaveCount(i+1);
   }
   await controls.nth(4).getByRole("button").click();
   await expect(controls.nth(4).getByRole("status")).toContainText("Maximum 4");
-  await controls.first().getByRole("link").click();
+  await page.locator('.comparison-tray-heading>a').click();
   await expect(page).toHaveURL(/\/compare\?ids=/);
   const shared = page.url();
   await expect(page.locator("thead th")).toHaveCount(5);

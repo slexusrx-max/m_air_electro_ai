@@ -6,7 +6,8 @@ import { stripLocale } from '../i18n/routing';
 export function currentNavigationSection(path: string, groups: NavigationGroup[]): string | undefined {
   const pathname = stripLocale(path).split(/[?#]/)[0].replace(/\/$/, '') || '/';
   const matches = (href: string) => pathname === href || pathname.startsWith(href + '/');
-  if (matches('/marketplace/water') || matches('/waterdrop') || matches('/marketplace/products/water-system-planning') || pathname.startsWith('/marketplace/products/waterdrop-')) return '/marketplace/water';
+  if (matches('/partnerships')) return '/about';
+  if (matches('/marketplace/water') || matches('/waterdrop') || pathname.startsWith('/marketplace/products/waterdrop-')) return '/marketplace';
   const destinations = (items: NavigationLink[]): string[] => items.flatMap(item => [item.href, ...destinations(item.children ?? [])]);
   let selected: string | undefined;
   let score = -1;
@@ -16,6 +17,6 @@ export function currentNavigationSection(path: string, groups: NavigationGroup[]
       if (matches(href) && specificity > score) { selected = group.href; score = specificity; }
     }
   }
-  return selected ?? (['/search', '/compare'].includes(pathname) ? '/marketplace' : undefined);
+  return selected ?? (pathname === '/search' ? '/marketplace' : undefined);
 }
 

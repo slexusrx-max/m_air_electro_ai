@@ -7,7 +7,6 @@ import { isCatalogListing } from "@/lib/marketplace/product-presentation";
 import type { CatalogProduct } from "@/lib/affiliate/types";
 import type { Dictionary } from "@/lib/i18n/types";
 import type { Equipment } from "@/lib/marketplace/catalog-data";
-import { categoryByPath } from "@/lib/marketplace/content";
 export function ProductCard({
   product,
   dictionary: t,
@@ -62,16 +61,11 @@ export function ProductCard({
         {extended && <p><strong>{ro ? "Compatibilitate" : "Compatibility"}</strong>{ro ? p.compatibility.ro : p.compatibility.en}</p>}
         <p><strong>{ro ? "Limite" : "Limitations"}</strong>{ro ? p.limitations.ro : p.limitations.en}</p>
       </details>
+      <SupplierPrice product={p} ro={ro} prominent />
       <Link className="text-link" href={`/marketplace/products/${p.slug}`}>
         {ro ? "Detalii și compatibilitate" : "Details & compatibility"} →
       </Link>
       <CompareControl id={p.id} ro={ro} />
-      <SupplierPrice product={p} ro={ro} />
-      <div className="product-actions">
-        <Link href={p.category === "water" ? "/marketplace/water#finder" : categoryByPath(p.paths?.[0] ?? "")?.calculator ?? "/marketplace/find-my-solution"}>
-          {p.category === "water" ? (ro ? "Alege sistemul de apa" : "Find your water system") : (ro ? "Calculeaza necesarul" : "Calculate requirements")} →
-        </Link>
-      </div>
     </article>
   );
 }
