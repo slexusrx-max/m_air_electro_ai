@@ -21,7 +21,7 @@ const TILT_SELECTOR = [
 
 export function PointerTiltController() {
   useEffect(() => {
-    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    if (!window.matchMedia("(any-hover: hover) and (any-pointer: fine)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     function update(event: PointerEvent) {

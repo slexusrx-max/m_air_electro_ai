@@ -22,7 +22,18 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
   const locale = await getRequestLocale();
   const dictionary = await getRequestDictionary();
   const ro = locale === "ro";
-  const products = catalog.filter(p => p.provider === "renogy").slice(0, 3);
+  const featuredProductIds = [
+    "renogy-mini-100",
+    "renogy-mini-200",
+    "renogy-panel-200",
+    "renogy-inverter-1000",
+    "waterdrop-g3p800",
+    "waterdrop-x12",
+  ];
+  const products = featuredProductIds.flatMap(id => {
+    const product = catalog.find(item => item.id === id);
+    return product ? [product] : [];
+  });
   const categorySection = <section id="equipment-categories" className="equipment-explorer" aria-labelledby="equipment-heading">
     <div className="section-line"><h2 id="equipment-heading">{ro ? "Categorii de echipamente" : "Equipment categories"}</h2><Link href="/search?kind=product">{ro ? "Toate modelele" : "All models"} →</Link></div>
     <div className="category-tiles">{rootCategories.map(category => <Link key={category.path} href={`/marketplace/${category.path}`} data-pointer-tilt>
@@ -31,6 +42,10 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
     </Link>)}</div>
     <p><Link href="/marketplace/solar/panels">{ro ? "Panouri solare fotovoltaice" : "Photovoltaic solar panels"}</Link> · <Link href="/marketplace/batteries/lifepo4">{ro ? "Baterii LiFePO4" : "LiFePO4 batteries"}</Link></p>
     <p className="category-photo-credits"><Link href="/photo-credits">{ro ? "Sursele și licențele fotografiilor de categorii" : "Category photo sources and licences"} →</Link></p>
+  </section>;
+  const featuredSection = <section className="homepage-products" aria-labelledby="featured-models">
+    <div className="section-line"><div><p className="eyebrow">{ro ? "MODELE DOCUMENTATE" : "DOCUMENTED MODELS"}</p><h2 id="featured-models">{ro ? "Produse pe care le poți explora acum." : "Products you can explore right now."}</h2></div><Link href="/marketplace?kind=product">{ro ? "Vezi toate produsele" : "View all products"} →</Link></div>
+    <div className="product-grid homepage-product-grid">{products.map(product => <ProductCard key={product.id} product={product} dictionary={dictionary} />)}</div>
   </section>;
   return <main className="commerce-page discovery-home storefront-home">
     {marketplace ? <header className="page-intro marketplace-intro">
@@ -64,6 +79,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
         <p className="hero-equipment-caption">{ro ? "Fotografii ale modelelor indicate. Componente individuale, nu un kit compatibil confirmat. Stațiile portabile PECRON și BLUETTI sunt disponibile pentru comparație în catalog." : "Photos of the named models. Individual components, not a confirmed compatible kit. PECRON and BLUETTI portable stations are also listed for comparison in the catalog."}</p>
       </div>
     </section>}
+    {!marketplace && featuredSection}
     {requirements && (requirements.batteryKwh || requirements.inverterKw) && <section className="content-panel">
       <h2>{ro ? "Cerințe primite din calculator" : "Requirements received from calculator"}</h2>
       <p>{ro ? "Baterie" : "Battery"}: {requirements.batteryKwh ?? "—"} kWh · {ro ? "Invertor" : "Inverter"}: {requirements.inverterKw ?? "—"} kW · {ro ? "Vârf" : "Surge"}: {requirements.surgeKw ?? "—"} kW · {requirements.region ?? "EU"}</p>
@@ -78,10 +94,6 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
       <p className="small-copy">{ro ? "Alege un exemplu, adaptează consumul și autonomia, apoi vezi ce modele acoperă cerința." : "Choose an example, adjust the load and runtime, then see which models meet the requirement."}</p>
       <QuickSolutionStarter ro={ro} />
       <p><Link href="/methodology">{ro ? "Ipoteze, criterii și metodologia selecției" : "Assumptions, criteria and selection methodology"}</Link></p>
-    </section>
-    <section aria-labelledby="featured-models">
-      <div className="section-line"><div><p className="eyebrow">{ro ? "SELECȚIE RENOGY EU" : "RENOGY EU SELECTION"}</p><h2 id="featured-models">{ro ? "Mai puține presupuneri. Alegeri mai clare." : "Less guesswork. Better-informed choices."}</h2></div><Link href="/renogy#renogy-products">{ro ? "Vezi selecția Renogy" : "View Renogy selection"} →</Link></div>
-      <div className="product-grid">{products.map(product => <ProductCard key={product.id} product={product} dictionary={dictionary} />)}</div>
     </section>
     {categorySection}
     <section className="planning-editorial" aria-labelledby="planning-heading">
