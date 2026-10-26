@@ -25,10 +25,20 @@ for (const width of [390, 1440]) test(`Waterdrop full assortment ${width}`, asyn
   await page.screenshot({ path: info.outputPath('waterdrop.png'), fullPage: true });
 });
 import records from '../../data/waterdrop-reviewed-expansion.json';
-test('new Waterdrop model pages preserve exact ordinary fallback destinations', async ({ page }) => {
+import { catalog } from '../../lib/affiliate/catalog';
+import { expectSupplierCta } from '../supplier-link-expectations';
+test('new Waterdrop model pages preserve exact issued links and ordinary fallbacks', async ({ page, baseURL }) => {
   for (const record of records) {
     await page.goto('/en/marketplace/products/' + record.id);
     await expect(page.locator('h1')).toContainText(record.model);
-    await expect(page.locator(`.product-detail [data-supplier-product="${record.id}"]`)).toHaveAttribute('href', record.url);
+    const product = catalog.find(item => item.id === record.id)!;
+    expect(product.productUrl).toBe(record.url);
+    const link = page.locator(`.product-detail [data-supplier-product="${record.id}"]`);
+    await expectSupplierCta(link, product, new URL(baseURL!).hostname === 'mairelectroai.com');
+    const destination = new URL((await link.getAttribute('href'))!);
+    if (destination.searchParams.has('u')) {
+      expect(destination.searchParams.get('u')).toBe(record.url);
+      expect(destination.searchParams.get('prodsku')).toBe(record.sku);
+    }
   }
 });
