@@ -14,6 +14,7 @@ import { CatalogBrowser } from "./catalog-browser";
 import { localizedPath } from "@/lib/i18n/routing";
 import { PublisherTrust } from "./publisher-trust";
 import { HomeBuyingGuide } from "./home-buying-guide";
+import { PointerTiltController } from "@/components/pointer-tilt-controller";
 
 export async function DiscoveryHome({ marketplace = false, requirements }: {
   marketplace?: boolean;
@@ -25,7 +26,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
   const products = catalog.filter(p => p.provider === "renogy").slice(0, 3);
   const categorySection = <section id="equipment-categories" className="equipment-explorer" aria-labelledby="equipment-heading">
     <div className="section-line"><h2 id="equipment-heading">{ro ? "Categorii de echipamente" : "Equipment categories"}</h2><Link href="/search?kind=product">{ro ? "Toate modelele" : "All models"} →</Link></div>
-    <div className="category-tiles">{rootCategories.map(category => <Link key={category.path} href={`/marketplace/${category.path}`}>
+    <div className="category-tiles">{rootCategories.map(category => <Link key={category.path} href={`/marketplace/${category.path}`} data-pointer-tilt>
       <div className="category-preview"><EquipmentVisual category={category.path} /></div>
       <span>{category.title[ro ? "ro" : "en"]}</span><span aria-hidden="true">↗</span>
     </Link>)}</div>
@@ -33,6 +34,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
     <p className="category-photo-credits"><Link href="/photo-credits">{ro ? "Sursele și licențele fotografiilor de categorii" : "Category photo sources and licences"} →</Link></p>
   </section>;
   return <main className="commerce-page discovery-home storefront-home">
+    <PointerTiltController />
     {marketplace ? <header className="page-intro marketplace-intro">
       <p className="eyebrow">Marketplace · România / EU</p>
       <h1>{ro ? "Alege echipamentul potrivit." : "Find the right equipment."}</h1>
@@ -56,7 +58,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
       <div className="hero-equipment-showcase" aria-label={ro ? "Explorează echipamentele" : "Explore the equipment"}>
         <div className="hero-equipment-heading"><span>{ro ? "ENERGIE PENTRU FIECARE ZI" : "POWER FOR EVERY DAY"}</span><BrandMark /></div>
         <div className="hero-equipment-grid">
-          {catalog.filter(p => p.provider === "renogy" && ["lithium-batteries", "solar-panels", "inverters"].includes(p.category)).slice(0, 4).map(p => <Link key={p.id} href={`/marketplace/products/${p.slug}`} className="hero-equipment-tile hero-model-tile">
+          {catalog.filter(p => p.provider === "renogy" && ["lithium-batteries", "solar-panels", "inverters"].includes(p.category)).slice(0, 4).map(p => <Link key={p.id} href={`/marketplace/products/${p.slug}`} className="hero-equipment-tile hero-model-tile" data-pointer-tilt>
             <ProductVisual product={p} ro={ro} />
             <span>{ro ? p.title.ro : p.name}</span>
           </Link>)}

@@ -43,7 +43,7 @@ export function HomeBuyingGuide({ ro }: { ro: boolean }) {
       <p>{ro ? "Un punct de plecare structurat pentru stații portabile, baterii, invertoare și sisteme fotovoltaice." : "A structured starting point for portable power stations, batteries, inverters, and photovoltaic systems."}</p>
     </div>
     <div className="home-buying-guide-grid">
-      {cards.map(card => <article key={card.href}>
+      {cards.map(card => <article key={card.href} data-pointer-tilt>
         <h3>{card.title}</h3>
         <p>{card.body}</p>
         <Link href={card.href}>{card.link} <span aria-hidden="true">→</span></Link>

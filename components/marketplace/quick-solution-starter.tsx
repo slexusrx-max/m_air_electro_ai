@@ -37,6 +37,7 @@ export function QuickSolutionStarter({ ro }: { ro: boolean }) {
       {starterScenarios.map((scenario) => <button
         key={scenario.id}
         type="button"
+        data-pointer-tilt
         className={scenario.id === selected.id ? "is-active" : ""}
         aria-pressed={scenario.id === selected.id}
         onClick={() => chooseScenario(scenario.id)}

@@ -20,7 +20,7 @@ export function ProductCard({
   const ro = t["locale.code"] === "ro";
   if (!isCatalogListing(p)) return null;
   return (
-    <article className="equipment-card">
+    <article className="equipment-card" data-pointer-tilt>
       <Link
         href={`/marketplace/products/${p.slug}`}
         tabIndex={-1}
