@@ -1049,7 +1049,8 @@ body:has(.home-brand-first) .brand-background-art { opacity:.48; }
 .comparison-form button:disabled { opacity:.55; cursor:not-allowed; }
 .comparison-scroll { max-width:100%; min-width:0; }
 .deep-footer .footer-columns { grid-template-columns:repeat(3,minmax(0,1fr)); gap:32px; }
-.deep-footer .footer-heading [data-brand-artwork] { max-width:110px; }
+.deep-footer .footer-heading .brand-name { width:110px; flex:0 0 auto; }
+.deep-footer .footer-heading [data-brand-artwork] { width:110px; max-width:100%; }
 .deep-footer .footer-heading { margin-bottom:20px; }
 .deep-footer .footer-columns ul { display:grid; gap:1px; }
 .deep-footer .footer-columns a { display:inline-flex; align-items:center; min-height:32px; font-size:13px; }

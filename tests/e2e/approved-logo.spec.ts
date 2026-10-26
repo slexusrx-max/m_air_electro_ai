@@ -40,6 +40,8 @@ for (const locale of ["ro", "en"]) for (const width of [320, 390, 1440]) {
     expect(await page.evaluate(() => (window as unknown as { logoShifts: number }).logoShifts)).toBeLessThan(0.1);
     await page.screenshot({ path: info.outputPath(`logo-home-${locale}-${width}.png`) });
     const footer = page.locator("footer [data-brand-artwork]");
+    await expect(footer).toBeVisible();
+    expect((await footer.boundingBox())!.width).toBeGreaterThan(100);
     await expect(page.locator("[data-mobile-brand-intro]")).toHaveCount(0);
     {
       await footer.scrollIntoViewIfNeeded(); await expect(footer.locator("img")).toBeVisible();
