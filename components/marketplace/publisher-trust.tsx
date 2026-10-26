@@ -16,6 +16,8 @@ export function PublisherTrust({ ro, compact = false }: { ro: boolean; compact?:
     <div><h3>{ro ? "Cum poți verifica recomandările" : "How to check our recommendations"}</h3>
       <p>{ro ? "Cercetarea între mărci folosește sursele furnizorilor. Paginile modelelor indică sursele exacte și data verificării asistate AI; calculele afișează ipotezele și limitele." : "Cross-brand research uses supplier sources. Model pages show exact sources and AI-assisted verification dates; calculations disclose assumptions and limitations."}</p>
       <div className="action-row"><Link href="/methodology">{ro ? "Metodologie" : "Methodology"}</Link><Link href="/corrections-policy">{ro ? "Corecții" : "Corrections"}</Link><Link href="/contact">Contact</Link></div>
+      <p className="small-copy">{ro ? "Profilurile profesionale, acreditările și proiectele sunt publicate numai după verificarea documentelor și obținerea acordului de publicare." : "Professional profiles, credentials, and projects are published only after evidence is verified and publication permission is obtained."}</p>
+      <div className="trust-evidence-links"><Link href="/editorial-policy">{ro ? "Politică editorială" : "Editorial policy"}</Link><Link href="/affiliate-disclosure">{ro ? "Transparență comercială" : "Commercial transparency"}</Link><Link href="/photo-credits">{ro ? "Surse vizuale" : "Visual sources"}</Link></div>
       <p className="small-copy">{siteConfig.operatorName} · <Link href="/about">{ro ? "Despre editor" : "About the publisher"}</Link></p>
     </div>
   </section>;

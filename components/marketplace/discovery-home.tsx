@@ -13,6 +13,7 @@ import { EquipmentVisual } from "./equipment-visual";
 import { CatalogBrowser } from "./catalog-browser";
 import { localizedPath } from "@/lib/i18n/routing";
 import { PublisherTrust } from "./publisher-trust";
+import { HomeBuyingGuide } from "./home-buying-guide";
 
 export async function DiscoveryHome({ marketplace = false, requirements }: {
   marketplace?: boolean;
@@ -92,6 +93,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
         ["/compare", "Which option fits better?", "Ce opțiune se potrivește?", "Product comparison", "Comparație de produse"],
       ].map(([href, en, romanian, label, translated]) => <Link key={href} href={href}><span>{ro ? translated : label}</span><strong>{ro ? romanian : en}</strong><span aria-hidden="true">↗</span></Link>)}</div>
     </section>
+    <HomeBuyingGuide ro={ro} />
     <RenogyFeature ro={ro} />
     <PublisherTrust ro={ro} />
     <WaterPromo ro={ro} />

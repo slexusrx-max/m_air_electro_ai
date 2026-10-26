@@ -1018,6 +1018,20 @@ body:has(.home-brand-first) .brand-background-art { opacity:.48; }
 .trust-strip>span::before { content:"✓"; margin-right:8px; color:#22647a; }
 .publisher-trust { display:grid; grid-template-columns:1fr 1.2fr; gap:32px; }
 .publisher-trust p { max-width:65ch; }
+.trust-evidence-links { display:flex; flex-wrap:wrap; gap:10px 18px; margin-top:14px; }
+.trust-evidence-links a { min-height:44px; display:inline-flex; align-items:center; }
+.home-buying-guide { display:grid; gap:24px; padding:clamp(24px,4vw,48px); border:1px solid #b7d2dc; border-radius:24px; background:linear-gradient(135deg,#edf9fcde,#d9f3f0cf); box-shadow:0 18px 50px #173d5010; backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); }
+.home-buying-guide-intro { max-width:760px; }
+.home-buying-guide-intro h2 { max-width:24ch; font-size:clamp(1.7rem,2.7vw,2.7rem); font-weight:550; letter-spacing:-.045em; }
+.home-buying-guide-intro>p:last-child { max-width:62ch; color:#3b5867; }
+.home-buying-guide-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; }
+.home-buying-guide-grid article { display:flex; flex-direction:column; min-width:0; padding:22px; border:1px solid #b8d1da; border-radius:18px; background:#f4fbfce0; }
+.home-buying-guide-grid h3 { margin:0; color:#17384a; font-size:1.05rem; }
+.home-buying-guide-grid p { color:#405c69; font-size:.88rem; line-height:1.65; }
+.home-buying-guide-grid a { margin-top:auto; min-height:44px; display:inline-flex; align-items:center; color:#1d5063; font-weight:700; }
+.home-learning-links { display:flex; flex-wrap:wrap; gap:10px; padding-top:4px; }
+.home-learning-links a { min-height:44px; display:inline-flex; align-items:center; padding:9px 14px; border:1px solid #8fb7c2; border-radius:999px; background:#eaf7f8d9; color:#173f51; font-size:13px; font-weight:700; transition:transform .2s ease,background .2s ease; }
+.home-learning-links a:hover { transform:translateY(-2px); background:#d7f5ef; }
 .marketplace-intro { padding:12px 0; }
 .page-intro.marketplace-intro { border:0; background:none; box-shadow:none; }
 .page-intro.marketplace-intro::after { display:none; }
@@ -1080,6 +1094,7 @@ body:has(.home-brand-first) .brand-background-art { opacity:.48; }
   .storefront-home .hero-equipment-showcase { display:none; }
   .trust-strip { font-size:12px; gap:8px; }
   .publisher-trust { grid-template-columns:1fr; gap:20px; }
+  .home-buying-guide-grid { grid-template-columns:1fr; }
   .comparison-tray { bottom:8px; padding:12px; width:calc(100% - 16px); border-radius:16px; }
   .comparison-tray li { flex:0 0 200px; }
   .comparison-tray p { font-size:12px; }

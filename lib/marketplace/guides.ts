@@ -565,6 +565,47 @@ for (const [
               : "/backup-calculator",
     sources: hub === "solar" ? [pvgis, wiring] : [wiring],
   });
+guides.push(
+  {
+    slug: "how-to-choose-portable-power-station",
+    title: b("How to choose a portable power station", "Cum alegi o stație de energie portabilă"),
+    hub: "backup-power",
+    level: "buying-guides",
+    intro: b(
+      "Choose a portable power station from the appliances, runtime, and installation context. Capacity in Wh and output in W answer different questions, and neither replaces an exact model check.",
+      "Alege stația portabilă pornind de la consumatori, autonomie și modul de utilizare. Capacitatea în Wh și puterea în W răspund la întrebări diferite, iar niciuna nu înlocuiește verificarea modelului exact.",
+    ),
+    sections: [
+      section("List loads and runtime", "Listează consumatorii și autonomia", "Add running watts multiplied by hours for every appliance. Keep simultaneous continuous power and measured startup surge in separate columns. A station may store enough energy but still be unable to start a compressor or pump.", "Adună puterea înmulțită cu orele pentru fiecare aparat. Păstrează separat puterea continuă simultană și vârful măsurat la pornire. Stația poate avea energie suficientă, dar să nu poată porni un compresor sau o pompă."),
+      section("Check the complete model", "Verifică modelul complet", "Verify usable capacity assumptions, continuous and time-limited output, charging inputs, AC voltage and frequency, operating temperature, and the exact EU variant. Confirm every port needed by the intended appliances and read the supplier manual before purchase.", "Verifică energia utilizabilă presupusă, ieșirea continuă și temporară, intrările de încărcare, tensiunea și frecvența AC, temperatura și varianta exactă pentru UE. Confirmă porturile necesare și citește manualul furnizorului înainte de cumpărare."),
+      section("Separate portable use from fixed wiring", "Separă utilizarea portabilă de instalația fixă", "Powering selected appliances directly is not the same as connecting equipment to fixed building wiring. Transfer equipment, earthing, protection, cable routing, and local requirements need a competent installation assessment.", "Alimentarea directă a unor aparate nu este același lucru cu legarea la instalația fixă a clădirii. Transferul, împământarea, protecțiile, cablurile și cerințele locale necesită evaluarea unui specialist competent."),
+    ],
+    category: "backup-power",
+    solution: "apartment-backup",
+    calculator: "/marketplace/find-my-solution",
+    sources: [wiring],
+  },
+  {
+    slug: "solar-system-payback",
+    title: b("How to estimate solar system payback", "Cum estimezi recuperarea investiției într-un sistem solar"),
+    hub: "solar",
+    level: "buying-guides",
+    intro: b(
+      "Solar payback is a scenario, not a guaranteed date. It depends on location-specific production, self-consumption, actual tariff terms, installed cost, maintenance, and equipment life.",
+      "Recuperarea investiției solare este un scenariu, nu o dată garantată. Depinde de producția locală, autoconsum, tarifele contractuale, costul instalat, întreținere și durata echipamentelor.",
+    ),
+    sections: [
+      section("Estimate annual production", "Estimează producția anuală", "Use a location-specific source such as the European Commission's PVGIS and model the actual orientation, tilt, system losses, and shading. Review monthly output as well as the annual total because seasonal timing affects how much energy is useful on site.", "Folosește o sursă localizată, precum PVGIS al Comisiei Europene, și modelează orientarea, înclinarea, pierderile și umbrirea reale. Verifică producția lunară, nu doar totalul anual, deoarece sezonul influențează energia folosită local."),
+      section("Value self-consumption and export separately", "Evaluează separat autoconsumul și exportul", "Multiply self-consumed energy by the avoided price in the current electricity contract. Value exported energy using the actual compensation terms. Do not apply today's retail tariff to every generated kWh, and test more than one future tariff scenario.", "Înmulțește energia autoconsumată cu prețul evitat din contractul actual. Evaluează energia exportată după condițiile reale de compensare. Nu aplica tariful de consum tuturor kWh produși și testează mai multe scenarii viitoare."),
+      section("Include lifecycle costs and uncertainty", "Include costurile și incertitudinea", "Start from the complete installed cost after confirmed incentives. Include inspection, maintenance, finance, insurance, replacement assumptions, and degradation where relevant. Compare a conservative, central, and optimistic case instead of publishing one precise promise.", "Pornește de la costul complet instalat după stimulente confirmate. Include inspecția, întreținerea, finanțarea, asigurarea, înlocuirile și degradarea, unde este relevant. Compară un scenariu prudent, unul central și unul optimist, nu publica o singură promisiune precisă."),
+    ],
+    category: "solar/kits",
+    solution: "solar-battery",
+    calculator: "/calculators/solar",
+    sources: [pvgis],
+  },
+);
+
 for (const guide of guides) {
   guide.sections.push({
     title: b("Worked case and decision", "Exemplu de calcul și decizie"),
