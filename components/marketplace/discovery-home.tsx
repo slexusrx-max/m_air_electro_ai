@@ -14,7 +14,6 @@ import { CatalogBrowser } from "./catalog-browser";
 import { localizedPath } from "@/lib/i18n/routing";
 import { PublisherTrust } from "./publisher-trust";
 import { HomeBuyingGuide } from "./home-buying-guide";
-import { PointerTiltController } from "@/components/pointer-tilt-controller";
 
 export async function DiscoveryHome({ marketplace = false, requirements }: {
   marketplace?: boolean;
@@ -34,7 +33,6 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
     <p className="category-photo-credits"><Link href="/photo-credits">{ro ? "Sursele și licențele fotografiilor de categorii" : "Category photo sources and licences"} →</Link></p>
   </section>;
   return <main className="commerce-page discovery-home storefront-home">
-    <PointerTiltController />
     {marketplace ? <header className="page-intro marketplace-intro">
       <p className="eyebrow">Marketplace · România / EU</p>
       <h1>{ro ? "Alege echipamentul potrivit." : "Find the right equipment."}</h1>

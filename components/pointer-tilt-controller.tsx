@@ -2,7 +2,22 @@
 
 import { useEffect } from "react";
 
-const TILT_SELECTOR = "[data-pointer-tilt]";
+const TILT_SELECTOR = [
+  "[data-pointer-tilt]",
+  ".equipment-card",
+  ".supplier-entry-card",
+  ".discovery-card",
+  ".info-card",
+  ".finder-recommendation",
+  ".starter-scenarios .content-panel",
+  ".category-tiles > a",
+  ".planning-links > a",
+  ".hero-equipment-tile",
+  ".home-buying-guide-grid > article",
+  ".quick-solution-scenarios > button",
+  ".water-category-grid > a",
+  ".water-suppliers > a",
+].join(",");
 
 export function PointerTiltController() {
   useEffect(() => {
@@ -12,6 +27,7 @@ export function PointerTiltController() {
     function update(event: PointerEvent) {
       const target = (event.target as Element | null)?.closest<HTMLElement>(TILT_SELECTOR);
       if (!target) return;
+      target.setAttribute("data-pointer-tilt", "");
       const bounds = target.getBoundingClientRect();
       const x = (event.clientX - bounds.left) / bounds.width;
       const y = (event.clientY - bounds.top) / bounds.height;

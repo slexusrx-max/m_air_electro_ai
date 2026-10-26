@@ -9,6 +9,7 @@ import { catalog } from "@/lib/affiliate/catalog";
 import { CommercialNotice } from "@/components/marketplace/commercial-notice";
 import { ComparisonProvider, ComparisonTray } from "@/components/marketplace/compare-control";
 import { getPublicSupplierPrices } from "@/lib/affiliate/price-feed";
+import { PointerTiltController } from "@/components/pointer-tilt-controller";
 type PlatformShellProps = {
   children: React.ReactNode;
   contentClassName?: string;
@@ -31,6 +32,7 @@ export async function PlatformShell({
   }));
   return (
     <div className={mobileBrandIntro ? "platform-root home-brand-first" : "platform-root"}>
+      <PointerTiltController />
       <a className="skip-link" href="#main-content">
         {locale === "ro" ? "Salt la conținut" : "Skip to content"}
       </a>

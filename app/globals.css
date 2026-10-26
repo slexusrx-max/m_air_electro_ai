@@ -1131,3 +1131,43 @@ body:has(.home-brand-first) .brand-background-art { opacity:.48; }
 @media(prefers-reduced-transparency:reduce) {
   .supplier-entry-card,.commerce-page .equipment-card,.catalog-filters,.platform-root .commercial-notice { background:#edf7fb; backdrop-filter:none; }
 }
+
+/* Universal clear-glass surfaces. Keep the site artwork visible while retaining
+   enough blur and edge contrast for readable controls. */
+.platform-root :is(.equipment-card,.supplier-entry-card,.discovery-card,.info-card,.brand-glass-card,.glass-panel,.content-panel,.catalog-filters,.water-category-grid>a,.water-suppliers>a,.planning-links>a,.home-buying-guide-grid>article) {
+  background-color:rgba(238,249,252,.1) !important;
+  background-image:linear-gradient(145deg,rgba(255,255,255,.12),rgba(215,244,248,.07)) !important;
+  border-color:rgba(82,138,159,.55);
+  box-shadow:inset 0 1px rgba(255,255,255,.48),0 10px 28px rgba(22,55,72,.09);
+  -webkit-backdrop-filter:blur(14px) saturate(118%);
+  backdrop-filter:blur(14px) saturate(118%);
+}
+.platform-root .equipment-card:hover {
+  background-color:rgba(228,249,251,.16) !important;
+  background-image:linear-gradient(145deg,rgba(255,255,255,.18),rgba(178,238,244,.1)) !important;
+}
+.platform-root :is(.equipment-visual,.product-model-photo,.category-preview,.category-preview .equipment-visual) {
+  background:transparent !important;
+  border-color:transparent;
+}
+.platform-root .product-model-photo { overflow:hidden; }
+.platform-root .product-model-photo img {
+  background:transparent !important;
+  mix-blend-mode:multiply;
+}
+.platform-root :is(.supplier-price,.product-context,.finder-help,.finder-assumptions) {
+  background:rgba(255,255,255,.08) !important;
+  box-shadow:inset 0 1px rgba(255,255,255,.38);
+}
+@supports not (backdrop-filter:blur(1px)) {
+  .platform-root :is(.equipment-card,.supplier-entry-card,.discovery-card,.info-card,.brand-glass-card,.glass-panel,.content-panel,.catalog-filters,.water-category-grid>a,.water-suppliers>a,.planning-links>a,.home-buying-guide-grid>article) {
+    background:#e9f5f7 !important;
+  }
+}
+@media(prefers-reduced-transparency:reduce) {
+  .platform-root :is(.equipment-card,.supplier-entry-card,.discovery-card,.info-card,.brand-glass-card,.glass-panel,.content-panel,.catalog-filters,.water-category-grid>a,.water-suppliers>a,.planning-links>a,.home-buying-guide-grid>article) {
+    background:#e9f5f7 !important;
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+  }
+}
