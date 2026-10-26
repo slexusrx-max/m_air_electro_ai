@@ -57,7 +57,7 @@ test("retains ordinary supplier fallback where no approved exact feed identity e
 
 test("every cataloged Renogy and Waterdrop model has an exact documented feed identity", () => {
   const eligible = catalog.filter(product => product.provider === "renogy" || product.provider === "waterdrop-eu");
-  assert.equal(eligible.length, 22);
+  assert.equal(eligible.length, 35);
   assert.deepEqual(eligible.filter(product => !productFeedIdentity(product)).map(product => product.id), []);
   assert.equal(new Set(eligible.map(product => productFeedIdentity(product)!.merchantSku)).size, eligible.length);
 });

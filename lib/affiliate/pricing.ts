@@ -1,4 +1,5 @@
 import type { CatalogProduct } from "./types";
+import waterdropReviewedExpansion from "@/data/waterdrop-reviewed-expansion.json";
 
 export const SUPPLIER_PRICE_MAX_AGE_MS = 48 * 60 * 60 * 1000;
 
@@ -32,6 +33,7 @@ const waterdropSkus: Record<string, string> = {
   "waterdrop-g3p800": "44431201206588",
   "waterdrop-g3p600": "45120409829692",
   "waterdrop-x12": "50113185153340",
+  ...Object.fromEntries(waterdropReviewedExpansion.map(record => [record.id, record.sku])),
 };
 
 // Exact advertiser-feed variants documented in product photo provenance. These
