@@ -19,7 +19,7 @@ import { BatteryRuntimeExample } from "@/components/marketplace/battery-runtime-
 import { catalog, productBySlug } from "@/lib/affiliate/catalog";
 import { categoryByPath, local } from "@/lib/marketplace/content";
 import { guides } from "@/lib/marketplace/guides";
-import { SupplierLink } from "@/components/marketplace/supplier-link";
+import { SupplierPrice } from "@/components/marketplace/supplier-link";
 import { buildMetadata } from "@/lib/metadata";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { legacyProducts as oldProducts } from "@/lib/marketplace/legacy";
@@ -93,9 +93,7 @@ export default async function Page({ params }: Props) {
             <a className="text-link" href="#specifications">{ro ? "Toate caracteristicile" : "All specifications"} ↓</a>
             <CompareControl id={p.id} ro={ro} />
             {p.productUrl ? (
-              <SupplierLink product={p} ro={ro} className="button-primary">
-                {ro ? `Vezi modelul la ${p.merchant}` : `View model at ${p.merchant}`}
-              </SupplierLink>
+              <SupplierPrice product={p} ro={ro} prominent />
             ) : (
               <Link href={`/marketplace/${c.path}`} className="button-primary">
                 {ro

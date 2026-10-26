@@ -1,4 +1,4 @@
-import { SupplierLink } from "./supplier-link";
+import { SupplierPrice } from "./supplier-link";
 import Link from "@/components/localized-link";
 import { specificationLabel, specificationValue } from "@/lib/marketplace/specifications";
 import { CompareControl } from "./compare-control";
@@ -66,11 +66,11 @@ export function ProductCard({
         {ro ? "Detalii și compatibilitate" : "Details & compatibility"} →
       </Link>
       <CompareControl id={p.id} ro={ro} />
+      <SupplierPrice product={p} ro={ro} />
       <div className="product-actions">
         <Link href={p.category === "water" ? "/marketplace/water#finder" : categoryByPath(p.paths?.[0] ?? "")?.calculator ?? "/marketplace/find-my-solution"}>
           {p.category === "water" ? (ro ? "Alege sistemul de apa" : "Find your water system") : (ro ? "Calculeaza necesarul" : "Calculate requirements")} →
         </Link>
-        <SupplierLink product={p} ro={ro} />
       </div>
     </article>
   );

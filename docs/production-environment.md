@@ -15,6 +15,8 @@ Configuration reference updated 1 October 2026. The sole current release/contact
 | RENOGY_AFFILIATE_APPROVED | `false` until real approval | Ordinary supplier links |
 | AFFILIATE_TRACKING_ENABLED | `false` until approved activation | Ordinary supplier links |
 | RENOGY_IMPACT_LINKS_JSON | Exact supplier URL → approved HTTPS mapping | Ordinary supplier links |
+| RENOGY_IMPACT_PRODUCT_FEED_URL / WATERDROP_IMPACT_PRODUCT_FEED_URL | Server-only authenticated official product-feed downloads | No numeric price; supplier price link remains |
+| SUPPLIER_PRICE_SNAPSHOTS_JSON | Optional controlled current-price snapshots with provider, catalog, retrieval time, SKU, EUR amount | No numeric price; never required for browsing |
 | NEXT_PUBLIC_PLAUSIBLE_DOMAIN | Optional intentional analytics configuration | No analytics events |
 | NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY | Optional account/session/document services | Public marketplace usable; accounts unavailable |
 | SUPABASE_SECRET_KEY or SUPABASE_SERVICE_ROLE_KEY | Optional server administration | No privileged account operations |
@@ -35,6 +37,8 @@ Maintain the documented production values and keep secret values server-only. Do
 Stanislav Zavizion is the owner-confirmed individual publisher in Romania for Romania / EU. There is no company override: `NEXT_PUBLIC_OPERATOR_NAME` is ignored. Optional `NEXT_PUBLIC_EDITOR_NAME/BIO/EXPERTISE/PROFILE` stay unset unless separately confirmed. Ownership is not authorship, a credential or human review.
 
 Never commit credentials. No tracking identifier, Impact account, site-verification tag or submitted application proves affiliate approval. Both affiliate flags and valid provider-issued mappings are required for activation. The obsolete `RENOGY_AFFILIATE_ID` ref-parameter convention is unused. Update disclosure and verify approved links at activation.
+
+Price ingestion is independent from affiliate-link activation. Only Renogy catalog `28907` and Waterdrop catalog `18289` are accepted, and each value must match an exact merchant variant SKU already assigned to a documented catalog product. The server downloads configured feeds over HTTPS, caches a successful response for one hour and exposes only current EUR amount, provider, SKU and retrieval date. It never exposes feed credentials, original/list price, discount, stock or feed tracking URLs. Missing, malformed, duplicate, non-EUR or unrecognized records fail closed. An optional JSON snapshot expires after 48 hours. PECRON and BLUETTI remain supplier-link-only until an authorized exact feed is configured and reviewed.
 
 ## Deployment and verification
 

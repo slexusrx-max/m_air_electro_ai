@@ -24,7 +24,7 @@ Romania is the launch market; the EU is the commercial region. Romanian is prima
 
 ## Commercial Model
 
-Independent affiliate-commerce discovery. The merchant controls price, stock, payment, orders, shipping, warranty and returns. No fabricated inventory, reviews, ratings, prices or partnership status. There is no equipment checkout or fulfilment operation.
+Independent affiliate-commerce discovery. The merchant controls price, stock, payment, orders, shipping, warranty and returns. A current price may be displayed only from an authorized official supplier feed, matched to the exact documented SKU/variant and bounded by a freshness gate. Missing or stale data falls back to the supplier price link. Do not display old/list prices, discounts or stock until separately supported by compliant evidence and policy. No fabricated inventory, reviews, ratings, prices or partnership status. There is no equipment checkout or fulfilment operation.
 
 ## Information Architecture
 
@@ -64,7 +64,7 @@ Renogy Impact approval is owner-confirmed on **14 October 2026**, program `14864
 
 12 October 2026 expansion (historical): distinct PECRON EU and BLUETTI EU identities were added. All real products require an explicit supplier, with brand/merchant/origin checked centrally in `lib/affiliate/suppliers.ts`. Nine EU-source-checked models are documented in `docs/eu-supplier-listings-2026-10-12.md`. Waterdrop remains in Water / Water & Resilience; portable power stations belong to Backup Power. The 13 October Waterdrop Germany launch supersedes its previous pending status. PECRON/BLUETTI tracking remains off. No prices, stock, ratings, certifications or approval are inferred.
 
-Real models carry official sources and review dates. Classes describe technical roles, not invented purchasable products. No merchant copy or images are reproduced. Original category artwork includes studio-style generated solar panel imagery and schematic illustrations for other families. Category imagery is illustrative, not a photograph of the named model. New suppliers need evidence, regional URL, disclosure and delivery checks. Never label a generic collection URL as a specific model.
+Real models carry official sources and review dates. Classes describe technical roles, not invented purchasable products. Authorized Renogy/Waterdrop feed prices remain a separate server-only, fail-closed runtime layer; PECRON/BLUETTI stay link-only without an authorized feed. No merchant copy or unlicensed images are reproduced. Original category artwork includes studio-style generated solar panel imagery and schematic illustrations for other families. Category imagery is illustrative, not a photograph of the named model. New suppliers need evidence, regional URL, disclosure and delivery checks. Never label a generic collection URL as a specific model.
 
 ## Search
 

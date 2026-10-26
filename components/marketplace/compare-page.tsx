@@ -5,7 +5,7 @@ import { specificationLabel, specificationValue } from "@/lib/marketplace/specif
 import { catalog } from "@/lib/affiliate/catalog";
 import { parseComparison } from "@/lib/marketplace/query";
 import { RemoveComparison } from "./compare-control";
-import { SupplierLink } from "./supplier-link";
+import { SupplierPrice } from "./supplier-link";
 import { localizedPath } from "@/lib/i18n/routing";
 import { SelectionHelp } from "./selection-help";
 import { stationCandidates, batteryCandidates } from "@/lib/marketplace/selection-guidance";
@@ -124,9 +124,9 @@ export function Comparison({ ids, ro }: { ids: string; ro: boolean }) {
                   [ro ? "Clasa de tensiune (V)" : "Voltage class (V)", "voltage"],
                 ].map(([label, field]) => <tr key={field}><th scope="row">{label}</th>{selected.map(p => <td key={p.id}>{p.facets[field] ?? (ro ? "Nedocumentat / nu se aplică" : "Not documented / not applicable")}</td>)}</tr>)}
                 <tr>
-                  <th scope="row">{ro ? "Furnizor extern" : "External supplier"}</th>
+                  <th scope="row">{ro ? "Preț curent / furnizor" : "Current price / supplier"}</th>
                   {selected.map(p => {
-                    return <td key={p.id}>{p.productUrl ? <SupplierLink product={p} ro={ro}>{p.merchant}</SupplierLink> : (ro ? "Niciun furnizor selectat" : "No supplier selected")}</td>;
+                    return <td key={p.id}>{p.productUrl ? <SupplierPrice product={p} ro={ro} compact /> : (ro ? "Niciun furnizor selectat" : "No supplier selected")}</td>;
                   })}
                 </tr>
                 <tr>

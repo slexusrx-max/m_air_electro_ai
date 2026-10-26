@@ -9,6 +9,7 @@ import { catalog } from "@/lib/affiliate/catalog";
 import { CommercialNotice } from "@/components/marketplace/commercial-notice";
 import { ComparisonProvider, ComparisonTray } from "@/components/marketplace/compare-control";
 import { BrandArtwork } from "@/components/brand-artwork";
+import { getPublicSupplierPrices } from "@/lib/affiliate/price-feed";
 type PlatformShellProps = {
   children: React.ReactNode;
   contentClassName?: string;
@@ -19,10 +20,11 @@ export async function PlatformShell({
   contentClassName = "flex-1 px-4 pb-12 pt-8 sm:px-6 lg:px-8",
   mobileBrandIntro = false,
 }: PlatformShellProps) {
-  const [profile, user, locale] = await Promise.all([
+  const [profile, user, locale, supplierPrices] = await Promise.all([
     getCurrentProfile(),
     getCurrentUser(),
     getRequestLocale(),
+    getPublicSupplierPrices(),
   ]);
   const supplierLinks = Object.fromEntries(catalog.filter(p => p.productUrl).map(p => {
     const { href, tracked } = supplierLink(p);
@@ -49,7 +51,7 @@ export async function PlatformShell({
       {mobileBrandIntro && <div className="mobile-home-brand" data-mobile-brand-intro><BrandArtwork eager /></div>}
       <CommercialNotice ro={locale === "ro"} />
       <div id="main-content" tabIndex={-1} className={contentClassName}>
-        <SupplierLinksProvider links={supplierLinks}>
+        <SupplierLinksProvider links={supplierLinks} prices={supplierPrices}>
           <ComparisonProvider products={Object.fromEntries(catalog.map(p => [p.id, locale === "ro" ? p.title.ro : p.name]))}>
           {children}
           <ComparisonTray ro={locale === "ro"} />

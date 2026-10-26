@@ -32,7 +32,7 @@ The [extended Renogy feed index](docs/renogy-feed-catalog-2026-10-24.md) adds 72
 The [15 October UX redesign](docs/ux-redesign-2026-10-15.md) makes equipment browsing and guided selection the two homepage entry points. Marketplace opens a filterable catalog, Renogy categories have no decorative numbering, and a shared comparison tray preserves selections across RO/EN switching. Finder drafts use bounded, non-sensitive URL parameters; filtered/draft URLs remain noindex. Existing supplier gates and Waterdrop configuration are unchanged.
 
 - Marketplace: ten main families and 22 category/subcategory routes with buying advice, technical checks and working filters.
-- Catalog: seven sourced Renogy EU models plus three Waterdrop Germany, three PECRON EU and three BLUETTI EU models; explicitly labelled equipment classes are retained. No invented prices, stock, reviews or ratings. See the [EU source and safety record](docs/eu-supplier-listings-2026-10-12.md).
+- Catalog: sourced Renogy EU models plus three Waterdrop Germany, three PECRON EU and three BLUETTI EU models; explicitly labelled equipment classes are retained. A separate fail-closed server layer may show the current EUR price only when an authorized official feed matches the exact SKU and is fresh; otherwise the interface links to the supplier for the current price. No list/old price, discount, stock, reviews or ratings are invented or displayed. See the [EU source and safety record](docs/eu-supplier-listings-2026-10-12.md).
 - Solutions: apartment, home, solar + battery, RV/caravan, marine, off-grid cabin, workshop and business continuity.
 - Learn: 18 independent guides, twelve topic/reading-level hubs and grouped FAQ.
 - Search: names, brands, specifications, voltage, power, capacity, applications and tags; intersecting known-value filters.
@@ -51,6 +51,8 @@ Additional sizes/features remain facets or procurement topics until catalog evid
 Next.js 16 App Router, React 19, TypeScript, Tailwind CSS 4, Supabase SSR for optional accounts, Playwright and Node tests. Read the installed Next.js documentation before changing framework code.
 
 `lib/marketplace/content.ts` owns bilingual taxonomy; `catalog-data.ts` owns models/classes; `solutions.ts`, `guides.ts` and `information.ts` own editorial content. `query.ts` and `recommendation.ts` provide deterministic logic. `routes.ts` provides the public inventory. Existing `lib/affiliate/catalog.ts` exports remain compatible; supplier tracking stays in `lib/affiliate/providers`.
+
+`lib/affiliate/price-feed.ts` is the server-only official-feed reader; `lib/affiliate/pricing.ts` owns exact SKU and freshness validation. Price data never changes editorial product facts or affiliate-link gates. Only current EUR amounts are rendered, and any unavailable, ambiguous or expired value becomes the ordinary “current price at supplier” action.
 
 Reusable server templates are `app/marketplace/[...path]`, `app/solutions/[slug]` and `app/learn/[slug]`. Small client components handle navigation, comparison selection and calculation inputs. Long-form content is not sent as menu client state.
 
