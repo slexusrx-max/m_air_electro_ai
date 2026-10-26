@@ -5,6 +5,22 @@ import evidence from "./fixtures/renogy-extra-feed-evidence.json";
 import { catalog } from "../lib/affiliate/catalog";
 import { publicRoutes } from "../lib/marketplace/routes";
 import { localizedPath, isLocalizedPublicPath } from "../lib/i18n/routing";
+import variants from "../data/renogy-feed-variants.json";
+
+test("full feed identity index retains all 365 exact SKU rows without prices or tracking URLs", () => {
+  assert.equal(variants.catalogId, "28907");
+  assert.equal(variants.products.length, 365);
+  assert.equal(new Set(variants.products.map(product => product.sku)).size, 365);
+  assert.equal(new Set(variants.products.map(product => product.name)).size, 365);
+  assert.equal(new Set(variants.products.map(product => product.url)).size, 101);
+  for (const product of variants.products) {
+    assert.match(product.sku, /^\d+$/);
+    assert.ok(product.name);
+    assert.equal(new URL(product.url).origin, "https://eu.renogy.com");
+    assert.doesNotMatch(product.url, /sjv\.io|prodsku|intsrc/i);
+    assert.deepEqual(Object.keys(product).sort(), ["kind", "name", "parentSku", "sku", "url"]);
+  }
+});
 
 test("feed index retains distinct ordinary EU parent pages outside the reviewed selection", () => {
   const existing = new Set(catalog.filter(p => p.provider === "renogy").map(p => new URL(p.productUrl).pathname));

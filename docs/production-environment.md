@@ -1,6 +1,6 @@
 # Production environment — M Air Electro AI
 
-Configuration reference updated 1 October 2026. The sole current release/contact status is [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md). Public browsing, search, comparison and deterministic tools do not require account, AI or payment credentials.
+Configuration reference updated 26 October 2026. The sole current release/contact status is [AFFILIATE_APPLICATION_READINESS.md](../AFFILIATE_APPLICATION_READINESS.md). Public browsing, search, comparison and deterministic tools do not require account, AI or payment credentials.
 
 | Variable | Production purpose/value | Missing behavior |
 | --- | --- | --- |
@@ -38,7 +38,7 @@ Stanislav Zavizion is the owner-confirmed individual publisher in Romania for Ro
 
 Never commit credentials. No tracking identifier, Impact account, site-verification tag or submitted application proves affiliate approval. Both affiliate flags and valid provider-issued mappings are required for activation. The obsolete `RENOGY_AFFILIATE_ID` ref-parameter convention is unused. Update disclosure and verify approved links at activation.
 
-Price ingestion is independent from affiliate-link activation. Only Renogy catalog `28907` and Waterdrop catalog `18289` are accepted, and each value must match an exact merchant variant SKU already assigned to a documented catalog product. The server downloads configured feeds over HTTPS, caches a successful response for one hour and exposes only current EUR amount, provider, SKU and retrieval date. It never exposes feed credentials, original/list price, discount, stock or feed tracking URLs. Missing, malformed, duplicate, non-EUR or unrecognized records fail closed. An optional JSON snapshot expires after 48 hours. PECRON and BLUETTI remain supplier-link-only until an authorized exact feed is configured and reviewed.
+Price ingestion is independent from affiliate-link activation. Only Renogy catalog `28907` and Waterdrop catalog `18289` are accepted. Renogy values must match one of the 365 exact SKU identities in the generated feed index; reviewed marketplace models and Waterdrop products retain their own exact identity mappings. The server downloads configured feeds over HTTPS, caches a successful response for one hour and exposes only current EUR amount, provider, SKU and retrieval date. It never exposes feed credentials, original/list price, discount, stock or feed tracking URLs. Missing, malformed, duplicate, non-EUR or unrecognized records fail closed. An optional JSON snapshot expires after 48 hours. PECRON and BLUETTI remain supplier-link-only until an authorized exact feed is configured and reviewed.
 
 ## Deployment and verification
 

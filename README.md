@@ -4,7 +4,7 @@
 
 41 canonical model records: 19 Renogy, 16 Waterdrop, 3 PECRON and 3 BLUETTI. This is not an in-stock offer count: Waterdrop K19H is archived/unavailable with ordinary documentation links. The 32-row Waterdrop feed represents 16 device models, 14 bundle/cartridge configurations and two extra-year offers excluded from device counts (one has conflicting title evidence). No full merchant-assortment claim is made.
 
-Renogy and Waterdrop Germany are the two approved programmes. Renogy EU/Romania eligibility is confirmed; Waterdrop delivery to Romania remains unverified. PECRON/BLUETTI remain ordinary listings. Renogy's separate 72 parent-page index represents 186 feed rows: 31 summaries, 114 variants and 41 single options, or 155 selections/options. It does not add 72 reviewed canonical models. See [count/disclosure audit](docs/disclosure-feed-accuracy-2026-10-25.md) and [image audit](docs/renogy-parent-photos-2026-10-25.md). Original 19/core 18 Renogy mappings are preserved.
+Renogy and Waterdrop Germany are the two approved programmes. Renogy EU/Romania eligibility is confirmed; Waterdrop delivery to Romania remains unverified. PECRON/BLUETTI remain ordinary listings. `/renogy/catalog` now exposes all 365 exact Renogy feed SKU entries through search and pagination while retaining the distinction between feed entries and the 19 separately reviewed canonical Renogy models. Runtime prices require a fresh exact official feed; missing values fail closed to the merchant link. The earlier 72-parent disclosure and image audits remain historical evidence for the curated parent subset.
 
 Current tests inspect routing and hrefs without generating external affiliate clicks. Network click registration, conversions and payout remain separate and unproven by these site tests. Earlier dated counts and route traversals below are historical, not instructions to repeat tracking tests.
 
@@ -27,7 +27,7 @@ Public RO/EN URL rules, search-intent priorities, worked energy examples and the
 
 ## Product modules
 
-The [extended Renogy feed index](docs/renogy-feed-catalog-2026-10-24.md) adds 72 ordinary official EU parent-page links at `/renogy/catalog` (also in English). These feed listings remain separate from the individually documented selections and may contain multiple variants; no new tracking, prices, stock or images are introduced.
+The [full Renogy feed catalog](docs/renogy-365-price-catalog-2026-10-26.md) exposes all 365 exact SKU identities at `/renogy/catalog` (also in English), with 48 entries per page and model/SKU search. These entries remain separate from individually reviewed selections. Only a fresh official feed may supply the current EUR price; no original price, discount or stock is displayed.
 
 The [15 October UX redesign](docs/ux-redesign-2026-10-15.md) makes equipment browsing and guided selection the two homepage entry points. Marketplace opens a filterable catalog, Renogy categories have no decorative numbering, and a shared comparison tray preserves selections across RO/EN switching. Finder drafts use bounded, non-sensitive URL parameters; filtered/draft URLs remain noindex. Existing supplier gates and Waterdrop configuration are unchanged.
 

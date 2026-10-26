@@ -1,84 +1,100 @@
-import Image from "next/image";
-import parentPhotos from "@/data/renogy-parent-photos.json";
-import rowTypes from "@/data/renogy-parent-row-types.json";
-import { renogyLink } from "@/lib/affiliate/providers/renogy";
 import Link from "@/components/localized-link";
 import { PlatformShell } from "@/components/platform-shell";
 import { Breadcrumbs } from "@/components/marketplace/shared";
 import { AffiliateDisclosure } from "@/components/marketplace/affiliate-disclosure";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { buildMetadata } from "@/lib/metadata";
-import { renogyFeedProducts } from "@/data/renogy-extra-feed-products";
+import { getPublicRenogyFeedPrices } from "@/lib/affiliate/price-feed";
+import feed from "@/data/renogy-feed-variants.json";
+import { localizedPath } from "@/lib/i18n/routing";
 import styles from "./catalog.module.css";
 
-const categories = [
-  ["Batteries", "Acumulatoare"],
-  ["Solar panels", "Panouri solare"],
-  ["Inverters", "Invertoare"],
-  ["Charge controllers", "Regulatoare de încărcare"],
-  ["Chargers", "Încărcătoare"],
-  ["Systems and kits", "Sisteme și kituri"],
-  ["Power stations", "Stații electrice"],
-  ["Components", "Componente"],
-] as const;
+const PAGE_SIZE = 48;
+type Props = { searchParams: Promise<Record<string, string | string[] | undefined>> };
 
-export async function generateMetadata() {
-  const locale = await getRequestLocale();
-  return buildMetadata({
-    locale,
-    path: "/renogy/catalog",
-    title: locale === "ro" ? "Catalog extins Renogy EU" : "Extended Renogy EU catalog",
-    description: locale === "ro"
-      ? `Răsfoiește ${renogyFeedProducts.length} de pagini suplimentare de produse Renogy din feed-ul furnizat.`
-      : `Browse ${renogyFeedProducts.length} additional Renogy product pages from the supplied feed.`,
-  });
+function first(value: string | string[] | undefined): string {
+  return (Array.isArray(value) ? value[0] : value)?.trim().slice(0, 120) ?? "";
 }
 
-export default async function RenogyCatalogPage() {
-  const [locale, dictionary] = await Promise.all([getRequestLocale(), getRequestDictionary()]);
+export async function generateMetadata({ searchParams }: Props) {
+  const locale = await getRequestLocale();
+  const params = await searchParams;
+  return {
+    ...buildMetadata({
+    locale,
+    path: "/renogy/catalog",
+    title: locale === "ro" ? "Catalog Renogy EU cu 365 SKU" : "Renogy EU catalog with 365 SKUs",
+    description: locale === "ro"
+      ? "Caută toate cele 365 de poziții SKU din catalogul oficial Renogy EU; prețurile apar numai dintr-un feed proaspăt și exact."
+      : "Search all 365 SKU entries from the official Renogy EU catalog; prices appear only from a fresh exact feed.",
+    }),
+    ...(first(params.q) || first(params.page) ? { robots: { index: false, follow: true } } : {}),
+  };
+}
+
+export default async function RenogyCatalogPage({ searchParams }: Props) {
+  const [locale, dictionary, prices, rawParams] = await Promise.all([
+    getRequestLocale(), getRequestDictionary(), getPublicRenogyFeedPrices(), searchParams,
+  ]);
   const ro = locale === "ro";
+  const query = first(rawParams.q);
+  const normalized = query.toLocaleLowerCase();
+  const filtered = feed.products.filter(product => !normalized ||
+    product.name.toLocaleLowerCase().includes(normalized) || product.sku.includes(normalized));
+  const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  const requestedPage = Number.parseInt(first(rawParams.page), 10);
+  const currentPage = Number.isInteger(requestedPage) ? Math.min(Math.max(requestedPage, 1), pageCount) : 1;
+  const visible = filtered.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+  const hrefForPage = (page: number) => `/renogy/catalog?${new URLSearchParams({
+    ...(query ? { q: query } : {}), ...(page > 1 ? { page: String(page) } : {}),
+  })}`.replace(/\?$/, "");
+
   return <PlatformShell><main className="commerce-page">
     <Breadcrumbs items={[
       { name: "Marketplace", path: "/marketplace" },
       { name: "Renogy", path: "/renogy" },
-      { name: ro ? "Catalog extins" : "Extended catalog", path: "/renogy/catalog" },
+      { name: ro ? "Catalog 365 SKU" : "365-SKU catalog", path: "/renogy/catalog" },
     ]} />
     <header className={styles.header}>
       <p className={styles.eyebrow}>{ro ? "CATALOG EU DIN FEED-UL IMPACT" : "EU CATALOG FROM THE IMPACT FEED"}</p>
-      <h1>{ro ? "Mai multe produse Renogy, în același loc." : "More Renogy products, in one place."}</h1>
+      <h1>{ro ? "Toate cele 365 de poziții Renogy." : "All 365 Renogy catalog entries."}</h1>
       <p>{ro
-        ? `Explorează ${renogyFeedProducts.length} de pagini suplimentare din feed-ul furnizat. Sunt pagini ale comerciantului, care pot grupa mai multe variante sau pachete; nu sunt modele verificate individual de noi. Denumirile produselor sunt păstrate în limba sursei. Verifică varianta și compatibilitatea la Renogy.`
-        : `Explore ${renogyFeedProducts.length} additional pages from the supplied feed. These are merchant pages that may group several variants or packs, not individually verified models. Product names retain the source language. Confirm the variant and compatibility with Renogy.`}</p>
-      <p className={styles.note}>{ro ? "186 rânduri de feed: 31 rezumate de pagină, 114 variante și 41 opțiuni individuale (155 selecții/opțiuni). Nu reprezintă stoc actual. Linkurile afiliate sunt marcate; prețul și disponibilitatea se confirmă la comerciant." : "186 feed rows: 31 page summaries, 114 variants and 41 single options (155 selections/options). These are not current stock counts. Affiliate links are marked; confirm price and availability with the merchant."}</p>
+        ? "Fiecare card reprezintă un SKU exact din catalogul furnizorului. Variantele aceleiași pagini rămân separate, astfel încât o valoare de preț să nu fie atribuită altui pachet sau altui model."
+        : "Each card represents one exact supplier-catalog SKU. Variants on the same parent page remain separate so a price is never assigned to another pack or model."}</p>
+      <p className={styles.note}>{ro
+        ? "Afișăm numai prețul curent EUR primit într-un feed proaspăt. Nu afișăm preț vechi, reducere sau stoc. Dacă feed-ul lipsește, este expirat ori nu conține preț pentru acel SKU, rămâne doar legătura pentru verificare la Renogy EU."
+        : "Only the current EUR price from a fresh feed is shown. Old price, discount and stock are never displayed. If the feed is missing, expired or has no price for that SKU, only the Renogy EU verification link remains."}</p>
     </header>
-    <nav className={styles.nav} aria-label={ro ? "Categorii de produse" : "Product categories"}>
-      {categories.map(([en, romanian]) => {
-        const count = renogyFeedProducts.filter((product) => product.category === en).length;
-        if (!count) return null;
-        return <Link key={en} href={`#${en.toLowerCase().replaceAll(" ", "-")}`}>{ro ? romanian : en} <span>{count}</span></Link>;
-      })}
-    </nav>
-    {categories.map(([en, romanian]) => {
-      const items = renogyFeedProducts.filter((product) => product.category === en);
-      if (!items.length) return null;
-      return <section key={en} id={en.toLowerCase().replaceAll(" ", "-")} className={styles.group}>
-        <h2>{ro ? romanian : en}</h2>
-        <div className={styles.grid}>
-          {items.map((product) => { const link = renogyLink(product.url); const counts = rowTypes[product.url]; const options = counts.variantRows + counts.singleOptions; const photo = parentPhotos.entries[product.url]; return <article key={product.url} className={styles.card}>
-            <div className={styles.cardTop}><span aria-hidden="true">RENOGY EU</span><span>{ro ? `${options} ${options === 1 ? "opțiune" : "opțiuni"} / ${counts.feedRows} ${counts.feedRows === 1 ? "rând" : "rânduri"}` : `${options} ${options === 1 ? "option" : "options"} / ${counts.feedRows} ${counts.feedRows === 1 ? "row" : "rows"}`}</span></div>
-            {"src" in photo && <figure className={styles.photo} data-parent-photo={product.url}>
-              <Image src={photo.src} width={photo.width} height={photo.height} unoptimized loading="lazy" alt={ro ? `Imagine reprezentativă a paginii Renogy: ${product.name}` : `Representative Renogy page image: ${product.name}`} />
-              <figcaption>{ro ? "Imagine de prezentare. Varianta și conținutul pachetului se confirmă la Renogy." : "Representative image. Confirm the selected variant and included items at Renogy."}</figcaption>
-            </figure>}
-            <h3>{product.name}</h3>
-            <a href={link.href} target="_blank" rel={link.tracked ? "sponsored noopener noreferrer" : "noopener noreferrer"} data-tracking-status={link.tracked ? "active" : "ordinary"}>
-              {ro ? "Vezi variantele la Renogy" : "View variants at Renogy"} <span aria-hidden="true">↗</span>
-              {link.tracked ? (ro ? " (link afiliat)" : " (affiliate link)") : ""}
-            </a>
-          </article>; })}
-        </div>
-      </section>;
-    })}
+
+    <form className={styles.search} action={localizedPath("/renogy/catalog", locale)}>
+      <label htmlFor="renogy-catalog-search">{ro ? "Caută după model, variantă sau SKU" : "Search by model, variant or SKU"}</label>
+      <div><input id="renogy-catalog-search" name="q" type="search" defaultValue={query} maxLength={120} /><button className="button-primary" type="submit">{ro ? "Caută" : "Search"}</button>{query && <Link href="/renogy/catalog">{ro ? "Resetează" : "Reset"}</Link>}</div>
+    </form>
+
+    <div className={styles.summary} role="status"><strong>{filtered.length}</strong> {ro ? "poziții găsite" : "entries found"} · {ro ? "pagina" : "page"} {currentPage}/{pageCount}</div>
+    {visible.length ? <section aria-label={ro ? "Poziții de catalog Renogy" : "Renogy catalog entries"}>
+      <div className={styles.grid}>
+        {visible.map(product => {
+          const price = prices[product.sku];
+          return <article key={product.sku} className={styles.card} data-feed-sku={product.sku} data-price-status={price ? "fresh" : "unavailable"}>
+            <div className={styles.cardTop}><span>RENOGY EU</span><span>SKU {product.sku}</span></div>
+            <h2>{product.name}</h2>
+            <p className={styles.variant}>{product.kind === "variant" ? (ro ? "Variantă feed" : "Feed variant") : product.kind === "parent" ? (ro ? "Poziție principală feed" : "Feed parent entry") : (ro ? "Poziție unică feed" : "Single feed entry")}</p>
+            {price ? <div className={styles.price}>
+              <strong>{new Intl.NumberFormat(ro ? "ro-RO" : "en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 2 }).format(price.amount)}</strong>
+              <span>{ro ? "Preț curent din feed" : "Current feed price"}</span>
+            </div> : <p className={styles.unavailable}>{ro ? "Prețul se verifică la furnizor" : "Check current price with supplier"}</p>}
+            <a href={product.url} target="_blank" rel="noopener noreferrer">{ro ? "Vezi această poziție la Renogy" : "View this entry at Renogy"} <span aria-hidden="true">↗</span></a>
+          </article>;
+        })}
+      </div>
+    </section> : <section className="content-panel"><h2>{ro ? "Nicio potrivire" : "No matches"}</h2><p>{ro ? "Verifică denumirea sau introdu SKU-ul numeric." : "Check the name or enter the numeric SKU."}</p></section>}
+
+    {pageCount > 1 && <nav className={styles.pagination} aria-label={ro ? "Pagini catalog" : "Catalog pages"}>
+      {currentPage > 1 && <Link href={hrefForPage(currentPage - 1)}>← {ro ? "Anterior" : "Previous"}</Link>}
+      {Array.from({ length: pageCount }, (_, index) => index + 1).map(page => <Link key={page} href={hrefForPage(page)} aria-current={page === currentPage ? "page" : undefined}>{page}</Link>)}
+      {currentPage < pageCount && <Link href={hrefForPage(currentPage + 1)}>{ro ? "Următor" : "Next"} →</Link>}
+    </nav>}
     <p className={styles.back}><Link href="/renogy">← {ro ? "Înapoi la selecția documentată" : "Back to the documented selection"}</Link></p>
     <AffiliateDisclosure dictionary={dictionary} />
   </main></PlatformShell>;

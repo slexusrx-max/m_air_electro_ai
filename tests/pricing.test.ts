@@ -4,6 +4,7 @@ import { catalog } from "../lib/affiliate/catalog";
 import {
   isFreshPriceTimestamp,
   pricesFromSnapshots,
+  pricesBySkuFromSnapshots,
   productFeedIdentity,
   type SupplierPriceSnapshot,
 } from "../lib/affiliate/pricing";
@@ -67,4 +68,17 @@ test("price freshness allows 48 hours, rejects future and invalid timestamps", (
   assert.equal(isFreshPriceTimestamp("2026-10-24T11:59:59.999Z", now), false);
   assert.equal(isFreshPriceTimestamp("2026-10-26T12:06:00.000Z", now), false);
   assert.equal(isFreshPriceTimestamp("not-a-date", now), false);
+});
+
+test("full feed price map keeps every unique valid SKU and omits missing prices", () => {
+  const records = Array.from({ length: 365 }, (_, index) => ({
+    merchantSku: String(10_000_000_000_000 + index),
+    amount: index < 362 ? 10 + index / 100 : Number.NaN,
+    currency: "EUR",
+  }));
+  const prices = pricesBySkuFromSnapshots([snapshot({ records })], "renogy", now);
+  assert.equal(Object.keys(prices).length, 362);
+  assert.equal(prices[records[0].merchantSku].amount, 10);
+  assert.equal(prices[records[361].merchantSku].amount, 13.61);
+  assert.equal(prices[records[364].merchantSku], undefined);
 });

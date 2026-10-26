@@ -4,6 +4,7 @@ import { gunzipSync } from "node:zlib";
 import { catalog } from "./catalog";
 import {
   pricesFromSnapshots,
+  pricesBySkuFromSnapshots,
   type PriceFeedProvider,
   type PublicSupplierPrice,
   type SupplierPriceSnapshot,
@@ -11,6 +12,7 @@ import {
 
 type CacheEntry = { expiresAt: number; snapshot: SupplierPriceSnapshot };
 const runtimeCache = new Map<PriceFeedProvider, CacheEntry>();
+const inFlight = new Map<PriceFeedProvider, Promise<SupplierPriceSnapshot | null>>();
 const CACHE_MS = 60 * 60 * 1000;
 const feedConfiguration: Array<{
   provider: PriceFeedProvider;
@@ -89,7 +91,7 @@ function inlineSnapshots(): SupplierPriceSnapshot[] {
   }
 }
 
-async function fetchSnapshot(config: typeof feedConfiguration[number]): Promise<SupplierPriceSnapshot | null> {
+async function downloadSnapshot(config: typeof feedConfiguration[number]): Promise<SupplierPriceSnapshot | null> {
   const now = Date.now();
   const cached = runtimeCache.get(config.provider);
   if (cached && cached.expiresAt > now) return cached.snapshot;
@@ -117,8 +119,26 @@ async function fetchSnapshot(config: typeof feedConfiguration[number]): Promise<
   }
 }
 
-export async function getPublicSupplierPrices(): Promise<Record<string, PublicSupplierPrice>> {
+async function fetchSnapshot(config: typeof feedConfiguration[number]): Promise<SupplierPriceSnapshot | null> {
+  const cached = runtimeCache.get(config.provider);
+  if (cached && cached.expiresAt > Date.now()) return cached.snapshot;
+  const pending = inFlight.get(config.provider);
+  if (pending) return pending;
+  const request = downloadSnapshot(config).finally(() => inFlight.delete(config.provider));
+  inFlight.set(config.provider, request);
+  return request;
+}
+
+async function freshSnapshots(): Promise<SupplierPriceSnapshot[]> {
   const remote = await Promise.all(feedConfiguration.map(fetchSnapshot));
-  return pricesFromSnapshots(catalog, [...inlineSnapshots(), ...remote.filter((item): item is SupplierPriceSnapshot => Boolean(item))]);
+  return [...inlineSnapshots(), ...remote.filter((item): item is SupplierPriceSnapshot => Boolean(item))];
+}
+
+export async function getPublicSupplierPrices(): Promise<Record<string, PublicSupplierPrice>> {
+  return pricesFromSnapshots(catalog, await freshSnapshots());
+}
+
+export async function getPublicRenogyFeedPrices(): Promise<Record<string, PublicSupplierPrice>> {
+  return pricesBySkuFromSnapshots(await freshSnapshots(), "renogy");
 }
 

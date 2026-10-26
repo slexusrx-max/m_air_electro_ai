@@ -114,3 +114,29 @@ export function pricesFromSnapshots(
   return result;
 }
 
+export function pricesBySkuFromSnapshots(
+  snapshots: SupplierPriceSnapshot[],
+  provider: PriceFeedProvider,
+  now = Date.now(),
+): Record<string, PublicSupplierPrice> {
+  const result: Record<string, PublicSupplierPrice> = {};
+  for (const snapshot of snapshots) {
+    if (snapshot.provider !== provider || snapshot.catalogId !== catalogIds[provider] ||
+      !Array.isArray(snapshot.records) || !isFreshPriceTimestamp(snapshot.retrievedAt, now)) continue;
+    const counts = new Map<string, number>();
+    for (const record of snapshot.records) counts.set(record.merchantSku, (counts.get(record.merchantSku) ?? 0) + 1);
+    for (const record of snapshot.records) {
+      if (counts.get(record.merchantSku) !== 1 || record.currency !== "EUR" ||
+        !/^\d+$/.test(record.merchantSku) || !Number.isFinite(record.amount) || record.amount <= 0) continue;
+      result[record.merchantSku] = {
+        amount: Math.round(record.amount * 100) / 100,
+        currency: "EUR",
+        provider,
+        merchantSku: record.merchantSku,
+        retrievedAt: snapshot.retrievedAt,
+      };
+    }
+  }
+  return result;
+}
+
