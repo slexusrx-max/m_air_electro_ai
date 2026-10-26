@@ -1019,8 +1019,8 @@ body:has(.home-brand-first) .brand-background-art { opacity:.48; }
 .equipment-card .compare-control { margin:0; }
 .equipment-card .compare-control button { min-height:44px; font-size:13px; padding:8px 12px; background:transparent; box-shadow:none; }
 .equipment-card .product-context { font-size:13px; }
-.equipment-card .product-photo-pending { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:14px; min-height:160px; padding:20px; text-align:center; background:radial-gradient(ellipse at center,#d6edf2,#edf6f9 70%); color:#3c6274; border:1px dashed #93b5c2; }
-.equipment-card .product-photo-pending svg { height:40px; width:40px; }
+.commerce-page .equipment-card .product-photo-pending { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:14px; min-height:160px; padding:20px; text-align:center; background:radial-gradient(ellipse at center,#d6edf2,#edf6f9 70%); color:#3c6274; border:1px dashed #93b5c2; }
+.commerce-page .equipment-card .product-photo-pending svg { height:40px; width:40px; max-height:40px; max-width:40px; flex-shrink:0; }
 .product-photo-pending span { max-width:22ch; font-size:13px; line-height:1.5; }
 .supplier-entry-card { display:flex; flex-direction:column; gap:12px; min-width:0; border-radius:22px; padding:22px; color:#28495c; overflow-wrap:anywhere; }
 .supplier-entry-card h3 { font-size:20px; line-height:1.35; color:#19384c; }
