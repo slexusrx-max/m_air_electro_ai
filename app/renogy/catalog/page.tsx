@@ -79,6 +79,9 @@ export default async function RenogyCatalogPage({ searchParams }: Props) {
           const price = prices[product.sku];
           return <article key={product.sku} className={styles.card} data-feed-sku={product.sku} data-price-status={price ? "fresh" : "unavailable"}>
             <div className={styles.cardTop}><span>RENOGY EU</span><span>SKU {product.sku}</span></div>
+            {product.imageUrl && <figure className={styles.photo}>
+              <img src={product.imageUrl} alt={supplierEntryName(product)} width="600" height="420" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+            </figure>}
             <h2>{supplierEntryName(product)}</h2>
             <p className={styles.variant}>{product.kind === "variant" ? (ro ? "Variantă feed" : "Feed variant") : product.kind === "parent" ? (ro ? "Poziție principală feed" : "Feed parent entry") : (ro ? "Poziție unică feed" : "Single feed entry")}</p>
             {price ? <div className={styles.price}>
