@@ -10,15 +10,23 @@ import variants from "../data/renogy-feed-variants.json";
 test("full feed identity index retains all 365 exact SKU rows without prices or tracking URLs", () => {
   assert.equal(variants.catalogId, "28907");
   assert.equal(variants.products.length, 365);
+  assert.equal(variants.products.filter(p => p.imageUrl).length, 364);
   assert.equal(new Set(variants.products.map(product => product.sku)).size, 365);
   assert.equal(new Set(variants.products.map(product => product.name)).size, 365);
   assert.equal(new Set(variants.products.map(product => product.url)).size, 101);
   for (const product of variants.products) {
     assert.match(product.sku, /^\d+$/);
     assert.ok(product.name);
+    if (product.imageUrl) {
+      const image = new URL(product.imageUrl);
+      assert.equal(image.protocol, "https:");
+      assert.ok(["cdn.shopify.com", "eu.renogy.com"].includes(image.hostname), image.hostname);
+    } else {
+      assert.equal(product.sku, "50175394414849", "Only the CSV promotion row has no supplied image");
+    }
     assert.equal(new URL(product.url).origin, "https://eu.renogy.com");
     assert.doesNotMatch(product.url, /sjv\.io|prodsku|intsrc/i);
-    assert.deepEqual(Object.keys(product).sort(), ["kind", "name", "parentSku", "sku", "url"]);
+    assert.deepEqual(Object.keys(product).sort(), ["imageUrl", "kind", "name", "parentSku", "sku", "url"]);
   }
 });
 

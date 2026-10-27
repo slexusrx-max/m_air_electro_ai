@@ -6,6 +6,22 @@ type PowerStation = {
   wh: number; watts: number; url: string;
 };
 const powerStations: PowerStation[] = [
+  { id: "pecron-e300lfp", name: "PECRON E300LFP", provider: "pecron-eu", wh: 288, watts: 600,
+    url: "https://eu.pecron.com/products/pecron-e300lfp-solar-power-and-generator" },
+  { id: "pecron-e500lfp", name: "PECRON E500LFP", provider: "pecron-eu", wh: 576, watts: 600,
+    url: "https://eu.pecron.com/products/pecron-e500lfp" },
+  { id: "pecron-e600lfp", name: "PECRON E600LFP", provider: "pecron-eu", wh: 614, watts: 1200,
+    url: "https://eu.pecron.com/products/pecron-e600lfp" },
+  { id: "pecron-f1000lfp", name: "PECRON F1000LFP", provider: "pecron-eu", wh: 960, watts: 1500,
+    url: "https://eu.pecron.com/products/pecron-f1000lfp" },
+  { id: "pecron-e3800lfp", name: "PECRON E3800LFP", provider: "pecron-eu", wh: 3840, watts: 4200,
+    url: "https://eu.pecron.com/products/pecron-e3800lfp" },
+  { id: "bluetti-elite-30-v2", name: "BLUETTI Elite 30 V2", provider: "bluetti-eu", wh: 288, watts: 600,
+    url: "https://www.bluettipower.eu/products/elite-30-v2-portable-power-station" },
+  { id: "bluetti-elite-300", name: "BLUETTI Elite 300", provider: "bluetti-eu", wh: 3014.4, watts: 2400,
+    url: "https://www.bluettipower.eu/products/elite-300-portable-power-station" },
+  { id: "bluetti-elite-400", name: "BLUETTI Elite 400", provider: "bluetti-eu", wh: 3840, watts: 2600,
+    url: "https://www.bluettipower.eu/products/elite-400-portable-power-station" },
   { id: "pecron-e1500lfp", name: "PECRON E1500LFP", provider: "pecron-eu", wh: 1536, watts: 2200,
     url: "https://eu.pecron.com/products/e1500lfp-power-station-2200w-1536wh" },
   { id: "pecron-e2400lfp", name: "PECRON E2400LFP", provider: "pecron-eu", wh: 2048, watts: 2400,
@@ -32,7 +48,7 @@ const waterSystems = [
 /** AI-assisted official EU source check, not hands-on testing or human technical approval. */
 export const supplierProducts: Entry[] = [
   ...powerStations.map((p): Entry => ({
-    id: p.id, slug: p.id, kind: "product", provider: p.provider, sourceCheckedAt: "2026-10-12",
+    id: p.id, slug: p.id, kind: "product", provider: p.provider, sourceCheckedAt: "2026-10-27",
     title: b(p.name, p.name), category: "backup-power", paths: ["backup-power"], url: p.url,
     summary: b(
       `${p.name} combines ${p.wh} Wh of stated battery capacity with ${p.watts} W rated AC output. Compare storage and output separately: a higher watt rating does not by itself provide longer runtime.`,

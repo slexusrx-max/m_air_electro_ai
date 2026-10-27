@@ -1,9 +1,14 @@
+import Image from "next/image";
 import Link from "@/components/localized-link";
 import type { PublicSupplierPrice } from "@/lib/affiliate/pricing";
 import { supplierEntryName, type SupplierEntry } from "@/lib/marketplace/supplier-discovery";
 
 export function SupplierEntryCard({ entry, price, ro }: { entry: SupplierEntry; price?: PublicSupplierPrice; ro: boolean }) {
   return <article className="supplier-entry-card" data-feed-sku={entry.sku} data-price-status={price ? "fresh" : "unavailable"}>
+    {entry.imageUrl && <div className="equipment-visual product-model-photo" data-feed-photo={entry.sku}>
+      <Image src={entry.imageUrl} alt={supplierEntryName(entry)} width={600} height={420}
+        unoptimized sizes="(max-width: 768px) 85vw, 360px" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+    </div>}
     <p className="eyebrow">Renogy EU · {ro ? "Catalog furnizor" : "Supplier catalog"}</p>
     <h3>{supplierEntryName(entry)}</h3>
     <p className="small-copy">SKU {entry.sku} · {entry.kind === "variant" ? (ro ? "Variantă" : "Variant") : entry.kind === "parent" ? (ro ? "Poziție principală" : "Parent entry") : (ro ? "Poziție feed" : "Feed entry")}</p>

@@ -40,13 +40,18 @@ for (const locale of ["ro", "en"] as const) test(`exact SKU search and source fa
     const raw = page.locator(`[data-feed-sku="${sku}"]`);
     if (await raw.count()) {
       await expect(raw).toContainText('Renogy EU');
+      const source = feed.products.find(p => p.sku === sku)!;
+      if (source.imageUrl) {
+        await expect(raw.locator('img')).toHaveAttribute('src', source.imageUrl);
+        await expect(raw.locator('img')).toHaveAttribute('alt', /\S/);
+      } else await expect(raw.locator('img')).toHaveCount(0);
       await expect(raw.locator('a[target="_blank"]')).toHaveAttribute('href', /^https:\/\/eu\.renogy\.com\/products\//);
       await expect(raw.locator('a[target="_blank"]')).not.toHaveAttribute('rel', /sponsored/);
       if (await raw.getAttribute('data-price-status') === 'unavailable') await expect(raw).toContainText(locale === 'ro' ? 'Verifică prețul actual' : 'Check current price');
     }
   }
   await page.goto(localizedPath('/search?kind=product&brand=PECRON',locale));
-  await expect(page.locator('.product-photo-pending')).toHaveCount(3);
+  await expect(page.locator('.product-photo-pending')).toHaveCount(8);
   await expect(page.locator('.product-photo-pending img')).toHaveCount(0);
   await expect(page.locator('.product-photo-pending').first()).toContainText(locale === 'ro' ? 'Imaginea produsului așteaptă verificarea' : 'Product image awaiting verification');
 });
