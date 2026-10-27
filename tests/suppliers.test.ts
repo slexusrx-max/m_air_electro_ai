@@ -10,6 +10,14 @@ import { getDictionary } from "../lib/i18n/dictionaries";
 import { matchingSystemCandidates } from "../lib/marketplace/recommendation";
 
 const models = [
+  ["pecron-e300lfp", "pecron-eu", "288", "600"],
+  ["pecron-e500lfp", "pecron-eu", "576", "600"],
+  ["pecron-e600lfp", "pecron-eu", "614", "1200"],
+  ["pecron-f1000lfp", "pecron-eu", "960", "1500"],
+  ["pecron-e3800lfp", "pecron-eu", "3840", "4200"],
+  ["bluetti-elite-30-v2", "bluetti-eu", "288", "600"],
+  ["bluetti-elite-300", "bluetti-eu", "3014.4", "2400"],
+  ["bluetti-elite-400", "bluetti-eu", "3840", "2600"],
   ["pecron-e1500lfp", "pecron-eu", "1536", "2200"],
   ["pecron-e2400lfp", "pecron-eu", "2048", "2400"],
   ["pecron-f3000lfp", "pecron-eu", "3072", "3600"],
@@ -18,7 +26,7 @@ const models = [
   ["bluetti-apex-300", "bluetti-eu", "2764.8", "3840"],
 ] as const;
 
-test("six EU power stations have explicit supplier identities and source-backed capacity/output", () => {
+test("fourteen EU power stations have explicit supplier identities and source-backed capacity/output", () => {
   for (const [id, provider, wh, watts] of models) {
     const p = catalog.find(p => p.id === id)!;
     assert.ok(p, id);
@@ -91,9 +99,9 @@ test("EU URL policy rejects cross-supplier, non-EU variants, tracking, encoded o
   assert.throws(() => pendingSupplierLink("pecron-eu", "https://www.bluettipower.eu/products/example"));
 });
 
-test("all nine additions are searchable and comparable without assumed prices", () => {
+test("all supplier models are searchable and comparable without assumed prices", () => {
   const added = catalog.filter(p => ["waterdrop-eu", "pecron-eu", "bluetti-eu"].includes(p.provider));
-  assert.equal(added.length, 22);
+  assert.equal(added.length, 30);
   for (const p of added) {
     assert.ok(filterEquipment(catalog, { q: p.name }).some(result => result.id === p.id), p.name);
     assert.equal(parseComparison(`${p.id},renogy-mini-100`, catalog)[0], p);
@@ -116,4 +124,21 @@ test("new backup stations never qualify by capacity alone or an invented surge r
   assert.equal(matchingSystemCandidates([station], ["backup-power"], "EU", requirements).length, 0);
   assert.equal(matchingSystemCandidates([station], ["backup-power"], "EU", { ...requirements, inverterW: 1000, surgeW: 2000 }).length, 0);
   assert.equal(matchingSystemCandidates([station], ["backup-power"], "EU", { ...requirements, inverterW: 1000, surgeW: 1500 }).length, 1);
+});
+
+test("BLUETTI image provenance stays exact but unpublished pending permission", async () => {
+  const { productPhoto } = await import("../lib/marketplace/product-photos");
+  const records = (await import("../data/bluetti-reviewed-photos.json")).default;
+  const stations = catalog.filter(p => p.provider === "bluetti-eu");
+  assert.equal(stations.length, 6);
+  assert.equal(new Set(records.map(r => r.imageUrl)).size, stations.length);
+  for (const p of stations) {
+    const source = records.find(r => r.id === p.id)!;
+    assert.ok(source, p.id);
+    assert.equal(source.sourceUrl, p.productUrl);
+    assert.equal(new URL(source.imageUrl).hostname, "cdn.shopify.com");
+    assert.equal(source.publicationApproved, false);
+    assert.equal(productPhoto(p), undefined);
+  }
+  for (const p of catalog.filter(p => p.provider === "pecron-eu")) assert.equal(productPhoto(p), undefined);
 });

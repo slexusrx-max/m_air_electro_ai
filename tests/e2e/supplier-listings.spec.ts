@@ -1,3 +1,4 @@
+import { productPhoto } from "../../lib/marketplace/product-photos";
 import { specificationValue } from "../../lib/marketplace/specifications";
 import { localizedPath } from "../../lib/i18n/routing";
 import { test, expect } from "@playwright/test";
@@ -15,6 +16,12 @@ for (const locale of ["ro", "en"] as const) for (const width of [390, 1440]) {
     for (const product of additions) {
       expect((await page.goto(localizedPath(`/marketplace/products/${product.slug}`, locale)))?.status()).toBe(200);
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(product.name);
+      const photo = productPhoto(product);
+      if (photo) {
+        const image = page.locator(`[data-product-photo="${product.id}"] img`);
+        await expect(image).toHaveAttribute("src", photo.src);
+        await expect(image).toHaveAttribute("alt", product.name);
+      }
       const cta = page.locator(`.product-detail a[data-supplier-product="${product.id}"]`);
       await expectSupplierCta(cta, product, new URL(baseURL!).hostname === "mairelectroai.com");
       if (product.availability !== "unavailable") await expect(cta).toContainText(product.merchant);
