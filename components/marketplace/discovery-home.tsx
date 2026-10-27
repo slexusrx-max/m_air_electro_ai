@@ -22,7 +22,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
   const dictionary = await getRequestDictionary();
   const ro = locale === "ro";
   const brands = ["Renogy", "Waterdrop", "PECRON", "BLUETTI"];
-  const brandModels = brands.map(brand => catalog.filter(item => item.kind === "product" && item.brand === brand));
+  const brandModels = brands.map(brand => catalog.filter(item => item.kind === "product" && item.availability !== "unavailable" && item.brand === brand));
   // Alternate brands so the first screen does not imply a Renogy-only assortment.
   const homeModels = Array.from({ length: Math.max(...brandModels.map(items => items.length)) }, (_, index) =>
     brandModels.flatMap(items => items[index] ? [items[index]] : [])).flat();
