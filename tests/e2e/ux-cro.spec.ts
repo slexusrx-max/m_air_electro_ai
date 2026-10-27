@@ -20,12 +20,7 @@ for (const locale of ["ro", "en"] as const) for (const [width, height] of [[320,
     await page.goto(localizedPath("/marketplace", locale));
     await expect(page.locator('.discovery-hero')).toHaveCount(0);
     await expect(page.locator('.catalog-filters input[name=q]')).toBeVisible();
-    const pending = page.locator('.equipment-card .product-photo-pending').first();
-    await expect(pending.locator('svg')).toHaveCSS('height', '40px');
-    const frame = (await pending.boundingBox())!;
-    const caption = (await pending.locator('span').boundingBox())!;
-    expect(caption.y).toBeGreaterThanOrEqual(frame.y);
-    expect(caption.y + caption.height).toBeLessThanOrEqual(frame.y + frame.height);
+    await expect(page.locator('.equipment-card .product-photo-pending')).toHaveCount(0);
     expect(await page.evaluate(() => document.querySelector('.catalog-layout')!.compareDocumentPosition(document.querySelector('#equipment-categories')!) & Node.DOCUMENT_POSITION_FOLLOWING)).toBeTruthy();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
     await page.screenshot({ path: info.outputPath(`marketplace-${width}.png`) });
@@ -51,9 +46,9 @@ for (const locale of ["ro", "en"] as const) test(`exact SKU search and source fa
     }
   }
   await page.goto(localizedPath('/search?kind=product&brand=PECRON',locale));
-  await expect(page.locator('.product-photo-pending')).toHaveCount(8);
+  await expect(page.locator('.equipment-card img')).toHaveCount(8);
   await expect(page.locator('.product-photo-pending img')).toHaveCount(0);
-  await expect(page.locator('.product-photo-pending').first()).toContainText(locale === 'ro' ? 'Imaginea produsului așteaptă verificarea' : 'Product image awaiting verification');
+  await expect(page.locator('.product-photo-pending')).toHaveCount(0);
 });
 
 test('category comparison blocks cross-family selection and keeps the tray usable', async ({ page }) => {

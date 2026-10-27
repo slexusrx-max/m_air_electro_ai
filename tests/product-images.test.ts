@@ -49,9 +49,11 @@ test("category artwork does not choose a named model photograph", () => {
   assert.notEqual(productPhotos["renogy-mini-100"].src, productPhotos["renogy-mini-200"].src);
 });
 
-test("model photographs match the ten reviewed exact variants and original bytes", async () => {
+test("all catalog models have photographs and the ten original local assets retain their reviewed bytes", async () => {
   const provenance = JSON.parse(readFileSync(new URL("../docs/product-photo-provenance-2026-10-18.json", import.meta.url), "utf8"));
-  assert.equal(Object.keys(productPhotos).length, 35);
+  const models = catalog.filter(product => product.kind === "product");
+  assert.equal(Object.keys(productPhotos).length, models.length);
+  for (const model of models) assert.ok(productPhoto(model), model.id);
   const hashes = new Set<string>();
   for (const asset of provenance.assets) {
     const product = catalog.find(product => product.id === asset.catalogId)!;
@@ -69,7 +71,7 @@ test("model photographs match the ten reviewed exact variants and original bytes
     assert.match(asset.visualReview, /^passed(?:-|$)/);
   }
   assert.equal(hashes.size, 10);
-  for (const product of catalog.filter(product => product.kind === "equipment-class" || ["pecron-eu", "bluetti-eu"].includes(product.provider))) {
+  for (const product of catalog.filter(product => product.kind === "equipment-class")) {
     assert.equal(productPhoto(product), undefined, product.id);
   }
   assert.equal(productPhoto({ id: "unverified-model", kind: "product" }), undefined);

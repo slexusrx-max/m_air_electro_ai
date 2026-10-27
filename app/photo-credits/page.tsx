@@ -4,6 +4,8 @@ import { getRequestLocale } from "@/lib/i18n/request";
 import { buildMetadata } from "@/lib/metadata";
 import { categoryPhotos } from "@/lib/marketplace/category-photos";
 import reviewedRenogy from "@/data/renogy-reviewed-products.json";
+import bluettiPhotos from "@/data/bluetti-reviewed-photos.json";
+import pecronPhotos from "@/data/pecron-reviewed-photos.json";
 
 export async function generateMetadata() {
   const locale = await getRequestLocale();
@@ -19,6 +21,11 @@ export default async function Page() {
       <h2>{ro ? "Fotografii ale modelelor Renogy" : "Renogy model photographs"}</h2>
       <p>{ro ? "Fotografiile de mai jos provin din resursele oficiale ale producătorului pentru promovarea produselor în programul afiliat. Sunt afișate fără modificarea imaginii, de pe CDN-ul producătorului. Drepturile aparțin titularilor; nu acordăm o licență generală de reutilizare." : "These photographs come from the manufacturer's official resources for product promotion in the affiliate program. They are displayed unchanged from the manufacturer's CDN. Rights remain with their holders; we do not grant a general reuse licence."}</p>
       <ul>{reviewedRenogy.map(p => <li key={p.id}><a href={p.url} target="_blank" rel="noopener noreferrer">{p.officialName} — {p.option}</a></li>)}</ul>
+    </section>
+    <section className="content-panel">
+      <h2>{ro ? "Fotografii ale stațiilor PECRON și BLUETTI" : "PECRON and BLUETTI station photographs"}</h2>
+      <p>{ro ? "Imagini originale de pe paginile oficiale UE ale modelelor indicate, afișate fără modificarea produsului. Drepturile aparțin titularilor. Indicarea sursei nu acordă o licență generală de reutilizare și nu confirmă statutul de partener autorizat." : "Original images from the indicated models' official EU pages, displayed without altering the product. Rights remain with their holders. Source attribution does not grant a general reuse licence or confirm authorized partner status."}</p>
+      <ul>{[...pecronPhotos, ...bluettiPhotos].map(p => <li key={p.id}><a href={p.sourceUrl} target="_blank" rel="noopener noreferrer">{p.id.toUpperCase().replaceAll("-", " ")}</a></li>)}</ul>
     </section>
     {Object.entries(categoryPhotos).map(([category, photo]) => <section className="content-panel" key={category}>
       <h2>{photo.subject[ro ? "ro" : "en"]}</h2><p>{photo.credit}</p>

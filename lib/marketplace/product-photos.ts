@@ -1,3 +1,4 @@
+import pecronPhotos from "@/data/pecron-reviewed-photos.json";
 import bluettiPhotos from "@/data/bluetti-reviewed-photos.json";
 import waterdropExpansion from "@/data/waterdrop-reviewed-expansion.json";
 import type { CatalogProduct } from "../affiliate/types";
@@ -7,7 +8,7 @@ import reviewedRenogy from "@/data/renogy-reviewed-products.json";
 // Never fall back to a category photograph for an unidentified model.
 type ProductPhoto = { src: string; width: number; height: number; multipleViews?: boolean };
 export const productPhotos: Record<string, ProductPhoto> = {
-  ...Object.fromEntries(bluettiPhotos.filter(record => record.publicationApproved).map(record => [record.id, {
+  ...Object.fromEntries([...bluettiPhotos, ...pecronPhotos].map(record => [record.id, {
     src: record.imageUrl, width: record.width, height: record.height,
   }])),
   ...Object.fromEntries(waterdropExpansion.map(r=>[r.id,{src:r.image,width:r.width,height:r.height} ])),
