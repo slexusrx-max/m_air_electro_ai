@@ -1,3 +1,4 @@
+import { RenogyFeedLink } from "@/components/marketplace/renogy-feed-link";
 import Link from "@/components/localized-link";
 import { PlatformShell } from "@/components/platform-shell";
 import { Breadcrumbs } from "@/components/marketplace/shared";
@@ -88,7 +89,7 @@ export default async function RenogyCatalogPage({ searchParams }: Props) {
               <strong>{new Intl.NumberFormat(ro ? "ro-RO" : "en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 2 }).format(price.amount)}</strong>
               <span>{ro ? "Preț curent din feed" : "Current feed price"}</span>
             </div> : <p className={styles.unavailable}>{ro ? "Prețul se verifică la furnizor" : "Check current price with supplier"}</p>}
-            <a href={product.url} target="_blank" rel="noopener noreferrer">{ro ? "Vezi această poziție la Renogy" : "View this entry at Renogy"} <span aria-hidden="true">↗</span></a>
+            <RenogyFeedLink entry={product} ro={ro}>{ro ? "Vezi această poziție la Renogy" : "View this entry at Renogy"}</RenogyFeedLink>
           </article>;
         })}
       </div>
