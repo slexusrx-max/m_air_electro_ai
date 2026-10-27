@@ -4,8 +4,8 @@ import Link from "@/components/localized-link";
 import type { PublicSupplierPrice } from "@/lib/affiliate/pricing";
 import { supplierEntryName, type SupplierEntry } from "@/lib/marketplace/supplier-discovery";
 
-export function SupplierEntryCard({ entry, price, ro }: { entry: SupplierEntry; price?: PublicSupplierPrice; ro: boolean }) {
-  return <article className="supplier-entry-card" data-feed-sku={entry.sku} data-price-status={price ? "fresh" : "unavailable"}>
+export function SupplierEntryCard({ entry, ro }: { entry: SupplierEntry; price?: PublicSupplierPrice; ro: boolean }) {
+  return <article className="supplier-entry-card" data-feed-sku={entry.sku} data-price-status="unavailable">
     {entry.imageUrl && <div className="equipment-visual product-model-photo" data-feed-photo={entry.sku}>
       <Image src={entry.imageUrl} alt={supplierEntryName(entry)} width={600} height={420}
         unoptimized sizes="(max-width: 768px) 85vw, 360px" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
@@ -14,8 +14,7 @@ export function SupplierEntryCard({ entry, price, ro }: { entry: SupplierEntry; 
     <h3>{supplierEntryName(entry)}</h3>
     <p className="small-copy">SKU {entry.sku} · {entry.kind === "variant" ? (ro ? "Variantă" : "Variant") : entry.kind === "parent" ? (ro ? "Poziție principală" : "Parent entry") : (ro ? "Poziție feed" : "Feed entry")}</p>
     <p>{ro ? "Denumire din feed-ul oficial. Specificațiile și compatibilitatea acestei poziții nu sunt evaluate individual." : "Name from the official feed. Specifications and compatibility of this entry have not been individually evaluated."}</p>
-    {price && <div className="supplier-entry-price"><strong>{new Intl.NumberFormat(ro ? "ro-RO" : "en-IE", { style: "currency", currency: "EUR" }).format(price.amount)}</strong><span>{ro ? "Preț din feed, actualizat" : "Feed price, updated"} {new Intl.DateTimeFormat(ro ? "ro-RO" : "en-GB", { dateStyle: "medium", timeZone: "Europe/Bucharest" }).format(new Date(price.retrievedAt))}</span></div>}
-    <RenogyFeedLink className="button-primary" entry={entry} ro={ro}>{price ? (ro ? "Vezi varianta la Renogy EU" : "Check variant at Renogy EU") : (ro ? "Verifică prețul actual la furnizor" : "Check current price with supplier")}</RenogyFeedLink>
+    <RenogyFeedLink className="button-primary" entry={entry} ro={ro}>{ro ? "Verifică prețul actual la furnizor" : "Check current price with supplier"}</RenogyFeedLink>
     <p className="small-copy">{ro ? "Selectează varianta exactă pe pagina furnizorului. Linkurile afiliate sunt marcate." : "Select the exact variant on the supplier page. Affiliate links are labelled."}</p>
     <Link href={`/renogy/catalog?q=${entry.sku}`}>{ro ? "Vezi în indexul furnizorului" : "View in the supplier index"} →</Link>
   </article>;

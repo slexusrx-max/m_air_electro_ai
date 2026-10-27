@@ -1,0 +1,21 @@
+# Growth backlog
+
+Updated 27 October 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
+
+| Priority | Hypothesis / task | Evidence and next verification | State |
+|---|---|---|---|
+| P0 | Verify Impact-recorded clicks, actions and payout separately | Deployed routing audit: feed 200 tracked/165 ordinary; homepage 33 tracked/30 ordinary. Existing Impact sign-in declined; do not reopen Renogy Romania eligibility | External access blocker |
+| P0 | Activate legitimate first-party measurement | Plausible absent in inspected production env. Existing collector respects consent/DNT/GPC/automation. Need actual existing project and receipt; no invented dashboard or new costs | Blocked on service/project |
+| P1 | Enforce link-only public pricing | Public UI could display fresh price values despite owner rule; remove rendering and public-page feed requests, preserve affiliate resolution | First package |
+| P1 | Recover from empty catalogue results | Add visible Clear all filters / Resetează toate filtrele to current catalogue path, preserving locale | First package |
+| P1 | Mobile search, filters, finder, compare, supplier journey | Desktop catalogue/source checked; mobile browser missing in prior run. Verify real 390/430-width layouts before claiming mobile readiness | Next |
+| P1 | 165 feed rows without active exact mappings | Obtain platform-issued exact links only; no guessed IDs/deep links; no bulk real tracking clicks | Needs authenticated partner account |
+| P2 | Search Console baseline and topic selection | Markifact GSC select_accounts reported no GSC connection. Clicks/impressions/CTR/position UNKNOWN, not zero | External connection blocker |
+| P2 | Improve existing backup-sizing guide | Existing guide has measured-load method and explicit router/laptop example. Inspect query/page performance when available; otherwise label prioritisation as editorial hypothesis | Next |
+| P2 | Product/category compatibility checks | Keep DC UPS, expansion batteries and accessories out of AC station finder; preserve unknown specs | Ongoing regression |
+| P2 | Organic distribution | Two RO/EN copy drafts prepared from existing guide. No verified connected owned social destination found; do not invent a channel or send spam | Drafts ready |
+| P2 | Partner/Ukraine replies | Renogy/Waterdrop/PECRON/BLUETTI delivery, discounts, forwarding and commission remain separate. Existing partner reply watcher retained | Await new substantive replies |
+
+## Regular execution
+One enabled daily task at 09:00 Europe/Bucharest, starting 28 October 2026; weekly review on Monday inside the same task. No duplicate mail watcher. Maximum 30 minutes and 1–3 actions per run. Read current main and this log first; check active growth PR/work before writes; use expected-SHA lease. Never overwrite conflicting work or start a second conflicting release. No paid services, ads, purchases, mass generated pages or automated tracking clicks. Notify only meaningful release/result/new blocker. Schedule creation confirmed; first scheduled run has not occurred.
+
