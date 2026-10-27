@@ -66,3 +66,7 @@ This branch is based on main 51c41f0 and includes the exact Renogy image patch. 
 The source-upload preview for local commit 7df117f reached READY on Vercel (deployment dpl_FbkWEhRRwHk5o67w7Qni4FwAZ1fF). Browser checks of the English BLUETTI brand search returned six models, six correctly mapped loaded official images, /en links, lang=en and no horizontal overflow at 1363×936. This is a preview, with preview environment settings, not Production or GitHub main.
 
 The exact supplied Renogy image is now also rendered on raw supplier-entry cards in main discovery/search, using the same SKU record as the full feed index. Missing images stay absent; no fallback photograph is inferred. Supplier entries remain unreviewed and untracked, independently of image availability.
+
+## Public release gate update
+
+Owner authorized publication on 27 October. All six BLUETTI image records now have publicationApproved=false and are excluded from rendered photo mappings until permission is documented. Exact provenance remains available internally. PECRON and BLUETTI show explicit missing-photo states. This does not activate tracking, prices or programme approval. GitHub write access was restored and PR #30 contains the release. Earlier preview photo counts and access failures above describe historical checks, not this release.

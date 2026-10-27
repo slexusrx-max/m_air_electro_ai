@@ -7,7 +7,7 @@ import reviewedRenogy from "@/data/renogy-reviewed-products.json";
 // Never fall back to a category photograph for an unidentified model.
 type ProductPhoto = { src: string; width: number; height: number; multipleViews?: boolean };
 export const productPhotos: Record<string, ProductPhoto> = {
-  ...Object.fromEntries(bluettiPhotos.map(record => [record.id, {
+  ...Object.fromEntries(bluettiPhotos.filter(record => record.publicationApproved).map(record => [record.id, {
     src: record.imageUrl, width: record.width, height: record.height,
   }])),
   ...Object.fromEntries(waterdropExpansion.map(r=>[r.id,{src:r.image,width:r.width,height:r.height} ])),

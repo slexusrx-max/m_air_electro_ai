@@ -126,7 +126,7 @@ test("new backup stations never qualify by capacity alone or an invented surge r
   assert.equal(matchingSystemCandidates([station], ["backup-power"], "EU", { ...requirements, inverterW: 1000, surgeW: 1500 }).length, 1);
 });
 
-test("BLUETTI images match exact base-station sources and never leak to PECRON", async () => {
+test("BLUETTI image provenance stays exact but unpublished pending permission", async () => {
   const { productPhoto } = await import("../lib/marketplace/product-photos");
   const records = (await import("../data/bluetti-reviewed-photos.json")).default;
   const stations = catalog.filter(p => p.provider === "bluetti-eu");
@@ -137,7 +137,8 @@ test("BLUETTI images match exact base-station sources and never leak to PECRON",
     assert.ok(source, p.id);
     assert.equal(source.sourceUrl, p.productUrl);
     assert.equal(new URL(source.imageUrl).hostname, "cdn.shopify.com");
-    assert.equal(productPhoto(p)?.src, source.imageUrl);
+    assert.equal(source.publicationApproved, false);
+    assert.equal(productPhoto(p), undefined);
   }
   for (const p of catalog.filter(p => p.provider === "pecron-eu")) assert.equal(productPhoto(p), undefined);
 });
