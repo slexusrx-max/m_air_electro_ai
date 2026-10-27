@@ -1,5 +1,7 @@
 # M Air Electro AI
 
+Current public commerce policy (27 October 2026): product pages and catalogues show supplier links without numerical prices, discounts or stock. Fresh price feeds do not override this owner instruction. Growth state: [backlog](docs/growth-backlog.md), [execution log](docs/growth-log.md), [organic drafts](docs/growth-social-drafts.md).
+
 ## Current catalog snapshot — 27 October 2026 (working branch)
 
 64 canonical product/model records: 19 Renogy, 16 Waterdrop, 23 PECRON and 6 BLUETTI. The PECRON assortment includes nine AC stations, DC backup supplies, solar panels, expansion batteries and accessories. This is not an in-stock offer count: Waterdrop K19H is archived/unavailable with ordinary documentation links. The 32-row Waterdrop feed represents 16 device models, 14 bundle/cartridge configurations and two extra-year offers excluded from device counts (one has conflicting title evidence). No full merchant-assortment claim is made. All 15 PECRON/BLUETTI AC stations and the additional PECRON catalog products now have official EU photographs, published on the owner’s explicit instruction of 27 October. This does not establish a separate manufacturer licence or programme approval. Exact issued tracking links for both suppliers remain outstanding; this branch is not an advertising-readiness sign-off. See `docs/partner-catalog-expansion-2026-10-27.md`.

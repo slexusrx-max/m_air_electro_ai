@@ -12,7 +12,6 @@ import type { Equipment } from "@/lib/marketplace/catalog-data";
 import type { Dictionary } from "@/lib/i18n/types";
 import { localizedPath } from "@/lib/i18n/routing";
 import { discoverEquipment, supplierSkuCount } from "@/lib/marketplace/supplier-discovery";
-import { getPublicRenogyFeedPrices } from "@/lib/affiliate/price-feed";
 import { SupplierEntryCard } from "./supplier-entry-card";
 export async function CatalogBrowser({
   products,
@@ -38,7 +37,6 @@ export async function CatalogBrowser({
   const pages = Math.max(1, Math.ceil(allResults.length / pageSize));
   const page = Math.max(1, Math.min(pages, Number.parseInt(query.page ?? "1", 10) || 1));
   const visible = allResults.slice((page - 1) * pageSize, page * pageSize);
-  const prices = visible.some(result => result.type === "supplier") ? await getPublicRenogyFeedPrices() : {};
   const supplierCount = allResults.length - results.length;
   const pageHref = (value: number) => `${path}?${new URLSearchParams(Object.entries({ ...query, page: String(value) }).filter((entry): entry is [string, string] => Boolean(entry[1])))}`;
   const facetProducts = filterEquipment(products, { q: query.q, kind: query.kind, brand: query.brand });
@@ -143,7 +141,7 @@ export async function CatalogBrowser({
         </p>
         {allResults.length ? (
           <div className="product-grid">
-            {visible.map(result => result.type === "reviewed" ? <ProductCard key={result.product.id} product={result.product} dictionary={dictionary} /> : <SupplierEntryCard key={result.entry.sku} entry={result.entry} price={prices[result.entry.sku]} ro={ro} />)}
+            {visible.map(result => result.type === "reviewed" ? <ProductCard key={result.product.id} product={result.product} dictionary={dictionary} /> : <SupplierEntryCard key={result.entry.sku} entry={result.entry} ro={ro} />)}
           </div>
         ) : (
           <div className="content-panel">
@@ -153,6 +151,7 @@ export async function CatalogBrowser({
                 ? "Încearcă o putere sau tensiune mai generală, elimină filtrele sau caută după tipul echipamentului. Pentru această categorie poți pregăti cerințele tehnice chiar dacă nu există încă un model selectat."
                 : "Try a broader power or voltage, remove filters, or search by equipment type. You can prepare the technical requirements even where a selected model is not yet available."}
             </p>
+            <Link className="button-primary" href={path}>{ro ? "Resetează toate filtrele" : "Clear all filters"}</Link>
             <Link href="/marketplace/find-my-solution">
               {ro ? "Configurează cerințele" : "Define the requirements"} →
             </Link>
