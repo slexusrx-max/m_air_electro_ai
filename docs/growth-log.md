@@ -28,3 +28,10 @@ Enabled one daily task: 09:00 Europe/Bucharest from 28 October 2026; first sched
 ### Rollback
 Revert the first-package code commit(s) through a reviewed reverse patch or Vercel rollback to the previous known production deployment; preserve subsequent unrelated changes. No data migration or secret changes.
 
+
+### Published verification
+PR #35 merged; application commit 8457c97a67a084202e246e7311ce5a1e76fa7186. Vercel production dpl_AbTLbcZPVXhBgevArbSHDsFGRAHU READY. Production HTTP 200 confirmed EN/RO empty results with correct reset text; Renogy feed page has link-only copy and no fresh price blocks; homepage still has 33 active/30 ordinary supplier CTAs. Desktop browser clicked Clear all filters: URL returned to /en/marketplace and 410 results. Search submitted E1000: 1 result, PECRON E1000LFP. Screenshot growth-catalog-recovery-20261027.jpg shows published recovery button. No merchant link followed. Phone verification is still outstanding.
+
+robots.txt and sitemap.xml HTTP 200; robots allow public site and point to official sitemap. Existing EN backup-sizing guide HTTP 200, canonical matches official EN URL, ro/en/x-default alternatives point to correct RO/EN routes. This is a limited technical check, not proof of indexing, traffic or exhaustive site crawl.
+
+Daily task was re-read after creation and is enabled at 09:00 Europe/Bucharest. First scheduled execution has not yet occurred. No social distribution or sales uplift claimed. Search Console and first-party metrics remain unavailable as described above. Application rollback baseline: deployment dpl_H4u8q4KCTPEkwTphkz5oAvLFPKpm / commit 0a62e9948bab01d6d2a8d54f0162c82ffad7d43a.
