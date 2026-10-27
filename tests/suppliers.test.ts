@@ -126,19 +126,18 @@ test("new backup stations never qualify by capacity alone or an invented surge r
   assert.equal(matchingSystemCandidates([station], ["backup-power"], "EU", { ...requirements, inverterW: 1000, surgeW: 1500 }).length, 1);
 });
 
-test("BLUETTI image provenance stays exact but unpublished pending permission", async () => {
+test("Supplier station photos match exact official EU source models", async () => {
   const { productPhoto } = await import("../lib/marketplace/product-photos");
-  const records = (await import("../data/bluetti-reviewed-photos.json")).default;
-  const stations = catalog.filter(p => p.provider === "bluetti-eu");
-  assert.equal(stations.length, 6);
+  const records = [...(await import("../data/bluetti-reviewed-photos.json")).default, ...(await import("../data/pecron-reviewed-photos.json")).default];
+  const stations = catalog.filter(p => ["bluetti-eu", "pecron-eu"].includes(p.provider));
+  assert.equal(stations.length, 14);
   assert.equal(new Set(records.map(r => r.imageUrl)).size, stations.length);
   for (const p of stations) {
     const source = records.find(r => r.id === p.id)!;
     assert.ok(source, p.id);
     assert.equal(source.sourceUrl, p.productUrl);
-    assert.equal(new URL(source.imageUrl).hostname, "cdn.shopify.com");
-    assert.equal(source.publicationApproved, false);
-    assert.equal(productPhoto(p), undefined);
+    assert.ok(["cdn.shopify.com", "eu.pecron.com"].includes(new URL(source.imageUrl).hostname));
+    assert.equal(productPhoto(p)?.src, source.imageUrl);
   }
-  for (const p of catalog.filter(p => p.provider === "pecron-eu")) assert.equal(productPhoto(p), undefined);
+
 });

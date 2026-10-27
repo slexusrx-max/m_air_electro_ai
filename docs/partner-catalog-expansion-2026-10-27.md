@@ -70,3 +70,7 @@ The exact supplied Renogy image is now also rendered on raw supplier-entry cards
 ## Public release gate update
 
 Owner authorized publication on 27 October. All six BLUETTI image records now have publicationApproved=false and are excluded from rendered photo mappings until permission is documented. Exact provenance remains available internally. PECRON and BLUETTI show explicit missing-photo states. This does not activate tracking, prices or programme approval. GitHub write access was restored and PR #30 contains the release. Earlier preview photo counts and access failures above describe historical checks, not this release.
+
+## Owner-directed station-photo publication
+
+On 27 October the owner explicitly instructed publication of all photographs, superseding the prior internal publication hold. Six BLUETTI and eight PECRON original official EU images are now mapped to exact model IDs. PECRON images were visually inspected for base-station identity and EU presentation; E3800LFP includes the cart pictured in its official listing. All use square display dimensions and object-fit containment. The image records preserve exact source pages and remote asset URLs; no generated replacements or marketing price overlays are used. Public photo credits identify sources and retain rights with their holders. Owner publication authorization is not represented as manufacturer permission, affiliate approval or tracking activation. The Renogy feed’s single image-less promotional identity remains without an invented image.
