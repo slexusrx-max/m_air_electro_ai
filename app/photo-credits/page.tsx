@@ -6,6 +6,7 @@ import { categoryPhotos } from "@/lib/marketplace/category-photos";
 import reviewedRenogy from "@/data/renogy-reviewed-products.json";
 import bluettiPhotos from "@/data/bluetti-reviewed-photos.json";
 import pecronPhotos from "@/data/pecron-reviewed-photos.json";
+import pecronExpansion from "@/data/pecron-reviewed-expansion.json";
 
 export async function generateMetadata() {
   const locale = await getRequestLocale();
@@ -26,6 +27,7 @@ export default async function Page() {
       <h2>{ro ? "Fotografii ale stațiilor PECRON și BLUETTI" : "PECRON and BLUETTI station photographs"}</h2>
       <p>{ro ? "Imagini originale de pe paginile oficiale UE ale modelelor indicate, afișate fără modificarea produsului. Drepturile aparțin titularilor. Indicarea sursei nu acordă o licență generală de reutilizare și nu confirmă statutul de partener autorizat." : "Original images from the indicated models' official EU pages, displayed without altering the product. Rights remain with their holders. Source attribution does not grant a general reuse licence or confirm authorized partner status."}</p>
       <ul>{[...pecronPhotos, ...bluettiPhotos].map(p => <li key={p.id}><a href={p.sourceUrl} target="_blank" rel="noopener noreferrer">{p.id.toUpperCase().replaceAll("-", " ")}</a></li>)}</ul>
+      <ul>{pecronExpansion.map(p => <li key={p.id}><a href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a></li>)}</ul>
     </section>
     {Object.entries(categoryPhotos).map(([category, photo]) => <section className="content-panel" key={category}>
       <h2>{photo.subject[ro ? "ro" : "en"]}</h2><p>{photo.credit}</p>

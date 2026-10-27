@@ -6,6 +6,8 @@ type PowerStation = {
   wh: number; watts: number; url: string;
 };
 const powerStations: PowerStation[] = [
+  { id: "pecron-e1000lfp", name: "PECRON E1000LFP", provider: "pecron-eu", wh: 1024, watts: 1800,
+    url: "https://eu.pecron.com/products/pecron-e1000lfp-portable-power-station" },
   { id: "pecron-e300lfp", name: "PECRON E300LFP", provider: "pecron-eu", wh: 288, watts: 600,
     url: "https://eu.pecron.com/products/pecron-e300lfp-solar-power-and-generator" },
   { id: "pecron-e500lfp", name: "PECRON E500LFP", provider: "pecron-eu", wh: 576, watts: 600,

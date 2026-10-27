@@ -1,0 +1,269 @@
+[
+  {
+    "id": "pecron-ep3800-48v",
+    "name": "PECRON EP3800-48V",
+    "url": "https://eu.pecron.com/products/pecron-ep3800-48v-expansion-battery",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/800.png?v=1766730080&width=1600",
+    "category": "lithium-batteries",
+    "paths": [
+      "batteries"
+    ],
+    "specs": {
+      "Stored energy": "3840 Wh"
+    },
+    "typeEn": "Expansion battery",
+    "typeRo": "Baterie de extensie",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON EP3800-48V Expansion Battery 3840Wh for E1500LFP/ E3600LFP/ E1000LFP/ E2400LFP/ E3800LFP"
+  },
+  {
+    "id": "pecron-ep3000-48v",
+    "name": "PECRON EP3000-48V",
+    "url": "https://eu.pecron.com/products/pecron-ep3000-48v-expansion-batterie",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/800.png?v=1766730080&width=1600",
+    "category": "lithium-batteries",
+    "paths": [
+      "batteries"
+    ],
+    "specs": {
+      "Stored energy": "3072 Wh"
+    },
+    "typeEn": "Expansion battery",
+    "typeRo": "Baterie de extensie",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON EP3000-48V Expansion Battery, 3072Wh LiFePO4 Power Station Auxiliary Battery for E1500LFP E2400LFP F3000LFP E3600LFP (EP3000-48V)"
+  },
+  {
+    "id": "pecron-ep2000s-48v",
+    "name": "PECRON EP2000S-48V",
+    "url": "https://eu.pecron.com/products/pecron-ep2000s-48v",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/1500x1500_3_ec4950b5-dbdf-4ae6-883a-51ed95ba008d.jpg?v=1766730054&width=2400",
+    "category": "lithium-batteries",
+    "paths": [
+      "batteries"
+    ],
+    "specs": {
+      "Stored energy": "2304 Wh"
+    },
+    "typeEn": "Expansion battery",
+    "typeRo": "Baterie de extensie",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON EP2000S-48V Extended Battery, 2304Wh LiFePO4, Compatible with E1500LFP / E3600LFP / E2400LFP"
+  },
+  {
+    "id": "pecron-pv200",
+    "name": "PECRON PV200 200 W",
+    "url": "https://eu.pecron.com/products/pv200-200w-portable-solar-packs",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/1600x1600_1_77c973b3-4ab4-4e07-899b-0d9322e1b7f6.jpg?v=1774947080&width=1600",
+    "category": "solar-panels",
+    "paths": [
+      "solar",
+      "solar/panels",
+      "solar/panels/portable"
+    ],
+    "specs": {
+      "Rated panel power": "200 W"
+    },
+    "typeEn": "Portable solar panel",
+    "typeRo": "Panou solar portabil",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON PV200 200W Portable Solar Panel Waterproof IP67"
+  },
+  {
+    "id": "pecron-pv100",
+    "name": "PECRON PV100 100 W",
+    "url": "https://eu.pecron.com/products/pv100-100w-portable-solar-panel-waterproof-ip67",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/PECRON_PV100_100W_Portable_Solar_Panel_Waterproof_IP67_-_Pecron-eu-7670546.png?v=1739869532&width=1600",
+    "category": "solar-panels",
+    "paths": [
+      "solar",
+      "solar/panels",
+      "solar/panels/portable"
+    ],
+    "specs": {
+      "Rated panel power": "100 W"
+    },
+    "typeEn": "Portable solar panel",
+    "typeRo": "Panou solar portabil",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON PV100 100W Portable Solar Panel Waterproof IP67"
+  },
+  {
+    "id": "pecron-d77",
+    "name": "PECRON D77 DC UPS",
+    "url": "https://eu.pecron.com/products/pecron-d77-dc-ups-battery-backup",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/1500x1500_1_cb09d192-f769-4cf5-9b49-364a6f96ce7b.jpg?v=1766730147&width=1600",
+    "category": "backup-power",
+    "paths": [
+      "backup-power"
+    ],
+    "specs": {
+      "Stored energy": "76.96 Wh"
+    },
+    "typeEn": "Low-voltage DC backup supply",
+    "typeRo": "Sursă de rezervă DC de joasă tensiune",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON  D77 DC UPS Battery Backup, 76.96Wh Small UPS for WiFi Router/Modem/Security Camera/Phone, With PoE Port, 5V/9V/12V"
+  },
+  {
+    "id": "pecron-d39",
+    "name": "PECRON D39 DC UPS",
+    "url": "https://eu.pecron.com/products/pecron-d39-dc-ups-battery-backup",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/1500x1500_2_299de794-8dca-4e57-91f8-e415c226f00c.jpg?v=1766730149",
+    "category": "backup-power",
+    "paths": [
+      "backup-power"
+    ],
+    "specs": {},
+    "typeEn": "Low-voltage DC backup supply",
+    "typeRo": "Sursă de rezervă DC de joasă tensiune",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON D39 DC UPS Battery Backup, 38.48Wh Small UPS for WiFi Router/Modem/Security Camera/Phone, With PoE Port, 5V/9V/12V",
+    "sourceNote": "Official D39 header and description conflict on stored energy; no capacity is published. Exact D39 variant image used."
+  },
+  {
+    "id": "pecron-wb12200",
+    "name": "PECRON WB12200 12 V 200 Ah",
+    "url": "https://eu.pecron.com/products/pecron-wb12200-lithium-12v-200ah-deep-cycle-lifepo4-battery",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/02.jpg?v=1792985385&width=2400",
+    "category": "lithium-batteries",
+    "paths": [
+      "batteries",
+      "batteries/lifepo4",
+      "batteries/12v"
+    ],
+    "specs": {
+      "Voltage class": "12 V",
+      "Capacity": "200 Ah"
+    },
+    "typeEn": "LiFePO4 battery",
+    "typeRo": "Baterie LiFePO4",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON WB12200 Lithium 12V 200Ah Deep Cycle LiFePO4 Battery"
+  },
+  {
+    "id": "pecron-smart-car-charger-500w",
+    "name": "PECRON Smart Car Charger 500 W",
+    "url": "https://eu.pecron.com/products/pecron-smart-car-charger-500w",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/PECRON_Smart_Car_Charger_500W_-_Pecron-eu-8502820.jpg?v=1766730068&width=2400",
+    "category": "battery-chargers",
+    "paths": [
+      "chargers",
+      "chargers/dc-dc"
+    ],
+    "specs": {
+      "Manufacturer-rated power": "500 W"
+    },
+    "typeEn": "Vehicle charging accessory",
+    "typeRo": "Accesoriu de încărcare din vehicul",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON Smart Car Charger 500W"
+  },
+  {
+    "id": "pecron-f3000lfp-cascade-cable",
+    "name": "PECRON F3000LFP Cascade Cable",
+    "url": "https://eu.pecron.com/products/pecron-f3000lfp-cascade-cable",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/273E8FB9-7A0B-4739-ADD6-5C213B333A10.png?v=1774429863&width=2400",
+    "category": "electrical-accessories",
+    "paths": [
+      "electrical-components"
+    ],
+    "specs": {},
+    "typeEn": "Model-specific cascading cable",
+    "typeRo": "Cablu de interconectare pentru modelul indicat",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON F3000LFP Cascade Cable"
+  },
+  {
+    "id": "pecron-spd-800",
+    "name": "PECRON SPD-800",
+    "url": "https://eu.pecron.com/products/pecron-spd-800-balcony-power-generation-system-micro-inverter",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/1500x1500_1_2f802c8f-0785-4712-9691-c09f70681074.jpg?v=1766730079&width=2400",
+    "category": "inverters",
+    "paths": [
+      "inverters"
+    ],
+    "specs": {
+      "Manufacturer-rated AC output": "800 W"
+    },
+    "typeEn": "Grid-connected microinverter",
+    "typeRo": "Microinvertor conectat la rețea",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON SPD-800 Balcony Power Generation System Micro Inverter, 800W Solar Input, 800W AC Input/Output"
+  },
+  {
+    "id": "pecron-solar-gx16-cable",
+    "name": "PECRON Solar Cable MC4 / GX16 5-pin",
+    "url": "https://eu.pecron.com/products/pecron-solar-charging-cable-m-c-4-to-5-pin-gx16-aviation-plug-solar-charging-cable",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/800.jpg?v=1766730077&width=2400",
+    "category": "electrical-accessories",
+    "paths": [
+      "electrical-components"
+    ],
+    "specs": {
+      "Connector description": "MC4 to GX16 5-pin"
+    },
+    "typeEn": "Solar charging cable",
+    "typeRo": "Cablu de încărcare solară",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON Solar Charging Cable, M/C/4 to 5-Pin GX16 Aviation Plug Solar Charging Cable"
+  },
+  {
+    "id": "pecron-trolley-kit",
+    "name": "PECRON Trolley Kit",
+    "url": "https://eu.pecron.com/products/pecron-trolley-kit",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/lQDPKHS0NW_0Sp_NAyDNAyCwCiUiDGZV0e8JK_w6h49ZAQ_800_800.jpg?v=1767011311&width=2400",
+    "category": "electrical-accessories",
+    "paths": [
+      "electrical-components"
+    ],
+    "specs": {},
+    "typeEn": "Transport trolley accessory",
+    "typeRo": "Accesoriu pentru transport",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON Trolley Kit For E3600LFP/E2000LFP/E1500LFP/E2400LFP/F3000LFP"
+  },
+  {
+    "id": "pecron-mj32-extension-cable",
+    "name": "PECRON MJ32 Extension Cable",
+    "url": "https://eu.pecron.com/products/pecron-mj32-cascading-extension-cable-47-inches-approx-117-4-cm-ep3000-48v-cascading-extension-cable",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/1_917c3b5f-40a3-4061-ab92-4cf13076b0c3.jpg?v=1772808642&width=2400",
+    "category": "electrical-accessories",
+    "paths": [
+      "electrical-components"
+    ],
+    "specs": {},
+    "typeEn": "Model-specific extension cable",
+    "typeRo": "Cablu prelungitor pentru modelul indicat",
+    "width": 600,
+    "height": 600,
+    "checkedAt": "2026-10-27",
+    "officialTitle": "PECRON MJ32 Cascading Extension Cable 47 inches (approx. 117.4 cm), EP3000-48V Cascading Extension Cable"
+  }
+]

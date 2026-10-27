@@ -10,6 +10,7 @@ import { getDictionary } from "../lib/i18n/dictionaries";
 import { matchingSystemCandidates } from "../lib/marketplace/recommendation";
 
 const models = [
+  ["pecron-e1000lfp", "pecron-eu", "1024", "1800"],
   ["pecron-e300lfp", "pecron-eu", "288", "600"],
   ["pecron-e500lfp", "pecron-eu", "576", "600"],
   ["pecron-e600lfp", "pecron-eu", "614", "1200"],
@@ -26,7 +27,7 @@ const models = [
   ["bluetti-apex-300", "bluetti-eu", "2764.8", "3840"],
 ] as const;
 
-test("fourteen EU power stations have explicit supplier identities and source-backed capacity/output", () => {
+test("fifteen EU power stations have explicit supplier identities and source-backed capacity/output", () => {
   for (const [id, provider, wh, watts] of models) {
     const p = catalog.find(p => p.id === id)!;
     assert.ok(p, id);
@@ -101,7 +102,7 @@ test("EU URL policy rejects cross-supplier, non-EU variants, tracking, encoded o
 
 test("all supplier models are searchable and comparable without assumed prices", () => {
   const added = catalog.filter(p => ["waterdrop-eu", "pecron-eu", "bluetti-eu"].includes(p.provider));
-  assert.equal(added.length, 30);
+  assert.equal(added.length, 45);
   for (const p of added) {
     assert.ok(filterEquipment(catalog, { q: p.name }).some(result => result.id === p.id), p.name);
     assert.equal(parseComparison(`${p.id},renogy-mini-100`, catalog)[0], p);
@@ -126,11 +127,27 @@ test("new backup stations never qualify by capacity alone or an invented surge r
   assert.equal(matchingSystemCandidates([station], ["backup-power"], "EU", { ...requirements, inverterW: 1000, surgeW: 1500 }).length, 1);
 });
 
+test("DC backup supplies and expansion accessories never become AC station recommendations", () => {
+  for (const id of ["pecron-d77", "pecron-d39", "pecron-ep3800-48v", "pecron-ep3000-48v", "pecron-trolley-kit", "pecron-spd-800"]) {
+    const product = catalog.find(p => p.id === id)!;
+    assert.ok(product, id);
+    assert.equal(matchingSystemCandidates([product], ["backup-power"], "EU", { batteryWh: 10, loadWh: 8, inverterW: 5, surgeW: 10 }).length, 0, id);
+    assert.equal(product.price, null);
+    assert.equal(pendingSupplierLink("pecron-eu", product.productUrl).tracked, false);
+  }
+  for (const id of ["pecron-pv100", "pecron-pv200"]) {
+    const panel = catalog.find(p => p.id === id)!;
+    assert.equal(panel.category, "solar-panels");
+    assert.equal(panel.facets.format, "portable");
+    assert.equal(panel.facets.voltage, undefined);
+  }
+});
+
 test("Supplier station photos match exact official EU source models", async () => {
   const { productPhoto } = await import("../lib/marketplace/product-photos");
   const records = [...(await import("../data/bluetti-reviewed-photos.json")).default, ...(await import("../data/pecron-reviewed-photos.json")).default];
-  const stations = catalog.filter(p => ["bluetti-eu", "pecron-eu"].includes(p.provider));
-  assert.equal(stations.length, 14);
+  const stations = catalog.filter(p => models.some(([id]) => id === p.id));
+  assert.equal(stations.length, 15);
   assert.equal(new Set(records.map(r => r.imageUrl)).size, stations.length);
   for (const p of stations) {
     const source = records.find(r => r.id === p.id)!;

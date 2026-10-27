@@ -46,7 +46,7 @@ for (const locale of ["ro", "en"] as const) test(`exact SKU search and source fa
     }
   }
   await page.goto(localizedPath('/search?kind=product&brand=PECRON',locale));
-  await expect(page.locator('.equipment-card img')).toHaveCount(8);
+  await expect(page.locator('.equipment-card img')).toHaveCount(23);
   await expect(page.locator('.product-photo-pending img')).toHaveCount(0);
   await expect(page.locator('.product-photo-pending')).toHaveCount(0);
 });

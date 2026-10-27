@@ -42,7 +42,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
       <Link className="button-outline" href="/renogy/catalog">{ro ? "Catalog Renogy · 365 SKU-uri" : "Renogy catalog · 365 SKUs"} →</Link>
     </nav>
     <p className="small-copy">{ro ? "Modele documentate din toate cele patru mărci. Pozițiile din catalogul furnizorului sunt disponibile separat; nu reprezintă modele evaluate individual." : "Documented models from all four brands. Supplier catalog entries are available separately; they are not individually reviewed models."}</p>
-    <CatalogBrowser products={homeModels} query={{kind: "product"}} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} />
+    <CatalogBrowser products={homeModels} query={{kind: "product"}} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} pageSize={homeModels.length} />
   </section>;
   return <main className="commerce-page discovery-home storefront-home">
     {marketplace ? <header className="page-intro marketplace-intro">

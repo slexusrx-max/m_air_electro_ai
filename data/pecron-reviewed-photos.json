@@ -70,5 +70,14 @@
     "height": 600,
     "checkedAt": "2026-10-27",
     "review": "Official EU catalog image. Base station and model markings visually checked; original unchanged. E3800LFP image includes the cart shown in the official listing."
+  },
+  {
+    "id": "pecron-e1000lfp",
+    "sourceUrl": "https://eu.pecron.com/products/pecron-e1000lfp-portable-power-station",
+    "imageUrl": "https://eu.pecron.com/cdn/shop/files/PECRON_E1000LFP_Portable_Power_Station_1800W_1024Wh_-_Pecron-eu-8502863.jpg?v=1766729961",
+    "width": 1500,
+    "height": 1500,
+    "checkedAt": "2026-10-27",
+    "review": "Exact E1000LFP base variant image on its official EU product page."
   }
 ]
