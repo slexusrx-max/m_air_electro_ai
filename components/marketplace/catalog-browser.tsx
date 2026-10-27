@@ -21,6 +21,7 @@ export async function CatalogBrowser({
   facets,
   dictionary,
   ro,
+  pageSize: requestedPageSize,
 }: {
   products: Equipment[];
   query: CatalogQuery;
@@ -28,11 +29,12 @@ export async function CatalogBrowser({
   facets: string[];
   dictionary: Dictionary;
   ro: boolean;
+  pageSize?: number;
 }) {
   const query = cleanQuery(raw);
   const allResults = discoverEquipment(products, query, path);
   const results = allResults.flatMap(result => result.type === "reviewed" ? [result.product] : []);
-  const pageSize = query.kind === "product" || query.kind === "equipment-class" ? 48 : 24;
+  const pageSize = requestedPageSize ?? (query.kind === "product" || query.kind === "equipment-class" ? 48 : 24);
   const pages = Math.max(1, Math.ceil(allResults.length / pageSize));
   const page = Math.max(1, Math.min(pages, Number.parseInt(query.page ?? "1", 10) || 1));
   const visible = allResults.slice((page - 1) * pageSize, page * pageSize);
