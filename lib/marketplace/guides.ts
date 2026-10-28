@@ -47,6 +47,12 @@ export const guides: Guide[] = [
         "Stocare nominală Wh = Wh AC necesari / fracția utilizabilă / randamentul invertorului. Pentru 1000 Wh, fracția orientativă 0,80 și randamentul 0,92 dau 1359 Wh. Factorii sunt ipoteze, nu promisiuni universale. Adaugă consumul în gol și rezerva justificată pentru temperatură și îmbătrânire. Arată separat consumatorii viitori ca să nu dublezi rezerva.",
       ),
       section(
+        "Battery or complete power station?",
+        "Baterie sau stație completă?",
+        "A battery stores DC energy. By itself it does not provide a 230 V AC socket: a compatible inverter and an appropriately designed system are separate requirements. A portable AC power station combines storage with an inverter, but check the exact EU model, continuous output, startup limits and charging requirements. An expansion battery or DC UPS is not automatically a standalone AC power station. Choose the type of system before comparing capacity labels.",
+        "O baterie stochează energie DC. Singură nu oferă o priză AC de 230 V: un invertor compatibil și un sistem proiectat corespunzător sunt cerințe separate. O stație portabilă AC combină stocarea cu un invertor, dar verifică modelul UE exact, puterea continuă, limitele la pornire și cerințele de încărcare. O baterie de extensie sau un UPS DC nu este automat o stație AC independentă. Alege tipul de sistem înainte să compari capacitățile.",
+      ),
+      section(
         "Check the second constraint: current",
         "Verifică a doua limită: curentul",
         "At 1000 W AC and 12.8 V nominal DC, 92% efficiency implies about 85 A. Current rises as battery voltage falls. A bank that stores enough energy may still trip its BMS on a compressor start. Compare continuous and time-limited discharge ratings, then coordinate the cable, fuse and terminals. Only use series or parallel grouping explicitly permitted for the model.",

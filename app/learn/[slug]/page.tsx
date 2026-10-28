@@ -106,6 +106,17 @@ export default async function Page({ params }: Props) {
               </section>
             ))}
             {(["how-to-size-backup-battery", "battery-runtime-calculation", "apartment-backup-system"].includes(slug) || slug === "rv-solar-basics") && <EnergyExample kind={slug === "rv-solar-basics" ? "rv" : "apartment"} ro={ro} />}
+            {slug === "how-to-size-backup-battery" && <section id="choose-backup-path" className="content-panel">
+              <h2>{ro ? "Alege următorul pas" : "Choose your next step"}</h2>
+              <p>{ro
+                ? "Pentru o stație AC gata de utilizare, începe cu aparatele și autonomia în selector. Pentru o baterie separată, verifică întregul sistem și manualele componentelor. Rezultatele selectorului sunt o verificare preliminară, nu o confirmare a compatibilității sau a livrării."
+                : "For a ready-to-use AC station, start with your appliances and runtime in the finder. For a separate battery, check the complete system and component manuals. Finder results are an initial screening, not confirmation of compatibility or delivery."}</p>
+              <div className="action-row">
+                <Link className="button-primary" href="/marketplace/find-my-solution">{ro ? "Găsește o stație pentru consumatorii tăi" : "Find a station for your loads"} →</Link>
+                <Link href="/marketplace/backup-power">{ro ? "Explorează alimentarea de rezervă" : "Explore backup power"} →</Link>
+                <Link href="/marketplace/batteries">{ro ? "Explorează bateriile separate" : "Explore separate batteries"} →</Link>
+              </div>
+            </section>}
             <section>
               <h2>
                 {ro
