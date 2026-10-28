@@ -2,6 +2,7 @@ import { test, expect } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import { localizedPath } from "../../lib/i18n/routing";
 import feed from "../../data/renogy-feed-variants.json";
+import { expectRenogyFeedCta } from "../supplier-link-expectations";
 
 for (const locale of ["ro", "en"] as const) for (const [width, height] of [[320,568],[360,800],[390,844],[768,1024],[1024,768],[1440,900]]) {
   test(`buyer first viewport and catalogue ${locale} ${width}`, async ({ page }, info) => {
@@ -27,7 +28,7 @@ for (const locale of ["ro", "en"] as const) for (const [width, height] of [[320,
   });
 }
 
-for (const locale of ["ro", "en"] as const) test(`exact SKU search and source fallback ${locale}`, async ({ page }) => {
+for (const locale of ["ro", "en"] as const) test(`exact SKU search and source fallback ${locale}`, async ({ page, baseURL }) => {
   for (const sku of [feed.products[0].sku, "46545423761665", feed.products.at(-1)!.sku]) {
     await page.goto(localizedPath(`/search?q=${sku}`, locale));
     await expect(page.locator('.result-count')).toContainText('1 ');
@@ -40,8 +41,7 @@ for (const locale of ["ro", "en"] as const) test(`exact SKU search and source fa
         await expect(raw.locator('img')).toHaveAttribute('src', source.imageUrl);
         await expect(raw.locator('img')).toHaveAttribute('alt', /\S/);
       } else await expect(raw.locator('img')).toHaveCount(0);
-      await expect(raw.locator('a[target="_blank"]')).toHaveAttribute('href', /^https:\/\/eu\.renogy\.com\/products\//);
-      await expect(raw.locator('a[target="_blank"]')).not.toHaveAttribute('rel', /sponsored/);
+      await expectRenogyFeedCta(raw.locator('a[target="_blank"]'), source, new URL(baseURL!).hostname === "mairelectroai.com");
       if (await raw.getAttribute('data-price-status') === 'unavailable') await expect(raw).toContainText(locale === 'ro' ? 'Verifică prețul actual' : 'Check current price');
     }
   }
