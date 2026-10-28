@@ -4,6 +4,7 @@ Updated 28 October 2026. Audience: Romania/EU; Romanian primary, English support
 
 | Priority | Hypothesis / task | Evidence and next verification | State |
 |---|---|---|---|
+| P0 | Waterdrop Romania requires separate EU programme | Partner clarification 28 October: DE programme/store Germany only. Shared DE CTAs and brand page now explicitly label scope; keep issued DE mappings unchanged. Obtain actual EU approval and exact links before activating Romanian tracking. No repeated enquiry | EU activation outstanding |
 | P0 | Verify Impact-recorded clicks, actions and payout separately | 28 October production recheck: feed 200 tracked/165 ordinary; canonical models 33 tracked/31 ordinary including one archived model. Current Impact sign-in wall; owner handoff requested. Renogy Romania eligibility confirmed by 26 October email; do not reopen it | External access blocker |
 | P0 | Prepare capped Romania paid-search pilot | Owner cap EUR 50 total after checks. Draft in ads-ro-pilot-2026-10-28.md. Renogy/Waterdrop paid-channel questions sent; Google Ads account/billing, network reports and measurement still unresolved. No spend | Prepared, NOT launched |
 | P0 | Activate legitimate first-party measurement | Plausible absent in inspected production env. Existing collector respects consent/DNT/GPC/automation. Need actual existing project and receipt; no invented dashboard or new costs | Blocked on service/project |

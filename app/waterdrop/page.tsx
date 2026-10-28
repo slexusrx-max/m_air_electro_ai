@@ -20,8 +20,8 @@ export async function generateMetadata() {
   const ro = locale === "ro";
   return buildMetadata({
     locale,
-    title: ro ? "Waterdrop Romania - sisteme pentru apa din locuinta" : "Waterdrop Romania - domestic water systems",
-    description: ro ? "Compara modelele Waterdrop documentate dupa instalare si specificatii cunoscute. Confirma configuratia si livrarea in Romania la comerciant." : "Compare documented Waterdrop domestic systems by installation and known specifications. Confirm exact configuration and Romanian delivery with the merchant.",
+    title: ro ? "Waterdrop - compară sisteme de apă, magazin DE" : "Waterdrop - compare water systems, DE store",
+    description: ro ? "Compară modele Waterdrop documentate. Linkurile actuale duc la magazinul german, pentru Germania. Pentru România este necesar magazinul EU separat." : "Compare documented Waterdrop models. Current links lead to the German store for Germany. Romania requires the separate EU store.",
     path: "/waterdrop",
   });
 }
@@ -47,7 +47,7 @@ export default async function WaterdropPage() {
 
         <header className={styles.hero}>
           <div>
-            <p className={styles.kicker}>WATERDROP · ROMÂNIA / EU</p>
+            <p className={styles.kicker}>WATERDROP · {ro ? "MAGAZIN GERMANIA" : "GERMANY STORE"}</p>
             <h1>
               {ro
                 ? "Alege sistemul Waterdrop potrivit pentru bucătăria ta"
@@ -78,6 +78,10 @@ export default async function WaterdropPage() {
         </header>
 
         <section className={styles.notice} aria-label={ro ? "Transparență comercială" : "Commercial transparency"}>
+          <p data-waterdrop-region-notice>
+            <strong>{ro ? "Linkurile actuale duc la magazinul DE, doar pentru Germania." : "Current links lead to the DE store, for Germany only."}</strong>{" "}
+            {ro ? "Pentru România este necesar magazinul EU și un program afiliat separat. Nu avem încă linkuri afiliate EU verificate pentru România. Nu folosi magazinul DE pentru o comandă cu livrare în România." : "Romania requires the EU store and a separate affiliate programme. We do not yet have verified EU affiliate links for Romania. Do not use the DE store for an order delivered to Romania."}
+          </p>
           <strong>
             {trackingActive
               ? (ro ? "Linkuri afiliate Waterdrop active" : "Active Waterdrop affiliate links")
@@ -144,7 +148,7 @@ export default async function WaterdropPage() {
             <h2 id="waterdrop-checklist-title">{ro ? "Verificări care evită o alegere greșită" : "Checks that prevent a poor fit"}</h2>
           </div>
           <ol>
-            <li>{ro ? "Confirmă livrarea modelului exact la adresa din România și costul total." : "Confirm delivery of the exact model to your Romanian address and the total cost."}</li>
+            <li>{ro ? "Alege magazinul pentru țara de livrare. Linkurile DE de aici sunt doar pentru Germania; pentru România verifică separat magazinul EU și varianta exactă." : "Choose the store for the delivery country. These DE links are for Germany only; for Romania, check the separate EU store and exact variant."}</li>
             <li>{ro ? "Măsoară spațiul de sub chiuvetă și verifică accesul la priză și evacuare." : "Measure under-sink space and verify access to power and a drain connection."}</li>
             <li>{ro ? "Compară presiunea și temperatura apei cu limitele din manual." : "Compare inlet pressure and temperature with the manual limits."}</li>
             <li>{ro ? "Confirmă codurile, prețul și disponibilitatea cartușelor de schimb." : "Confirm replacement-cartridge codes, price and availability."}</li>

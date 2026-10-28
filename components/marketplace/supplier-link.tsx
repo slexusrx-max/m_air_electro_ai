@@ -27,6 +27,7 @@ export function SupplierLink({ product, ro, children, className }: {
     data-disclosure-status={link.tracked ? "labelled" : "not-required"}>
     {product.availability === "unavailable" ? (ro ? "Model retras - documentatia producatorului" : "Discontinued model - manufacturer documentation") : children ?? (ro ? "Verifică prețul la furnizor" : "Check price at supplier")} ↗
     {link.tracked ? (ro ? " (link afiliat)" : " (affiliate link)") : ""}
+    {product.provider === "waterdrop-eu" ? (ro ? " · Magazin DE — doar Germania" : " · DE store — Germany only") : ""}
   </a>;
 }
 
