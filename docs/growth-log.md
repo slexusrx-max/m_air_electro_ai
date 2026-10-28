@@ -35,3 +35,15 @@ PR #35 merged; application commit 8457c97a67a084202e246e7311ce5a1e76fa7186. Verc
 robots.txt and sitemap.xml HTTP 200; robots allow public site and point to official sitemap. Existing EN backup-sizing guide HTTP 200, canonical matches official EN URL, ro/en/x-default alternatives point to correct RO/EN routes. This is a limited technical check, not proof of indexing, traffic or exhaustive site crawl.
 
 Daily task was re-read after creation and is enabled at 09:00 Europe/Bucharest. First scheduled execution has not yet occurred. No social distribution or sales uplift claimed. Search Console and first-party metrics remain unavailable as described above. Application rollback baseline: deployment dpl_H4u8q4KCTPEkwTphkz5oAvLFPKpm / commit 0a62e9948bab01d6d2a8d54f0162c82ffad7d43a.
+
+## 28 October 2026 — backup guide selection path
+
+Baseline: no open PRs and no in-progress GitHub workflows. Main and READY production both 1a67b655c4bdbc9f8ba4739a8902dade264fd592. Preserved the unrelated untracked local asset temporary file. Gmail search after 27 October excluding sent and authentication mail returned no new substantive messages from Renogy, Waterdrop, PECRON or BLUETTI. No duplicate correspondence or notification sent. Existing Impact sign-in refusal respected; unavailable traffic and revenue remain UNKNOWN.
+
+Package: extend the existing RO/EN backup-battery guide with an original battery-versus-AC-station explanation and a visible next-step panel linking to the existing finder, backup-power category and separate-battery category. The guide previously funnelled readers primarily to a bare-battery calculator/category. Hypothesis: clarifying the equipment role and offering the matching next step reduces confusion; no measured conversion lift claimed. No product facts, prices, tracking mappings, imagery or brand design changed. DC UPS and expansion batteries are explicitly not assumed standalone AC stations.
+
+Source checked 28 October: https://www.victronenergy.com/media/pg/The_Wiring_Unlimited_book/en/battery-bank-wiring.html (battery-bank and compatibility context). Original editorial distinction added, not copied vendor prose. Existing calculation examples unchanged.
+
+Validation: all 150 unit tests passed; targeted lint no errors; catalogue 77 records/64 models/64 photos, no errors. Webpack build and release checks recorded after completion below. Playwright Chromium still absent; phone verification not claimed and remains the next independent validation priority. No repeated browser install, sign-in request, tracking click or order.
+
+Rollback: revert only this package after checking for subsequent changes, or roll back to baseline production deployment dpl_riUGb8stjHtfxUH1xX6Wsg35BdXi. No migrations or secrets.
