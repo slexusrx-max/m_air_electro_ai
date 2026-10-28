@@ -11,7 +11,7 @@ Updated 28 October 2026. Audience: Romania/EU; Romanian primary, English support
 | P1 | Mobile search, filters, finder, compare, supplier journey | Desktop catalogue/source checked; mobile browser missing in prior run. Verify real 390/430-width layouts before claiming mobile readiness | Next |
 | P1 | 165 feed rows without active exact mappings | Obtain platform-issued exact links only; no guessed IDs/deep links; no bulk real tracking clicks | Needs authenticated partner account |
 | P2 | Search Console baseline and topic selection | Markifact GSC select_accounts reported no GSC connection. Clicks/impressions/CTR/position UNKNOWN, not zero | External connection blocker |
-| P2 | Improve existing backup-sizing guide | Battery/AC-station distinction and finder/category next-step links added in RO/EN. Existing calculations preserved. No measured lift; inspect query/page performance when available | Current package |
+| P2 | Improve existing backup-sizing guide | Battery/AC-station distinction and finder/category next-step links added in RO/EN. Existing calculations preserved. No measured lift; inspect query/page performance when available | Published in PR #36 |
 | P2 | Product/category compatibility checks | Keep DC UPS, expansion batteries and accessories out of AC station finder; preserve unknown specs | Ongoing regression |
 | P2 | Organic distribution | Two RO/EN copy drafts prepared from existing guide. No verified connected owned social destination found; do not invent a channel or send spam | Drafts ready |
 | P2 | Partner/Ukraine replies | Renogy/Waterdrop/PECRON/BLUETTI delivery, discounts, forwarding and commission remain separate. Existing partner reply watcher retained | Await new substantive replies |
