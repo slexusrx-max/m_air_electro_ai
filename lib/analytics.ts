@@ -8,7 +8,7 @@ export function supplierClickProperties(input: SupplierClick, pathname: string) 
   if (!/^\/[a-z0-9/-]*$/.test(source)) return undefined;
   return { product: input.product, supplier: input.supplier, category: input.category, language: input.language, source_page: source };
 }
-export const consentKey = "mair-analytics-consent-v1";
+export const consentKey = "mair-analytics-consent-v2";
 export function analyticsConsent() {
   try {
     const saved = JSON.parse(localStorage.getItem(consentKey) || "null");
