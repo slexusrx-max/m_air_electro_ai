@@ -9,7 +9,7 @@ test("document CSP allows Turnstile scripts and frames without allowing arbitrar
     const [name, ...sources] = value.trim().split(/\s+/);
     return [name, sources];
   }));
-  assert.ok(directives.get("script-src")!.includes("https://challenges.cloudflare.com"));
+  assert.deepEqual(directives.get("script-src")!.filter(source => source.startsWith("https://")), ["https://challenges.cloudflare.com", "https://www.googletagmanager.com"]);
   assert.deepEqual(directives.get("frame-src"), ["'self'", "https://challenges.cloudflare.com"]);
   assert.ok(!directives.get("script-src")!.includes("https:"));
   assert.deepEqual(directives.get("frame-ancestors"), ["'none'"]);
