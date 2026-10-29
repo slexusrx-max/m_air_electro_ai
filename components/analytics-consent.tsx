@@ -14,22 +14,27 @@ export function AnalyticsConsent({ ro }: { ro: boolean }) {
     return () => window.removeEventListener("storage", sync);
   }, []);
   useEffect(() => {
+    // gtag commands must be Arguments objects, not arrays (the latter are data-layer events).
+    const gtag: (...args: unknown[]) => void = function () {
+      const dataLayer = (window as Window & { dataLayer?: unknown[] }).dataLayer ||= [];
+      // eslint-disable-next-line prefer-rest-params -- Match Google's gtag command queue protocol.
+      dataLayer.push(arguments);
+    };
     const layer = (window as Window & { dataLayer?: unknown[] }).dataLayer;
     if (choice !== "accepted" || analyticsConsent() !== "accepted") {
-      if (layer) layer.push(["consent", "update", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "denied" }]);
+      if (layer) gtag("consent", "update", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "denied" });
       return;
     }
     if (navigator.doNotTrack === "1" || (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl || navigator.webdriver) return;
     if (layer && document.querySelector("script[data-mair-google-ads]")) {
-      layer.push(["consent", "update", { ad_storage: "granted", ad_user_data: "granted", ad_personalization: "denied", analytics_storage: "granted" }]);
+      gtag("consent", "update", { ad_storage: "granted", ad_user_data: "granted", ad_personalization: "denied", analytics_storage: "granted" });
       return;
     }
-    const dataLayer = (window as Window & { dataLayer?: unknown[] }).dataLayer ||= [];
     // Basic consent mode: the Google script is loaded only after explicit consent.
-    dataLayer.push(["consent", "default", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "denied" }]);
-    dataLayer.push(["consent", "update", { ad_storage: "granted", ad_user_data: "granted", ad_personalization: "denied", analytics_storage: "granted" }]);
-    dataLayer.push(["js", new Date()]);
-    dataLayer.push(["config", "AW-18541953196"]);
+    gtag("consent", "default", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "denied" });
+    gtag("consent", "update", { ad_storage: "granted", ad_user_data: "granted", ad_personalization: "denied", analytics_storage: "granted" });
+    gtag("js", new Date());
+    gtag("config", "AW-18541953196");
     const script = document.createElement("script");
     script.async = true;
     script.src = "https://www.googletagmanager.com/gtag/js?id=AW-18541953196";
