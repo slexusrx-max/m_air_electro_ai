@@ -1,11 +1,15 @@
 import type { ReactNode } from "react";
 import { renogyLink } from "@/lib/affiliate/providers/renogy";
+import { validSupplierUrl } from "@/lib/affiliate/suppliers";
 import type { SupplierEntry } from "@/lib/marketplace/supplier-discovery";
 
 /** Prefer an exact issued SKU mapping; otherwise preserve the approved parent or ordinary link. */
 function renogyEntryLink(entry: SupplierEntry) {
   const variantUrl = new URL(entry.url);
   variantUrl.searchParams.set("variant", entry.sku);
+  // The strict resolver rejects unreviewed variants; raw feed rows must keep
+  // their existing parent/ordinary path instead of failing page rendering.
+  if (!validSupplierUrl(variantUrl.href, "renogy")) return renogyLink(entry.url);
   const exactVariant = renogyLink(variantUrl.href);
   return exactVariant.tracked ? exactVariant : renogyLink(entry.url);
 }

@@ -12,6 +12,7 @@ test("feed links prefer exact issued SKU mappings and preserve ordinary fallback
     const href = tracked ? "https://renogy.sjv.io/issued" : entry.url;
     const calls = [];
     const { RenogyFeedLink } = load("components/marketplace/renogy-feed-link.tsx", {
+      "@/lib/affiliate/suppliers": { validSupplierUrl: () => true },
       "@/lib/affiliate/providers/renogy": {
         renogyLink: url => {
           calls.push(url);
@@ -34,4 +35,31 @@ test("feed links prefer exact issued SKU mappings and preserve ordinary fallback
       ? [exactVariantUrl, exactVariantUrl]
       : [exactVariantUrl, entry.url, exactVariantUrl, entry.url]);
   }
+});
+
+test('all real feed rows keep valid supplier inputs and unknown variants fall back safely', async () => {
+  const { validSupplierUrl } = await import('../lib/affiliate/suppliers.ts');
+  const { createRequire } = await import('node:module');
+  const require = createRequire(import.meta.url);
+  const feed = require('../data/renogy-feed-variants.json');
+  const reviewed = require('../data/renogy-reviewed-links.json');
+  let recovered = 0;
+  const { RenogyFeedLink } = load('components/marketplace/renogy-feed-link.tsx', {
+    '@/lib/affiliate/suppliers': { validSupplierUrl },
+    '@/lib/affiliate/providers/renogy': { renogyLink: url => {
+      assert.ok(validSupplierUrl(url, 'renogy'), `Unreviewed variant sent to strict resolver: ${url}`);
+      return {href:reviewed[url] ?? url,tracked:Boolean(reviewed[url])};
+    } },
+  });
+  for (const entry of feed.products) {
+    const exact = `${entry.url}?variant=${entry.sku}`;
+    for (const ro of [true,false]) {
+      const result = RenogyFeedLink({entry,ro,children:'Visit'});
+      if (reviewed[exact]) {
+        assert.equal(result.props.href, reviewed[exact]);
+        if (ro) recovered++;
+      }
+    }
+  }
+  assert.equal(recovered,12);
 });
