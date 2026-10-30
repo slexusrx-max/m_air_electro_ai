@@ -74,6 +74,13 @@ export default async function Page({ params }: Props) {
     );
   if (!g) notFound();
   const category = categoryByPath(g.category)!;
+  const equipmentGroups = g.equipmentGroups?.map(group => ({
+    ...group,
+    products: group.productIds.flatMap(id => {
+      const product = catalog.find(p => p.id === id && p.kind === "product" && p.availability !== "unavailable");
+      return product ? [product] : [];
+    }),
+  })).filter(group => group.products.length > 0);
 
   return (
     <PlatformShell>
@@ -181,6 +188,12 @@ export default async function Page({ params }: Props) {
           </aside>
         </div>
         <h2>{ro ? "Echipamente de explorat" : "Equipment to explore"}</h2>
+        {equipmentGroups ? <div id="equipment-paths">{equipmentGroups.map(group => <section key={group.title.en} className="content-panel">
+          <h3>{local(group.title, locale)}</h3>
+          <p>{local(group.description, locale)}</p>
+          <div className="product-grid">{group.products.map(product => <ProductCard key={product.id} product={product} dictionary={t} />)}</div>
+          {group.products.length >= 2 && <Link className="button-outline" href={`/compare?ids=${encodeURIComponent(group.products.map(product => product.id).join(","))}`}>{ro ? "Compară aceste modele" : "Compare these models"} →</Link>}
+        </section>)}</div> : <>
         <div className="product-grid">
           {catalog
             .filter((p) => p.paths.includes(g.category))
@@ -189,6 +202,7 @@ export default async function Page({ params }: Props) {
               <ProductCard key={p.id} product={p} dictionary={t} />
             ))}
         </div>
+        </>}
         <h2>{ro ? "Continuă lectura" : "Continue reading"}</h2>
         <LinkGrid
           locale={locale}

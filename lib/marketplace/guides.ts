@@ -11,6 +11,7 @@ export type Guide = {
   solution: string;
   calculator: string;
   sources: string[];
+  equipmentGroups?: { title: LocalText; description: LocalText; productIds: string[] }[];
 };
 const wiring =
   "https://www.victronenergy.com/media/pg/The_Wiring_Unlimited_book/en/index-en.html";
@@ -23,6 +24,18 @@ const section = (en: string, ro: string, body: string, translated: string) => ({
 export const guides: Guide[] = [
   {
     slug: "how-to-size-backup-battery",
+    equipmentGroups: [
+      {
+        title: b("Ready-to-use AC stations", "Stații AC gata de utilizare"),
+        description: b("These models include AC output. Compare documented limits, then use the finder to check your loads and runtime. These examples are not a sizing result for your home.", "Aceste modele includ ieșire AC. Compară limitele documentate, apoi verifică aparatele și autonomia în selector. Exemplele nu sunt un rezultat de dimensionare pentru locuința ta."),
+        productIds: ["pecron-e600lfp", "pecron-e1000lfp"],
+      },
+      {
+        title: b("Separate batteries for a designed system", "Baterii separate pentru un sistem proiectat"),
+        description: b("These batteries do not provide a standalone 230 V socket. They require compatible equipment and a complete system design. Confirm inverter, charging and protection requirements before choosing.", "Aceste baterii nu oferă singure o priză de 230 V. Au nevoie de echipamente compatibile și de proiectarea întregului sistem. Verifică invertorul, încărcarea și protecțiile înainte de alegere."),
+        productIds: ["renogy-mini-100", "renogy-mini-200"],
+      },
+    ],
     title: b(
       "How to size a backup battery",
       "Cum dimensionezi bateria de rezervă",

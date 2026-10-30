@@ -1,6 +1,6 @@
 # Growth backlog
 
-Updated 29 October 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
+Updated 30 October 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
 
 | Priority | Hypothesis / task | Evidence and next verification | State |
 |---|---|---|---|
@@ -13,7 +13,7 @@ Updated 29 October 2026. Audience: Romania/EU; Romanian primary, English support
 | P1 | Mobile search, filters, finder, compare, supplier journey | 28 October: 17 production browser tests passed, including RO/EN calculator/finder/compare at 390/430px, exact-SKU search, feed accessibility and RO ad landing. Supplier navigation intercepted; not a checkout/network attribution test | Verified within documented scope |
 | P1 | Recover 12 existing exact Renogy SKU mappings | Continue existing PR #41. Guard unknown variants before the strict resolver, use reviewed issued links only, preserve parent/ordinary fallback. Published PR #41: 215 active/150 ordinary across 365 rows. All 12 repository-issued and 3 already-published production mappings recovered. Obtain remaining exact issued links; no bulk tracking clicks | 15 recovered; 150 ordinary remain |
 | P2 | Search Console baseline and topic selection | Markifact GSC select_accounts reported no GSC connection. Clicks/impressions/CTR/position UNKNOWN, not zero | External connection blocker |
-| P2 | Improve existing backup-sizing guide | Battery/AC-station distinction and finder/category next-step links added in RO/EN. Existing calculations preserved. No measured lift; inspect query/page performance when available | Published in PR #36 |
+| P1 | Backup guide equipment path | Existing bottom cards showed only 3 expansion modules. Separate two documented AC stations and two standalone batteries with role explanations and same-category comparison links. Preserve calculations, images and supplier gates; verify RO/EN release | Release verification pending |
 | P2 | Product/category compatibility checks | Keep DC UPS, expansion batteries and accessories out of AC station finder; preserve unknown specs | Ongoing regression |
 | P2 | Organic distribution | Two RO/EN copy drafts prepared from existing guide. No verified connected owned social destination found; do not invent a channel or send spam | Drafts ready |
 | P2 | Partner/Ukraine replies | Renogy/Waterdrop/PECRON/BLUETTI delivery, discounts, forwarding and commission remain separate. Existing partner reply watcher retained | Await new substantive replies |
