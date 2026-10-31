@@ -8,6 +8,7 @@ import { supplierLink } from "@/lib/affiliate/providers";
 import { catalog } from "@/lib/affiliate/catalog";
 import { CommercialNotice } from "@/components/marketplace/commercial-notice";
 import { ComparisonProvider, ComparisonTray } from "@/components/marketplace/compare-control";
+import { comparisonGroup } from "@/lib/marketplace/comparison";
 import { PointerTiltController } from "@/components/pointer-tilt-controller";
 type PlatformShellProps = {
   children: React.ReactNode;
@@ -50,7 +51,7 @@ export async function PlatformShell({
       <CommercialNotice ro={locale === "ro"} />
       <div id="main-content" tabIndex={-1} className={contentClassName}>
         <SupplierLinksProvider links={supplierLinks} prices={{}}>
-          <ComparisonProvider products={Object.fromEntries(catalog.filter(p => p.kind === "product").map(p => [p.id, { name: locale === "ro" ? p.title.ro : p.name, category: p.category }]))}>
+          <ComparisonProvider products={Object.fromEntries(catalog.filter(p => p.kind === "product").map(p => [p.id, { name: locale === "ro" ? p.title.ro : p.name, category: comparisonGroup(p) }]))}>
           {children}
           <ComparisonTray ro={locale === "ro"} />
           </ComparisonProvider>

@@ -3,7 +3,7 @@ import { AnalyticsEvent } from "@/components/analytics-event";
 import Link from "@/components/localized-link";
 import { specificationLabel, specificationValue } from "@/lib/marketplace/specifications";
 import { catalog } from "@/lib/affiliate/catalog";
-import { comparableSelection } from "@/lib/marketplace/comparison";
+import { comparableSelection, comparisonGroup } from "@/lib/marketplace/comparison";
 import { ComparisonForm } from "./comparison-form";
 import { RemoveComparison } from "./compare-control";
 import { SupplierPrice } from "./supplier-link";
@@ -11,6 +11,7 @@ import { stationCandidates, batteryCandidates } from "@/lib/marketplace/selectio
 export function Comparison({ ids, ro, category }: { ids: string; ro: boolean; category?: string }) {
   const { selected, invalid } = comparableSelection(ids, catalog);
   const waterOnly = selected.length > 0 && selected.every(p => p.category === "water");
+  const group = selected[0] ? comparisonGroup(selected[0]) : category;
   const starterGroups = [
     { title: ro ? "Stații portabile: PECRON și BLUETTI" : "Portable stations: PECRON and BLUETTI", items: stationCandidates(catalog, "EU", { batteryWh: 1, loadWh: 1, inverterW: 1, surgeW: 1 }) },
     { title: ro ? "Baterii Renogy de clasă 12 V" : "Renogy 12 V-class batteries", items: batteryCandidates(catalog, 1, 12) },
@@ -20,8 +21,10 @@ export function Comparison({ ids, ro, category }: { ids: string; ro: boolean; ca
   ];
   return (
     <>
-      {invalid && <p className="safety-note" role="status">{ro ? "Selecția combină categorii diferite sau ghiduri de clasă. Alege modele din aceeași categorie pentru o comparație corectă." : "This selection mixes categories or class guides. Choose models in the same category for a meaningful comparison."}</p>}
-      <ComparisonForm key={ids} ro={ro} initialCategory={category} products={catalog.filter(p => p.kind === "product").map(p => ({ id: p.id, name: ro ? p.title.ro : p.name, category: p.category }))} selected={selected.map(p => p.id)} />
+      {invalid && <p className="safety-note" role="status">{ro ? "Selecția combină categorii sau roluri diferite, ori ghiduri de clasă. Compară modele cu același rol: stații AC, surse DC sau baterii de extensie separat." : "This selection mixes categories, equipment roles or class guides. Compare models with the same role: AC stations, DC supplies and expansion batteries separately."}</p>}
+      <ComparisonForm key={ids} ro={ro} initialCategory={category} products={catalog.filter(p => p.kind === "product").map(p => ({ id: p.id, name: ro ? p.title.ro : p.name, category: comparisonGroup(p) }))} selected={selected.map(p => p.id)} />
+      {group === "dc-backup" && <p className="safety-note" data-comparison-role="dc-backup">{ro ? "Aceste surse DC nu oferă o priză AC de 230 V. Verifică tensiunea, polaritatea și conectorul fiecărui aparat." : "These DC supplies do not provide a 230 V AC socket. Check each device's voltage, polarity and connector."}</p>}
+      {group === "expansion-batteries" && <p className="safety-note" data-comparison-role="expansion-batteries">{ro ? "Aceste baterii de extensie necesită o stație compatibilă separată. Nu sunt stații AC autonome; compararea capacității nu confirmă compatibilitatea." : "These expansion batteries require a separate compatible station. They are not standalone AC stations; comparing capacity does not confirm compatibility."}</p>}
       {!waterOnly && <section className="content-panel">
         <h2>{ro ? "Compară produse cu același rol" : "Compare products with the same role"}</h2>
         <p>{ro ? "Selecții editoriale din modelele documentate, nu kituri sau oferte de preț. Pentru consumatorii tăi, începe cu configuratorul." : "Editorial selections of documented models, not kits or price offers. For your own loads, start with the finder."}</p>
