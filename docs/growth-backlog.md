@@ -1,6 +1,6 @@
 # Growth backlog
 
-Updated 31 October 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
+Updated 1 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
 
 | Priority | Hypothesis / task | Evidence and next verification | State |
 |---|---|---|---|
@@ -15,7 +15,7 @@ Updated 31 October 2026. Audience: Romania/EU; Romanian primary, English support
 | P2 | Search Console baseline and topic selection | Markifact GSC select_accounts reported no GSC connection. Clicks/impressions/CTR/position UNKNOWN, not zero | External connection blocker |
 | P1 | Backup guide equipment path | Existing bottom cards showed only 3 expansion modules. Separate two documented AC stations and two standalone batteries with role explanations and same-category comparison links. Preserve calculations, images and supplier gates; RO/EN and both comparisons verified | Published PR #43 |
 | P1 | Same-role comparison | Source category let D77/DC UPS mix with AC stations and expansion modules mix with separate batteries. Use one reviewed role group for table, form and tray; keep catalogue categories and supplier links unchanged | Published PR #44; RO/EN table/form and saved-tray checks passed; phone layout unverified |
-| P1 | Same-role alternatives on detail pages | 31 October browser check: D77 detail still offers AC models under category alternatives. Comparison now rejects mixed roles; follow up by filtering related-model suggestions with documented roles, preserving product access | Next independent package |
+| P1 | Same-role alternatives on detail pages | 31 October browser check: D77 detail still offers AC models under category alternatives. Comparison now rejects mixed roles; follow up by filtering related-model suggestions with documented roles, preserving product access | Same-role helper and regression checks prepared; preview/release verification pending |
 | P2 | Organic distribution | Two RO/EN copy drafts prepared from existing guide. No verified connected owned social destination found; do not invent a channel or send spam | Drafts ready |
 | P2 | Partner/Ukraine replies | Renogy/Waterdrop/PECRON/BLUETTI delivery, discounts, forwarding and commission remain separate. Existing partner reply watcher retained | Await new substantive replies |
 
