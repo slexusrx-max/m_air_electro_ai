@@ -12,7 +12,7 @@ import {
 } from "@/components/marketplace/shared";
 import { CompareControl } from "@/components/marketplace/compare-control";
 import { ProductVisual } from "@/components/marketplace/product-visual";
-import { isCatalogListing } from "@/lib/marketplace/product-presentation";
+import { productAlternatives } from "@/lib/marketplace/product-alternatives";
 import { ProductPageStructuredData } from "@/components/marketplace/structured-data";
 import { ProductCard } from "@/components/marketplace/product-card";
 import { BatteryRuntimeExample } from "@/components/marketplace/battery-runtime-example";
@@ -152,13 +152,12 @@ export default async function Page({ params }: Props) {
         </section>
         <h2>
           {ro
-            ? "Alternative din aceeași categorie"
-            : "Alternatives in this category"}
+            ? "Alternative cu același rol"
+            : "Alternatives with the same role"}
         </h2>
+        <p>{ro ? "Același rol nu confirmă compatibilitatea. Verifică cerințele echipamentului și manualul modelului exact." : "The same role does not confirm compatibility. Check your equipment requirements and the exact model manual."}</p>
         <div className="product-grid">
-          {catalog
-            .filter((n) => isCatalogListing(n) && n.id !== p.id && n.category === p.category && n.availability !== "unavailable" && (p.category !== "water" || !p.technicalSpecs.Installation || p.technicalSpecs.Installation === "Check manual" || n.technicalSpecs.Installation === p.technicalSpecs.Installation))
-            .slice(0, 3)
+          {productAlternatives(p, catalog)
             .map((n) => (
               <ProductCard key={n.id} product={n} dictionary={t} />
             ))}
