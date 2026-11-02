@@ -1052,6 +1052,7 @@ body:has(.home-brand-first) .brand-background-art { opacity:.48; }
 .equipment-card .supplier-price a { display:flex; align-items:center; justify-content:center; min-height:48px; text-align:center; padding:12px; border:1px solid #468394; border-radius:14px; background:#a9e8ef; color:#163747; font-size:14px; font-weight:750; }
 .equipment-card>.text-link { font-size:14px; }
 .equipment-card .compare-control { margin:0; }
+.finder-controls { border:0; margin:0; padding:0; min-width:0; }
 .equipment-card .compare-control button { min-height:44px; font-size:13px; padding:8px 12px; background:transparent; box-shadow:none; }
 .equipment-card .product-context { font-size:13px; }
 .commerce-page .equipment-card .product-photo-pending { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:14px; min-height:160px; padding:20px; text-align:center; background:radial-gradient(ellipse at center,#d6edf2,#edf6f9 70%); color:#3c6274; border:1px dashed #93b5c2; }

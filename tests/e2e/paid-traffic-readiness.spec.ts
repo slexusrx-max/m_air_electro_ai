@@ -28,6 +28,7 @@ for (const locale of ["ro", "en"]) for (const width of [390, 430]) {
     await expect(calculator.locator(".button-primary")).toHaveAttribute("href", `${prefix}/marketplace/find-my-solution?application=apartment-backup&load=300&peak=600&hours=4&region=EU&step=3`);
     await calculator.locator(".button-primary").click();
     await expect(page).toHaveURL(/find-my-solution\?.*load=300/);
+    await expect(page.getByTestId("finder-controls")).toBeEnabled();
     await page.getByRole("button", { name: locale === "ro" ? "Calculează sistemul" : "Calculate system", exact: true }).click();
     await expect(page.locator(".finder-results")).toContainText("300 W");
     await expect(page.locator('[data-recommendation="best"]')).toHaveCount(1);
