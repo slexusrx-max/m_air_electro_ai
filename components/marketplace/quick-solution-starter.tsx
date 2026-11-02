@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "@/components/localized-link";
+import { localizedPath } from "@/lib/i18n/routing";
 import { estimateSystem } from "@/lib/marketplace/recommendation";
 import { starterScenarios } from "@/lib/marketplace/selection-guidance";
 
@@ -68,11 +68,12 @@ export function QuickSolutionStarter({ ro }: { ro: boolean }) {
             <div><dt>{ro ? "Invertor continuu" : "Continuous inverter"}</dt><dd>{result.inverterW} W</dd></div>
             <div><dt>{ro ? "Capacitate la pornire" : "Starting capability"}</dt><dd>{result.surgeW} W</dd></div>
           </dl>
-          <Link className="button-primary" href={finderHref}>{ro ? "Vezi modelele potrivite" : "See suitable models"} →</Link>
+          {/* Hand off current inputs directly instead of waiting for a client-side route transition. */}
+          <a className="button-primary" href={localizedPath(finderHref, ro ? "ro" : "en")}>{ro ? "Vezi modelele potrivite" : "See suitable models"} →</a>
         </> : <>
           <p className="quick-solution-label">{ro ? "VERIFICĂ DATELE" : "CHECK YOUR INPUTS"}</p>
           <p>{ro ? "Introdu valori pozitive; vârful trebuie să fie cel puțin egal cu sarcina continuă." : "Enter positive values; starting peak must be at least the running load."}</p>
-          <Link className="button-outline" href="/marketplace/find-my-solution">{ro ? "Deschide calculatorul complet" : "Open the full calculator"} →</Link>
+          <a className="button-outline" href={localizedPath("/marketplace/find-my-solution", ro ? "ro" : "en")}>{ro ? "Deschide calculatorul complet" : "Open the full calculator"} →</a>
         </>}
       </div>
     </div>

@@ -22,6 +22,8 @@ Local unit tests: 164 passed; catalog validation: 77 records, 64 models/photos, 
 
 The local Next production server does not propagate the English rewrite locale, whereas the live deployment does. English browser checks must run on the actual Vercel deployment; this release does not change locale routing to mask that environment discrepancy. Release SHA, public browser checks and crawl outcome must be recorded after deployment.
 
+PR #47 is merged and Vercel production metadata confirms `656d4a365164c629dad96761a216262c34b748e9`. Public crawl: 379 routes, zero failures/orphans. The first public browser run passed 26 of 28 tests; two English calculator handoffs exceeded the ten-second transition expectation. A separate real-browser check eventually navigated without console errors, so this was delayed client navigation, not a missing destination. The input-derived calculator CTAs now use ordinary localized document links; route/query/specification content is unchanged. The follow-up browser run must verify both languages and exact input preservation before reporting the journey fixed.
+
 ## Remaining gates
 
 - Independently verify real measurement receipt and the intended conversion goal; a page view is not a sale.
