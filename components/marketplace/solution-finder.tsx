@@ -1,7 +1,7 @@
 "use client";
 import Link from "@/components/localized-link";
 import { trackEvent } from "@/lib/analytics";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useSyncExternalStore } from "react";
 import { ProductCard } from "./product-card";
 import { catalog } from "@/lib/affiliate/catalog";
 import { estimateSystem } from "@/lib/marketplace/recommendation";
@@ -23,6 +23,7 @@ const applications = [
   ["workshop", "Workshop", "Atelier"],
   ["business-backup", "Business", "Afacere"],
 ];
+const subscribeToReadiness = () => () => {};
 export function SolutionFinder({
   dictionary: t,
   initial = {},
@@ -31,6 +32,7 @@ export function SolutionFinder({
   initial?: Record<string, string | undefined>;
 }) {
   const ro = t["locale.code"] === "ro";
+  const interactive = useSyncExternalStore(subscribeToReadiness, () => true, () => false);
   const l = (en: string, translated: string) => (ro ? translated : en);
   const resultRef = useRef<HTMLElement>(null);
   const started = useRef(false);
@@ -168,6 +170,7 @@ export function SolutionFinder({
             "Estimare deterministă inițială. Clasele ghidează achiziția; compatibilitatea cere verificarea modelului și instalației.",
           )}
         </p>
+        <fieldset disabled={!interactive} aria-busy={!interactive} className="finder-controls" data-testid="finder-controls">
         {step === 1 && <section className="starter-scenarios" aria-label={l("Calculated examples", "Exemple calculate")}>
           <h2>{l("Start with an everyday task", "Începe cu o nevoie de zi cu zi")}</h2>
           <p>{l("Editorial examples, not customer cases or factory kits. All listed loads run together for the stated time through 230 V AC outlets/adapters. Edit the assumed loads and startup peak for your devices.", "Exemple editoriale, nu cazuri de clienți sau kituri de fabrică. Toți consumatorii funcționează simultan pe durata indicată, prin prize/adaptoare de 230 V AC. Modifică puterile și vârful de pornire presupuse pentru aparatele tale.")}</p>
@@ -288,6 +291,7 @@ export function SolutionFinder({
             </button>
           )}
         </div>
+        </fieldset>
       </section>
       {ready && result && (
         <section
