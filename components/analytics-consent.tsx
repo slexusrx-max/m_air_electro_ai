@@ -2,7 +2,7 @@
 import Link from "@/components/localized-link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { analyticsConsent, consentKey, trackEvent } from "@/lib/analytics";
+import { analyticsConsent, consentKey, isPublicMeasurementPath, trackEvent } from "@/lib/analytics";
 
 export function AnalyticsConsent({ ro }: { ro: boolean }) {
   const [open, setOpen] = useState(false);
@@ -21,11 +21,11 @@ export function AnalyticsConsent({ ro }: { ro: boolean }) {
       dataLayer.push(arguments);
     };
     const layer = (window as Window & { dataLayer?: unknown[] }).dataLayer;
-    if (choice !== "accepted" || analyticsConsent() !== "accepted") {
+    if (choice !== "accepted" || analyticsConsent() !== "accepted" || !isPublicMeasurementPath(path)
+      || navigator.doNotTrack === "1" || (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl || navigator.webdriver) {
       if (layer) gtag("consent", "update", { ad_storage: "denied", ad_user_data: "denied", ad_personalization: "denied", analytics_storage: "denied" });
       return;
     }
-    if (navigator.doNotTrack === "1" || (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl || navigator.webdriver) return;
     if (layer && document.querySelector("script[data-mair-google-ads]")) {
       gtag("consent", "update", { ad_storage: "granted", ad_user_data: "granted", ad_personalization: "denied", analytics_storage: "granted" });
       return;
@@ -40,7 +40,7 @@ export function AnalyticsConsent({ ro }: { ro: boolean }) {
     script.src = "https://www.googletagmanager.com/gtag/js?id=AW-18541953196";
     script.dataset.mairGoogleAds = "true";
     document.head.appendChild(script);
-  }, [choice]);
+  }, [choice, path]);
   useEffect(() => {
     if (choice === "accepted") trackEvent("pageview");
     const click = (event: MouseEvent) => {

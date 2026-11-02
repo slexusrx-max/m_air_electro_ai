@@ -9,6 +9,11 @@ export function supplierClickProperties(input: SupplierClick, pathname: string) 
   return { product: input.product, supplier: input.supplier, category: input.category, language: input.language, source_page: source };
 }
 export const consentKey = "mair-analytics-consent-v2";
+/** Apply the same private-route exclusion to every optional measurement provider. */
+export function isPublicMeasurementPath(pathname: string) {
+  const path = pathname.split(/[?#]/)[0].replace(/^\/(en|ro)(?=\/|$)/, "") || "/";
+  return !/^\/(api|auth|account|login|register|forgot-password|reset-password|dashboard|onboarding|admin|expert|client|supplier)(\/|$)/.test(path);
+}
 export function analyticsConsent() {
   try {
     const saved = JSON.parse(localStorage.getItem(consentKey) || "null");
@@ -22,7 +27,7 @@ export function trackEvent(name: AnalyticsEvent, supplier?: SupplierClick) {
   if (!domain || domain !== window.location.hostname || /^(localhost|127\.)/.test(domain)) return;
   const path = window.location.pathname.split(/[?#]/)[0];
   const unlocalizedPath = path.replace(/^\/(en|ro)(?=\/|$)/, "") || "/";
-  if (/^\/(api|auth|account|login|register|forgot-password|reset-password|dashboard|onboarding|admin|expert|client|supplier)(\/|$)/.test(unlocalizedPath)) return;
+  if (!isPublicMeasurementPath(path)) return;
   if (name === "contact_accepted" && unlocalizedPath !== "/contact") return;
   const props = name === "supplier_outbound_click" && supplier ? supplierClickProperties(supplier, path) : undefined;
   if (name === "supplier_outbound_click" && !props) return;

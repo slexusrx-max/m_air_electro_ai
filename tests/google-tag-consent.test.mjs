@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { load } from "./helpers.mjs";
 
-function harness() {
+function harness(pathname = "/") {
   let choice = "unset";
   let saved = "unset";
   let stateIndex = 0;
@@ -12,12 +12,12 @@ function harness() {
   const navigator = {};
   const { AnalyticsConsent } = load("components/analytics-consent.tsx", {
     "@/components/localized-link": { default: () => null },
-    "next/navigation": { usePathname: () => "/" },
+    "next/navigation": { usePathname: () => pathname },
     react: {
       useState: () => [stateIndex++ === 1 ? choice : false, () => {}],
       useEffect: (effect) => effects.push(effect),
     },
-    "@/lib/analytics": { analyticsConsent: () => saved, trackEvent: () => {}, consentKey: "test" },
+    "@/lib/analytics": { ...load("lib/analytics.ts"), analyticsConsent: () => saved, trackEvent: () => {}, consentKey: "test" },
   }, {
     window, navigator,
     document: {
@@ -28,6 +28,7 @@ function harness() {
   });
   return {
     window, navigator, scripts,
+    navigate(path) { pathname = path; },
     run(nextChoice, persisted = nextChoice) {
       choice = nextChoice; saved = persisted; stateIndex = 0; effects.length = 0;
       AnalyticsConsent({ ro: false });
@@ -50,6 +51,32 @@ test("no Google queue or script before persisted explicit consent", () => {
   h.run("accepted", "unset");
   assert.equal(h.window.dataLayer, undefined);
   assert.equal(h.scripts.length, 0);
+});
+
+test("a newly enabled privacy signal revokes an already loaded Google tag", () => {
+  for (const signal of [{ doNotTrack: "1" }, { globalPrivacyControl: true }, { webdriver: true }]) {
+    const h = harness();
+    h.run("accepted");
+    Object.assign(h.navigator, signal);
+    h.run("accepted");
+    assert.equal(h.commands().at(-1)[2].ad_storage, "denied");
+    assert.equal(h.commands().at(-1)[2].ad_user_data, "denied");
+  }
+});
+
+test("private routes never initialize ads and navigation revokes then restores consent without duplicate config", () => {
+  for (const path of ["/account", "/en/reset-password", "/ro/dashboard/client", "/auth/callback"]) {
+    const h = harness(path);
+    h.run("accepted");
+    assert.equal(h.scripts.length, 0, path);
+  }
+  const h = harness();
+  h.run("accepted");
+  h.navigate("/en/account"); h.run("accepted");
+  assert.equal(h.commands().at(-1)[2].ad_storage, "denied");
+  h.navigate("/marketplace/solar/panels"); h.run("accepted");
+  assert.equal(h.commands().at(-1)[2].ad_storage, "granted");
+  assert.equal(h.commands().filter(c => c[0] === "config").length, 1);
 });
 
 test("consent, js and config use the standard Arguments queue in order", () => {
