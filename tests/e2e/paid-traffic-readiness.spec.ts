@@ -25,6 +25,7 @@ for (const locale of ["ro", "en"]) for (const width of [390, 430]) {
     await expect(calculator.locator(".quick-solution-result")).toContainText(locale === "ro" ? "VERIFICĂ DATELE" : "CHECK YOUR INPUTS");
     await calculator.getByLabel(locale === "ro" ? "Vârf la pornire în wați" : "Starting peak in watts", { exact: true }).fill("600");
     await expect(calculator.locator(".quick-solution-result")).toContainText("1200 Wh");
+    await expect(calculator.locator(".button-primary")).toHaveAttribute("href", `${prefix}/marketplace/find-my-solution?application=apartment-backup&load=300&peak=600&hours=4&region=EU&step=3`);
     await calculator.locator(".button-primary").click();
     await expect(page).toHaveURL(/find-my-solution\?.*load=300/);
     await page.getByRole("button", { name: locale === "ro" ? "Calculează sistemul" : "Calculate system", exact: true }).click();
