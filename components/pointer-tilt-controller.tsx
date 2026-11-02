@@ -22,44 +22,68 @@ const TILT_SELECTOR = [
 
 export function PointerTiltController() {
   useEffect(() => {
-    if (!window.matchMedia("(any-hover: hover) and (any-pointer: fine)").matches) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const allowed = window.matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+    let active: HTMLElement | null = null;
+    let frame = 0;
+    let point: { x: number; y: number } | null = null;
+
+    function clear() {
+      cancelAnimationFrame(frame); frame = 0; point = null;
+      if (!active) return;
+      for (const property of ["--tilt-x", "--tilt-y", "--tilt-lift", "--tilt-light-x", "--tilt-light-y"]) active.style.removeProperty(property);
+      delete active.dataset.tiltActive;
+      active = null;
+    }
+
+    function paint() {
+      frame = 0;
+      if (!allowed.matches || !active?.isConnected || !point) { clear(); return; }
+      const bounds = active.getBoundingClientRect();
+      if (!bounds.width || !bounds.height) { clear(); return; }
+      const x = Math.max(0, Math.min(1, (point.x - bounds.left) / bounds.width));
+      const y = Math.max(0, Math.min(1, (point.y - bounds.top) / bounds.height));
+      active.style.setProperty("--tilt-x", `${((0.5 - y) * 4).toFixed(2)}deg`);
+      active.style.setProperty("--tilt-y", `${((x - 0.5) * 4).toFixed(2)}deg`);
+      active.style.setProperty("--tilt-lift", "0px");
+      active.style.setProperty("--tilt-light-x", `${(x * 100).toFixed(1)}%`);
+      active.style.setProperty("--tilt-light-y", `${(y * 100).toFixed(1)}%`);
+      active.dataset.tiltActive = "true";
+    }
 
     function update(event: PointerEvent) {
-      if (event.pointerType === "touch") return;
-      const target = (event.target as Element | null)?.closest<HTMLElement>(TILT_SELECTOR);
-      if (!target) return;
+      if (!allowed.matches || event.pointerType !== "mouse") { clear(); return; }
+      const element = event.target instanceof Element ? event.target : null;
+      const target = element?.closest<HTMLElement>(TILT_SELECTOR);
+      const control = element?.closest("button,input,select,textarea,label,a,summary,[contenteditable]");
+      if (!target || (control && control !== target)) { clear(); return; }
+      if (active !== target) { clear(); active = target; }
       target.setAttribute("data-pointer-tilt", "");
-      const bounds = target.getBoundingClientRect();
-      const x = (event.clientX - bounds.left) / bounds.width;
-      const y = (event.clientY - bounds.top) / bounds.height;
-      // Reach a visible tilt before the edge, capped at seven degrees per axis.
-      const tiltX = Math.max(-7, Math.min(7, (0.5 - y) * 20));
-      const tiltY = Math.max(-7, Math.min(7, (x - 0.5) * 20));
-      target.style.setProperty("--tilt-x", `${tiltX.toFixed(2)}deg`);
-      target.style.setProperty("--tilt-y", `${tiltY.toFixed(2)}deg`);
-      target.style.setProperty("--tilt-lift", "-3px");
-      target.style.setProperty("--tilt-light-x", `${(x * 100).toFixed(1)}%`);
-      target.style.setProperty("--tilt-light-y", `${(y * 100).toFixed(1)}%`);
-      target.dataset.tiltActive = "true";
+      point = { x: event.clientX, y: event.clientY };
+      if (!frame) frame = requestAnimationFrame(paint);
     }
 
     function reset(event: PointerEvent) {
-      const target = (event.target as Element | null)?.closest<HTMLElement>(TILT_SELECTOR);
-      if (!target || target.contains(event.relatedTarget as Node | null)) return;
-      target.style.removeProperty("--tilt-x");
-      target.style.removeProperty("--tilt-y");
-      target.style.removeProperty("--tilt-lift");
-      target.style.removeProperty("--tilt-light-x");
-      target.style.removeProperty("--tilt-light-y");
-      delete target.dataset.tiltActive;
+      if (active && (!(event.relatedTarget instanceof Node) || !active.contains(event.relatedTarget))) clear();
     }
 
     document.addEventListener("pointermove", update, { passive: true });
     document.addEventListener("pointerout", reset, { passive: true });
+    document.addEventListener("pointerdown", clear, { passive: true });
+    document.addEventListener("pointercancel", clear, { passive: true });
+    document.addEventListener("focusin", clear);
+    window.addEventListener("scroll", clear, { passive: true });
+    window.addEventListener("blur", clear);
+    allowed.addEventListener("change", clear);
     return () => {
+      clear();
       document.removeEventListener("pointermove", update);
       document.removeEventListener("pointerout", reset);
+      document.removeEventListener("pointerdown", clear);
+      document.removeEventListener("pointercancel", clear);
+      document.removeEventListener("focusin", clear);
+      window.removeEventListener("scroll", clear);
+      window.removeEventListener("blur", clear);
+      allowed.removeEventListener("change", clear);
     };
   }, []);
 

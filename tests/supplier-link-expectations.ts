@@ -4,13 +4,14 @@ import type { CatalogProduct } from "../lib/affiliate/types";
 import reviewedRenogyLinks from "../data/renogy-reviewed-links.json";
 import existingRenogyLinks from "./fixtures/renogy-existing-production-links.json";
 import { readFileSync } from "node:fs";
+import { parseCsvRow } from "./csv-row";
 const renogyLinks: Record<string, string> = { ...existingRenogyLinks, ...reviewedRenogyLinks };
 
-// Public href snapshot from the deployed 27 October audit, not network click evidence.
+// Public href snapshot from the deployed audit, not network click evidence.
 const feedLinks = new Map(readFileSync("docs/affiliate-renogy-feed-links.csv", "utf8")
   .trim().split(/\r?\n/).slice(1).map(line => {
-    const cells = line.match(/"(?:[^"]|"")*"/g)?.map(cell => cell.slice(1, -1).replaceAll('""', '"'));
-    if (cells?.length !== 6) throw new Error("Invalid audited feed-link row");
+    const cells = parseCsvRow(line);
+    if (cells.length !== 6 || !["tracked", "ordinary"].includes(cells[4])) throw new Error("Invalid audited feed-link row");
     return [cells[0], { source: cells[2], href: cells[3], tracked: cells[4] === "tracked" }] as const;
   }));
 
