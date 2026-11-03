@@ -26,6 +26,10 @@ const labels: Record<string, string> = {
   "Maximum discharge": "Curent maxim de descărcare",
   Chemistry: "Chimie",
   "Rated power (STC)": "Putere nominală (STC)",
+  "Rated panel power": "Putere nominală a panoului",
+  "Manufacturer-rated power": "Putere declarată de producător",
+  "Manufacturer-rated AC output": "Putere AC declarată de producător",
+  "Connector description": "Descriere conector",
   "Open-circuit voltage (STC)": "Tensiune în gol (STC)",
   "Operating voltage (STC)": "Tensiune de lucru (STC)",
   "Short-circuit current (STC)": "Curent de scurtcircuit (STC)",
@@ -54,6 +58,6 @@ export const specificationLabel = (key: string, ro: boolean) => {
 
 export function specificationValue(value: string, ro: boolean) {
  if (value.endsWith(" / Under-sink, indoor") || value.endsWith(" / Required")) return value.split(" / ")[ro ? 0 : 1];
- const values: Record<string,string> = { "Countertop": "Pe blat", "Under-sink": "Sub chiuveta", "Check manual": "Verifica manualul" };
+ const values: Record<string,string> = { "Countertop": "Pe blat", "Under-sink": "Sub chiuvetă", "Check manual": "Verifică manualul" };
  return ro ? values[value] ?? value : value;
 }

@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { load } from "./helpers.mjs";
+import { readFileSync } from "node:fs";
 const { localizedPath } = load("lib/i18n/routing.ts");
 const { exampleEnergy, energyExamples } = load("lib/marketplace/energy-examples.ts");
 
@@ -28,4 +29,12 @@ test("mixed AC/DC examples apply conversion losses only to AC and never round th
   assert.ok(Math.abs(rv.nominalWh - 788.315217391) < 1e-6);
   assert.equal(exampleEnergy([{ en: "DC", ro: "DC", watts: 100, hours: 1, circuit: "DC" }], 1, 0.5).nominalWh, 100);
   assert.throws(() => exampleEnergy(energyExamples.rv, 0), /Invalid/);
+});
+
+
+test("404 metadata is noindex and does not inherit the homepage canonical", () => {
+  const source = readFileSync("app/not-found.tsx", "utf8");
+  assert.match(source, /robots:\s*\{\s*index:\s*false,\s*follow:\s*false\s*\}/);
+  assert.match(source, /alternates:\s*\{\s*\}/);
+  assert.doesNotMatch(source, /buildMetadata\s*\(/);
 });
