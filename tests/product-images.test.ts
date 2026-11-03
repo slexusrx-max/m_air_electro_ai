@@ -11,6 +11,9 @@ import { validSupplierUrl } from "../lib/affiliate/suppliers";
 import { readFileSync } from "node:fs";
 import { createHash } from "node:crypto";
 import sharp from "sharp";
+import bluettiPhotos from "../data/bluetti-reviewed-photos.json";
+import pecronPhotos from "../data/pecron-reviewed-photos.json";
+import pecronExpansion from "../data/pecron-reviewed-expansion.json";
 
 test("reference battery remains addressable but never appears in catalog results", () => {
   const reference = productBySlug("lfp-battery-12v-100ah-class")!;
@@ -49,11 +52,16 @@ test("category artwork does not choose a named model photograph", () => {
   assert.notEqual(productPhotos["renogy-mini-100"].src, productPhotos["renogy-mini-200"].src);
 });
 
-test("all catalog models have photographs and the ten original local assets retain their reviewed bytes", async () => {
+test("only rights-cleared catalog models use photographs and the ten original local assets retain their reviewed bytes", async () => {
   const provenance = JSON.parse(readFileSync(new URL("../docs/product-photo-provenance-2026-10-18.json", import.meta.url), "utf8"));
   const models = catalog.filter(product => product.kind === "product");
-  assert.equal(Object.keys(productPhotos).length, models.length);
-  for (const model of models) assert.ok(productPhoto(model), model.id);
+  const withheld = new Set([...bluettiPhotos, ...pecronPhotos, ...pecronExpansion].map(record => record.id));
+  assert.equal(withheld.size, 29);
+  assert.equal(Object.keys(productPhotos).length, models.length - withheld.size);
+  for (const model of models) {
+    if (withheld.has(model.id)) assert.equal(productPhoto(model), undefined, model.id);
+    else assert.ok(productPhoto(model), model.id);
+  }
   const hashes = new Set<string>();
   for (const asset of provenance.assets) {
     const product = catalog.find(product => product.id === asset.catalogId)!;

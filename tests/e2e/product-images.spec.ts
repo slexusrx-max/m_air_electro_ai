@@ -18,7 +18,11 @@ for (const locale of ["ro", "en"]) for (const width of [390, 1440]) {
     for (const product of catalog.filter(product => product.kind === "product")) {
       const visual = page.locator(`[data-product-photo="${product.id}"]`);
       const photo = productPhoto(product);
-      if (!photo) { await expect(visual).toHaveText(label); continue; }
+      if (!photo) {
+        await expect(visual).toHaveText(label);
+        await expect(visual.locator("img")).toHaveCount(0);
+        continue;
+      }
       const img = visual.locator("img");
       await img.scrollIntoViewIfNeeded();
       await expect(img).toHaveAttribute("alt", product.name);
