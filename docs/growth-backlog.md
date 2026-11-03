@@ -1,6 +1,6 @@
 # Growth backlog
 
-Updated 2 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
+Updated 3 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
 
 | Priority | Hypothesis / task | Evidence and next verification | State |
 |---|---|---|---|
@@ -28,3 +28,7 @@ One enabled daily task at 09:00 Europe/Bucharest, starting 28 October 2026; week
 Review window 26 October–1 November. Verified improvements: 15 existing exact Renogy mappings recovered on 29 October, same-role guide/comparison/detail paths published, Waterdrop Germany scope labelled, link-only prices and catalogue identities retained. Current feed baseline on 2 November: 365 SKUs, 215 tracked/150 ordinary. No measured organic traffic, network click, conversion, confirmed commission or payout increase can be established from the available data.
 
 Next order: (1) obtain genuine existing-service analytics/Impact receipts and resolve Search Console access without new spend; (2) complete phone validation of recent changes when a working runner is available; (3) create and verify the 12 requested solar parent/variant links in authenticated Impact, retaining exact destinations. Those 12 requested records are a subset of the 150 ordinary feed rows, not an additional count. Waterdrop EU approval and issued links remain separate prerequisites. Defer new templated content and repeated role changes until evidence identifies a useful next package.
+
+## 3 November verification note
+
+No new actionable partner reply after the 2 November Renogy message already handled by the partner watcher. Main/production now includes PR #48 direct calculator handoff and PR #49 finder hydration readiness; preserve both. A single Chromium installation attempt in the refreshed dependency environment still returned invalid ZIP archives. Phone validation remains outstanding; do not repeat until the browser source/runner condition changes. Markifact credit and declined Impact access conditions have not changed, so neither was retried. Priorities from the 2 November weekly review remain in force. HTTP 200 alone does not establish hydrated finder behaviour or commissions.
