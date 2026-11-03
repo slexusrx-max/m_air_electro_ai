@@ -18,6 +18,16 @@ export function SupplierLink({ product, ro, children, className }: {
 }) {
   const links = useContext(SupplierLinks);
   if (!product.productUrl) return null;
+  if (product.provider === "waterdrop-eu") {
+    return <span className="safety-note supplier-market-notice" role="note"
+      aria-label={ro ? "Oferta Waterdrop Germania nu este disponibilă pentru România" : "Waterdrop Germany offer unavailable for Romania"}
+      data-supplier-product={product.id} data-supplier={product.provider}
+      data-market-status="blocked-romania" data-tracking-status="disabled">
+      {ro
+        ? "Oferta afiliată Waterdrop DE nu este disponibilă pentru România. Consultă sursa oficială de pe pagina produsului."
+        : "The Waterdrop Germany affiliate offer is unavailable for Romania. Use the official source on the product page."}
+    </span>;
+  }
   const link = product.availability === "unavailable" ? { href: product.productUrl, tracked: false } : links[product.id] ?? { href: product.productUrl, tracked: false };
   return <a href={link.href} target="_blank" className={className}
     rel={link.tracked ? "sponsored noopener noreferrer" : "noopener noreferrer"}
@@ -27,7 +37,6 @@ export function SupplierLink({ product, ro, children, className }: {
     data-disclosure-status={link.tracked ? "labelled" : "not-required"}>
     {product.availability === "unavailable" ? (ro ? "Model retras - documentatia producatorului" : "Discontinued model - manufacturer documentation") : children ?? (ro ? "Verifică prețul la furnizor" : "Check price at supplier")} ↗
     {link.tracked ? (ro ? " (link afiliat)" : " (affiliate link)") : ""}
-    {product.provider === "waterdrop-eu" ? (ro ? " · Magazin DE — doar Germania" : " · DE store — Germany only") : ""}
   </a>;
 }
 
