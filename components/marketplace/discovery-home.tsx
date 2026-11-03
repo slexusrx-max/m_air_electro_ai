@@ -13,6 +13,9 @@ import { CatalogBrowser } from "./catalog-browser";
 import { localizedPath } from "@/lib/i18n/routing";
 import { PublisherTrust } from "./publisher-trust";
 import { HomeBuyingGuide } from "./home-buying-guide";
+import { ProductCard } from "./product-card";
+
+const HOME_PREVIEW_LIMIT = 12;
 
 export async function DiscoveryHome({ marketplace = false, requirements }: {
   marketplace?: boolean;
@@ -26,6 +29,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
   // Alternate brands so the first screen does not imply a Renogy-only assortment.
   const homeModels = Array.from({ length: Math.max(...brandModels.map(items => items.length)) }, (_, index) =>
     brandModels.flatMap(items => items[index] ? [items[index]] : [])).flat();
+  const homePreviewModels = homeModels.slice(0, HOME_PREVIEW_LIMIT);
   const categorySection = <section id="equipment-categories" className="equipment-explorer" aria-labelledby="equipment-heading">
     <div className="section-line"><h2 id="equipment-heading">{ro ? "Categorii de echipamente" : "Equipment categories"}</h2><Link href="/search?kind=product">{ro ? "Toate modelele" : "All models"} →</Link></div>
     <div className="category-tiles">{rootCategories.map(category => <Link key={category.path} href={`/marketplace/${category.path}`} data-pointer-tilt>
@@ -36,13 +40,15 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
     <p className="category-photo-credits"><Link href="/photo-credits">{ro ? "Sursele și licențele fotografiilor de categorii" : "Category photo sources and licences"} →</Link></p>
   </section>;
   const featuredSection = <section id="home-catalog" className="homepage-products" aria-labelledby="featured-models">
-    <div className="section-line"><div><p className="eyebrow">{ro ? "CATALOG COMPLET" : "FULL CATALOG"}</p><h2 id="featured-models">{ro ? "Explorează toate modelele" : "Explore all models"}</h2></div><Link className="button-primary" href="/marketplace">{ro ? "Toate produsele și SKU-urile" : "All products and SKUs"} →</Link></div>
+    <div className="section-line"><div><p className="eyebrow">{ro ? "SELECȚIE DOCUMENTATĂ" : "DOCUMENTED SELECTION"}</p><h2 id="featured-models">{ro ? "Începe cu 12 modele reprezentative" : "Start with 12 representative models"}</h2></div><Link className="button-primary" href="/marketplace">{ro ? "Toate produsele și SKU-urile" : "All products and SKUs"} →</Link></div>
     <nav className="action-row" aria-label={ro ? "Catalog după marcă" : "Catalog by brand"}>
       {brands.map(brand => <Link key={brand} className="button-outline" href={`/marketplace?kind=product&brand=${brand}`}>{brand} · {brandModels[brands.indexOf(brand)].length}</Link>)}
       <Link className="button-outline" href="/renogy/catalog">{ro ? "Catalog Renogy · 365 SKU-uri" : "Renogy catalog · 365 SKUs"} →</Link>
     </nav>
-    <p className="small-copy">{ro ? "Modele documentate din toate cele patru mărci. Pozițiile din catalogul furnizorului sunt disponibile separat; nu reprezintă modele evaluate individual." : "Documented models from all four brands. Supplier catalog entries are available separately; they are not individually reviewed models."}</p>
-    <CatalogBrowser products={homeModels} query={{kind: "product"}} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} pageSize={homeModels.length} />
+    <p className="small-copy">{ro ? "O selecție alternată din toate cele patru mărci. Pentru toate modelele și pozițiile furnizorilor, deschide catalogul complet." : "A balanced selection from all four brands. Open the full catalog for every model and supplier entry."}</p>
+    <div className="product-grid homepage-product-preview">
+      {homePreviewModels.map(product => <ProductCard key={product.id} product={product} dictionary={dictionary} />)}
+    </div>
   </section>;
   return <main className="commerce-page discovery-home storefront-home">
     {marketplace ? <header className="page-intro marketplace-intro">
@@ -55,7 +61,7 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
         <h1>{marketplace ? (ro ? "Catalog de echipamente energetice" : "Energy equipment catalog") : (ro ? "Panouri solare, baterii și invertoare" : "Solar panels, batteries and inverters")}</h1>
         <p className="hero-promise">{ro ? "Găsește energia de rezervă potrivită pentru casă sau călătorii. Compară, calculează și cumpără direct la furnizor." : "Find backup power for home or life on the move. Compare, calculate and buy directly from the supplier."}</p>
         <div className="action-row">
-          <Link className="button-primary" href="#home-catalog">{ro ? "Vezi toate produsele" : "Browse all products"} →</Link>
+          <Link className="button-primary" href="#home-catalog">{ro ? "Vezi selecția" : "Browse selection"} →</Link>
           <Link className="button-outline" href="/marketplace/find-my-solution">{ro ? "Ajută-mă să aleg" : "Help me choose"} →</Link>
         </div>
         <form action={localizedPath("/marketplace", locale)} className="hero-search" role="search" aria-label={ro ? "Caută echipamente" : "Search equipment"}>
