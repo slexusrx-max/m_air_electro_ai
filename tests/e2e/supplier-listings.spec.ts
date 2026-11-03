@@ -11,16 +11,21 @@ for (const locale of ["ro", "en"] as const) for (const width of [390, 1440]) {
     test.setTimeout(180000);
     await context.addCookies([{ name: "mr-electro-locale", value: locale, url: baseURL! }]);
     await page.setViewportSize({ width, height: 900 });
+    const fallbackLabel = locale === "ro" ? "Imaginea produsului așteaptă verificarea" : "Product image awaiting verification";
     const errors: string[] = [];
     page.on("pageerror", error => errors.push(error.message));
     for (const product of additions) {
       expect((await page.goto(localizedPath(`/marketplace/products/${product.slug}`, locale)))?.status()).toBe(200);
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(product.name);
       const photo = productPhoto(product);
+      const visual = page.locator(`[data-product-photo="${product.id}"]`);
       if (photo) {
-        const image = page.locator(`[data-product-photo="${product.id}"] img`);
+        const image = visual.locator("img");
         await expect(image).toHaveAttribute("src", photo.src);
         await expect(image).toHaveAttribute("alt", product.name);
+      } else {
+        await expect(visual).toHaveText(fallbackLabel);
+        await expect(visual.locator("img")).toHaveCount(0);
       }
       const cta = page.locator(`.product-detail a[data-supplier-product="${product.id}"]`);
       await expectSupplierCta(cta, product, new URL(baseURL!).hostname === "mairelectroai.com");
