@@ -147,7 +147,7 @@ export default async function Page({ params }: Props) {
             {p.category !== "water" && <Link href={c.calculator}>
               {ro ? "Verifică prin calcul" : "Check with calculator"} →
             </Link>}
-            {p.category === "water" ? <><Link href="/marketplace/water#finder">{ro ? "Alege sistemul de apă" : "Find your water system"}</Link><Link href="/marketplace/water/countertop">{ro ? "Sisteme pe blat" : "Countertop systems"}</Link></> : <><Link href={`/solutions/${c.solution}`}>{ro ? "Soluție de sistem" : "System solution"}</Link><Link href="/marketplace/electrical-components">{ro ? "Cabluri și protecție" : "Wiring & protection"</Link></>}
+            {p.category === "water" ? <><Link href="/marketplace/water#finder">{ro ? "Alege sistemul de apă" : "Find your water system"}</Link><Link href="/marketplace/water/countertop">{ro ? "Sisteme pe blat" : "Countertop systems"}</Link></> : <><Link href={`/solutions/${c.solution}`}>{ro ? "Soluție de sistem" : "System solution"}</Link><Link href="/marketplace/electrical-components">{ro ? "Cabluri și protecție" : "Wiring & protection"}</Link></>}
           </div>
         </section>
         <h2>
