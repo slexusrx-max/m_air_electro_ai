@@ -6,7 +6,7 @@ import type { MarketplaceRole } from "@/lib/i18n/types";
 import type { Profile } from "@/lib/supabase/types";
 
 export const rolePath: Record<MarketplaceRole, string> = { client: "/dashboard/client", expert: "/dashboard/expert", admin: "/admin" };
-export async function getCurrentUser() { try { const supabase = await createClient(); const { data: { user } } = await supabase.auth.getUser(); return user; } catch { return null; } }
+export async function getCurrentUser() { try { const supabase = await createClient(); const { data: { user }, error } = await supabase.auth.getUser(); return error ? null : user; } catch { return null; } }
 function sessionProfile(user: User): Profile {
   const now = new Date().toISOString();
   const role: MarketplaceRole = user.user_metadata.role === "expert" ? "expert" : "client";
@@ -20,10 +20,11 @@ function sessionProfile(user: User): Profile {
   };
 }
 export async function ensureProfileForUser(user: User): Promise<Profile | null> {
+  try {
   const admin = createAdminClient();
   if (!admin) return null;
   const role: MarketplaceRole = user.user_metadata.role === "expert" ? "expert" : "client";
-  const { data } = await admin
+  const { data, error } = await admin
     .from("profiles")
     .upsert({
       id: user.id,
@@ -35,9 +36,20 @@ export async function ensureProfileForUser(user: User): Promise<Profile | null> 
     }, { onConflict: "id", ignoreDuplicates: true })
     .select("*")
     .maybeSingle();
-  return data;
+  return error ? null : data;
+  } catch { return null; }
 }
-export async function getCurrentProfile(): Promise<Profile | null> { const user = await getCurrentUser(); if (!user) return null; const supabase = await createClient(); const { data } = await supabase.from("profiles").select("*").eq("id", user.id).maybeSingle(); return data ?? await ensureProfileForUser(user) ?? sessionProfile(user); }
+export async function getCurrentProfile(): Promise<Profile | null> {
+  const user = await getCurrentUser();
+  if (!user) return null;
+  try {
+    const supabase = await createClient();
+    const { data, error } = await supabase.from("profiles").select("*").eq("id", user.id).maybeSingle();
+    // A failed status lookup is not evidence of a new/missing active profile.
+    if (error) return null;
+    return data ?? await ensureProfileForUser(user) ?? sessionProfile(user);
+  } catch { return null; }
+}
 export async function requireUser() { const user = await getCurrentUser(); if (!user) redirect("/login"); return user; }
 export async function requireCompletedProfile() {
   const profile = await getCurrentProfile();
@@ -48,6 +60,7 @@ export async function requireCompletedProfile() {
 
 /** Load private role details from the same tables written by the onboarding RPC. */
 export async function getAccountDetails(profile: Profile): Promise<Profile> {
+ try {
  const supabase = await createClient();
  const [client, expert, company] = await Promise.all([
   supabase.from("client_profiles").select("assistance_type").eq("profile_id", profile.id).maybeSingle(),
@@ -55,4 +68,5 @@ export async function getAccountDetails(profile: Profile): Promise<Profile> {
   supabase.from("company_profiles").select("company_name,description").eq("profile_id", profile.id).maybeSingle(),
  ]);
  return { ...profile, ...client.data, ...expert.data, ...(company.data ? { company_name: company.data.company_name, company_description: company.data.description } : {}) };
+ } catch { return profile; }
 }

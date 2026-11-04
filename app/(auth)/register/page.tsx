@@ -11,7 +11,8 @@ export default async function RegisterPage() {
   const user = await getCurrentUser();
   if (user) {
     const profile = await getCurrentProfile();
-    if (profile?.account_status !== "blocked") redirect(profile ? rolePath[profile.role] : "/dashboard");
+    if (!profile) redirect("/login?error=account-unavailable");
+    if (profile.account_status !== "blocked") redirect(rolePath[profile.role]);
   }
 
   return <PlatformShell contentClassName="flex flex-1 items-center px-4 py-12"><AuthForm dictionary={await getRequestDictionary()} action={signUp} mode="register" /></PlatformShell>;

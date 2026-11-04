@@ -1,0 +1,4 @@
+.visual { position:relative; }
+.badge { position:absolute; top:8px; left:8px; pointer-events:none; }
+.badge :global([data-category-identifier]) { width:36px; height:36px; }
+.badge :global([data-category-identifier]) svg { width:28px; height:28px; }

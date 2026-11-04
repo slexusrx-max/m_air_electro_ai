@@ -15,7 +15,8 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function CheckEmailPage() {
   if (await getCurrentUser()) {
     const profile = await getCurrentProfile();
-    if (profile?.account_status !== "blocked") redirect(profile ? rolePath[profile.role] : "/dashboard");
+    if (!profile) redirect("/login?error=account-unavailable");
+    if (profile.account_status !== "blocked") redirect(rolePath[profile.role]);
   }
   const locale = await getRequestLocale() === "ro" ? "ro" : "en";
   const dictionary = await getRequestDictionary();

@@ -25,6 +25,7 @@ export async function signIn(_: ActionState, formData: FormData): Promise<Action
   const supabase = await client(); if (!supabase) return error("unavailable"); const { error: authError } = await supabase.auth.signInWithPassword({ email, password });
   if (authError) return error(authErrorKey(authError.code));
   const profile = await getCurrentProfile();
+  if (!profile) return error("unavailable");
   if (profile?.account_status === "blocked") { await supabase.auth.signOut(); return error("blocked"); }
   redirect(profile ? rolePath[profile.role] : "/dashboard");
 }
@@ -37,6 +38,7 @@ export async function signUp(_: ActionState, formData: FormData): Promise<Action
   if (authError) return error(authErrorKey(authError.code));
   if (data.session) {
     const profile = await getCurrentProfile();
+    if (!profile) return error("unavailable");
     if (profile?.account_status === "blocked") { await supabase.auth.signOut(); return error("blocked"); }
     redirect(profile ? rolePath[profile.role] : "/dashboard");
   }

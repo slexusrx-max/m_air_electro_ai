@@ -1,7 +1,7 @@
 import { EditorialRecord } from "@/components/editorial-record";
 import { AnalyticsEvent } from "@/components/analytics-event";
 import Link from "@/components/localized-link";
-import { specificationLabel, specificationValue } from "@/lib/marketplace/specifications";
+import { comparisonSpecifications } from "@/lib/marketplace/comparison-specifications";
 import { catalog } from "@/lib/affiliate/catalog";
 import { comparableSelection, comparisonGroup } from "@/lib/marketplace/comparison";
 import { ComparisonForm } from "./comparison-form";
@@ -16,9 +16,7 @@ export function Comparison({ ids, ro, category }: { ids: string; ro: boolean; ca
     { title: ro ? "Stații portabile: PECRON și BLUETTI" : "Portable stations: PECRON and BLUETTI", items: stationCandidates(catalog, "EU", { batteryWh: 1, loadWh: 1, inverterW: 1, surgeW: 1 }) },
     { title: ro ? "Baterii Renogy de clasă 12 V" : "Renogy 12 V-class batteries", items: batteryCandidates(catalog, 1, 12) },
   ];
-  const fields = [
-    ...new Set(selected.flatMap((p) => Object.keys(p.technicalSpecs))),
-  ];
+  const specificationRows = comparisonSpecifications(selected, ro);
   return (
     <>
       {invalid && <p className="safety-note" role="status">{ro ? "Selecția combină categorii sau roluri diferite, ori ghiduri de clasă. Compară modele cu același rol: stații AC, surse DC sau baterii de extensie separat." : "This selection mixes categories, equipment roles or class guides. Compare models with the same role: AC stations, DC supplies and expansion batteries separately."}</p>}
@@ -74,6 +72,10 @@ export function Comparison({ ids, ro, category }: { ids: string; ro: boolean; ca
                 </tr>
               </thead>
               <tbody>
+                {specificationRows.map(row => <tr key={row.id} data-comparison-spec={row.id}>
+                  <th scope="row">{row.label}</th>
+                  {selected.map((product, index) => <td key={product.id}>{row.values[index] ?? (ro ? "Nedocumentat" : "Not documented")}</td>)}
+                </tr>)}
                 <tr>
                   <th scope="row">{ro ? "Utilizare" : "Intended use"}</th>
                   {selected.map((p) => (
@@ -88,11 +90,6 @@ export function Comparison({ ids, ro, category }: { ids: string; ro: boolean; ca
                     </td>
                   ))}
                 </tr>
-                {!waterOnly && [
-                  [ro ? "Energie nominală (Wh)" : "Nominal energy (Wh)", "capacityWh"],
-                  [ro ? "Putere (W; rolul diferă după categorie)" : "Power (W; role depends on category)", "power"],
-                  [ro ? "Clasa de tensiune (V)" : "Voltage class (V)", "voltage"],
-                ].map(([label, field]) => <tr key={field}><th scope="row">{label}</th>{selected.map(p => <td key={p.id}>{p.facets[field] ?? (ro ? "Nedocumentat / nu se aplică" : "Not documented / not applicable")}</td>)}</tr>)}
                 <tr>
                   <th scope="row">{ro ? "Preț curent / furnizor" : "Current price / supplier"}</th>
                   {selected.map(p => {
@@ -111,17 +108,6 @@ export function Comparison({ ids, ro, category }: { ids: string; ro: boolean; ca
                     </td>
                   ))}
                 </tr>
-                {fields.map((field) => (
-                  <tr key={field}>
-                    <th scope="row">{specificationLabel(field, ro)}</th>
-                    {selected.map((p) => (
-                      <td key={p.id}>
-                        {(p.technicalSpecs[field] ? specificationValue(p.technicalSpecs[field], ro) : undefined) ??
-                          (ro ? "Nedocumentat" : "Not documented")}
-                      </td>
-                    ))}
-                  </tr>
-                ))}
                 <tr>
                   <th scope="row">{ro ? "Verificare sursă (asistată AI)" : "Source check (AI-assisted)"}</th>
                   {selected.map((p) => (

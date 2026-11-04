@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { load } from "./helpers.mjs";
 const form = (values) => { const data = new FormData(); for (const [k,v] of Object.entries(values)) data.set(k,v); return data; };
-function setup({locale="ro",role="client",blocked=false,configured=true,session=null,authError=null}={}) {
+function setup({locale="ro",role="client",blocked=false,configured=true,session=null,authError=null,profileAvailable=true}={}) {
  const calls=[];
  const auth = new Proxy({}, { get:(_,name)=>async (input)=>{calls.push([name,input]);return {data:{user:{id:"test"},session},error:authError};} });
  const actions=load("app/(auth)/actions.ts",{
@@ -14,7 +14,7 @@ function setup({locale="ro",role="client",blocked=false,configured=true,session=
   "@/lib/site":{absoluteUrl:path=>`https://example.invalid${path}`},
   "@/lib/i18n/types":{roles:["client","expert"]},
   "@/lib/supabase/server":{createActionClient:async()=>{if(!configured)throw Error("missing");return {auth,rpc:async(name,input)=>{calls.push([name,input]);return {error:null};}};}},
-  "@/lib/supabase/auth":{getCurrentProfile:async()=>({role,account_status:blocked?"blocked":"active"}),rolePath:{client:"/dashboard/client",expert:"/dashboard/expert"}},
+  "@/lib/supabase/auth":{getCurrentProfile:async()=>profileAvailable?({role,account_status:blocked?"blocked":"active"}):null,rolePath:{client:"/dashboard/client",expert:"/dashboard/expert"}},
  });
  return {actions,calls};
 }
@@ -52,6 +52,18 @@ test("login routes clients and experts and signs blocked accounts out",async()=>
  const {actions,calls}=setup({blocked:true});
  assert.match((await actions.signIn({},form({email:"a@b.test",password:"longpassword"}))).error,/blocat/);
  assert.equal(calls.at(-1)[0],"signOut");
+});
+
+test("successful credentials with unavailable profile status do not claim dashboard access",async()=>{
+ for(const locale of ["ro","en"]) {
+  const {actions}=setup({locale,profileAvailable:false,session:{access_token:"fixture"}});
+  const data=form({email:"test@example.invalid",password:"secret123",confirmation:"secret123",role:"client"});
+  for(const name of ["signIn","signUp"]) {
+   const result=await actions[name]({},data);
+   assert.match(result.error,locale==="ro"?/momentan/:/temporarily unavailable/);
+   assert.equal(result.message,undefined);
+  }
+ }
 });
 test("all authentication actions report missing configuration in RO and EN",async()=>{
  for(const locale of ["ro","en"]) {
