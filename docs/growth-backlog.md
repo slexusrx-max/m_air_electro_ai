@@ -1,10 +1,10 @@
 # Growth backlog
 
-Updated 3 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
+Updated 4 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
 
 | Priority | Hypothesis / task | Evidence and next verification | State |
 |---|---|---|---|
-| P0 | Waterdrop Romania requires separate EU programme | Partner clarification 28 October: DE programme/store Germany only. Shared DE CTAs and brand page now explicitly label scope; keep issued DE mappings unchanged. Obtain actual EU approval and exact links before activating Romanian tracking. No repeated enquiry | DE scope correction published PR #39; EU activation outstanding |
+| P0 | Waterdrop Romania requires separate EU programme | Partner clarification 28 October: DE programme/store Germany only. 3 November release now blocks all 16 Waterdrop supplier CTAs on the Romania/EU site; official source links remain ordinary documentation. 4 November RO/EN landings and comparison confirmed zero supplier anchors; keep stored mappings unchanged. Obtain actual EU approval and exact links before activating Romanian tracking. No repeated enquiry | Regional CTA block verified; EU activation outstanding |
 | P0 | Verify Impact-recorded clicks, actions and payout separately | 2 November static production recheck: all 365 feed SKUs, 215 tracked/150 ordinary, unchanged since 29 October. Canonical model counts last checked 28 October, not recounted today. Current Impact sign-in wall; owner handoff requested. Renogy Romania eligibility confirmed by 26 October email; do not reopen it | External access blocker |
 | P0 | Prepare capped Romania paid-search pilot | Owner cap EUR 50 total after checks. Draft in ads-ro-pilot-2026-10-28.md. Renogy/Waterdrop paid-channel questions sent; Google Ads account/billing, network reports and measurement still unresolved. No spend | Prepared, NOT launched |
 | P0 | Activate legitimate first-party measurement | Consent-gated Google tag shipped in PR #40/#42. Plausible absent in last inspected env. Actual service receipt/report remains unverified; preserve consent/DNT/GPC/automation and do not invent a project or buy services | Blocked on service/project |
