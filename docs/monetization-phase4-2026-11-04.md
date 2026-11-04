@@ -41,3 +41,29 @@ No new website users, sessions, CTR, channel performance, sales, approved/revers
 Fresh local application checks passed seven privacy cases (five RO widths plus two existing guard cases) and ten comparison regressions. The known local EN rewrite issue is deferred to real RO/EN production testing, not suppressed by weaker assertions. Two repeated 390/1440 captures verify readable safe-off settings, with no Accept control when unconfigured. The local crawl visited 379 routes with zero failures, orphans or redirects. Production acceptance is recorded below after deployment.
 
 Evidence is ignored under `.task-work/phase4-20261104/`. No synthetic affiliate click, supplier navigation, order, new customer account or contact-form submission was used for QA. No scheduled automation or persistent analytics worker was created.
+
+## Production acceptance
+
+Application commit **`7fc458304b34552bfe004615b66a3d02a26dbda8`** was pushed to main. Vercel Production **`dpl_qHhvq42apEHqBquuwMy4YFVAYq9J`** is READY, and official `/en/privacy` metadata matched the full SHA before testing. The page explicitly reported `data-analytics-provider="none"`; no real Measurement ID was configured. [GitHub Verify run 41884694071](https://github.com/slexusrx-max/m_air_electro_ai/actions/runs/41884694071) completed successfully.
+
+**35 distinct production browser scenarios passed without retries**: ten GA4/privacy/navigation scenarios (RO/EN × 390, 430, 768, 1366, 1440px), two existing automated-telemetry guards, eleven compact-comparison cases, two battery-sizing journeys, six read-only account/anonymous-denial cases and four Waterdrop regional cases. No browser automation exclusion was disabled. Production 390px English and 1440px Romanian consent-panel screenshots were inspected; the safe-off notice and controls are readable. The test fixture's fake GA ID was never used as a Vercel variable or a live collector.
+
+The production crawl visited **379 routes**, with zero failures, orphans or redirects. All **365** first-party Renogy href identities matched the register and the new deployment SHA: **227 tracked / 138 ordinary**, including all twelve previously issued exact links, with zero mapping failures. No external tracking endpoint was followed. Product facts, photos and affiliate mappings changed: **0**. These checks do not prove merchant conversion or Impact attribution.
+
+| Requirement | Final observed status at application acceptance |
+| --- | --- |
+| GA4 account/property | Prepared draft; required agreements awaiting owner confirmation |
+| Web stream / Measurement ID / Vercel value | Not created or configured |
+| Production adapter and privacy UI | Deployed and verified with collection off |
+| Allowed collection / withdrawal logic | Unit and isolated-browser tests pass; actual GA service behavior still needs activation acceptance |
+| Actual GA4 event receipt | Unverified; no legitimate production measurement generated for QA |
+| Search Console connection | Not configured; existing GSC property must be reused after stream creation |
+| Event implementation | Manual page views, model views, comparison, calculators, finder, supplier/affiliate departures implemented |
+| Key events / custom definitions / saved dashboard | Runbook prepared; not configured in a live property |
+| Hosting | Hobby confirmed; commercial plan mismatch unresolved; no upgrade purchased |
+| Required quality checks | Unit, i18n, lint, typecheck, build and scoped production QA passed |
+| Verified traffic / commissions / payouts this phase | Unknown; no fabricated zero or revenue |
+
+Next action is the owner's confirmation of the displayed Romania Analytics and GDPR data-processing agreements. Then finish the stream with Enhanced Measurement disabled, configure the actual public ID only for Production, rebuild, set the requested key events/custom definitions, link the existing Search Console property and verify a genuine consented session in authenticated GA4 reports. Separately resolve the hosting plan with an approved budget or migration decision. Neither elapsed time nor the deployment substitutes for either approval.
+
+The three protected owner files remained hash-identical. The local server was stopped. A documentation-only closeout records this acceptance; final main/domain metadata is checked again after that publication. No new background automation was configured and no continued activity beyond this execution session is claimed.
