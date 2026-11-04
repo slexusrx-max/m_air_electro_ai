@@ -78,6 +78,30 @@ A crawl caught the removed last transformer-calculator link; it was restored rat
 
 The final clean local run passed all **15 new RO browser scenarios**, followed sequentially by a **379-route crawl with zero failures, orphans or redirects**. Source SHA, Vercel readiness, both-language production results and GitHub checks are appended after release. Logs, traces, redacted account/provider observations and private reporting snapshots remain ignored under `.task-work/phase3-20261104/`; they are not product data or committed mailbox content.
 
+## Production acceptance — 4 November
+
+Application commit **`fb083b141f2a7411324195121d6da668bf899889`** was pushed to main. Vercel Production **`dpl_8BGar8eWVMSBcYTkUyWMpiU9XSPM`** was READY, and the official `/en/calculators/generator` deployment metadata matched the full SHA before testing.
+
+**58 distinct Production Chromium scenarios passed**, with no retries or assertion relaxation in the clean Production run:
+
+- 30 new generator/water/marine journeys: RO/EN at 390, 430, 768, 1366 and 1440px. These include actual calculation examples and validation, localized comparison navigation, exact four-model water photos loading/decoding, source labels, vessel-compatibility boundaries and scoped accessibility checks.
+- 11 compact comparison regressions covering zero/one/two/four selections, saved/reloaded state, remove/clear, Escape/focus recovery and mobile navigation.
+- 2 preserved RO/EN battery-sizing examples and exact 100Ah/200Ah comparison paths.
+- 2 automated-browser privacy scenarios: no Google/funnel collection before or after automated consent interaction.
+- 6 read-only public account/anonymous-denial cases, including all five widths; no auth forms submitted.
+- 4 RO/EN Waterdrop regional cases at 390/1440px; Germany-only offers remain blocked for Romania.
+- 3 SEO cases: localized category metadata, reciprocal alternates, canonical/indexability, sitemap/robots and filtered-page noindex.
+
+The actual **379-route Production crawl** passed with zero failures, orphans or redirects. All **365 Renogy href/SKU identities** matched the register with consistent deployment metadata: **227 tracked / 138 ordinary**, all **12 Phase 1 issued links** preserved and zero mapping failures. No tracking endpoint was followed. These checks do not establish merchant checkout, order attribution or revenue.
+
+The real authorized Client session was reloaded **after release**: client dashboard and Edit profile rendered successfully without mutation. A new `/dashboard/expert` request again returned the Client session to its client dashboard. Native private values are omitted from the saved evidence. This strengthens the real-session evidence above while leaving registration, fresh login/logout, inbox/reset and expert-role sessions unverified.
+
+Actual Production screenshots and scoped accessibility results were inspected; new guide/card content remained readable, and tested pages had no horizontal overflow. The four guide product photographs match the existing exact models. This is tested-region evidence, not a site-wide WCAG certification or CWV field-data claim.
+
+GitHub [run 41866291828](https://github.com/slexusrx-max/m_air_electro_ai/actions/runs/41866291828) and its **`verify` check completed with `success`**, including dependency audit, lint, catalog validation, unit tests, build and typecheck. The direct API confirmed the completed successful workflow before closeout. No workflow/protection was bypassed or cancelled to force a result.
+
+Evidence: `production-browser.log` (55 passed), `production-seo.log` (3 passed), `crawl-production.log`, `feed-production-verification.json`, `production-release.json`, redacted client/profile/role post-release records and CI observations under the ignored Phase 3 directory. A documentation closeout changes no application source; final main/domain metadata and checks are verified again when publishing it.
+
 ## Next priorities and execution boundary
 
 1. Establish access to a legitimate authorized collector/site and verify real consented receipt before calculating outbound CTR or choosing an A/B test.
