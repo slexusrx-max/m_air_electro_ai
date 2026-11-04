@@ -25,6 +25,7 @@ import { buildMetadata } from "@/lib/metadata";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { legacyProducts as oldProducts } from "@/lib/marketplace/legacy";
 import { localizedPath } from "@/lib/i18n/routing";
+import { productAnalyticsContext } from "@/lib/marketplace/product-analytics";
 type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props) {
   const slug = (await params).slug;
@@ -53,7 +54,7 @@ export default async function Page({ params }: Props) {
   return (
     <PlatformShell>
       <main className="commerce-page product-storefront">
-        <AnalyticsEvent name="product_view" eventKey={p.id} properties={{ product: p.id, supplier: p.provider, category: p.category, language: ro ? "ro" : "en" }} />
+        <AnalyticsEvent name="product_view" eventKey={p.id} properties={{ product: p.id, ...productAnalyticsContext(p), language: ro ? "ro" : "en" }} />
         {p.kind === "product" && <ProductPageStructuredData product={p} />}
         <Breadcrumbs
           items={[

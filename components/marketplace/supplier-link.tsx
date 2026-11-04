@@ -3,7 +3,7 @@ import { createContext, useContext, type ReactNode } from "react";
 import type { CatalogProduct } from "@/lib/affiliate/types";
 import type { PublicSupplierPrice } from "@/lib/affiliate/pricing";
 
-type PublicLink = { href: string; tracked: boolean };
+type PublicLink = { href: string; tracked: boolean; sku?: string };
 const SupplierLinks = createContext<Record<string, PublicLink>>({});
 export function SupplierLinksProvider({ links, children }: { links: Record<string, PublicLink>; prices: Record<string, PublicSupplierPrice>; children: ReactNode }) {
   return <SupplierLinks.Provider value={links}>{children}</SupplierLinks.Provider>;
@@ -33,6 +33,8 @@ export function SupplierLink({ product, ro, children, className }: {
     rel={link.tracked ? "sponsored noopener noreferrer" : "noopener noreferrer"}
     data-supplier-product={product.id} data-supplier={product.provider}
     data-supplier-category={product.category} data-supplier-language={ro ? "ro" : "en"}
+    data-supplier-kind={product.kind} data-supplier-brand={product.kind === "product" ? product.brand : undefined}
+    data-supplier-sku={links[product.id]?.sku}
     data-tracking-status={link.tracked ? "active" : "ordinary"}
     data-disclosure-status={link.tracked ? "labelled" : "not-required"}>
     {product.availability === "unavailable" ? (ro ? "Model retras - documentatia producatorului" : "Discontinued model - manufacturer documentation") : children ?? (ro ? "Verifică prețul la furnizor" : "Check price at supplier")} ↗

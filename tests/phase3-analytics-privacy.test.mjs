@@ -3,7 +3,7 @@ import test from "node:test";
 import { load } from "./helpers.mjs";
 
 function harness({ failWrite = false, failRemove = false } = {}) {
-  let saved = JSON.stringify({ choice: "accepted", at: Date.now() - 1000 });
+  let saved = JSON.stringify({ choice: "accepted", at: Date.now() - 1000, provider: "plausible" });
   let writeFails = failWrite;
   const sent = [];
   const storage = {
@@ -77,7 +77,7 @@ test("consent changes do not duplicate pageviews but actual route returns do", (
       useState: value => [stateIndex++ === 1 ? choice : value, () => {}],
       useEffect: effect => effects.push(effect), useRef: () => ref,
     },
-    "@/lib/analytics": { trackEvent: name => { sent.push(name); return true; } },
+    "@/lib/analytics": { analyticsProvider: () => "plausible", trackEvent: name => { sent.push(name); return true; } },
   }, { document: { addEventListener() {}, removeEventListener() {} } });
   function render(nextChoice, nextPath = path) {
     choice = nextChoice; path = nextPath; stateIndex = 0; effects.length = 0;

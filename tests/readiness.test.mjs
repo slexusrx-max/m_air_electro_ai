@@ -126,16 +126,16 @@ test("contact rejects address lists, header injection, malformed JSON and excess
 test("analytics needs current consent, excludes private/query data, bots, local hosts and DNT", () => {
   let saved = null; const calls = [];
   const nav = { doNotTrack: "0", webdriver: false };
-  const location = { hostname: "energy.example.org", origin: env.NEXT_PUBLIC_SITE_URL, pathname: "/compare", search: "?email=private" };
+  const location = { hostname: "mairelectroai.com", origin: "https://mairelectroai.com", pathname: "/compare", search: "?email=private" };
   const analytics = load("lib/analytics.ts", {}, { process: { env: { NEXT_PUBLIC_PLAUSIBLE_DOMAIN: location.hostname } }, window: { location }, navigator: nav, localStorage: { getItem: () => saved }, fetch: (...args) => { calls.push(args); return Promise.resolve(); } });
   analytics.trackEvent("comparison_view"); assert.equal(calls.length, 0);
-  saved = JSON.stringify({ choice: "accepted", at: Date.now() });
+  saved = JSON.stringify({ choice: "accepted", at: Date.now(), provider: "plausible" });
   analytics.trackEvent("comparison_view"); assert.equal(calls.length, 1);
-  assert.equal(JSON.parse(calls[0][1].body).url, env.NEXT_PUBLIC_SITE_URL + "/compare");
+  assert.equal(JSON.parse(calls[0][1].body).url, location.origin + "/compare");
   nav.webdriver = true; analytics.trackEvent("pageview"); assert.equal(calls.length, 1);
   nav.webdriver = false; nav.doNotTrack = "1"; analytics.trackEvent("pageview"); assert.equal(calls.length, 1);
   nav.doNotTrack = "0"; location.pathname = "/dashboard/client"; analytics.trackEvent("pageview"); assert.equal(calls.length, 1);
-  location.pathname = "/"; saved = JSON.stringify({ choice: "accepted", at: 0 }); analytics.trackEvent("pageview"); assert.equal(calls.length, 1);
+  location.pathname = "/"; saved = JSON.stringify({ choice: "accepted", at: 0, provider: "plausible" }); analytics.trackEvent("pageview"); assert.equal(calls.length, 1);
 });
 
 test('contact separates SMTP rejection from ambiguous post-DATA failure and correlates without PII', async () => {

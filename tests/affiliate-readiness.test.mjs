@@ -26,7 +26,7 @@ test("configuration preserves ordinary links until approval, tracking and disclo
 function analyticsHarness({ choice = "accepted", dnt = "0", gpc = false, webdriver = false, domain = "mairelectroai.com", path = "/compare", at = Date.now() } = {}) {
   const sent = [];
   const api = load("lib/analytics.ts", {}, {
-    localStorage: { getItem: () => JSON.stringify({ choice, at }) },
+    localStorage: { getItem: () => JSON.stringify({ choice, at, provider: "plausible" }) },
     window: { location: { hostname: "mairelectroai.com", origin: "https://mairelectroai.com", pathname: path } },
     navigator: { doNotTrack: dnt, globalPrivacyControl: gpc, webdriver },
     process: { env: { NEXT_PUBLIC_PLAUSIBLE_DOMAIN: domain } },

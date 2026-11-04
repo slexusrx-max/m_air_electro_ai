@@ -23,6 +23,7 @@ export function RenogyFeedLink({ entry, ro, className, children }: {
     rel={link.tracked ? "sponsored noopener noreferrer" : "noopener noreferrer"}
     data-supplier-product={`renogy-feed-${entry.sku}`} data-supplier="renogy"
     data-supplier-category="supplier-entry" data-supplier-language={ro ? "ro" : "en"}
+    data-supplier-brand="Renogy" data-supplier-sku={entry.sku}
     data-tracking-status={link.tracked ? "active" : "ordinary"}
     data-disclosure-status={link.tracked ? "labelled" : "not-required"}>
     {children} ↗{link.tracked ? (ro ? " (link afiliat)" : " (affiliate link)") : ""}

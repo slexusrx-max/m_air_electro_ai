@@ -8,7 +8,7 @@ function harness(overrides = {}) {
   const sent = [];
   const options = { choice: "accepted", dnt: "0", gpc: false, webdriver: false, path: "/en/marketplace/products/renogy-core-mini-100ah", ...overrides };
   const api = load("lib/analytics.ts", {}, {
-    localStorage: { getItem: () => JSON.stringify({ choice: options.choice, at: Date.now() - 1000 }) },
+    localStorage: { getItem: () => JSON.stringify({ choice: options.choice, at: Date.now() - 1000, provider: "plausible" }) },
     window: { location: { hostname: "mairelectroai.com", origin: "https://mairelectroai.com", pathname: options.path } },
     navigator: { doNotTrack: options.dnt, globalPrivacyControl: options.gpc, webdriver: options.webdriver },
     process: { env: { NEXT_PUBLIC_PLAUSIBLE_DOMAIN: "mairelectroai.com" } },
@@ -81,7 +81,7 @@ test("supplier listener marks only active tracking as affiliate and ignores righ
     react: { useEffect: effect => effects.push(effect), useState: value => [value, () => {}], useRef: value => ({ current: value }) },
     "next/navigation": { usePathname: () => "/en/marketplace" },
     "@/components/localized-link": () => null,
-    "@/lib/analytics": { trackEvent: (...args) => sent.push(args) },
+    "@/lib/analytics": { analyticsProvider: () => "plausible", trackEvent: (...args) => sent.push(args) },
   }, {
     Element: Target,
     window: { location: { origin: "https://mairelectroai.com" } },

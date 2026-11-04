@@ -1,11 +1,16 @@
 "use client";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, type AnalyticsProperties } from "@/lib/analytics";
 import Link from "@/components/localized-link";
 import { createContext, useContext, useSyncExternalStore, useState, useId, useRef, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { stripLocale } from "@/lib/i18n/routing";
-type ComparisonProduct = { name: string; category: string };
+type ComparisonProduct = { name: string; category: string; catalogCategory?: string; supplier?: string; brand?: string; sku?: string };
 const Products = createContext<Record<string, ComparisonProduct>>({});
+function comparisonProperties(id: string, products: Record<string, ComparisonProduct>, ro: boolean): AnalyticsProperties {
+  const product = products[id];
+  return { product: id, language: ro ? "ro" : "en", kind: "product", category: product?.catalogCategory,
+    supplier: product?.supplier, brand: product?.brand, sku: product?.sku };
+}
 export function ComparisonProvider({ products, children }: { products: Record<string, ComparisonProduct>; children: ReactNode }) {
   return <Products.Provider value={products}>{children}</Products.Provider>;
 }
@@ -59,7 +64,7 @@ export function ComparisonTray({ ro }: { ro: boolean }) {
     const next = ids.filter(value => value !== id);
     try {
       save(next);
-      trackEvent("product_compare_remove", { product: id, language: ro ? "ro" : "en" });
+      trackEvent("product_compare_remove", comparisonProperties(id, products, ro));
       setExpandedSelection(next.length ? `${pathname}:${next.join(",")}` : null);
       setError("");
       if (next.length) toggleRef.current?.focus();
@@ -70,7 +75,7 @@ export function ComparisonTray({ ro }: { ro: boolean }) {
   function clear() {
     try {
       save([]);
-      ids.forEach(id => trackEvent("product_compare_remove", { product: id, language: ro ? "ro" : "en" }));
+      ids.forEach(id => trackEvent("product_compare_remove", comparisonProperties(id, products, ro)));
       restoreCardFocus(ids[0]);
       setExpandedSelection(null);
       setError("");
@@ -131,7 +136,7 @@ export function CompareControl({
     }
     try {
       save(next);
-      trackEvent(active ? "product_compare_remove" : "product_compare_add", { product: id, language: ro ? "ro" : "en" });
+      trackEvent(active ? "product_compare_remove" : "product_compare_add", comparisonProperties(id, products, ro));
       setMessage("");
     } catch {
       setMessage(
@@ -154,11 +159,11 @@ export function CompareControl({
 }
 
 export function RemoveComparison({ ids, ro }: { ids: string[]; ro: boolean }) {
-  const saved = useSelection().ids;
+  const { ids: saved, products } = useSelection();
   return <Link className="remove-compare" href={`/compare?ids=${encodeURIComponent(ids.join(","))}`} onClick={() => {
     try {
       save(ids);
-      saved.filter(id => !ids.includes(id)).forEach(id => trackEvent("product_compare_remove", { product: id, language: ro ? "ro" : "en" }));
+      saved.filter(id => !ids.includes(id)).forEach(id => trackEvent("product_compare_remove", comparisonProperties(id, products, ro)));
     } catch { /* URL-based comparison remains usable without browser storage. */ }
   }}>{ro ? "Elimină" : "Remove"}</Link>;
 }

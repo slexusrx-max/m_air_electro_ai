@@ -10,6 +10,7 @@ import { CommercialNotice } from "@/components/marketplace/commercial-notice";
 import { ComparisonProvider, ComparisonTray } from "@/components/marketplace/compare-control";
 import { comparisonGroup } from "@/lib/marketplace/comparison";
 import { PointerTiltController } from "@/components/pointer-tilt-controller";
+import { productAnalyticsContext } from "@/lib/marketplace/product-analytics";
 type PlatformShellProps = {
   children: React.ReactNode;
   contentClassName?: string;
@@ -27,7 +28,7 @@ export async function PlatformShell({
   ]);
   const supplierLinks = Object.fromEntries(catalog.filter(p => p.productUrl).map(p => {
     const { href, tracked } = supplierLink(p);
-    return [p.id, { href, tracked }];
+    return [p.id, { href, tracked, sku: productAnalyticsContext(p).sku }];
   }));
   return (
     <div className={mobileBrandIntro ? "platform-root home-brand-first" : "platform-root"}>
@@ -51,7 +52,14 @@ export async function PlatformShell({
       <CommercialNotice ro={locale === "ro"} />
       <div id="main-content" tabIndex={-1} className={contentClassName}>
         <SupplierLinksProvider links={supplierLinks} prices={{}}>
-          <ComparisonProvider products={Object.fromEntries(catalog.filter(p => p.kind === "product").map(p => [p.id, { name: locale === "ro" ? p.title.ro : p.name, category: comparisonGroup(p) }]))}>
+          <ComparisonProvider products={Object.fromEntries(catalog.filter(p => p.kind === "product").map(p => [p.id, {
+            name: locale === "ro" ? p.title.ro : p.name,
+            category: comparisonGroup(p),
+            catalogCategory: p.category,
+            supplier: p.provider,
+            brand: p.brand,
+            sku: productAnalyticsContext(p).sku,
+          }]))}>
           {children}
           <ComparisonTray ro={locale === "ro"} />
           </ComparisonProvider>
