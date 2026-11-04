@@ -24,6 +24,17 @@ Renogy programme 14864 and publisher 7767803 remain separate from product editor
 
 Waterdrop DE programme 19363 remains geographically restricted. The existing Romanian blocked-affiliate notices and ordinary official source links are preserved. No approved EU/Romania tracking activation was established.
 
+Additional correspondence checked before any new application:
+
+| Partner | Evidence available on 4 November | Consequence |
+| --- | --- | --- |
+| ECO-WORTHY | Supplier reply dated 2 November explicitly says it currently cannot deliver to Romania. The owner's 31 October enquiry already records a pending Impact invitation/application and asks about eligible destinations. | Do not activate a Romanian delivery/commission proposition or duplicate the application. Other-country eligibility and approval still need their own evidence. |
+| BLUETTI | Awin public programme 95479 is readable; existing-account entry currently requires sign-in. The 30 October owner follow-up describes the previously observed pending application. | Current authenticated acceptance is unverified. A public offer and the earlier Romanian-publisher invitation do not establish approval or image rights. |
+| PECRON | Existing 30 October follow-up already requests exact status, Romania eligibility and permitted images/feed. | Await a substantiated response; no duplicate registration or outreach. |
+| Zendure | A 30 October reply requests traffic-source information; the owner has already replied in the existing chain. | No new approval established; do not fabricate traffic statistics. |
+| Jackery / Anker SOLIX / FOSSiBOT / AquaTru / ZeroWater | Existing follow-ups are visible in the recent business-mail search; no fresh approval was established by this review. | Preserve ordinary/unactivated status. Mail search is not proof that every separate network account has been audited. |
+| EcoFlow | No approval was established by the focused correspondence review. | Status remains unverified; no activation or duplicate application. |
+
 ## Real reporting observations
 
 ### Impact
@@ -70,7 +81,30 @@ The Product rich-result report still showed two old errors for Core Mini 100Ah/2
 
 Pre-release checks passed: **194 unit tests**, i18n validation (419 keys), TypeScript, catalog validation (77 records / 64 real models / 13 classes), lint (zero errors, one existing raw-image optimization warning), production build and a **379-route local crawl with no failures/orphans**. Eleven local RO browser scenarios cover new cards/specification comparisons at 390, 430, 768, 1366 and 1440px and the battery sizing example; a separate image-decoding run verifies all eleven category photos before capture. A read-only cross-agent review found no material product-fact or comparison regression.
 
-The local server's existing English rewrite discrepancy is not hidden by weakening language assertions. RO was checked locally and both languages must pass on the actual production domain. Production acceptance, the deployed source SHA and GitHub checks are appended after release.
+The local server's existing English rewrite discrepancy is not hidden by weakening language assertions. RO was checked locally; both languages passed on the actual production domain as recorded below.
+
+## Production acceptance
+
+Application commit: **`64f041bc4bfaac36f3d0301ff3b5c30b39943add`**. GitHub main was pushed successfully and [Verify run 41855433562](https://github.com/slexusrx-max/m_air_electro_ai/actions/runs/41855433562) passed, including dependency audit, lint, catalog validation, unit tests, webpack production build and typecheck.
+
+Vercel production **`dpl_849UN54V1kMHTsMY4nQJnCzeLtDG`** was READY; `https://mairelectroai.com/en/calculators/battery` exposed that exact application commit through its deployment metadata before post-release QA. This is actual official-domain evidence, not localhost-only success.
+
+**49 distinct production Chromium scenarios passed:**
+
+- 11 recognizable-card/category-icon cases, including the Waterdrop Romania restriction.
+- 10 category-specific comparison cases across RO/EN and all five requested widths.
+- 11 compact comparison regressions: zero/one/two/four products, saved state/reload, removal/clear, Escape/focus and mobile navigation.
+- 2 calculator/search-landing examples, RO/EN, reproducing the real calculation and localized product comparison.
+- 6 read-only account checks: forms at all five widths, anonymous dashboard/API denial and safe invalid callback recovery. No form submission, auth email or account creation occurred.
+- 2 automation/privacy checks: no Google tag or funnel telemetry before/after consent in automated public interactions.
+- 4 complete model-photo/fallback sweeps, RO/EN at 390/1440px, covering all real models and correct image/ordinary/blocked supplier behavior.
+- 3 SEO cases: localized category metadata/indexability/reciprocal alternates, sitemap/robots and filtered-page noindex.
+
+The **379-route production crawl** found no broken internal routes, orphans or redirects. First-party HTML verification matched **all 365 Renogy identities/hrefs**, **227 tracked / 138 ordinary**, and all **12 exact Phase 1 issued links**, with no mapping failures and consistent application deployment metadata. Affiliate endpoints were not followed. Numeric commercial coverage is not evidence of a sale or end-to-end attribution.
+
+Inspected actual production mobile/desktop screenshots: recognizable exact-model cards, readable supplier disclosure and specifications, all eleven loaded category photographs and the comparison table. No horizontal page overflow or scoped accessibility failure was observed in the passing scenarios. This is tested-region evidence, not a site-wide accessibility certification or a field-performance result.
+
+Local evidence is ignored under `.task-work/phase2-20261104/`: `unit.log`, `build.log`, `lint-final.log`, `browser-local.log`, `production-browser.log` (46 passed), `production-seo.log` (3 passed), `crawl-production.log`, `feed-production-verification.json`, `production-release.json`, GSC observations and business-thread evidence. Private inbox snapshots/environment inventories are not committed. The documentation closeout changes no application source; final main/domain status is checked again when publishing it.
 
 ## Remaining blockers and next priorities
 
@@ -81,4 +115,4 @@ The local server's existing English rewrite discrepancy is not hidden by weakeni
 5. Complete owner-account login/confirmation/reset and signed-in dashboard acceptance in a real authorized session. Current mocked and anonymous tests do not prove inbox delivery or a real signed-in session.
 6. Reconcile the existing private equipment-project work before adding saved calculations. The smallest secure extension needs a bounded versioned result schema and owner/RLS tests; existing projects accept catalog IDs and quantities, not arbitrary calculator payloads. No parallel saved-data system was introduced.
 
-No paid campaign, legal agreement, account creation, supplier message or purchase was performed. This is an active-session report; no persistent worker or recurring automation has been configured.
+No paid campaign, legal agreement, account creation, supplier message or purchase was performed. No persistent worker or recurring automation was created by this phase; the state of any previously scheduled tasks was not independently audited here. Work is not represented as continuing after this execution session.

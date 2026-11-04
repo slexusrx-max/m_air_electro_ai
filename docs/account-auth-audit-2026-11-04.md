@@ -24,7 +24,7 @@ Twenty focused tests passed across `auth.test.mjs`, `phase2-account-regression.t
 
 Fresh read-only production checks passed all six `phase2-account-readonly.spec.ts` scenarios: public forms at 390, 430, 768, 1366 and 1440px, plus anonymous dashboard/project denial and invalid-callback recovery. No runtime errors or horizontal overflow were observed in the form checks, and no form was submitted. The API request in the initial denial run could not validate the host certificate through Node's default trust store; its focused rerun passed with `NODE_USE_SYSTEM_CA=1`, retaining TLS validation. Logs/screenshots are ignored under `.task-work/phase2-account/`.
 
-These checks validate the pre-release production baseline, not deployment of the new error-handling code. The lead agent must record full package checks, deployment and post-release acceptance. Mocked tests do not prove inbox delivery, real signed-in rendering, production database grants or successful confirmation/reset across devices.
+These initial checks validate the pre-release production baseline. The [Phase 2 release report](monetization-phase2-2026-11-04.md#production-acceptance) records deployment of the new error-handling code and the subsequent passing six-scenario production run, alongside full-package checks. Mocked tests do not prove inbox delivery, real signed-in rendering, production database grants or successful confirmation/reset across devices.
 
 ## Analytics receipt prerequisites (read-only code audit)
 
