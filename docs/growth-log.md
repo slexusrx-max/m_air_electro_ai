@@ -192,3 +192,18 @@ Action 2: attempt to close phone validation after the dependency environment was
 Action 3: update saved verification state and retain weekly priorities. Do not modify a healthy site because financial/search measurements remain unavailable. Markifact credits unchanged and no declined Impact sign-in retried. No new analytics, Search Console, Impact clicks, attributed actions, confirmed commissions or payout evidence; all remain unverified rather than zero. No application/catalogue/photo/design/RO/EN/pricing/tracking gate changes. No new automation, paid service, campaign or subscription.
 
 Validation: documentation-only state update with expected-SHA lease. No new unit/build/browser result asserted, no application preview required because no application patch. Vercel release source and public HTTP health are checked after publication. Rollback is a focused revert of these two documentation updates after checking later changes; no application rollback/migration required. No new user-facing result or new blocker, so no repeated notification.
+
+
+## 4 November 2026 — reconcile current affiliate surface
+
+Preflight: main 335693d8472f87c63cf711c7f13195aee60448f5 matches READY production dpl_GKELW6rYd5zJxd8otxNJ5MU1yL2q. No open PR or in-progress workflow. Read all required project/state docs and the 3 November image-rights gate. Preserve newer Waterdrop region blocking, Next.js/Nodemailer updates, 12-model homepage preview and withheld-photo provenance. Latest three main Verify runs completed successfully. Gmail failure notices refer to older PR #50/preview attempts, not current production. No new substantive Renogy/Waterdrop/PECRON/BLUETTI reply after 3 November; no duplicate mail or application.
+
+Problem/hypothesis: saved audit still implied 15 Waterdrop affiliate CTAs remained active although the separate owner-directed release disabled public DE offers. Reconcile source evidence and current first-party HTML so a later run cannot reactivate ineligible buttons or misstate monetisation. No public application change needed.
+
+Action 1: crawl all 77 EN sitemap detail routes, HTTP 200 throughout. Deduplicate canonical IDs rather than counting class-page alternative cards: 64 unique models, 18 active Renogy/1 ordinary Renogy, 23 ordinary PECRON, 6 ordinary BLUETTI, 16 Waterdrop disabled spans without href. Official editorial source links are not supplier CTAs. Merchant destination reachability not tested. No broken internal detail route found; external destinations not assessed.
+
+Action 2: verify Waterdrop RO/EN landing and RO G3P600/G3P800 comparison: 200, respectively 32/32/2 repeated non-clickable region notices, zero Waterdrop supplier anchors. Read only native HTML. All eight Renogy feed pages 200, 365 unique rows, 215 active/150 ordinary, unchanged. Level A source/HTML evidence only; no analytics collector, network click/action, commission or payout result. No synthetic clicks/orders, declined login, Markifact retry, browser download or spend.
+
+Action 3: add dated 64-model CSV, current audit matrix and supersession note; update Waterdrop backlog state. Existing image source files and rights gate untouched. No technical ratings, compatibility, delivery, discounts, programme approval or revenue claim. No new automation. Rollback: revert this documentation/register package only after reviewing later changes; no app/config migration or rollback required.
+
+Validation: 77 detail routes, eight feed pages and three Waterdrop surfaces checked on baseline production, with counts cross-checked against unique IDs and non-anchor blocked notices. Documentation-only changes do not require new application unit/mobile checks; prior CI is dated evidence, not a fresh mobile pass. Preview/publication evidence follows.

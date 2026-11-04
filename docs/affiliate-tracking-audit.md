@@ -1,5 +1,20 @@
 # Affiliate tracking audit — 27 October 2026
 
+## Current state — checked 4 November 2026
+
+This section supersedes historical rendered-link counts below. Main 335693d8472f87c63cf711c7f13195aee60448f5 matches READY production dpl_GKELW6rYd5zJxd8otxNJ5MU1yL2q. All 77 sitemap detail routes returned HTTP 200. They include 64 models and 13 equipment/planning classes. Class-page alternative cards are not counted as additional models. See [dated canonical register](affiliate-canonical-links-2026-11-04.csv).
+
+| Provider | Active affiliate model CTAs | Ordinary model CTAs | Blocked regional offer notices | Network reporting |
+|---|---:|---:|---:|---|
+| Renogy EU | 18 | 1 | 0 | Click/action/confirmed commission/payout unverified |
+| Waterdrop DE | 0 | 0 | 16 | Disabled in this site's supplier CTA; EU programme/links outstanding |
+| PECRON EU | 0 | 23 | 0 | No tracking activation verified |
+| BLUETTI EU | 0 | 6 | 0 | No tracking activation verified |
+
+The 16 Waterdrop records include the archived model. Official editorial source links remain ordinary documentation links; they are outside supplier-CTA totals. RO/EN Waterdrop landings each rendered 32 repeated blocked notices (cards and table), zero Waterdrop supplier anchors. RO G3P600/G3P800 comparison rendered two blocked notices, zero Waterdrop supplier anchors. This reflects the deliberate 3 November regional block, not a new outage or a new programme approval. Historic 15-active-Waterdrop counts and the 28 October preserve-active-CTA instruction below are superseded for public Romanian/EU supplier surfaces. Stored mappings and earlier evidence remain historical; do not reactivate without verified regional programme/link evidence.
+
+Fresh Renogy feed check: all eight pages returned 200, 365 unique SKU rows, 215 active/150 ordinary. These feed rows are not additional canonical models and the two counts must not be added. No external merchant or tracking URL requested. Technical href status does not establish a recorded click, action, confirmed commission or payout. No bank/tax/profile change.
+
 ## Baseline and evidence
 GitHub main and Vercel production match `88ff839453c1987ab688c1edf359a15a39b37b51`, tree `8883a1d78a537bc3ff73cecf7c6135334f4d1600`; deployment READY. Local working tree was clean before this change. Existing catalogue/design/RO/EN retained. No test orders or bulk tracking clicks performed.
 
