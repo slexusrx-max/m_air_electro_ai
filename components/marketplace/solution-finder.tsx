@@ -37,7 +37,7 @@ export function SolutionFinder({
   const resultRef = useRef<HTMLElement>(null);
   const started = useRef(false);
   function start() {
-    if (!started.current) { trackEvent("finder_start"); started.current = true; }
+    if (!started.current) started.current = trackEvent("finder_start");
   }
   const [revision, setRevision] = useState(0);
   const [step, setStep] = useState(["1", "2", "3"].includes(initial.step ?? "") ? Number(initial.step) : 1);
@@ -116,8 +116,8 @@ export function SolutionFinder({
       );
       return;
     }
-    trackEvent("calculator_complete");
-    trackEvent("finder_result");
+    start();
+    trackEvent("finder_complete");
     setReady(true);
     setRevision((n) => n + 1);
     setTimeout(() => {

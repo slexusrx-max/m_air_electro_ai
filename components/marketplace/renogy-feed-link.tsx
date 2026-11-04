@@ -5,6 +5,7 @@ import type { SupplierEntry } from "@/lib/marketplace/supplier-discovery";
 
 /** Prefer an exact issued SKU mapping; otherwise preserve the approved parent or ordinary link. */
 function renogyEntryLink(entry: SupplierEntry) {
+  if (entry.kind === "parent") return renogyLink(entry.url);
   const variantUrl = new URL(entry.url);
   variantUrl.searchParams.set("variant", entry.sku);
   // The strict resolver rejects unreviewed variants; raw feed rows must keep

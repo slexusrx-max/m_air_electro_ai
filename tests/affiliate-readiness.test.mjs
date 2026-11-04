@@ -42,7 +42,7 @@ test("finder and comparison events use the existing consent gates and send no ca
       api.trackEvent(name); assert.equal(sent.length, 0);
     }
     const { api, sent } = analyticsHarness(); api.trackEvent(name);
-    assert.deepEqual(JSON.parse(sent[0][1].body), { name, domain: "mairelectroai.com", url: "https://mairelectroai.com/compare" });
+    assert.deepEqual(JSON.parse(sent[0][1].body), { name, domain: "mairelectroai.com", url: "https://mairelectroai.com/compare", ...(name === "finder_start" ? { props: { language: "ro", source_page: "/compare" } } : {}) });
   }
 });
 test("supplier measurement respects consent, DNT, automation, host and private-route exclusions", () => {

@@ -1,4 +1,3 @@
-import expansion from "../data/waterdrop-reviewed-expansion.json";
 import { expect, type Locator } from "@playwright/test";
 import type { CatalogProduct } from "../lib/affiliate/types";
 import reviewedRenogyLinks from "../data/renogy-reviewed-links.json";
@@ -35,17 +34,19 @@ export async function expectRenogyFeedCta(link: Locator, entry: { sku: string; u
   await expect(link).toHaveAttribute("rel", tracked ? "sponsored noopener noreferrer" : "noopener noreferrer");
 }
 
-// Actual issued Waterdrop URLs recorded in the 2026-10-13 launch evidence.
-const waterdropIssued: Record<string, string> = {
-  ...Object.fromEntries(expansion.map(r=>[r.id,r.issued])),
-  "waterdrop-g3p600": "https://dewaterdropfilter.pxf.io/OYJAjQ",
-  "waterdrop-g3p800": "https://dewaterdropfilter.pxf.io/vDrd7d",
-  "waterdrop-x12": "https://dewaterdropfilter.pxf.io/4aYV19",
-};
-
 export async function expectSupplierCta(link: Locator, product: CatalogProduct, production: boolean) {
-  const candidate = product.provider === "waterdrop-eu" ? waterdropIssued[product.id]
-    : product.provider === "renogy" ? renogyLinks[product.productUrl] : undefined;
+  if (product.provider === "waterdrop-eu") {
+    // Germany-only eligibility is deliberately blocked on the Romania-facing site.
+    // Verify the actual public gate, not historical issued links retained in the data.
+    await expect(link).toHaveAttribute("role", "note");
+    await expect(link).toHaveAttribute("data-market-status", "blocked-romania");
+    await expect(link).toHaveAttribute("data-tracking-status", "disabled");
+    expect(await link.getAttribute("href")).toBeNull();
+    expect(await link.getAttribute("target")).toBeNull();
+    expect(await link.evaluate(element => element.tagName)).not.toBe("A");
+    return;
+  }
+  const candidate = product.provider === "renogy" ? renogyLinks[product.productUrl] : undefined;
   const tracked = production && product.availability !== "unavailable" && Boolean(candidate);
   const href = tracked ? candidate! : product.productUrl;
   expect(href, `Known destination for ${product.id}`).toBeTruthy();

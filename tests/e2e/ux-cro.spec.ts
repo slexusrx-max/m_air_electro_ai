@@ -76,6 +76,7 @@ test('category comparison blocks cross-family selection and keeps the tray usabl
   await page.locator('.equipment-card .compare-control button').first().click();
   await expect(page.locator('.compare-control [role=status]').first()).toContainText('aceeași categorie');
   await expect(page.locator('.comparison-tray li')).toHaveCount(1);
+  await page.locator('.comparison-tray-toggle').click();
   await page.locator('.comparison-tray li button').click();
   await expect(page.locator('.comparison-tray')).toHaveCount(0);
 });

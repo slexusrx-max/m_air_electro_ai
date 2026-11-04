@@ -1,5 +1,6 @@
 import { waterSuppliers } from "./providers/water";
 import reviewedRenogy from "@/data/renogy-reviewed-products.json";
+import issuedSolarLinks from "@/data/renogy-issued-solar-links-2026-11-04.json";
 
 const waterdrop = waterSuppliers.find(supplier => supplier.id === "waterdrop-eu")!;
 
@@ -23,6 +24,10 @@ const reviewedRenogyVariants: Record<string, string> = {
   "/products/dcc50s-12v-50a-dc-dc-on-board-battery-charger-with-mppt-new-version": "46740803715329",
   "/products/12v-20a-dc-to-dc-battery-charger": "46435562684673",
 };
+// Additional exact variant destinations were checked against the ordinary
+// merchant JSON and then entered in Impact's authenticated link generator.
+// Product-level feed IDs are deliberately absent from this URL allowlist.
+const issuedSolarVariantUrls = new Set(issuedSolarLinks.filter(link => link.kind === "variant").map(link => link.source));
 
 /** Canonical, untracked European model URLs, with explicitly reviewed variant selectors. */
 export function validSupplierUrl(href: string, provider?: string): boolean {
@@ -30,8 +35,8 @@ export function validSupplierUrl(href: string, provider?: string): boolean {
     const url = new URL(href);
     if (href !== url.href || url.protocol !== "https:" || url.port || url.username || url.password || url.hash) return false;
     if (url.search && !(url.origin === suppliers.renogy.origin &&
-      Object.hasOwn(reviewedRenogyVariants, url.pathname) &&
-      url.search === `?variant=${reviewedRenogyVariants[url.pathname]}`)) return false;
+      (issuedSolarVariantUrls.has(href) || (Object.hasOwn(reviewedRenogyVariants, url.pathname) &&
+      url.search === `?variant=${reviewedRenogyVariants[url.pathname]}`)))) return false;
     const supplier = provider === undefined
       ? Object.values(suppliers).find(entry => entry.origin === url.origin)
       : isSupplierId(provider) ? suppliers[provider] : undefined;

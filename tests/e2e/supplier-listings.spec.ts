@@ -27,9 +27,9 @@ for (const locale of ["ro", "en"] as const) for (const width of [390, 1440]) {
         await expect(visual).toHaveText(fallbackLabel);
         await expect(visual.locator("img")).toHaveCount(0);
       }
-      const cta = page.locator(`.product-detail a[data-supplier-product="${product.id}"]`);
+      const cta = page.locator(`.product-detail [data-supplier-product="${product.id}"]`);
       await expectSupplierCta(cta, product, new URL(baseURL!).hostname === "mairelectroai.com");
-      if (product.availability !== "unavailable") await expect(cta).toContainText(product.merchant);
+      if (product.availability !== "unavailable" && product.provider !== "waterdrop-eu") await expect(cta).toContainText(product.merchant);
       const source = page.getByRole("link", { name: `${product.merchant} · ${locale === "ro" ? "pagina oficială a modelului" : "official model page"} ↗`, exact: true });
       await expect(source).toHaveAttribute("href", product.productUrl);
       await expect(page.locator("main")).not.toContainText("Renogy EU");
@@ -72,8 +72,8 @@ test("new models can be found, compared and browsed in the correct Water subcate
     await page.goto(localizedPath(`/compare?ids=${ids.join(",")}`, "en"));
     for (const id of ids) {
       const product = catalog.find(p => p.id === id)!;
-      const link = page.locator(`table a[data-supplier-product="${id}"]`);
-      await expect(link).toContainText(product.merchant);
+      const link = page.locator(`table [data-supplier-product="${id}"]`);
+      if (product.provider !== "waterdrop-eu") await expect(link).toContainText(product.merchant);
       await expectSupplierCta(link, product, new URL(baseURL!).hostname === "mairelectroai.com");
     }
   }

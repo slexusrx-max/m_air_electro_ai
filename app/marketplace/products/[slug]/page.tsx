@@ -1,4 +1,5 @@
 import { EditorialRecord } from "@/components/editorial-record";
+import { AnalyticsEvent } from "@/components/analytics-event";
 import Link from "@/components/localized-link";
 import { specificationLabel, specificationValue } from "@/lib/marketplace/specifications";
 import { notFound, permanentRedirect } from "next/navigation";
@@ -52,6 +53,7 @@ export default async function Page({ params }: Props) {
   return (
     <PlatformShell>
       <main className="commerce-page product-storefront">
+        <AnalyticsEvent name="product_view" eventKey={p.id} properties={{ product: p.id, supplier: p.provider, category: p.category, language: ro ? "ro" : "en" }} />
         {p.kind === "product" && <ProductPageStructuredData product={p} />}
         <Breadcrumbs
           items={[

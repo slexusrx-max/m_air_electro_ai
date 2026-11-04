@@ -1,0 +1,122 @@
+[
+  {
+    "feedSku": "8827104461057",
+    "kind": "parent",
+    "source": "https://eu.renogy.com/products/renogy-400w-lightweight-portable-solar-suitcase",
+    "href": "https://renogy.sjv.io/6k6EV3",
+    "programId": "14864",
+    "generatedAt": "2026-11-04T13:40:55.689Z",
+    "merchantSku": null,
+    "merchantOption": null
+  },
+  {
+    "feedSku": "46674258985217",
+    "kind": "variant",
+    "source": "https://eu.renogy.com/products/renogy-400w-lightweight-portable-solar-suitcase?variant=46674258985217",
+    "href": "https://renogy.sjv.io/qWKyVO",
+    "programId": "14864",
+    "generatedAt": "2026-11-04T13:41:48.521Z",
+    "merchantSku": "RSP300LSC-EU",
+    "merchantOption": "300W"
+  },
+  {
+    "feedSku": "46674259017985",
+    "kind": "variant",
+    "source": "https://eu.renogy.com/products/renogy-400w-lightweight-portable-solar-suitcase?variant=46674259017985",
+    "href": "https://renogy.sjv.io/en0NaZ",
+    "programId": "14864",
+    "generatedAt": "2026-11-04T13:42:40.585Z",
+    "merchantSku": "RSP100LSC-EU",
+    "merchantOption": "100W"
+  },
+  {
+    "feedSku": "46674264785153",
+    "kind": "variant",
+    "source": "https://eu.renogy.com/products/renogy-400w-lightweight-portable-solar-suitcase?variant=46674264785153",
+    "href": "https://renogy.sjv.io/en0Na6",
+    "programId": "14864",
+    "generatedAt": "2026-11-04T13:43:48.435Z",
+    "merchantSku": "RSP220LSC-EU",
+    "merchantOption": "220W"
+  },
+  {
+    "feedSku": "8827108622593",
+    "kind": "parent",
+    "source": "https://eu.renogy.com/products/renogy-200w-shadowflux-anti-shading-n-type-solar-panel",
+    "href": "https://renogy.sjv.io/3kKERy",
+    "programId": "14864",
+    "generatedAt": "2026-11-04T13:44:49.399Z",
+    "merchantSku": null,
+    "merchantOption": null
+  },
+  {
+    "feedSku": "49259071308033",
+    "kind": "variant",
+    "source": "https://eu.renogy.com/products/renogy-200w-shadowflux-anti-shading-n-type-solar-panel?variant=49259071308033",
+    "href": "https://renogy.sjv.io/qWKy0q",
+    "programId": "14864",
+    "generatedAt": "2026-11-04T13:45:10.122Z",
+    "merchantSku": "RSP200DC-ASR-ZB-EU",
+    "merchantOption": "200W (1× 200W) w/ Z Bracket"
+  },
+  {
+    "feedSku": "46435561603329",
+    "kind": "variant",
+    "source": "https://eu.renogy.com/products/renogy-200w-shadowflux-anti-shading-n-type-solar-panel?variant=46435561603329",
+    "href": "https://renogy.sjv.io/PzQbAM",
+    "programId": "14864",
+    "generatedAt": "2026-11-04T13:45:37.698Z",
+    "merchantSku": "RSP200DC-ASR-EU",
+    "merchantOption": "200W (1 × 200W)"
+  },
+  {
+    "feedSku": "46948494967041",
+    "kind": "variant",
+    "source": "https://eu.renogy.com/products/renogy-200w-shadowflux-anti-shading-n-type-solar-panel?variant=46948494967041",
+    "href": "https://renogy.sjv.io/oNKOPe",
+    "programId": "14864",
+    "generatedAt": "2026-11-04T13:45:39.713Z",
+    "merchantSku": "RSP200DC-ASRx4-ZB-EU",
+    "merchantOption": "800W (4 × 200W)  w/ Z Bracket"
+  },
+  {
+    "feedSku": "49394288787713",
+    "kind": "variant",
+    "source": "https://eu.renogy.com/products/renogy-200w-shadowflux-anti-shading-n-type-solar-panel?variant=49394288787713",
+    "href": "https://renogy.sjv.io/zzK4Xx",
+    "programId": "14864",
+    "generatedAt": "2026-11-04T13:45:41.742Z",
+    "merchantSku": "RSP200DC-ASRx6-ZB-EU",
+    "merchantOption": "1200W (6 × 200W)  w/ Z Bracket"
+  },
+  {
+    "feedSku": "49394288820481",
+    "kind": "variant",
+    "source": "https://eu.renogy.com/products/renogy-200w-shadowflux-anti-shading-n-type-solar-panel?variant=49394288820481",
+    "href": "https://renogy.sjv.io/WOeNJO",
+    "programId": "14864",
+    "generatedAt": "2026-11-04T13:45:43.839Z",
+    "merchantSku": "RSP200DC-ASRx8-ZB-EU",
+    "merchantOption": "1600W (8 × 200W)  w/ Z Bracket"
+  },
+  {
+    "feedSku": "8865886470401",
+    "kind": "parent",
+    "source": "https://eu.renogy.com/products/200w-400w-solar-panel-blanket",
+    "href": "https://renogy.sjv.io/0G6PXY",
+    "programId": "14864",
+    "generatedAt": "2026-11-04T13:45:45.952Z",
+    "merchantSku": null,
+    "merchantOption": null
+  },
+  {
+    "feedSku": "46563072180481",
+    "kind": "variant",
+    "source": "https://eu.renogy.com/products/200w-400w-solar-panel-blanket?variant=46563072180481",
+    "href": "https://renogy.sjv.io/E06yG9",
+    "programId": "14864",
+    "generatedAt": "2026-11-04T13:45:48.018Z",
+    "merchantSku": "RPP200SB-SE-EU",
+    "merchantOption": "200W"
+  }
+]

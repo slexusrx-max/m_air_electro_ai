@@ -9,8 +9,9 @@ for (const locale of ["ro", "en"] as const) {
     await context.addCookies([{ name: "mr-electro-locale", value: locale, url: baseURL! }]);
     await page.setViewportSize({ width: 390, height: 900 });
     await page.goto(localizedPath("/", locale));
-    const browse = page.locator(".discovery-hero").getByRole("link", { name: ro ? /Alege echipamente/ : /Browse Equipment/ });
+    const browse = page.locator(".discovery-hero").getByRole("link", { name: ro ? /Vezi selecția/ : /Browse selection/ });
     await expect(browse).toBeVisible();
+    await expect(browse).toHaveAttribute("href", "#home-catalog");
     expect((await browse.boundingBox())!.y).toBeLessThan(900);
     const starter = page.getByTestId("quick-solution-starter");
     await expect(starter.getByRole("button")).toHaveCount(3);
@@ -34,8 +35,8 @@ for (const locale of ["ro", "en"] as const) {
     await expect(page.locator('.catalog-filters select[name="capacityAh"]')).toBeVisible();
     await page.locator(".filter-options summary").click();
     const cards = page.locator(".equipment-card");
-    await cards.nth(0).locator(".compare-control button").click();
-    await cards.nth(1).locator(".compare-control button").click();
+    await cards.locator('[data-compare-product="renogy-mini-100"]').click();
+    await cards.locator('[data-compare-product="renogy-mini-200"]').click();
     const tray = page.locator(".comparison-tray");
     await expect(tray.locator("li")).toHaveCount(2);
     const names = await tray.locator("li>span").allTextContents();
@@ -48,9 +49,10 @@ for (const locale of ["ro", "en"] as const) {
     await tray.locator(".comparison-tray-heading>a").click();
     await expect(page.locator(".comparison-scroll table")).toBeVisible();
     await page.goto(localizedPath("/renogy", locale));
-    await tray.locator("button").first().click();
+    await tray.locator(".comparison-tray-toggle").click();
+    await tray.locator("li button").first().click();
     await expect(tray.locator("li")).toHaveCount(1);
-    await tray.locator("button").click();
+    await tray.locator("li button").click();
     await expect(tray).toHaveCount(0);
   });
   test(`finder retains draft inputs and step on language switch ${locale}`, async ({ page, context, baseURL }) => {

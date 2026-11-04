@@ -73,7 +73,7 @@ test("commercial journey preserves homepage artwork, search, comparison, calcula
     await expect(page.getByTestId("affiliate-disclosure-before-content")).toBeVisible();
   }
   expect((await page.goto(localizedPath("/waterdrop", "en")))?.status()).toBe(200);
-  for (const product of catalog.filter(p => p.provider === "waterdrop-eu")) await expectSupplierCta(page.locator(`.equipment-card a[data-supplier-product="${product.id}"]`), product, new URL(baseURL!).hostname === "mairelectroai.com");
+  for (const product of catalog.filter(p => p.provider === "waterdrop-eu")) await expectSupplierCta(page.locator(`.equipment-card [data-supplier-product="${product.id}"]`), product, new URL(baseURL!).hostname === "mairelectroai.com");
   expect((await page.request.get("/sitemap.xml")).status()).toBe(200);
   expect(await (await page.request.get("/sitemap.xml")).text()).toContain("https://mairelectroai.com/renogy");
 });

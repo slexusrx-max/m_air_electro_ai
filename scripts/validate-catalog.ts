@@ -11,6 +11,7 @@ import waterdrop from "../data/waterdrop-reviewed-expansion.json";
 import renogyLinks from "../data/renogy-reviewed-links.json";
 import { renogyParentLinks } from "../lib/affiliate/renogy-parent-links";
 import parentPhotos from "../data/renogy-parent-photos.json";
+import issuedSolarLinks from "../data/renogy-issued-solar-links-2026-11-04.json";
 
 const identifier = /^[a-z0-9][a-z0-9-]*$/;
 const date = (value: string) => /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
@@ -66,8 +67,11 @@ export function validateReviewedLinks() {
   const errors: string[] = [];
   const links = Object.fromEntries(waterdrop.map(row => [row.url, row.issued]));
   if (Object.keys(verifiedWaterdropLinks(links)).length !== waterdrop.length) errors.push("Waterdrop reviewed link shape or duplicate source");
-  const renogy = { ...renogyLinks, ...renogyParentLinks };
+  const renogy = { ...renogyLinks, ...renogyParentLinks, ...Object.fromEntries(issuedSolarLinks.map(link => [link.source, link.href])) };
   if (Object.keys(verifiedImpactLinks(renogy, '["https://renogy.sjv.io"]')).length !== Object.keys(renogy).length) errors.push("Renogy reviewed link shape");
+  for (const link of issuedSolarLinks) {
+    if (link.programId !== "14864" || !validSupplierUrl(link.source, "renogy") || !date(link.generatedAt.slice(0, 10))) errors.push(`Invalid issued Renogy solar mapping: ${link.feedSku}`);
+  }
   const entries: Record<string, { status: string; src?: string; width?: number; height?: number; reason?: string }> = parentPhotos.entries;
   for (const [url, photo] of Object.entries(entries)) {
     if (!Object.hasOwn(renogyParentLinks, url)) errors.push("Orphan Renogy parent photo association");

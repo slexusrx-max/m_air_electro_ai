@@ -50,7 +50,10 @@ export function AnalyticsConsent({ ro }: { ro: boolean }) {
       if (link && link.protocol === "https:" && link.origin !== window.location.origin) {
         const data = link.dataset;
         if (data.supplierProduct && data.supplier && data.supplierCategory && data.supplierLanguage) {
-          trackEvent("supplier_outbound_click", { product: data.supplierProduct, supplier: data.supplier, category: data.supplierCategory, language: data.supplierLanguage });
+          const properties = { product: data.supplierProduct, supplier: data.supplier, category: data.supplierCategory, language: data.supplierLanguage };
+          trackEvent("supplier_outbound", properties);
+          // A marked, server-resolved affiliate link is a subset of all supplier departures.
+          if (data.trackingStatus === "active") trackEvent("affiliate_click", properties);
         } else trackEvent("outbound_click");
       }
     };
@@ -61,6 +64,7 @@ export function AnalyticsConsent({ ro }: { ro: boolean }) {
   function choose(value: string) {
     try { localStorage.setItem(consentKey, JSON.stringify({ choice: value, at: Date.now() })); } catch { /* No persistent storage means no tracking. */ }
     setChoice(value); setOpen(false);
+    window.dispatchEvent(new Event("mair-analytics-consent"));
   }
   return <aside className="analytics-settings" aria-label={ro ? "Setări analiză" : "Analytics settings"}>
     <button className="button-outline" onClick={() => setOpen(!open)} aria-expanded={open}>{ro ? "Setări analiză" : "Analytics settings"}</button>
