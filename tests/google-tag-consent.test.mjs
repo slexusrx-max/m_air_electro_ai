@@ -16,6 +16,7 @@ function harness(pathname = "/") {
     react: {
       useState: () => [stateIndex++ === 1 ? choice : false, () => {}],
       useEffect: (effect) => effects.push(effect),
+      useRef: value => ({ current: value }),
     },
     "@/lib/analytics": { ...load("lib/analytics.ts"), analyticsConsent: () => saved, trackEvent: () => {}, consentKey: "test" },
   }, {
@@ -65,7 +66,7 @@ test("a newly enabled privacy signal revokes an already loaded Google tag", () =
 });
 
 test("private routes never initialize ads and navigation revokes then restores consent without duplicate config", () => {
-  for (const path of ["/account", "/en/reset-password", "/ro/dashboard/client", "/auth/callback"]) {
+  for (const path of ["/account", "/en/reset-password", "/ro/dashboard/client", "/auth/callback", "/documents", "/assistant", "/diagnostics", "/energy-ai", "/my-home"]) {
     const h = harness(path);
     h.run("accepted");
     assert.equal(h.scripts.length, 0, path);

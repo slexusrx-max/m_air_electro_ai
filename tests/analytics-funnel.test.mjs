@@ -78,7 +78,7 @@ test("supplier listener marks only active tracking as affiliate and ignores righ
   let link;
   class Target { closest() { return link; } }
   const component = load("components/analytics-consent.tsx", {
-    react: { useEffect: effect => effects.push(effect), useState: value => [value, () => {}] },
+    react: { useEffect: effect => effects.push(effect), useState: value => [value, () => {}], useRef: value => ({ current: value }) },
     "next/navigation": { usePathname: () => "/en/marketplace" },
     "@/components/localized-link": () => null,
     "@/lib/analytics": { trackEvent: (...args) => sent.push(args) },

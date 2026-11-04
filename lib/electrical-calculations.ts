@@ -106,6 +106,8 @@ export type GeneratorCalculationInput = {
 export type GeneratorCalculationResult = {
   motorStartAllowanceKva: number;
   recommendedGeneratorKva: number;
+  requiredGeneratorKva: number;
+  reserveAdjustedRunningKw: number;
   reserveAdjustedRunningKva: number;
   runningLoadKva: number;
 };
@@ -427,17 +429,24 @@ export function calculateGenerator({
 }: GeneratorCalculationInput): GeneratorCalculationResult {
   requireFiniteInputs([powerFactor, runningLoadKw], [largestMotorKw, reservePercent]);
   if (powerFactor > 1) throw new Error("Power factor must stay between 0 and 1.");
+  if (largestMotorKw > runningLoadKw) throw new Error("Largest motor electrical input must be included in total running load.");
   const runningLoadKva = runningLoadKw / powerFactor;
   const reserveAdjustedRunningKva = runningLoadKva * (1 + reservePercent / 100);
+  const reserveAdjustedRunningKw = runningLoadKw * (1 + reservePercent / 100);
+  // These legacy factors are additional planning allowances in kVA per electrical
+  // motor kW, not measured inrush ratios or manufacturer sizing guarantees.
   const motorStartAllowanceKva = largestMotorKw * getStartingMethodKvaMultiplier(startingMethod);
+  const requiredGeneratorKva = Math.max(reserveAdjustedRunningKva, runningLoadKva + motorStartAllowanceKva);
 
   return {
     runningLoadKva,
     reserveAdjustedRunningKva,
+    reserveAdjustedRunningKw,
+    requiredGeneratorKva,
     motorStartAllowanceKva,
     recommendedGeneratorKva: getNextStandardValue(
       standardProtectionRatings,
-      Math.max(reserveAdjustedRunningKva, runningLoadKva + motorStartAllowanceKva),
+      requiredGeneratorKva,
     ),
   };
 }

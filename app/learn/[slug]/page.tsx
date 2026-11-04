@@ -15,6 +15,8 @@ import { categoryByPath, local } from "@/lib/marketplace/content";
 import { catalog } from "@/lib/affiliate/catalog";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { buildMetadata } from "@/lib/metadata";
+import { WaterGuideSupport } from "@/components/marketplace/water-guide-support";
+import { waterGuideSourceLabel } from "@/lib/marketplace/water-guide-content";
 
 type Props = { params: Promise<{ slug: string }> };
 export async function generateMetadata({ params }: Props) {
@@ -73,6 +75,7 @@ export default async function Page({ params }: Props) {
       </PlatformShell>
     );
   if (!g) notFound();
+  const waterGuide = slug === "choosing-water-system";
   const category = categoryByPath(g.category)!;
   const equipmentGroups = g.equipmentGroups?.map(group => ({
     ...group,
@@ -124,7 +127,7 @@ export default async function Page({ params }: Props) {
                 <Link href="/marketplace/batteries">{ro ? "Explorează bateriile separate" : "Explore separate batteries"} →</Link>
               </div>
             </section>}
-            <section>
+            {waterGuide ? <WaterGuideSupport ro={ro} /> : <section>
               <h2>
                 {ro
                   ? "Transformă explicația într-o listă de achiziție"
@@ -140,7 +143,7 @@ export default async function Page({ params }: Props) {
                   ? "După alegerea componentelor, un instalator calificat trebuie să verifice cablurile, protecțiile, separarea surselor, ventilația și condițiile locației. Nu folosi exemplul de calcul drept instrucțiune de cablare. La schimbarea unui consumator sau a bateriei, refă atât bugetul energetic, cât și verificarea de putere. Un test de funcționare supravegheat trebuie să confirme ipotezele fără depășirea limitelor producătorului."
                   : "After selecting components, a qualified installer should verify cables, protection, source isolation, ventilation and site conditions. Do not use a worked energy example as wiring instructions. When changing a load or battery, revisit both the energy budget and power check. A supervised operating test should confirm assumptions without exceeding manufacturer limits."}
               </p>
-            </section>
+            </section>}
             <section>
               <h2>
                 {ro
@@ -151,7 +154,7 @@ export default async function Page({ params }: Props) {
                 {g.sources.map((url, i) => (
                   <li key={url}>
                     <a href={url} target="_blank" rel="noreferrer">
-                      {url.includes("europa")
+                      {waterGuide ? waterGuideSourceLabel(url) : url.includes("europa")
                         ? "European Commission · PVGIS"
                         : url.includes("cpsc.gov") ? "U.S. Consumer Product Safety Commission · Carbon monoxide"
                         : "Victron Energy · Technical information / Wiring Unlimited"}{" "}
@@ -176,13 +179,13 @@ export default async function Page({ params }: Props) {
                 </a>
               ))}
               <Link className="button-primary" href={g.calculator}>
-                {ro ? "Deschide calculatorul" : "Open calculator"}
+                {waterGuide ? (ro ? "Folosește selectorul de apă" : "Use the water selection checklist") : (ro ? "Deschide calculatorul" : "Open calculator")}
               </Link>
               <Link href={`/marketplace/${g.category}`}>
                 {local(category.title, locale)} →
               </Link>
               <Link href={`/solutions/${g.solution}`}>
-                {ro ? "Soluție asociată" : "Related solution"} →
+                {waterGuide ? (ro ? "Planifică energia off-grid" : "Plan off-grid power") : (ro ? "Soluție asociată" : "Related solution")} →
               </Link>
             </div>
           </aside>
@@ -215,7 +218,9 @@ export default async function Page({ params }: Props) {
             .slice(0, 3)
             .map((n) => ({ href: `/learn/${n.slug}`, title: n.title }))}
         />
-        <Faq ro={ro} />
+        <Faq ro={ro}
+          question={waterGuide ? (ro ? "Alegerea categoriei confirmă că apa este potabilă?" : "Does choosing a category establish safe drinking water?") : undefined}
+          answer={waterGuide ? (ro ? "Nu. Verifică sursa, contaminantul exact, cartușul, condițiile și documentația modelului. Pentru o avertizare sanitară, urmează instrucțiunile autorităților. O valoare lipsă rămâne necunoscută." : "No. Check the source, exact contaminant, cartridge, conditions and model documentation. During a public-health advisory, follow the authorities' instructions. Missing evidence remains unknown.") : undefined} />
       </main>
     </PlatformShell>
   );

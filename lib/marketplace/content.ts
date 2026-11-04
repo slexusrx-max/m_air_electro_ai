@@ -435,6 +435,18 @@ for (const [path, parent, en, ro, summary] of subcategories)
   });
 // Category navigation stays compact; search titles explain the buying task.
 const categoryEditorial: Record<string, Partial<Pick<Category, "title" | "seoTitle" | "seoDescription" | "summary" | "choose" | "checks">>> = {
+  marine: {
+    seoTitle: bilingual("Marine battery systems: capacity, charging and solar", "Baterii la bord: capacitate, încărcare și panouri solare"),
+    seoDescription: bilingual("Plan a boat's house battery, charging and solar around daily Wh. Compare documented equipment, use the capacity calculator and check vessel-specific installation limits.", "Planifică bateria de servicii, încărcarea și panourile solare după consumul în Wh. Compară echipamente, calculează capacitatea și verifică limitele instalației navale."),
+    summary: bilingual(
+      "Choose house-battery storage, charging and solar for a boat by daily energy use and the available charging sources. Calculate capacity, review the marine planning guide and explore separate component categories before checking the exact model and delivery terms with a supplier. A listing does not establish suitability for your vessel.",
+      "Alege bateria de servicii, încărcarea și panourile solare pentru o ambarcațiune după energia zilnică și sursele de încărcare disponibile. Calculează capacitatea, citește ghidul naval și explorează separat categoriile de componente înainte să verifici modelul exact și livrarea la furnizor. Listarea nu confirmă compatibilitatea cu nava ta.",
+    ),
+    choose: bilingual(
+      "Separate engine-start and house loads. Make an energy budget in Wh for time at anchor and under way, then use the battery calculator with an explicit usable fraction and efficiency. Compare Ah only at the same nominal voltage. Check the exact model's discharge-current limits and permitted charging profile alongside alternator, shore-power and solar requirements; storage capacity alone does not size the complete system.",
+      "Separă pornirea motorului de consumul de servicii. Calculează energia în Wh la ancoră și în mers, apoi folosește calculatorul bateriei cu fracția utilizabilă și randamentul explicite. Compară Ah numai la aceeași tensiune nominală. Verifică limitele de descărcare și profilul de încărcare ale modelului împreună cu alternatorul, alimentarea de la cheu și panourile solare; capacitatea bateriei nu dimensionează singură sistemul.",
+    ),
+  },
   solar: {
     seoTitle: bilingual("Solar equipment for Romania: panels, kits and controllers", "Echipamente solare pentru România: panouri, kituri și regulatoare"),
     seoDescription: bilingual("Explore solar panels, kits and charge controllers. Compare system requirements, calculate daily energy and check supplier terms for Romania.", "Explorează panouri solare, kituri și regulatoare. Compară cerințele sistemului, calculează energia zilnică și verifică termenii furnizorului pentru România."),

@@ -21,17 +21,31 @@ export function supplierClickProperties(input: SupplierClick, pathname: string) 
   return productEventProperties(input, pathname);
 }
 export const consentKey = "mair-analytics-consent-v2";
+let consentBlockedInDocument = false;
 /** Apply the same private-route exclusion to every optional measurement provider. */
 export function isPublicMeasurementPath(pathname: string) {
   const path = pathname.split(/[?#]/)[0].replace(/^\/(en|ro)(?=\/|$)/, "") || "/";
-  return !/^\/(api|auth|account|login|register|forgot-password|reset-password|dashboard|onboarding|admin|expert|client|supplier)(\/|$)/.test(path);
+  return !/^\/(api|auth|account|login|register|forgot-password|reset-password|dashboard|onboarding|admin|expert|client|supplier|documents|assistant|diagnostics|energy-ai|my-home)(\/|$)/.test(path);
 }
 export function analyticsConsent() {
+  if (consentBlockedInDocument) return "rejected";
   try {
     const saved = JSON.parse(localStorage.getItem(consentKey) || "null");
     const age = saved && Date.now() - saved.at;
     return saved && Number.isFinite(saved.at) && age >= 0 && age < 180 * 86400000 && ["accepted", "rejected"].includes(saved.choice) ? saved.choice as string : "unset";
   } catch { return "unset"; }
+}
+/** A failed persistence write must never leave an earlier acceptance active in this tab. */
+export function saveAnalyticsConsent(choice: "accepted" | "rejected") {
+  try {
+    localStorage.setItem(consentKey, JSON.stringify({ choice, at: Date.now() }));
+    consentBlockedInDocument = false;
+  } catch {
+    consentBlockedInDocument = true;
+    // Best effort: remove an older acceptance so a reload cannot restore it.
+    try { localStorage.removeItem(consentKey); } catch { /* The in-document denial still applies. */ }
+  }
+  return analyticsConsent();
 }
 export function trackEvent(name: AnalyticsEvent, properties?: AnalyticsProperties): boolean {
   if (typeof window === "undefined" || analyticsConsent() !== "accepted" || navigator.doNotTrack === "1" || (navigator as Navigator & { globalPrivacyControl?: boolean }).globalPrivacyControl || navigator.webdriver) return false;

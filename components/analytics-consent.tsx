@@ -1,13 +1,14 @@
 "use client";
 import Link from "@/components/localized-link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { analyticsConsent, consentKey, isPublicMeasurementPath, trackEvent } from "@/lib/analytics";
+import { analyticsConsent, saveAnalyticsConsent, isPublicMeasurementPath, trackEvent } from "@/lib/analytics";
 
 export function AnalyticsConsent({ ro }: { ro: boolean }) {
   const [open, setOpen] = useState(false);
   const [choice, setChoice] = useState("unset");
   const path = usePathname();
+  const pageview = useRef({ path: "", sent: false });
   useEffect(() => {
     const sync = () => { const c = analyticsConsent(); setChoice(c); setOpen(c === "unset"); };
     sync(); window.addEventListener("storage", sync);
@@ -42,7 +43,8 @@ export function AnalyticsConsent({ ro }: { ro: boolean }) {
     document.head.appendChild(script);
   }, [choice, path]);
   useEffect(() => {
-    if (choice === "accepted") trackEvent("pageview");
+    if (pageview.current.path !== path) pageview.current = { path, sent: false };
+    if (choice === "accepted" && !pageview.current.sent) pageview.current.sent = trackEvent("pageview");
     const click = (event: MouseEvent) => {
       if (event.type === "auxclick" && event.button !== 1) return;
       const target = event.target;
@@ -61,9 +63,8 @@ export function AnalyticsConsent({ ro }: { ro: boolean }) {
     document.addEventListener("auxclick", click);
     return () => { document.removeEventListener("click", click); document.removeEventListener("auxclick", click); };
   }, [path, choice]);
-  function choose(value: string) {
-    try { localStorage.setItem(consentKey, JSON.stringify({ choice: value, at: Date.now() })); } catch { /* No persistent storage means no tracking. */ }
-    setChoice(value); setOpen(false);
+  function choose(value: "accepted" | "rejected") {
+    setChoice(saveAnalyticsConsent(value)); setOpen(false);
     window.dispatchEvent(new Event("mair-analytics-consent"));
   }
   return <aside className="analytics-settings" aria-label={ro ? "Setări analiză" : "Analytics settings"}>

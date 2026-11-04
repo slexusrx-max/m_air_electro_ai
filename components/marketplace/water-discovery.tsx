@@ -48,6 +48,7 @@ export function WaterDiscovery({ ro, products }: { ro: boolean; products: Equipm
           <h3>{name(suggested.title)}</h3><p>{name(suggested.checks)}</p>
           <p>{source === "mains" ? (ro ? "Pregătește raportul furnizorului de apă și, dacă este necesar, analiza la robinetul tău." : "Prepare your water utility’s report and, where needed, a test at your own tap.") : source === "well" ? (ro ? "Începe cu o analiză de laborator a sursei private și discută rezultatele cu un specialist înainte de alegerea tratării." : "Start with a laboratory analysis of the private source and discuss the results with a specialist before choosing treatment.") : (ro ? "Sursa și riscurile nu sunt confirmate. Nu presupune că un filtru portabil face orice apă potabilă; urmează recomandările autorităților sanitare." : "The source and hazards are unconfirmed. Do not assume a portable filter makes any water safe to drink; follow public-health guidance.")}</p>
           <Link className="water-button" href={`/marketplace/water/${suggested.slug}`}>{ro ? "Explorează categoria" : "Explore category"} →</Link>
+          <Link href="/learn/choosing-water-system#water-selection-brief">{ro ? "Pregătește consumul zilnic și instalarea" : "Plan daily capacity and installation"} →</Link>
         </div>
       </div>
     </section>

@@ -98,6 +98,17 @@ export default async function CategoryPage({ params, searchParams }: Props) {
             ? "Prin linkul furnizorului continui pe site-ul comerciantului, într-o filă nouă. Acolo verifici varianta, prețul, stocul și livrarea la adresa ta din România și finalizezi comanda. M Air Electro AI nu încasează plata și nu expediază produse. Linkurile marcate ca afiliate pot genera comision pentru achiziții eligibile."
             : "The supplier link opens the merchant's website in a new tab. Check the variant, price, stock and delivery to your Romanian address there before placing an order. M Air Electro AI does not take payment or ship products. Marked affiliate links may earn commission on qualifying purchases."}</p>
         </section>
+        {c.path === "marine" && <section className="content-panel" data-testid="marine-component-paths">
+          <h2>{ro ? "Alege separat componentele sistemului" : "Select the system components separately"}</h2>
+          <p>{ro
+            ? "Ghidul de clasă navală nu este un sistem oferit spre cumpărare. Explorează modelele din categoriile de componente după dimensionare; verifică separat montajul, mediul și compatibilitatea fiecărui model cu nava. Aceste linkuri nu confirmă o certificare navală."
+            : "The marine equipment-class guide is not a system offered for purchase. Explore models in the component categories after sizing, then separately verify each model's installation, environment and vessel compatibility. These links do not establish marine certification."}</p>
+          <div className="action-row">
+            <Link href="/marketplace/batteries/lifepo4">{ro ? "Compară baterii LiFePO4" : "Compare LiFePO4 batteries"} →</Link>
+            <Link href="/marketplace/chargers/dc-dc">{ro ? "Verifică încărcătoare DC-DC" : "Check DC-DC chargers"} →</Link>
+            <Link href="/marketplace/solar/panels/flexible">{ro ? "Explorează panouri flexibile" : "Explore flexible panels"} →</Link>
+          </div>
+        </section>}
         <div className="two-columns">
           <section className="content-panel">
             <h2>{ro ? "Cum alegi" : "How to choose"}</h2>
