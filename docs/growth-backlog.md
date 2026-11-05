@@ -2,6 +2,8 @@
 
 Updated 4 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
 
+5 November measurement update: [verified GA4 activation](ga4-activation-2026-11-04.md) supersedes the service/project blocker below. Production uses the actual ID with consent and automation guards; two key events and the existing Search Console link are configured. Landing-page search report for 8 October–4 November: 359 impressions, 0 clicks, average position 30.52. These are search metrics, not measured website sessions. Next: verify legitimate GA4 event receipt and finish only needed reporting definitions; do not recreate the property, stream or link. The historical Markifact credit blocker does not prevent the now-working authenticated Google search-report UI. Live scheduler status is still unverified despite the historical regular-execution description below.
+
 | Priority | Hypothesis / task | Evidence and next verification | State |
 |---|---|---|---|
 | P0 | Waterdrop Romania requires separate EU programme | Partner clarification 28 October: DE programme/store Germany only. 3 November release now blocks all 16 Waterdrop supplier CTAs on the Romania/EU site; official source links remain ordinary documentation. 4 November RO/EN landings and comparison confirmed zero supplier anchors; keep stored mappings unchanged. Obtain actual EU approval and exact links before activating Romanian tracking. No repeated enquiry | Regional CTA block verified; EU activation outstanding |

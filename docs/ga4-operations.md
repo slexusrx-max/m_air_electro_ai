@@ -1,5 +1,7 @@
 # GA4 operations and Search Console — 4 November 2026
 
+**5 November status:** the existing production stream, actual public ID, deployment, retention, two key events, all-region advertising-personalization opt-out and Search Console link have now been verified. Search reports are available; actual website-event receipt and custom definitions remain unverified. Read the [dated activation register](ga4-activation-2026-11-04.md) for evidence. The setup snapshot below is historical, and the remaining steps must not recreate completed resources or links.
+
 This runbook describes steps and evidence requirements. It does not establish that a GA4 property, stream, custom definition, key event or Search Console link has been created. Keep credentials and account screenshots out of tracked files. Production code, deployment, provider configuration and backend receipt are separate checks.
 
 Setup snapshot, 4 November 2026: the authorized owner browser reached the GA4 account/property draft for `M Air Electro AI`, with Romania time zone and EUR selected. The terms dialog had not been accepted. This draft is not evidence of a completed property, web stream, Measurement ID, activated collection or provider receipt. Record the later confirmed state separately; do not infer it from draft form selections.
