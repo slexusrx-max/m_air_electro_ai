@@ -1,6 +1,6 @@
 <!-- BEGIN:nextjs-agent-rules -->
 
-# This is NOT the Next.js you know
+## This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
 
@@ -27,6 +27,8 @@ Owner authorization (30 September 2026): Stanislav authorizes routine configurat
 Owner authorization (8 October 2026): Stanislav authorizes autonomous technical changes, testing and deployment for mairelectroai.com, plus truthful affiliate applications and ordinary business correspondence signed as `Stanislav Zavizion / M Air Electro AI`. Do not repeatedly request the same project authorization. Use only established facts: individual / independent publisher in Romania, Romania / EU market, Romanian / English audience, and the official domain/contact addresses. Do not invent a company, traffic, tax, identity, address, banking or partner-approval facts. This authorization does not bypass service login/2FA, payment confirmation, identity-document handling, platform confirmation requirements or acceptance of unknown/legal contract terms.
 
 Owner analytics preference (5 November 2026): disable GA4 advertising personalization for all 307 regions. The owner explicitly authorizes comparable routine privacy-protective analytics decisions without repeated questions. Preserve consent, DNT/GPC, private-route and automation exclusions. This does not authorize new paid services, legal commitments, expanded access or weakened privacy/security protections.
+
+Owner continuing authorization (5 November 2026): the owner reiterates that routine work to improve and promote M Air Electro AI should proceed autonomously within existing permissions, without repeated approval requests for already authorized actions. The owner specifically approved confirming the existing Impact.com Google OAuth re-login with profile name and email scope to read current clicks, commissions and payouts for the business audit. Remember this project preference across sessions. This is not blanket permission for new OAuth scopes, paid spending, legal commitments, account transfers or weakening security; applicable confirmation and handoff requirements still apply.
 
 Official public domain: https://mairelectroai.com. Keep canonicals, robots, sitemap and structured data aligned. Preserve the original public/hero.png homepage artwork and the route-family visual system. Primary navigation includes Marketplace, Solutions, Tools, Learn, Experts and For Business. Experts provides planning guidance without inventing a verified directory.
 

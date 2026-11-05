@@ -1082,6 +1082,13 @@ body:has(.home-brand-first) .brand-background-art { opacity:.48; }
 .commerce-page .equipment-card .product-photo-pending { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:14px; min-height:160px; padding:20px; text-align:center; background:radial-gradient(ellipse at center,#d6edf2,#edf6f9 70%); color:#3c6274; border:1px dashed #93b5c2; }
 .commerce-page .equipment-card .product-photo-pending svg { height:40px; width:40px; max-height:40px; max-width:40px; flex-shrink:0; }
 .product-photo-pending span { max-width:22ch; font-size:13px; line-height:1.5; }
+/* A photo placeholder must size to its text instead of inheriting the photo's fixed SVG height. */
+.storefront-home .hero-model-tile .product-photo-pending { height:auto; min-height:145px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:12px; padding:16px; flex-shrink:0; }
+.storefront-home .hero-model-tile .product-photo-pending svg { width:40px; height:40px; flex-shrink:0; }
+.catalog-extra-filters { grid-column:1/-1; min-width:0; }
+.catalog-extra-filters>summary { cursor:pointer; padding:10px 0; font-weight:700; }
+.catalog-extra-fields { display:grid; gap:16px; padding-top:12px; }
+.catalog-extra-filters>summary:focus-visible { outline:3px solid #476b9c; outline-offset:3px; border-radius:4px; }
 .supplier-entry-card { display:flex; flex-direction:column; gap:12px; min-width:0; border-radius:22px; padding:22px; color:#28495c; overflow-wrap:anywhere; }
 .supplier-entry-card h3 { font-size:20px; line-height:1.35; color:#19384c; }
 .supplier-entry-card>p { margin:0; font-size:13px; }

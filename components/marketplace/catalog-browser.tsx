@@ -59,6 +59,9 @@ export async function CatalogBrowser({
             type="search"
           />
         </label>
+        <details className="catalog-extra-filters" open={path !== "/marketplace" || Boolean(query.kind || query.brand || query.sort || facets.some(key => query[key]))}>
+          <summary>{ro ? "Filtre și sortare" : "Filters and sorting"}</summary>
+          <div className="catalog-extra-fields">
         <label>
           {ro ? "Tip înregistrare" : "Record type"}
           <select name="kind" defaultValue={query.kind ?? ""}>
@@ -108,6 +111,8 @@ export async function CatalogBrowser({
             </label>
           ) : null;
         })}</div>
+        </details>
+          </div>
         </details>
         <button className="button-primary" type="submit">
           {ro ? "Aplică filtrele" : "Apply filters"}
