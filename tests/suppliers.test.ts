@@ -143,7 +143,7 @@ test("DC backup supplies and expansion accessories never become AC station recom
   }
 });
 
-test("Supplier station source records stay exact while unlicensed photos remain withheld", async () => {
+test("restored supplier station photos match their exact reviewed source records", async () => {
   const { productPhoto } = await import("../lib/marketplace/product-photos");
   const records = [...(await import("../data/bluetti-reviewed-photos.json")).default, ...(await import("../data/pecron-reviewed-photos.json")).default];
   const stations = catalog.filter(p => models.some(([id]) => id === p.id));
@@ -154,7 +154,7 @@ test("Supplier station source records stay exact while unlicensed photos remain 
     assert.ok(source, p.id);
     assert.equal(source.sourceUrl, p.productUrl);
     assert.ok(["cdn.shopify.com", "eu.pecron.com"].includes(new URL(source.imageUrl).hostname));
-    assert.equal(productPhoto(p), undefined);
+    assert.deepEqual(productPhoto(p), { src: source.imageUrl, width: source.width, height: source.height });
   }
 
 });

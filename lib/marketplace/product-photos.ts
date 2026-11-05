@@ -1,13 +1,19 @@
 import waterdropExpansion from "@/data/waterdrop-reviewed-expansion.json";
 import type { CatalogProduct } from "../affiliate/types";
 import reviewedRenogy from "@/data/renogy-reviewed-products.json";
+import pecronPhotos from "@/data/pecron-reviewed-photos.json";
+import bluettiPhotos from "@/data/bluetti-reviewed-photos.json";
 
 // Exact existing variants reviewed in docs/product-photo-provenance-2026-10-18.json.
-// PECRON and BLUETTI source records stay documented but their images remain withheld
-// until explicit publication rights or approved partner creative access is confirmed.
+// Station photographs restored on the owner's explicit instruction, 5 November 2026.
+// This is not evidence of a manufacturer licence or affiliate programme approval.
+// Additional PECRON accessories remain outside this station-photo restoration.
 // Never fall back to a category photograph for an unidentified model.
 type ProductPhoto = { src: string; width: number; height: number; multipleViews?: boolean };
 export const productPhotos: Record<string, ProductPhoto> = {
+  ...Object.fromEntries([...pecronPhotos, ...bluettiPhotos].map(record => [record.id, {
+    src: record.imageUrl, width: record.width, height: record.height,
+  }])),
   ...Object.fromEntries(waterdropExpansion.map(r=>[r.id,{src:r.image,width:r.width,height:r.height} ])),
   ...Object.fromEntries(reviewedRenogy.map(record => [record.id, {
     src: record.imageUrl, width: record.width, height: record.height,

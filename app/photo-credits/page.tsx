@@ -24,8 +24,8 @@ export default async function Page() {
       <ul>{reviewedRenogy.map(p => <li key={p.id}><a href={p.url} target="_blank" rel="noopener noreferrer">{p.officialName} — {p.option}</a></li>)}</ul>
     </section>
     <section className="content-panel">
-      <h2>{ro ? "Înregistrări sursă PECRON și BLUETTI — imagini reținute" : "PECRON and BLUETTI source records — images withheld"}</h2>
-      <p>{ro ? "Păstrăm legăturile către paginile oficiale UE pentru verificarea identității modelelor. Imaginile acestor produse nu sunt publicate până când primim permisiune explicită sau acces la materiale creative printr-un program partener aprobat. Indicarea sursei nu acordă drept de publicare și nu confirmă statutul de partener autorizat." : "We retain links to the official EU pages to verify model identity. These product images are not published until explicit permission or creative access through an approved partner programme is confirmed. Source attribution does not grant publication rights or confirm authorized partner status."}</p>
+      <h2>{ro ? "Surse foto PECRON și BLUETTI" : "PECRON and BLUETTI photo sources"}</h2>
+      <p>{ro ? "Fotografiile stațiilor provin din paginile oficiale UE și sunt afișate fără modificarea produselor. Drepturile aparțin titularilor. Afișarea nu confirmă aprobarea unui program afiliat și nu acordă o licență de reutilizare. Imaginile accesoriilor și bateriilor de extensie rămân nepublicate." : "Station photographs come from the official EU pages and are displayed without altering the products. Rights remain with their holders. Display does not establish affiliate programme approval or grant a reuse licence. Accessory and expansion-battery images remain unpublished."}</p>
       <ul>{[...pecronPhotos, ...bluettiPhotos].map(p => <li key={p.id}><a href={p.sourceUrl} target="_blank" rel="noopener noreferrer">{p.id.toUpperCase().replaceAll("-", " ")}</a></li>)}</ul>
       <ul>{pecronExpansion.map(p => <li key={p.id}><a href={p.url} target="_blank" rel="noopener noreferrer">{p.name}</a></li>)}</ul>
     </section>

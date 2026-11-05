@@ -1,5 +1,7 @@
 # M Air Electro AI
 
+5 November photo restoration: on the owner’s explicit request, the 15 reviewed PECRON/BLUETTI station photographs are restored. The catalog now displays 50 model photographs; 14 PECRON expansion/accessory images remain withheld. This is a publication instruction, not evidence of a manufacturer licence or affiliate approval. See `docs/station-photo-restoration-2026-11-05.md`.
+
 5 November GA4 activation: the verified production stream `G-RG28QVQF7N` is configured and deployed; privacy checks passed. Advertising personalization is disabled for all 307 regions, two intent key events are registered, and the existing Search Console property is linked with search reports available. Actual website-event receipt in GA4 remains unverified. See the [dated activation evidence and remaining tasks](docs/ga4-activation-2026-11-04.md).
 
 4 November Phase 4: the existing funnel now supports consent-gated GA4 with fresh provider-specific consent, manual pageviews and public catalog dimensions. Missing real configuration keeps collection off; code deployment is not proof of GA4 receipt. See [Phase 4 status](docs/monetization-phase4-2026-11-04.md), [activation/runbook](docs/ga4-operations.md), [monthly template](docs/ga4-monthly-performance-template.md) and the unresolved [Vercel commercial-plan requirement](docs/vercel-commercial-plan-2026-11-04.md).
