@@ -1,6 +1,14 @@
 # Affiliate tracking audit — 27 October 2026
 
-## Current state — checked 4 November 2026
+## Current reconciliation — 6 November 2026
+
+Current main/production baseline: 215d028e3b742ce31f82722b35fd775827230fda / READY dpl_Fn6hX3Qg5WxYGAiX8RiHcGDeHUL5. Fresh first-party feed HTML: eight HTTP 200 pages, **365 unique SKUs / 227 active / 138 ordinary**. This supersedes earlier 215/150 feed counts. [Exact queue](renogy-equipment-link-queue-2026-11-05.md): 26 ordinary equipment identities across seven merchant families; all current destinations match. No tracking endpoint followed or new link issued.
+
+Measurement: the [5 November GA4 acceptance](ga4-activation-2026-11-04.md) confirms actual-ID deployment, consent/privacy QA, key-event configuration and Search Console link. Actual website event receipt remains unverified. Earlier unconfigured/no-account and sign-in-wall statements below are historical. The [4 November mission](monetization-mission-2026-11-04.md) reports Impact 21 October–3 November: Renogy 19 clicks/0 actions, Waterdrop DE 6/0; historical, may include internal tests, not unique customers. No fresh network or financial report obtained in this cycle. Attributed actions, confirmed commission and payout remain distinct; no payment-profile or banking change.
+
+The later owner photo restoration is preserved: 50 model photographs displayed, 14 withheld; see README and dated restoration evidence. No new licence/approval claim. Waterdrop regional gates remain unchanged. Ukraine delivery is not confirmed by Renogy's 6 November referral to support; an enquiry is already sent. No duplicate mail or eligibility enquiry.
+
+## Historical state — checked 4 November 2026
 
 This section supersedes historical rendered-link counts below. Main 335693d8472f87c63cf711c7f13195aee60448f5 matches READY production dpl_GKELW6rYd5zJxd8otxNJ5MU1yL2q. All 77 sitemap detail routes returned HTTP 200. They include 64 models and 13 equipment/planning classes. Class-page alternative cards are not counted as additional models. See [dated canonical register](affiliate-canonical-links-2026-11-04.csv).
 
