@@ -1,4 +1,5 @@
 import { SupplierPrice } from "./supplier-link";
+import { EquipmentGuideActions } from "./equipment-guide-actions";
 import Link from "@/components/localized-link";
 import { specificationLabel, specificationValue } from "@/lib/marketplace/specifications";
 import { CompareControl } from "./compare-control";
@@ -29,6 +30,7 @@ export function ProductCard({
   const specs = cardSpecifications(p);
   return (
     <article className={`equipment-card ${styles.card}`} data-product-card={p.id} data-card-tone={p.category === "water" ? "water" : "energy"} data-pointer-tilt>
+      {p.kind === "equipment-class" && <p className="eyebrow">{ro ? "Ghid de alegere · fără model selectat" : "Buying guide · no model selected"}</p>}
       <Link
         className={styles.imageLink}
         href={`/marketplace/products/${p.slug}`}
@@ -64,7 +66,7 @@ export function ProductCard({
       <p className={`product-purpose ${styles.purpose}`}><strong>{ro ? "Potrivit pentru" : "Suitable for"}</strong><span>{ro ? p.bestFor.ro : p.bestFor.en}</span></p>
       <div className={styles.actions}>
         <CompareControl id={p.id} ro={ro} />
-        <SupplierPrice product={p} ro={ro} prominent />
+        {p.kind === "equipment-class" ? <EquipmentGuideActions product={p} ro={ro} /> : <SupplierPrice product={p} ro={ro} prominent />}
         <Link className={`text-link ${styles.detailsLink}`} href={`/marketplace/products/${p.slug}`}>
           {ro ? "Detalii și compatibilitate" : "Details & compatibility"} →
         </Link>

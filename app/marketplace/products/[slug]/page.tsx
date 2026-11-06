@@ -21,6 +21,7 @@ import { catalog, productBySlug } from "@/lib/affiliate/catalog";
 import { categoryByPath, local } from "@/lib/marketplace/content";
 import { guides } from "@/lib/marketplace/guides";
 import { SupplierPrice } from "@/components/marketplace/supplier-link";
+import { EquipmentGuideActions } from "@/components/marketplace/equipment-guide-actions";
 import { buildMetadata } from "@/lib/metadata";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { legacyProducts as oldProducts } from "@/lib/marketplace/legacy";
@@ -82,12 +83,20 @@ export default async function Page({ params }: Props) {
                 p.kind === "product"
                   ? p.brand
                   : ro
-                    ? "Clasă de echipament · nu model comercial"
-                    : "Equipment class · not a purchasable model"
+                    ? "Ghid de alegere · fără model selectat"
+                    : "Buying guide · no model selected"
               }
               title={local(p.title, locale)}
               description={local(p.summary, locale)}
             />
+            {p.kind === "equipment-class" ? <EquipmentGuideActions product={p} ro={ro} /> : <>
+              <SupplierPrice product={p} ro={ro} prominent />
+              <p className="small-copy">
+                {ro
+                  ? "Prețul, stocul, livrarea în România și garanția se confirmă la furnizor."
+                  : "Confirm price, availability, Romania delivery and warranty with the supplier."}
+              </p>
+            </>}
             {p.kind === "product" && <p className="small-copy">
               {ro ? "Verificare sursă (asistată AI)" : "Source check (AI-assisted)"}: {p.lastUpdated} · EU
             </p>}
@@ -95,21 +104,6 @@ export default async function Page({ params }: Props) {
             <div className="product-key-specs">{Object.entries(p.technicalSpecs).filter(([key]) => key !== "Feed SKU").slice(0, 3).map(([key, value]) => <div key={key}><span>{specificationLabel(key, ro)}</span><strong>{specificationValue(value, ro)}</strong></div>)}</div>
             <a className="text-link" href="#specifications">{ro ? "Toate caracteristicile" : "All specifications"} ↓</a>
             <CompareControl id={p.id} ro={ro} />
-            {p.productUrl ? (
-              <SupplierPrice product={p} ro={ro} prominent />
-            ) : (
-              <Link href={`/marketplace/${c.path}`} className="button-primary">
-                {ro
-                  ? "Explorează categoria și modelele"
-                  : "Explore category and models"}{" "}
-                →
-              </Link>
-            )}
-            <p className="small-copy">
-              {ro
-                ? "Prețul, stocul, livrarea în România și garanția se confirmă la furnizor."
-                : "Confirm price, availability, Romania delivery and warranty with the supplier."}
-            </p>
           </article>
         </div>
         <section className="content-panel" id="specifications">
