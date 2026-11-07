@@ -1,6 +1,6 @@
 # Growth backlog
 
-Updated 6 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
+Updated 7 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
 
 5 November measurement update: [verified GA4 activation](ga4-activation-2026-11-04.md) supersedes the service/project blocker below. Production uses the actual ID with consent and automation guards; two key events and the existing Search Console link are configured. Landing-page search report for 8 October–4 November: 359 impressions, 0 clicks, average position 30.52. These are search metrics, not measured website sessions. Next: verify legitimate GA4 event receipt and finish only needed reporting definitions; do not recreate the property, stream or link. The historical Markifact credit blocker does not prevent the now-working authenticated Google search-report UI. Live scheduler status is still unverified despite the historical regular-execution description below.
 
@@ -43,3 +43,10 @@ Resume PR #55 after the 5 November GA4 production/account acceptance checkpoint;
 Fresh static production feed: 365 unique SKU identities, 227 active/138 ordinary; all eight pages HTTP 200. [Exact equipment queue](renogy-equipment-link-queue-2026-11-05.md) contains 26 ordinary identities across seven merchant families, all 26 current hrefs match. Remaining 112 ordinary rows are protection/accessory/fee/promotion records, not 112 missing equipment models. Next authenticated exact-link work must preserve SKU/variant and existing gates; no bulk tracking traversal.
 
 Partner watcher coordination: the 6 November Renogy reply refers Ukraine delivery questions to customer service and does not confirm delivery, discounts or commission. A support follow-up is already in Sent; do not duplicate it. PECRON/BLUETTI Ukraine requests were sent 5 November; no new reply found. No new Waterdrop reply found in this cycle. Direct shipping, forwarding, warranty, discounts and commission remain separately unverified for Ukraine. Renogy Romania eligibility remains closed/confirmed.
+
+
+## 7 November verification checkpoint
+
+PR #55 is merged; reuse its exact 26-SKU queue, do not recreate it. Preserve PR #58 seller navigation and the newer main. [Guide navigation evidence](equipment-guide-navigation-2026-11-07.md): 26 RO/EN equipment-class pages and 20 distinct internal guide destinations HTTP 200; no same-category action loop, EV-Mag explicitly ordinary/category-only. Static checks are not a phone/browser interaction pass or tracking receipt.
+
+Impact currently opens its login form; no login attempted in this cycle and no fresh reporting figures obtained. Existing GA4 receipt and financial reporting priorities remain, with unknowns retained. Gmail contains no newer substantive partner reply beyond the handled Renogy referral/support follow-up. No duplicate correspondence or Ukraine delivery promise. No application change justified by this health check.
