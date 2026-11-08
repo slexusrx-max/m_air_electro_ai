@@ -346,11 +346,17 @@ export const guides: Guide[] = [
         "After installation, test the intended load with monitoring and a conservative stop threshold. Compare measured delivered energy with the plan and investigate differences such as standby draw or unexpected loads. Respect the battery's discharge limits; a BMS emergency cutoff is not a target operating point. Revisit autonomy as batteries age or the essential-load list changes.",
         "După instalare, testează sarcina cu monitorizare și prag conservator de oprire. Compară energia livrată cu planul și investighează consumul în gol sau aparatele neașteptate. Respectă limitele; oprirea de urgență BMS nu este țintă normală. Reevaluează autonomia la îmbătrânire sau modificarea consumatorilor.",
       ),
+      section(
+        "Avoid counting losses twice",
+        "Evită scăderea pierderilor de două ori",
+        "First identify where the Wh were measured. The nominal-battery equation above starts before conversion losses. If a hypothetical test instead delivers 800 Wh at the AC output while supplying a steady 100 W between chosen start and stop limits, that case gives 800 Wh / 100 W = 8 hours. Do not multiply those already-delivered 800 Wh by 80% and 92% again: that would count the same usable-energy and conversion allowances twice. This is an arithmetic example, not a device we tested or a promised runtime. Record the load, battery start/stop limits, temperature and output mode. A different load or operating window can change delivered energy. Manufacturer maximum efficiency and zero-load consumption are separate specifications, not one fixed efficiency for every load. Keep startup power and model compatibility checks separate from this energy calculation.",
+        "Identifică mai întâi unde au fost măsurați Wh. Ecuația pentru bateria nominală de mai sus pornește înaintea pierderilor de conversie. Dacă un test ipotetic livrează în schimb 800 Wh la ieșirea AC, alimentând constant 100 W între limitele alese de pornire și oprire, acel caz dă 800 Wh / 100 W = 8 ore. Nu înmulți din nou cei 800 Wh deja livrați cu 80% și 92%: ai scădea de două ori aceleași limitări ale energiei utilizabile și pierderi de conversie. Este un exemplu aritmetic, nu un aparat testat de noi sau o autonomie promisă. Notează sarcina, limitele inițială și finală ale bateriei, temperatura și modul ieșirii. Altă sarcină sau alt interval de utilizare poate schimba energia livrată. Randamentul maxim și consumul în gol din manual sunt specificații separate, nu un randament fix la orice sarcină. Verifică separat puterea de pornire și compatibilitatea modelului.",
+      ),
     ],
     category: "batteries",
     solution: "apartment-backup",
     calculator: "/calculators/battery",
-    sources: [wiring],
+    sources: [wiring, "https://www.victronenergy.com/media/pg/Inverter_VE.Direct_230V_-_HW15/en/technical-specifications.html"],
   },
 ];
 
