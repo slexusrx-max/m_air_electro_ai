@@ -1,6 +1,6 @@
 # Growth backlog
 
-Updated 8 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
+Updated 9 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
 
 5 November measurement update: [verified GA4 activation](ga4-activation-2026-11-04.md) supersedes the service/project blocker below. Production uses the actual ID with consent and automation guards; two key events and the existing Search Console link are configured. Landing-page search report for 8 October–4 November: 359 impressions, 0 clicks, average position 30.52. These are search metrics, not measured website sessions. Next: verify legitimate GA4 event receipt and finish only needed reporting definitions; do not recreate the property, stream or link. The historical Markifact credit blocker does not prevent the now-working authenticated Google search-report UI. Live scheduler status is still unverified despite the historical regular-execution description below.
 
@@ -55,3 +55,12 @@ Impact currently opens its login form; no login attempted in this cycle and no f
 ## 8 November editorial package
 
 Existing runtime guide now distinguishes nominal battery Wh from measured AC-output Wh in RO/EN. Hypothesis: making the measurement boundary explicit prevents double-subtracting losses before equipment selection. Illustrative 800 Wh / 100 W = 8 h is not a product test or promise. Sources: existing Wiring Unlimited and the manufacturer's separate maximum-efficiency/zero-load ratings, checked 8 November. No specs, prices, compatibility, tracking or new indexed route added. Organic RO/EN copy saved as drafts; no connected owned publishing destination established. Next: retain measurement/reporting and exact-link priorities, then assess actual guide engagement when legitimate analytics data is available.
+
+
+## Weekly review — 9 November 2026 (supersedes prior weekly ordering)
+
+Review window 2–8 November; [full evidence and measurement limits](growth-weekly-review-2026-11-09.md). Delivered: twelve issued solar links, GA4 configuration/privacy acceptance, compact comparison, photo restoration, exact equipment queue, repaired equipment-guide navigation and localized runtime measurement clarification. Link coverage increased from the dated 215/150 snapshot to 227/138; this is not a traffic, conversion or revenue increase. No matching weekly analytics/finance window is available, so no trend or outbound CTR is calculated.
+
+Next order: (1) legitimate GA4 receipt plus matched Impact action/commission/payout evidence when authorized session access is available, (2) exact issued links for the preserved 26 equipment identities/seven families, (3) only scoped pending mobile/funnel acceptance with a changed working runner condition, then evidence-led editorial work. Do not recreate the GA4 stream/Search Console link or repeat the old 12-solar request. Old blanket mobile-unavailable notes are historical: 4–5 November registers already document scoped production acceptance, without proving every later change on a phone.
+
+Fresh targeted SEO: eight first-party endpoints HTTP 200; tested search/filter queries noindex, clean canonicals and reciprocal RO/EN alternates; sitemap has 372 unique official-origin locs without query/private/search paths and includes both runtime-guide URLs. Sitemap parse is not a 372-route crawl or Google indexing proof. No defect found, no app patch. No new substantive partner reply after 8 November, duplicate enquiry, declined login retry, credit request or new spend. Paid pilot stays deferred within this task; organic drafts remain unposted without a verified owned channel.
