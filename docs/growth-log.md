@@ -272,3 +272,16 @@ Validation: arithmetic and unchanged existing guide anchors checked; CI/preview/
 
 
 Release verification caught an anchor-order regression in the first editorial release ddd02dc0cb95f91f89664e38f1558e4be8938052: the generated worked case had originally occupied section-4. Move the new content after that generated case, using section-5; preserve the original section-1 through section-4 meanings. Organic drafts were not published, and their local targets are corrected to section-5. Add a focused regression test for the original four titles/order and Romanian worked-case title. No supplier link was removed; two new source references and one new table-of-contents anchor explain the increased anchor count. Follow-up preview/CI/production must pass before reporting the cycle complete.
+
+
+## 9 November 2026 — weekly review and bounded SEO acceptance
+
+Preflight main 0ecb21c322896762a9c7369497da531418920d53 matches READY production dpl_6a4feo7chEUR4fqWakWBzXS5BiiX; no open growth PR or in-progress workflow. Read all six required current-main docs and newer GA4/mission/Phase 4 evidence. Continue from PR #61; preserve runtime section-5 and original anchors, all photos/catalogue/RO/EN/design, no prices and independent supplier/consent gates.
+
+Action 1: focused Gmail after 8 November returns no new partner message. Separate Ukraine reply workflow and existing support follow-up not duplicated. No login/Markifact retry or new network/GA4/GSC finance receipt. Historical periods are not current-week totals, missing evidence is not zero. No merchant/tracking request, synthetic event, paid ad, purchase, subscription or new automation.
+
+Action 2: targeted static SEO checks: RO/EN search?q=Renogy and marketplace?q=PECRON are noindex,follow with clean canonicals and reciprocal language links; runtime-guide RO/EN clean canonicals/alternates; robots and sitemap HTTP 200. All eight endpoints successful. Parse 372 unique official-origin sitemap locs, no query or inspected private/search paths; both runtime-guide URLs included. This is eight HTTP checks plus XML parsing, not a full crawl, browser/mobile run or Google-indexing result. No new defect justifies changing healthy application code.
+
+Action 3: review week 2–8 November and reprioritize backlog. Save dated report with source windows, completed coverage/UI/privacy/content work, unknown analytics/finance results and three next priorities. Dated 4 November coverage delta 215/150 to 227/138 is technical mapping progress, not network/revenue growth. Preserve actual scoped production mobile/privacy evidence from 4–5 Nov rather than blanket obsolete blocker wording. No unmatched historical trend comparisons. Report: growth-weekly-review-2026-11-09.md.
+
+Validation: source/report date scopes reviewed, eight HTTP/metadata checks and sitemap integrity assertions passed. Documentation-only maintenance; existing CI/preview/release proof will be recorded on the associated PR. Rollback: focused revert of these three documentation files after checking subsequent changes; no app/configuration migration or rollback. No new public feature, measured business change or new blocker warrants notification.
