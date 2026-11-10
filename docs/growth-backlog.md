@@ -1,6 +1,6 @@
 # Growth backlog
 
-Updated 9 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
+Updated 10 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
 
 5 November measurement update: [verified GA4 activation](ga4-activation-2026-11-04.md) supersedes the service/project blocker below. Production uses the actual ID with consent and automation guards; two key events and the existing Search Console link are configured. Landing-page search report for 8 October–4 November: 359 impressions, 0 clicks, average position 30.52. These are search metrics, not measured website sessions. Next: verify legitimate GA4 event receipt and finish only needed reporting definitions; do not recreate the property, stream or link. The historical Markifact credit blocker does not prevent the now-working authenticated Google search-report UI. Live scheduler status is still unverified despite the historical regular-execution description below.
 
@@ -64,3 +64,10 @@ Review window 2–8 November; [full evidence and measurement limits](growth-week
 Next order: (1) legitimate GA4 receipt plus matched Impact action/commission/payout evidence when authorized session access is available, (2) exact issued links for the preserved 26 equipment identities/seven families, (3) only scoped pending mobile/funnel acceptance with a changed working runner condition, then evidence-led editorial work. Do not recreate the GA4 stream/Search Console link or repeat the old 12-solar request. Old blanket mobile-unavailable notes are historical: 4–5 November registers already document scoped production acceptance, without proving every later change on a phone.
 
 Fresh targeted SEO: eight first-party endpoints HTTP 200; tested search/filter queries noindex, clean canonicals and reciprocal RO/EN alternates; sitemap has 372 unique official-origin locs without query/private/search paths and includes both runtime-guide URLs. Sitemap parse is not a 372-route crawl or Google indexing proof. No defect found, no app patch. No new substantive partner reply after 8 November, duplicate enquiry, declined login retry, credit request or new spend. Paid pilot stays deferred within this task; organic drafts remain unposted without a verified owned channel.
+
+
+## 10 November scoped live acceptance
+
+[Battery calculator journey](battery-calculator-journey-2026-11-10.md): a real desktop browser interaction recalculated 100 W × 2 h at 12 V class/80%/92%, showed 200 load Wh and 271.74 nominal Wh, populated three candidate batteries, opened their comparison, preserved all IDs on EN→RO switch, and reached the exact Core Mini 100 detail with matching variant href. Consent declined; supplier CTA not clicked. Default high-energy 24 V case showed an honest no-single-model state. No code fix needed.
+
+Native Chromium became available, but two bounded typing attempts failed with AT-SPI provider unavailable before loading the site. This does not constitute phone acceptance or a site defect. No repeated binary installation/login/credit request. Next priorities from the weekly review remain: real receipt/financial reports, exact 26-record queue, then scoped phone checks after input/runner availability changes. No new partner reply or duplicate correspondence.
