@@ -1,6 +1,6 @@
 # Growth backlog
 
-Updated 10 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
+Updated 11 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
 
 5 November measurement update: [verified GA4 activation](ga4-activation-2026-11-04.md) supersedes the service/project blocker below. Production uses the actual ID with consent and automation guards; two key events and the existing Search Console link are configured. Landing-page search report for 8 October–4 November: 359 impressions, 0 clicks, average position 30.52. These are search metrics, not measured website sessions. Next: verify legitimate GA4 event receipt and finish only needed reporting definitions; do not recreate the property, stream or link. The historical Markifact credit blocker does not prevent the now-working authenticated Google search-report UI. Live scheduler status is still unverified despite the historical regular-execution description below.
 
@@ -71,3 +71,7 @@ Fresh targeted SEO: eight first-party endpoints HTTP 200; tested search/filter q
 [Battery calculator journey](battery-calculator-journey-2026-11-10.md): a real desktop browser interaction recalculated 100 W × 2 h at 12 V class/80%/92%, showed 200 load Wh and 271.74 nominal Wh, populated three candidate batteries, opened their comparison, preserved all IDs on EN→RO switch, and reached the exact Core Mini 100 detail with matching variant href. Consent declined; supplier CTA not clicked. Default high-energy 24 V case showed an honest no-single-model state. No code fix needed.
 
 Native Chromium became available, but two bounded typing attempts failed with AT-SPI provider unavailable before loading the site. This does not constitute phone acceptance or a site defect. No repeated binary installation/login/credit request. Next priorities from the weekly review remain: real receipt/financial reports, exact 26-record queue, then scoped phone checks after input/runner availability changes. No new partner reply or duplicate correspondence.
+
+## 11 November supplier verification
+
+The production smoke script follows the current catalog for Waterdrop, PECRON and BLUETTI and checks each model's published supplier state. The previous expected total was 22, while the current catalog contains 45 models for these providers. Waterdrop's Romania-blocked notices are checked without requiring an anchor. The 90-page RO/EN HTML check found 16 blocked Waterdrop offers, 23 ordinary PECRON URLs and six ordinary BLUETTI URLs per locale. Three desktop browser samples matched. Keep the existing reporting, exact Renogy-link and mobile priorities. See the 11 November growth log for verification limits.
