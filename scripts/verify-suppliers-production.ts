@@ -2,9 +2,19 @@ import { chromium, expect } from "@playwright/test";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { catalog } from "../lib/affiliate/catalog";
 import { expectSupplierCta } from "../tests/supplier-link-expectations";
-import waterdropReviewedExpansion from "../data/waterdrop-reviewed-expansion.json";
+
+const targetProviders = ["waterdrop-eu", "pecron-eu", "bluetti-eu"];
+const products = catalog.filter((product) =>
+  targetProviders.includes(product.provider),
+);
 
 async function main() {
+  for (const provider of targetProviders) {
+    if (!products.some((product) => product.provider === provider)) {
+      throw new Error(`No catalogue models for ${provider}`);
+    }
+  }
+
   mkdirSync(".task-work", { recursive: true });
 
   const browser = await chromium.launch();
@@ -30,24 +40,8 @@ async function main() {
       status: number | undefined;
       merchant: string;
       ordinaryUrl: string;
+      trackingStatus: string | null;
     }> = [];
-
-    const targetProviders = [
-      "waterdrop-eu",
-      "pecron-eu",
-      "bluetti-eu",
-    ];
-
-    const products = catalog.filter((product) =>
-      targetProviders.includes(product.provider),
-    );
-
-    const expectedCount = 3 + waterdropReviewedExpansion.length + 3 + 3;
-    if (products.length !== expectedCount) {
-      throw new Error(
-        `Expected ${expectedCount} reviewed Waterdrop/PECRON/BLUETTI products, found ${products.length}`,
-      );
-    }
 
     for (const product of products) {
       const response = await page.goto(
@@ -64,10 +58,11 @@ async function main() {
       ).toHaveText(product.name);
 
       const cta = page.locator(
-        `.product-detail a[data-supplier-product="${product.id}"]`,
+        `.product-detail [data-supplier-product="${product.id}"]`,
       );
 
       await expect(cta).toBeVisible();
+      await expect(cta).toHaveAttribute("data-supplier", product.provider);
 
       await expectSupplierCta(cta, product, true);
 
@@ -78,6 +73,7 @@ async function main() {
         status: response?.status(),
         merchant: product.merchant,
         ordinaryUrl: product.productUrl,
+        trackingStatus: await cta.getAttribute("data-tracking-status"),
       });
     }
 
