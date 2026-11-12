@@ -47,3 +47,21 @@ Why can two battery-runtime calculations disagree? Check whether the energy is n
 Explanation and limits: https://mairelectroai.com/en/learn/battery-runtime-calculation#section-5
 
 Arithmetic example, not a product test. M Air Electro AI is an independent catalogue; some marked links are affiliate links and purchases take place with the supplier.
+
+## 12 November — portable power station comparison (drafts)
+
+### Romanian
+
+De câți Wh ai nevoie pentru router, laptop și lumină? În exemplul din ghid, 15 W + 60 W + 20 W timp de patru ore înseamnă 380 Wh la consumatori. Cu 80% energie utilizabilă și 92% randament, rezultă aproximativ 516 Wh nominali. Sunt ipoteze de calcul. Verifică separat puterea simultană și vârful la pornire.
+
+Vezi exemplul și compară trei stații portabile AC din catalog: https://mairelectroai.com/learn/how-to-choose-portable-power-station#section-4
+
+M Air Electro AI este un catalog independent. Unele linkuri marcate de pe site sunt afiliate. Achiziția se face la furnizor.
+
+### English
+
+How many Wh do you need for a router, laptop and lights? In the guide’s example, 15 W + 60 W + 20 W for four hours adds up to 380 Wh at the loads. Assuming 80% usable energy and 92% conversion efficiency, that is about 516 Wh nominal. Check simultaneous output power and startup demand separately.
+
+See the example and compare three portable AC stations from the catalog: https://mairelectroai.com/en/learn/how-to-choose-portable-power-station#section-4
+
+M Air Electro AI is an independent catalog. Some marked links on the site are affiliate links. Purchases take place with the supplier.

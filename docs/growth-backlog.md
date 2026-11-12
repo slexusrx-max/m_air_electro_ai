@@ -1,6 +1,6 @@
 # Growth backlog
 
-Updated 11 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
+Updated 12 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
 
 5 November measurement update: [verified GA4 activation](ga4-activation-2026-11-04.md) supersedes the service/project blocker below. Production uses the actual ID with consent and automation guards; two key events and the existing Search Console link are configured. Landing-page search report for 8 October–4 November: 359 impressions, 0 clicks, average position 30.52. These are search metrics, not measured website sessions. Next: verify legitimate GA4 event receipt and finish only needed reporting definitions; do not recreate the property, stream or link. The historical Markifact credit blocker does not prevent the now-working authenticated Google search-report UI. Live scheduler status is still unverified despite the historical regular-execution description below.
 
@@ -75,3 +75,7 @@ Native Chromium became available, but two bounded typing attempts failed with AT
 ## 11 November supplier verification
 
 The production smoke script follows the current catalog for Waterdrop, PECRON and BLUETTI and checks each model's published supplier state. The previous expected total was 22, while the current catalog contains 45 models for these providers. Waterdrop's Romania-blocked notices are checked without requiring an anchor. The 90-page RO/EN HTML check found 16 blocked Waterdrop offers, 23 ordinary PECRON URLs and six ordinary BLUETTI URLs per locale. Three desktop browser samples matched. Keep the existing reporting, exact Renogy-link and mobile priorities. See the 11 November growth log for verification limits.
+
+## 12 November portable power station guide
+
+The existing worked example links directly to the station finder and its three portable AC models. An exact, localized comparison opens PECRON E1000LFP, E300LFP and E500LFP together. Hypothesis: the two next steps reduce manual selection after a visitor calculates the load. RO/EN drafts are saved in [growth-social-drafts.md](growth-social-drafts.md). Evaluate guide-to-finder and comparison use when legitimate event receipt is available. The existing Impact reporting, exact Renogy-link queue and mobile priorities remain open.

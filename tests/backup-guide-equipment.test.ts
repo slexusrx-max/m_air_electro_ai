@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { guides } from '../lib/marketplace/guides';
 import { catalog } from '../lib/affiliate/catalog';
+import { comparableSelection, comparisonGroup } from '../lib/marketplace/comparison';
 
 test('backup sizing guide separates real AC stations from standalone batteries', () => {
   const guide = guides.find(g => g.slug === 'how-to-size-backup-battery')!;
@@ -21,4 +22,22 @@ test('backup sizing guide separates real AC stations from standalone batteries',
       assert.ok(!id.startsWith('pecron-ep'), 'expansion battery must not replace either path');
     }
   });
+});
+
+test('portable station guide opens a comparison of distinct documented AC stations', () => {
+  const guide = guides.find(g => g.slug === 'how-to-choose-portable-power-station');
+  const group = guide?.equipmentGroups?.[0];
+  assert.ok(group);
+
+  const { selected, invalid } = comparableSelection(group.productIds.join(','), catalog);
+  assert.equal(invalid, false);
+  assert.ok(selected.length >= 2);
+  assert.deepEqual(selected.map(product => product.id), group.productIds);
+
+  for (const product of selected) {
+    assert.notEqual(product.availability, 'unavailable');
+    assert.equal(comparisonGroup(product), 'backup-power');
+    assert.ok(Number(product.facets.capacityWh) > 0);
+    assert.ok(Number(product.facets.power) > 0);
+  }
 });
