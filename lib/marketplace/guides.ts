@@ -587,6 +587,16 @@ for (const [
 guides.push(
   {
     slug: "how-to-choose-portable-power-station",
+    equipmentGroups: [
+      {
+        title: b("Portable AC stations to compare", "Stații portabile AC de comparat"),
+        description: b(
+          "Compare stored energy in Wh and rated AC output in W separately. Use your own loads and runtime to narrow the choice, then check startup demand and the exact EU model manual.",
+          "Compară separat energia stocată în Wh și puterea nominală AC în W. Folosește consumatorii și autonomia ta pentru a restrânge alegerea, apoi verifică puterea la pornire și manualul variantei UE exacte.",
+        ),
+        productIds: ["pecron-e1000lfp", "pecron-e300lfp", "pecron-e500lfp"],
+      },
+    ],
     title: b("How to choose a portable power station", "Cum alegi o stație de energie portabilă"),
     hub: "backup-power",
     level: "buying-guides",

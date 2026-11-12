@@ -76,6 +76,7 @@ export default async function Page({ params }: Props) {
     );
   if (!g) notFound();
   const waterGuide = slug === "choosing-water-system";
+  const portableStationGuide = slug === "how-to-choose-portable-power-station";
   const category = categoryByPath(g.category)!;
   const equipmentGroups = g.equipmentGroups?.map(group => ({
     ...group,
@@ -115,6 +116,16 @@ export default async function Page({ params }: Props) {
                 <p>{local(s.body, locale)}</p>
               </section>
             ))}
+            {portableStationGuide && (
+              <div className="action-row">
+                <Link className="button-primary" href={g.calculator}>
+                  {ro ? "Găsește o stație pentru consumatorii tăi" : "Find a station for your loads"} →
+                </Link>
+                <a href="#equipment-paths">
+                  {ro ? "Vezi stațiile de comparat" : "See stations to compare"} ↓
+                </a>
+              </div>
+            )}
             {(["how-to-size-backup-battery", "battery-runtime-calculation", "apartment-backup-system"].includes(slug) || slug === "rv-solar-basics") && <EnergyExample kind={slug === "rv-solar-basics" ? "rv" : "apartment"} ro={ro} />}
             {slug === "how-to-size-backup-battery" && <section id="choose-backup-path" className="content-panel">
               <h2>{ro ? "Alege următorul pas" : "Choose your next step"}</h2>
@@ -178,9 +189,9 @@ export default async function Page({ params }: Props) {
                   {local(s.title, locale)}
                 </a>
               ))}
-              <Link className="button-primary" href={g.calculator}>
+              {!portableStationGuide && <Link className="button-primary" href={g.calculator}>
                 {waterGuide ? (ro ? "Folosește selectorul de apă" : "Use the water selection checklist") : (ro ? "Deschide calculatorul" : "Open calculator")}
-              </Link>
+              </Link>}
               <Link href={`/marketplace/${g.category}`}>
                 {local(category.title, locale)} →
               </Link>
