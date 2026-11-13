@@ -73,6 +73,19 @@ test("search covers spaced units, compact units, brands, use cases and Romanian"
   assert.ok(filterEquipment(catalog, { q: "baterie" }).length);
   assert.equal(filterEquipment(catalog, { q: "no-such-model-999" }).length, 0);
 });
+test("exact model searches tolerate compact and hyphenated names without bypassing filters", () => {
+  for (const q of ["BLUETTI Elite100V2", "Elite-100V2", "BLUETTI Elite 100 V2"]) {
+    assert.deepEqual(filterEquipment(catalog, { q }).map(product => product.id), ["bluetti-elite-100-v2"]);
+  }
+  for (const query of [
+    { q: "BLUETTI Elite100V3" },
+    { q: "Elite100V2", brand: "PECRON" },
+    { q: "Elite100V2", power: "600" },
+    { q: "Elite100V2", kind: "equipment-class" },
+  ]) {
+    assert.deepEqual(filterEquipment(catalog, query), []);
+  }
+});
 test("filters intersect and never infer missing feature values", () => {
   const results = filterEquipment(catalog, {
     voltage: "12",

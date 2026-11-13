@@ -52,11 +52,20 @@ export function cleanQuery(
 }
 export function filterEquipment(products: Equipment[], raw: CatalogQuery) {
   const query = cleanQuery(raw);
-  const terms = normalizeSearch(query.q ?? "")
+  const search = normalizeSearch(query.q ?? "");
+  const compactSearch = search.replaceAll(" ", "");
+  const terms = search
     .split(/\s+/)
     .filter(Boolean);
   const results = products.filter((p) => {
     if (!isCatalogListing(p)) return false;
+    const modelName = normalizeSearch(p.name);
+    const brand = normalizeSearch(p.brand);
+    const nameWithoutBrand = brand && modelName.startsWith(`${brand} `)
+      ? modelName.slice(brand.length + 1)
+      : modelName;
+    const exactModelMatch = p.kind === "product" && compactSearch !== "" &&
+      [modelName, nameWithoutBrand].some(name => name.replaceAll(" ", "") === compactSearch);
     const names: Record<string, string> = {
       "lithium-batteries": "batteries acumulator acumulatoare baterii",
       inverters: "invertoare invertor",
@@ -86,7 +95,7 @@ export function filterEquipment(products: Equipment[], raw: CatalogQuery) {
       ].join(" "),
     );
     return (
-      terms.every((term) => haystack.includes(term)) &&
+      (exactModelMatch || terms.every((term) => haystack.includes(term))) &&
       Object.keys(facetLabels).every(
         (key) => !query[key] || (p.facets[key] !== undefined && normalizeFacet(key, p.facets[key]) === normalizeFacet(key, query[key]!)),
       ) &&
