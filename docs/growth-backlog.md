@@ -1,6 +1,6 @@
 # Growth backlog
 
-Updated 13 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
+Updated 14 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
 
 5 November measurement update: [verified GA4 activation](ga4-activation-2026-11-04.md) supersedes the service/project blocker below. Production uses the actual ID with consent and automation guards; two key events and the existing Search Console link are configured. Landing-page search report for 8 October–4 November: 359 impressions, 0 clicks, average position 30.52. These are search metrics, not measured website sessions. Next: verify legitimate GA4 event receipt and finish only needed reporting definitions; do not recreate the property, stream or link. The historical Markifact credit blocker does not prevent the now-working authenticated Google search-report UI. Live scheduler status is still unverified despite the historical regular-execution description below.
 
@@ -83,3 +83,7 @@ The existing worked example links directly to the station finder and its three p
 ## 13 November exact model search
 
 The compact model query BLUETTI Elite100V2 returned zero on both site languages even though the spaced name returned the documented model. Exact model matching now tolerates spaces and hyphens with or without the brand. Filters still apply. Preserve the current supplier destinations and the pending report, Renogy-link and mobile priorities.
+
+## 14 November Waterdrop regional disclosure
+
+The Waterdrop DE promotional email of 13 November addresses Germany. Romanian and Ukrainian delivery, EU affiliate approval and attribution remain unverified by that message. The RO/EN Waterdrop page explains the current regional offer status. Verified EU approval and exact issued links remain prerequisites to activation.
