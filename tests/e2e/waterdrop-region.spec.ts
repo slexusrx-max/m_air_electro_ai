@@ -5,6 +5,8 @@ for (const locale of ['ro','en']) for (const width of [390,1440]) {
     await page.route(/https:\/\/(?:[^/]*pxf\.io|www\.waterdropfilter\.de)\//, route => route.abort());
     await page.goto(`${locale === 'en' ? '/en' : ''}/waterdrop`);
     await expect(page.locator('[data-waterdrop-region-notice]')).toContainText(locale === 'ro' ? 'doar pentru Germania' : 'for Germany only');
+    await expect(page.locator('[data-waterdrop-region-notice]')).toContainText(locale === 'ro' ? 'nu sunt disponibile aici pentru România' : 'for Romania are unavailable here');
+    await expect(page.locator('main')).not.toContainText(/Active Waterdrop affiliate links|Linkuri afiliate Waterdrop active/);
     await expect(page.locator('a[data-supplier="waterdrop-eu"]')).toHaveCount(0);
     const notices = page.locator('[data-supplier="waterdrop-eu"][data-market-status="blocked-romania"]');
     expect(await notices.count()).toBeGreaterThan(15);

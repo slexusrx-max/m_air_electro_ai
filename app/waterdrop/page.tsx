@@ -5,7 +5,6 @@ import { ProductCard } from "@/components/marketplace/product-card";
 import { SupplierLink } from "@/components/marketplace/supplier-link";
 import { PlatformShell } from "@/components/platform-shell";
 import { catalog } from "@/lib/affiliate/catalog";
-import { supplierLink } from "@/lib/affiliate/providers";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { buildMetadata } from "@/lib/metadata";
 import type { Equipment } from "@/lib/marketplace/catalog-data";
@@ -20,8 +19,8 @@ export async function generateMetadata() {
   const ro = locale === "ro";
   return buildMetadata({
     locale,
-    title: ro ? "Waterdrop - compară sisteme de apă, magazin DE" : "Waterdrop - compare water systems, DE store",
-    description: ro ? "Compară modele Waterdrop documentate. Linkurile actuale duc la magazinul german, pentru Germania. Pentru România este necesar magazinul EU separat." : "Compare documented Waterdrop models. Current links lead to the German store for Germany. Romania requires the separate EU store.",
+    title: ro ? "Waterdrop – compară sisteme de filtrare a apei" : "Waterdrop – compare water filtration systems",
+    description: ro ? "Compară modelele Waterdrop documentate și verifică cerințele de instalare. Ofertele afiliate Waterdrop Germania sunt disponibile doar pentru Germania." : "Compare documented Waterdrop models and check installation requirements. Waterdrop Germany affiliate offers are for Germany only.",
     path: "/waterdrop",
   });
 }
@@ -32,8 +31,6 @@ export default async function WaterdropPage() {
     getRequestDictionary(),
   ]);
   const ro = locale === "ro";
-  const trackingActive = waterdropProducts.some((product) => supplierLink(product).tracked);
-
   return (
     <PlatformShell>
       <main className={styles.page}>
@@ -47,7 +44,7 @@ export default async function WaterdropPage() {
 
         <header className={styles.hero}>
           <div>
-            <p className={styles.kicker}>WATERDROP · {ro ? "MAGAZIN GERMANIA" : "GERMANY STORE"}</p>
+            <p className={styles.kicker}>WATERDROP · {ro ? "GHID DE ALEGERE" : "SELECTION GUIDE"}</p>
             <h1>
               {ro
                 ? "Alege sistemul Waterdrop potrivit pentru bucătăria ta"
@@ -79,22 +76,11 @@ export default async function WaterdropPage() {
 
         <section className={styles.notice} aria-label={ro ? "Transparență comercială" : "Commercial transparency"}>
           <p data-waterdrop-region-notice>
-            <strong>{ro ? "Linkurile actuale duc la magazinul DE, doar pentru Germania." : "Current links lead to the DE store, for Germany only."}</strong>{" "}
-            {ro ? "Pentru România este necesar magazinul EU și un program afiliat separat. Nu avem încă linkuri afiliate EU verificate pentru România. Nu folosi magazinul DE pentru o comandă cu livrare în România." : "Romania requires the EU store and a separate affiliate programme. We do not yet have verified EU affiliate links for Romania. Do not use the DE store for an order delivered to Romania."}
+            <strong>{ro ? "Programul afiliat Waterdrop DE este doar pentru Germania." : "The Waterdrop DE affiliate programme is for Germany only."}</strong>{" "}
+            {ro ? "Ofertele afiliate Waterdrop nu sunt disponibile aici pentru România. Pentru livrare în România, verifică varianta exactă și condițiile de livrare în magazinul UE separat." : "Waterdrop affiliate offers for Romania are unavailable here. For delivery to Romania, check the exact model variant and shipping terms with the separate EU store."}
           </p>
-          <strong>
-            {trackingActive
-              ? (ro ? "Linkuri afiliate Waterdrop active" : "Active Waterdrop affiliate links")
-              : (ro ? "Program Waterdrop (DE) aprobat" : "Waterdrop (DE) program approved")}
-          </strong>
           <p>
-            {trackingActive
-              ? (ro
-                ? "M Air Electro AI este editor independent. Linkurile Waterdrop marcate ca afiliate pot genera un comision pentru achizițiile eligibile, fără cost suplimentar pentru cumpărător."
-                : "M Air Electro AI is an independent publisher. Marked Waterdrop affiliate links may earn us a commission on qualifying purchases at no extra cost to the buyer.")
-              : (ro
-                ? "Relația afiliată este confirmată, iar linkurile rămân obișnuite până la activarea tehnică a adreselor emise de Impact."
-                : "The affiliate relationship is confirmed; links remain ordinary until the Impact-issued URLs are technically activated.")} {ro ? "Magazinul german stabilește prețul, țările de livrare, garanția și retururile." : "The German store controls pricing, delivery countries, warranty and returns."}
+            {ro ? "Paginile modelelor includ sursele producătorului pentru verificarea specificațiilor." : "The model pages link to manufacturer documentation for checking specifications."}
           </p>
         </section>
 
@@ -148,7 +134,7 @@ export default async function WaterdropPage() {
             <h2 id="waterdrop-checklist-title">{ro ? "Verificări care evită o alegere greșită" : "Checks that prevent a poor fit"}</h2>
           </div>
           <ol>
-            <li>{ro ? "Alege magazinul pentru țara de livrare. Linkurile DE de aici sunt doar pentru Germania; pentru România verifică separat magazinul EU și varianta exactă." : "Choose the store for the delivery country. These DE links are for Germany only; for Romania, check the separate EU store and exact variant."}</li>
+            <li>{ro ? "Verifică dacă magazinul livrează varianta exactă în țara ta și ce condiții de garanție și retur se aplică." : "Check whether the store ships the exact variant to your country and which warranty and return terms apply."}</li>
             <li>{ro ? "Măsoară spațiul de sub chiuvetă și verifică accesul la priză și evacuare." : "Measure under-sink space and verify access to power and a drain connection."}</li>
             <li>{ro ? "Compară presiunea și temperatura apei cu limitele din manual." : "Compare inlet pressure and temperature with the manual limits."}</li>
             <li>{ro ? "Confirmă codurile, prețul și disponibilitatea cartușelor de schimb." : "Confirm replacement-cartridge codes, price and availability."}</li>
