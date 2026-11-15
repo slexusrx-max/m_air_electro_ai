@@ -5,9 +5,8 @@ import { Breadcrumbs } from "@/components/marketplace/shared";
 import { AffiliateDisclosure } from "@/components/marketplace/affiliate-disclosure";
 import { getRequestDictionary, getRequestLocale } from "@/lib/i18n/request";
 import { buildMetadata } from "@/lib/metadata";
-import feed from "@/data/renogy-feed-variants.json";
 import { localizedPath } from "@/lib/i18n/routing";
-import { supplierEntryName } from "@/lib/marketplace/supplier-discovery";
+import { searchRenogyFeed, supplierEntryName } from "@/lib/marketplace/supplier-discovery";
 import styles from "./catalog.module.css";
 
 const PAGE_SIZE = 48;
@@ -39,9 +38,7 @@ export default async function RenogyCatalogPage({ searchParams }: Props) {
   ]);
   const ro = locale === "ro";
   const query = first(rawParams.q);
-  const normalized = query.toLocaleLowerCase();
-  const filtered = feed.products.filter(product => !normalized ||
-    product.name.toLocaleLowerCase().includes(normalized) || product.sku.includes(normalized));
+  const filtered = searchRenogyFeed(query);
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const requestedPage = Number.parseInt(first(rawParams.page), 10);
   const currentPage = Number.isInteger(requestedPage) ? Math.min(Math.max(requestedPage, 1), pageCount) : 1;

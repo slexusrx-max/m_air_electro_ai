@@ -6,6 +6,17 @@ import { catalog } from "../lib/affiliate/catalog";
 import { publicRoutes } from "../lib/marketplace/routes";
 import { localizedPath, isLocalizedPublicPath } from "../lib/i18n/routing";
 import variants from "../data/renogy-feed-variants.json";
+import { searchRenogyFeed } from "../lib/marketplace/supplier-discovery";
+
+test("Renogy feed search preserves the exact SKU across common unit and hyphen spellings", () => {
+  const sku = "46435544924417";
+  for (const query of ["12 V 60 A DC-to-DC", "12V 60A DC to DC", sku]) {
+    assert.deepEqual(searchRenogyFeed(query).map(entry => entry.sku), [sku]);
+  }
+  assert.equal(searchRenogyFeed("no-such-model-999").length, 0);
+  assert.equal(searchRenogyFeed("---").length, 0);
+  assert.deepEqual(searchRenogyFeed("").map(entry => entry.sku), variants.products.map(entry => entry.sku));
+});
 
 test("full feed identity index retains all 365 exact SKU rows without prices or tracking URLs", () => {
   assert.equal(variants.catalogId, "28907");
