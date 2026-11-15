@@ -29,6 +29,18 @@ export function supplierEntryName(entry: SupplierEntry): string {
     .replace(/[（(]save[^)）]*[)）]/gi, "").replace(/\s+/g, " ").trim();
 }
 
+export function searchRenogyFeed(query: string): SupplierEntry[] {
+  const literal = query.trim().toLowerCase();
+  if (!literal) return feed.products;
+
+  const normalized = normalizeSearch(literal);
+  return feed.products.filter(entry =>
+    entry.sku.includes(literal) ||
+    entry.name.toLowerCase().includes(literal) ||
+    (normalized !== "" && normalizeSearch(entry.name).includes(normalized)),
+  );
+}
+
 export type DiscoveryResult = { type: "reviewed"; product: Equipment } | { type: "supplier"; entry: SupplierEntry };
 
 export function discoverEquipment(products: Equipment[], raw: CatalogQuery, path = "/search"): DiscoveryResult[] {
