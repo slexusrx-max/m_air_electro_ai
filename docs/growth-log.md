@@ -344,3 +344,11 @@ Main `0c3ef551cb60871b3801b91cdba1584bbc2f4eae` matched the READY public deploym
 The live EN Renogy index returned zero for `12 V 60 A DC-to-DC`, while the literal feed name and SKU `46435544924417` found one exact card. Reuse the existing catalog normalization for an additional name match while retaining literal name matching, SKU matching, feed order and identities. The change does not touch the supplier link resolver. Hypothesis: spelling differences in copied model names and units cause fewer dead ends.
 
 Local checks passed 214 tests, including unchanged feed order, exact SKU selection across three spellings, and empty results for unknown names and separator-only input. Catalog validation found 77 records, 64 models and 50 photos with no errors. Targeted lint has one existing image warning. Preview and release checks are recorded on the PR. Rollback: revert the feed-search matcher, page wiring, regression and documentation after checking later changes.
+
+## 16 November 2026 — weekly review, Renogy link reconciliation and Ukraine reply
+
+Main `2bdff8246fe67580e64dc9a0303a354ea5ef7fa9` matched READY production `dpl_HQQmmGAS7ujPdqQQsUGUFxTqX11W` and the public alias. No open PR or queued/running workflow. Checked the six required current documents.
+
+Verified eight EN Renogy feed pages against the saved 365-SKU rendered register. All returned HTTP 200, no href or status changed, and the 26 queued identities remain ordinary at their recorded destinations. Read first-party HTML only. Reviewed the 9–15 November merged work and updated priorities by scope. See [weekly review](growth-weekly-review-2026-11-16.md).
+
+Gmail showed Renogy Support's 16 November reply to the existing Ukraine enquiry. It identifies exact products and destination postal code as prerequisites to confirm transport and cost. No other new substantive partner reply found. No duplicates sent. No new GA4, Search Console or network report obtained. The documentation package records the conditional delivery status and the regression check; no public offer changed. Release verification is recorded on its PR. Rollback: revert only these three documentation files after checking later changes.

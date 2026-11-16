@@ -1,6 +1,6 @@
 # Growth backlog
 
-Updated 15 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
+Updated 16 November 2026. Audience: Romania/EU; Romanian primary, English supported. Owner: Stanislav Zavizion, independent publisher. No public numerical prices, discount promises or stock; purchases at merchants.
 
 5 November measurement update: [verified GA4 activation](ga4-activation-2026-11-04.md) supersedes the service/project blocker below. Production uses the actual ID with consent and automation guards; two key events and the existing Search Console link are configured. Landing-page search report for 8 October–4 November: 359 impressions, 0 clicks, average position 30.52. These are search metrics, not measured website sessions. Next: verify legitimate GA4 event receipt and finish only needed reporting definitions; do not recreate the property, stream or link. The historical Markifact credit blocker does not prevent the now-working authenticated Google search-report UI. Live scheduler status is still unverified despite the historical regular-execution description below.
 
@@ -91,3 +91,9 @@ The Waterdrop DE promotional email of 13 November addresses Germany. Romanian an
 ## 15 November Renogy feed search
 
 Reuse catalog search normalization in the full 365-SKU Renogy index. Shoppers can find the same charger by its exact SKU or by typing the units with spaces and the model phrase with hyphens. Hypothesis: fewer empty results from copy-pasted names and specification strings. The remaining 26-SKU link queue and reporting priorities stay open.
+
+## Weekly review — 16 November 2026
+
+[Review for 9–15 November](growth-weekly-review-2026-11-16.md). Seven merged PRs cover SEO evidence, desktop journey verification, supplier smoke checks, the portable-station guide, two search improvements and Waterdrop regional disclosure. Fresh static Renogy check: 365 of 365 link states and hrefs match the register (227 active, 138 ordinary). The 26 exact equipment identities still need issued links. Prioritize real event and financial reports, the exact link queue, and a focused phone test when a usable runner is available.
+
+Renogy Support's 16 November reply moves the existing Ukraine enquiry to a product-and-postcode check. Support can assess shipment of lithium batteries via its Poland warehouse. Confirm the exact model, destination and quote before making delivery claims. Forwarding, discounts, warranty and commission remain separate open questions.
