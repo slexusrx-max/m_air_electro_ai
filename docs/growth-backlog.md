@@ -107,3 +107,8 @@ Main `ffef5b4` and READY production `dpl_5od94i7EndZuncqAnE4iNy5DGipj` match. Ei
 ## 18 November post-release checkpoint
 
 Main `12cee3f` and READY production `dpl_42tKVWFS66bfFRGWsqvxAzSbQtYj` match. Post-release static checks found all 365 Renogy feed identities unchanged: 227 active/138 ordinary, zero href/status mismatches, and no numerical price cards. Root, robots, sitemap, RO/EN Waterdrop and comparison routes returned HTTP 200; Waterdrop remains blocked for Romania with no active supplier CTA. Gmail has no new substantive partner reply after 17 November. No new analytics or financial report is available, and no tracking clicks were generated. Keep the existing three priorities; do not create a no-op application change or repeat the blocked runner attempt without a changed condition.
+
+
+## 19 November post-release checkpoint
+
+Main `bfb26df` and READY production `dpl_4xGMZTdshF2A6N2QtrcZr3HvxHLV` match. Eight EN Renogy feed pages render all 365 registered identities with 227 active/138 ordinary states, zero normalized href/status mismatches (HTML `&amp;` is normalized to `&`), and no numerical price cards. Root, robots, sitemap, RO/EN Waterdrop and comparison routes return HTTP 200; the Romania gate remains in place with no active Waterdrop supplier CTA. Gmail has no new substantive partner reply after 18 November. No new analytics or financial report is available, and no tracking clicks were generated. Keep the existing three priorities; do not create a no-op application change or repeat the blocked runner attempt without a changed condition.
