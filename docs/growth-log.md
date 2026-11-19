@@ -378,3 +378,16 @@ Action 2 — public route and regional health: `/`, `/robots.txt`, `/sitemap.xml
 Action 3 — partner/report state: a Gmail search after 17 November returned no Renogy, Waterdrop, PECRON or BLUETTI messages. The existing Renogy Ukraine case remains unchanged and no duplicate enquiry or watcher notice was created. No fresh GA4, Search Console, Impact or Awin report is available; site events, network clicks, actions, confirmed commissions and payouts remain UNKNOWN rather than zero. The prior runner IPC limitation was not retried without a changed condition.
 
 Hypothesis/result: post-release static checks can catch deployment drift without generating tracking traffic. No application, catalog, photo, design, price, regional gate or affiliate mapping changed. Rollback: focused revert of this documentation note only, after checking later changes; no application rollback or migration is required. Next priorities remain authorized event/financial reporting, exact links for the 26-SKU equipment queue and a phone-viewport journey when a usable runner exists.
+
+
+## 19 November 2026 — post-release production health check
+
+Preflight: main `bfb26df439fb53d42838f9b58444b38619ce562b` has no open growth PR. Vercel production `dpl_4xGMZTdshF2A6N2QtrcZr3HvxHLV` is READY and the `mairelectroai.com` alias points to it. The six required current-main documents were read; this package changes documentation only.
+
+Action 1 — Renogy feed/page integrity: all eight English catalog pages returned HTTP 200 with deployment marker `bfb26df439fb53d42838f9b58444b38619ce562b`. The rendered pages contained 365 unique SKUs, 227 active/labelled entries and 138 ordinary entries. Every card carried `data-price-status=unavailable`. A read-only comparison of all 365 href/status pairs with `docs/affiliate-renogy-feed-links.csv` found zero mismatches after normalizing HTML `&amp;` escaping to the URL character `&`; no merchant or tracking URL was requested.
+
+Action 2 — public route and regional health: `/`, `/robots.txt`, `/sitemap.xml`, `/waterdrop`, `/en/waterdrop` and the localized Waterdrop comparison returned HTTP 200. The EN Waterdrop landing retained 32 Romania-blocked notices and no active supplier CTA; the comparison retained its blocked notices. No external supplier navigation was performed.
+
+Action 3 — partner/report state: a Gmail search after 18 November returned no Renogy, Waterdrop, PECRON or BLUETTI messages. The existing Renogy Ukraine case remains unchanged and no duplicate enquiry or watcher notice was created. No fresh GA4, Search Console, Impact or Awin report is available; site events, network clicks, actions, confirmed commissions and payouts remain UNKNOWN rather than zero. No tracking clicks, test purchase or new subscription was created.
+
+Hypothesis/result: a normalized static feed check catches genuine destination/status drift without generating tracking traffic. No application, catalog, photo, design, price, regional gate or affiliate mapping changed. Rollback: focused revert of this documentation note only, after checking later changes; no application rollback or migration is required. Next priorities remain authorized event/financial reporting, exact links for the 26-SKU equipment queue and a phone-viewport journey when a usable runner exists.
