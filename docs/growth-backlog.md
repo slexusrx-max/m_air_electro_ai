@@ -122,3 +122,10 @@ Main `db394d9` and READY production `dpl_CcLWzMkvJgtX7ecqvfoHC3z9rCPA` match. Ei
 ## 21 November campaign checkpoint
 
 Main `643f3b9` and READY production `dpl_EDPTtCL4gerPgqsPHcGC6hSdFHxH` match. Eight EN Renogy feed pages render 365 registered identities with 227 active/138 ordinary states, zero normalized href/status mismatches and no numerical price cards. Root, robots, sitemap, RO/EN Waterdrop and comparison routes return HTTP 200; the Romania gate remains in place with no active Waterdrop supplier CTA. New Renogy affiliate email (20 Nov, message `1a1f89d6406c2ce3`) advertises a UK\&DE campaign for 19–30 Nov with up to 52% off; market, Romania eligibility and commission compatibility are unverified, so do not publish or follow its promotion links. Waterdrop Germany campaign from 19 Nov remains gated the same way. No new analytics or financial report is available, and no tracking clicks were generated. Keep the existing three priorities; treat campaign verification as a gated follow-up, not a site change.
+
+
+## 22 November 2026 — checkpoint update
+
+- **Renogy campaign evidence:** message `1a1f89d6406c2ce3` (20 Nov) advertises a UK\\&DE Black Friday/Cyber Monday promotion, 19–30 Nov 2026, up to 52% off. Romania eligibility, allowed stores, commission compatibility, exclusions and tracking receipt are unverified; do not publish prices or follow the promotion links. Waterdrop Germany campaign remains similarly gated; no new PECRON/BLUETTI reply.
+- **Verification:** main `91a7265a7c917d7f775bfeb6bbd2576e1689e3f8` matched READY production `dpl_EgsyBxr3qGJVhdiW3HoVWCMNtiZU`. Static catalogue remained 365 SKU / 227 active-tracked / 138 ordinary, all price status unavailable, 0 normalized register mismatches; core routes HTTP 200 and Waterdrop Romania gate unchanged.
+- **Next:** keep the existing priorities—authorized GA4/Impact/Awin/Search Console receipts, exact 26-SKU Renogy equipment queue, then phone validation only after runner/input condition changes. No application change justified by this campaign-only evidence.
