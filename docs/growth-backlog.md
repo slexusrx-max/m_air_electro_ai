@@ -129,3 +129,12 @@ Main `643f3b9` and READY production `dpl_EDPTtCL4gerPgqsPHcGC6hSdFHxH` match. Ei
 - **Renogy campaign evidence:** message `1a1f89d6406c2ce3` (20 Nov) advertises a UK\\&DE Black Friday/Cyber Monday promotion, 19–30 Nov 2026, up to 52% off. Romania eligibility, allowed stores, commission compatibility, exclusions and tracking receipt are unverified; do not publish prices or follow the promotion links. Waterdrop Germany campaign remains similarly gated; no new PECRON/BLUETTI reply.
 - **Verification:** main `91a7265a7c917d7f775bfeb6bbd2576e1689e3f8` matched READY production `dpl_EgsyBxr3qGJVhdiW3HoVWCMNtiZU`. Static catalogue remained 365 SKU / 227 active-tracked / 138 ordinary, all price status unavailable, 0 normalized register mismatches; core routes HTTP 200 and Waterdrop Romania gate unchanged.
 - **Next:** keep the existing priorities—authorized GA4/Impact/Awin/Search Console receipts, exact 26-SKU Renogy equipment queue, then phone validation only after runner/input condition changes. No application change justified by this campaign-only evidence.
+
+
+## Weekly review — 23 November 2026 (review window 16–22 November)
+
+Delivered in the review window: static production health checkpoints, Waterdrop Germany/Romania gate preservation, and documentation of the Renogy UK\\&DE campaign email. No application, catalogue, photo, design, price, regional or affiliate mapping changes were needed. The current live register remains 365 Renogy rows with 227 active/tracked and 138 ordinary; this is source/render coverage, not network clicks or revenue.
+
+No fresh Impact/Awin, GA4 or Search Console report is available; actions, commissions and payouts remain UNKNOWN. No new substantive PECRON/BLUETTI reply arrived, and the Renogy Ukraine enquiry remains unchanged. The canonical Romanian Waterdrop route is `/waterdrop`; the unlisted `/ro/waterdrop` path is intentionally not treated as a defect.
+
+Next order remains: (1) authorized measurement receipts and matched network evidence, (2) exact issued links for the preserved 26 equipment identities, (3) scoped phone validation after runner/input changes. Do not repeat declined access, create tracking traffic, publish UK/DE or Germany-only discount claims for Romania, or make a no-op code change.
