@@ -138,3 +138,7 @@ Delivered in the review window: static production health checkpoints, Waterdrop 
 No fresh Impact/Awin, GA4 or Search Console report is available; actions, commissions and payouts remain UNKNOWN. No new substantive PECRON/BLUETTI reply arrived, and the Renogy Ukraine enquiry remains unchanged. The canonical Romanian Waterdrop route is `/waterdrop`; the unlisted `/ro/waterdrop` path is intentionally not treated as a defect.
 
 Next order remains: (1) authorized measurement receipts and matched network evidence, (2) exact issued links for the preserved 26 equipment identities, (3) scoped phone validation after runner/input changes. Do not repeat declined access, create tracking traffic, publish UK/DE or Germany-only discount claims for Romania, or make a no-op code change.
+
+## 24 November 2026 — affiliate evidence checkpoint
+
+Use the current evidence table in [the affiliate audit](affiliate-tracking-audit.md) for the next reporting check. Fresh production HTML matched all 365 registered href/status pairs and all 26 ordinary equipment destinations. The next link work requires account-issued Impact links for those exact identities. A fresh report is still needed for site event receipt, network clicks, attributed actions, confirmed commission and payout. The latest Gmail candidate was a newsletter; the Ukraine case and Waterdrop regional requirements stay as recorded. Keep the 23 November priority order.
