@@ -1,6 +1,22 @@
 # Affiliate tracking audit — 27 October 2026
 
-## Current reconciliation — 6 November 2026
+## Current evidence — 24 November 2026
+
+Production baseline: GitHub main `a3bce0776fe542b0dcea91d9e14863ac6e77cffc`, [Vercel deployment](https://vercel.com/m-air-electro-ai/m-air-electro-ai/DE2XAPDwGHiaqjenLLAoRDt8A1w7). Eight [EN catalog pages](https://mairelectroai.com/en/renogy/catalog) returned HTTP 200. The [rendered-link register](affiliate-renogy-feed-links.csv) matched all 365 unique SKUs by href and status: 227 active and 138 ordinary. The [equipment queue](renogy-equipment-link-queue-2026-11-05.csv) still has 26 ordinary SKUs across seven destination families, with every live href matching the queue. These counts cover the supplier feed. Product-detail model counts are recorded separately.
+
+Waterdrop's RO and EN pages each showed 32 blocked notices (repeated placements), and the two-model EN comparison showed two. These surfaces had zero active supplier CTAs. PECRON and BLUETTI have no new programme/link evidence in this review. A static EN/RO search for `BLUETTI Elite100V2` rendered its existing ordinary exact-model link.
+
+| Evidence | Latest verified state |
+| --- | --- |
+| Published affiliate href | Renogy live register matched 365/365. Waterdrop regional restriction verified on the sampled pages. |
+| Site-side outbound event receipt | GA4 production setup was accepted on 5 November. Actual website-event receipt remains unverified. |
+| Affiliate network clicks | Historical Impact report for 21 October–3 November recorded Renogy 19 and Waterdrop DE 6, possibly including internal tests. Current counts and placement breakdown are unknown. |
+| Attributed action | Historical report recorded zero actions in that window. Current actions are unknown. |
+| Confirmed commission and payout | No current confirmation for either stage. |
+
+Gmail review found a Renogy EU newsletter dated 23 November and no substantive new reply from the four monitored partners, including the Ukraine enquiries. The existing Renogy Ukraine case still requires exact model(s) and destination postcode before delivery and cost can be confirmed. EU forwarding, discounts and commission each require separate confirmation. Renogy Romania eligibility remains confirmed. No supplier or tracking URL was requested during these checks.
+
+## 6 November 2026 — historical reconciliation
 
 Current main/production baseline: 215d028e3b742ce31f82722b35fd775827230fda / READY dpl_Fn6hX3Qg5WxYGAiX8RiHcGDeHUL5. Fresh first-party feed HTML: eight HTTP 200 pages, **365 unique SKUs / 227 active / 138 ordinary**. This supersedes earlier 215/150 feed counts. [Exact queue](renogy-equipment-link-queue-2026-11-05.md): 26 ordinary equipment identities across seven merchant families; all current destinations match. No tracking endpoint followed or new link issued.
 
