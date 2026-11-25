@@ -447,3 +447,11 @@ Preflight: main `a3bce0776fe542b0dcea91d9e14863ac6e77cffc` matches the public Ve
 The [affiliate audit](affiliate-tracking-audit.md) now leads with the current evidence and keeps dated evidence under dated headings. Hypothesis: clear validation boundaries prevent an ordinary or region-blocked link from being mistaken for commission evidence, and keep the exact equipment queue ready for an authorized Impact session. Static checks: eight catalog pages HTTP 200; 365 unique SKUs, 227 active, 138 ordinary, 365 no-price cards and zero href/status mismatches; 26/26 queued hrefs and ordinary states matched. RO/EN Waterdrop pages retained 32 blocked notices each; EN comparison retained two. RO/EN BLUETTI compact-model search returned the exact ordinary link with noindex. Robots and sitemap returned HTTP 200.
 
 Targeted Gmail checks found only a Renogy newsletter and no substantive partner or Ukraine update. No mail sent. No current measurement reports, merchant visits, tracking clicks or orders. Revert this documentation commit after checking later edits if rollback is needed.
+
+## 25 November 2026 — correct the inverter surge guide shortcut
+
+Baseline `98f561a5287dac380c076a94b5a5a998cb54112a` matched GitHub main and the ready public deployment. No open PR, active build or workflow on the baseline commit was found.
+
+Both language versions of the inverter surge guide linked to the generator sizing tool. The existing backup calculator exposes a per-load starting multiplier and estimated inverter surge output in both languages. Point the guide there through its existing localized calculator field. Hypothesis: the route change takes readers directly to the relevant estimate. Source evidence is the published RO/EN guide and backup calculator HTML. Add a regression assertion for the guide route and verify the localized hrefs and destination labels on preview and production.
+
+Targeted Gmail searches found generic Impact digests and the previously reviewed Renogy newsletter. No substantive update from Renogy, Waterdrop, PECRON or BLUETTI, including the Ukraine enquiries. Current GA4, Search Console and affiliate reports were not obtained. No outbound email, supplier visit, tracking click or test order. Rollback: revert this focused commit after checking for later changes to the route.
