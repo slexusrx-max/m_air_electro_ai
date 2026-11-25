@@ -315,7 +315,7 @@ export const guides: Guide[] = [
     ],
     category: "inverters",
     solution: "workshop",
-    calculator: "/calculators/generator",
+    calculator: "/backup-calculator",
     sources: [wiring],
   },
   {
