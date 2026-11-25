@@ -4,6 +4,11 @@ import { guides } from '../lib/marketplace/guides';
 import { catalog } from '../lib/affiliate/catalog';
 import { comparableSelection, comparisonGroup } from '../lib/marketplace/comparison';
 
+test('inverter surge guide opens the backup calculator for inverter peak demand', () => {
+  const guide = guides.find(g => g.slug === 'inverter-surge-power');
+  assert.equal(guide?.calculator, '/backup-calculator');
+});
+
 test('backup sizing guide separates real AC stations from standalone batteries', () => {
   const guide = guides.find(g => g.slug === 'how-to-size-backup-battery')!;
   assert.equal(guide.equipmentGroups?.length, 2);
