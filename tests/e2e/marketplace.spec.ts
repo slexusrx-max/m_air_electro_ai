@@ -132,7 +132,7 @@ test("solar calculator, battery calculator and backup hours change results", asy
   expect(after).not.toEqual(before);
   await expect(
     page.getByRole("link", {
-      name: "Găsește echipamente potrivite",
+      name: "Vezi cerințele în catalog",
       exact: true,
     }),
   ).toHaveAttribute("href", /batteryKwh=/);
