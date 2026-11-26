@@ -455,3 +455,13 @@ Baseline `98f561a5287dac380c076a94b5a5a998cb54112a` matched GitHub main and the 
 Both language versions of the inverter surge guide linked to the generator sizing tool. The existing backup calculator exposes a per-load starting multiplier and estimated inverter surge output in both languages. Point the guide there through its existing localized calculator field. Hypothesis: the route change takes readers directly to the relevant estimate. Source evidence is the published RO/EN guide and backup calculator HTML. Add a regression assertion for the guide route and verify the localized hrefs and destination labels on preview and production.
 
 Targeted Gmail searches found generic Impact digests and the previously reviewed Renogy newsletter. No substantive update from Renogy, Waterdrop, PECRON or BLUETTI, including the Ukraine enquiries. Current GA4, Search Console and affiliate reports were not obtained. No outbound email, supplier visit, tracking click or test order. Rollback: revert this focused commit after checking for later changes to the route.
+
+## 26 November 2026 — clarify backup calculator handoff
+
+GitHub main `115a1a0677b0cdad7a620916dac31545def527c8` matched the ready public deployment. No open PR, building deployment or workflow for that commit appeared. On the live calculator, “Find Matching Equipment” linked to the unfiltered catalog with a requirements summary and only a battery shortcut. The calculator supplies estimates for both battery energy and inverter power.
+
+Use explicit bilingual action text for the handoff and add direct battery and inverter category links to the summary. Hypothesis: readers can reach the relevant category and use their existing estimate to review specifications. Evidence: first-party HTML for the calculator, query-based catalog and both categories. Regression assertions cover the existing transfer and both category destinations. Check the localized HTML and noindex query behavior on preview and production. Rollback: revert this commit after checking later changes.
+
+All 215 unit tests, TypeScript, targeted ESLint, the 419-key i18n check and diff validation passed. The browser specs were updated but the local Chromium executable is unavailable. Release checks use the rendered HTML for both locales.
+
+The scoped Gmail results contained the previously reviewed generic Impact digests. The Ukraine search returned no new candidates. Fresh analytics or affiliate network reports were not obtained.
