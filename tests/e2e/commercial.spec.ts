@@ -25,7 +25,7 @@ test("backup edits power/quantity/hours, adds custom device and transfers valid 
     .fill("0");
   await expect(page.locator("#main-content").getByRole("alert")).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Găsește echipamente potrivite" }),
+    page.getByRole("link", { name: "Vezi cerințele în catalog" }),
   ).toHaveCount(0);
   await page
     .getByTestId("appliance")
@@ -34,12 +34,19 @@ test("backup edits power/quantity/hours, adds custom device and transfers valid 
     .fill("200");
   await expect(page.getByTestId("backup-continuous")).toHaveText("630 W");
   await page
-    .getByRole("link", { name: "Găsește echipamente potrivite", exact: true })
+    .getByRole("link", { name: "Vezi cerințele în catalog", exact: true })
     .click();
   await expect(page.getByRole("heading", { name: "Cerințe primite din calculator" })).toBeVisible();
   const q = new URL(page.url()).searchParams;
   expect(Number(q.get("batteryKwh"))).toBeGreaterThan(0);
   expect(q.get("region")).toBe("RO");
+  const requirements = page.locator("section").filter({
+    has: page.getByRole("heading", { name: "Cerințe primite din calculator" }),
+  });
+  await expect(requirements.getByRole("link", { name: /Vezi bateriile/ }))
+    .toHaveAttribute("href", "/marketplace/batteries");
+  await expect(requirements.getByRole("link", { name: /Vezi invertoarele/ }))
+    .toHaveAttribute("href", "/marketplace/inverters");
 });
 
 test("legacy product URLs preserve models, schema and supplier disclosure", async ({

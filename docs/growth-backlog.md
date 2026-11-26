@@ -146,3 +146,7 @@ Use the current evidence table in [the affiliate audit](affiliate-tracking-audit
 ## 25 November 2026 — inverter guide calculator link
 
 The [inverter surge guide](https://mairelectroai.com/en/learn/inverter-surge-power) now points readers to the existing backup calculator, which exposes a per-load starting multiplier and an estimated inverter surge requirement. Hypothesis: matching the calculator to the decision described in the guide removes a wrong turn for readers sizing an inverter. The next attribution work still requires authorized reports and account-issued links for the existing 26-SKU queue.
+
+## 26 November 2026 — backup estimate to catalog
+
+The [backup calculator](https://mairelectroai.com/en/backup-calculator) hands off the existing energy, continuous-power and surge estimates to the catalog. The RO/EN action now describes that handoff. The results panel offers separate battery and inverter category links. Hypothesis: people can use the estimate to find the right category with one fewer navigation step. Keep this URL noindex and keep technical matching as a separately validated task.

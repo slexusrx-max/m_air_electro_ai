@@ -86,8 +86,11 @@ export async function DiscoveryHome({ marketplace = false, requirements }: {
     {requirements && (requirements.batteryKwh || requirements.inverterKw) && <section className="content-panel">
       <h2>{ro ? "Cerințe primite din calculator" : "Requirements received from calculator"}</h2>
       <p>{ro ? "Baterie" : "Battery"}: {requirements.batteryKwh ?? "—"} kWh · {ro ? "Invertor" : "Inverter"}: {requirements.inverterKw ?? "—"} kW · {ro ? "Vârf" : "Surge"}: {requirements.surgeKw ?? "—"} kW · {requirements.region ?? "EU"}</p>
-      <p>{ro ? "Estimări pentru sistem, nu confirmare de compatibilitate a unui produs." : "System estimates, not confirmation of product compatibility."}</p>
-      <Link href="/marketplace/batteries">{ro ? "Verifică baterii" : "Review batteries"} →</Link>
+      <p>{ro ? "Folosește estimările de mai sus pentru a verifica datele tehnice ale fiecărui model. Catalogul afișează toate categoriile, indiferent de rezultatul calculului." : "Use the estimates above to check each model’s specifications. The catalog shows all categories regardless of the calculation result."}</p>
+      <div className="action-row">
+        <Link href="/marketplace/batteries">{ro ? "Vezi bateriile" : "Browse batteries"} →</Link>
+        <Link href="/marketplace/inverters">{ro ? "Vezi invertoarele" : "Browse inverters"} →</Link>
+      </div>
     </section>}
     {marketplace && <><CatalogBrowser products={catalog} query={requirements ?? {}} path="/marketplace" facets={["voltage", "capacityAh", "power"]} dictionary={dictionary} ro={ro} />{categorySection}</>}
     {!marketplace && <>
