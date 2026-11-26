@@ -313,7 +313,7 @@ export function BackupCalculator({
             )}
             className="button-primary"
           >
-            {tx("Găsește echipamente potrivite", "Find Matching Equipment")}
+            {tx("Vezi cerințele în catalog", "View requirements in the catalog")}
           </Link>
         </section>
       ) : null}
