@@ -150,3 +150,7 @@ The [inverter surge guide](https://mairelectroai.com/en/learn/inverter-surge-pow
 ## 26 November 2026 — backup estimate to catalog
 
 The [backup calculator](https://mairelectroai.com/en/backup-calculator) hands off the existing energy, continuous-power and surge estimates to the catalog. The RO/EN action now describes that handoff. The results panel offers separate battery and inverter category links. Hypothesis: people can use the estimate to find the right category with one fewer navigation step. Keep this URL noindex and keep technical matching as a separately validated task.
+
+## 27 November 2026 — solar example to solar calculator
+
+The [Solar + battery solution](https://mairelectroai.com/en/solutions/solar-battery) sent readers to a finder application that defaulted to Apartment. The primary RO/EN action now opens the [existing solar calculator](https://mairelectroai.com/en/calculators/solar), where the same 3,000 Wh/day, 3.5 peak sun hours and 75% yield factor give 1,143 W before the reader supplies local inputs. Hypothesis: the worked example now leads directly to an editable calculation and the relevant panel category. Evaluate that path when authorized reports are available. The existing attribution and 26-SKU exact-link priorities remain open.
