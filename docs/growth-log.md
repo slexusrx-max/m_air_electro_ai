@@ -465,3 +465,13 @@ Use explicit bilingual action text for the handoff and add direct battery and in
 All 215 unit tests, TypeScript, targeted ESLint, the 419-key i18n check and diff validation passed. The browser specs were updated but the local Chromium executable is unavailable. Release checks use the rendered HTML for both locales.
 
 The scoped Gmail results contained the previously reviewed generic Impact digests. The Ukraine search returned no new candidates. Fresh analytics or affiliate network reports were not obtained.
+
+## 27 November 2026 — correct the Solar + battery calculator shortcut
+
+GitHub main `bf599d3ac62ddd534ffd30aa42533e97bee8725e` matched READY production `dpl_B275cKoEktDTu13ZTbvHiX7hZFDB`. No open PR, active build or workflow for that commit appeared. Sources: rendered RO/EN solution pages, the linked finder, and the existing solar calculator. The live solution CTA passed `application=solar-battery`, which the finder does not support, and the rendered finder selected Apartment.
+
+Point the primary action in both languages to the existing solar calculator and name what it estimates. The calculator starts with the guide's own illustrative assumptions: 3,000 Wh/day ÷ 3.5 h ÷ 0.75 rounds up to 1,143 W. Hypothesis: readers can reproduce the example, enter their own assumptions and continue to the solar-panel category. The example still requires location and month inputs for a site estimate. Catalogue, photographs, public price policy, supplier and affiliate configuration are unchanged.
+
+All 215 unit tests, TypeScript, targeted ESLint, the 419-key i18n check and diff validation passed. Added a 390 px Playwright regression for the two localized CTAs, calculation assumptions and onward panel link. Local Chromium is unavailable. Verify the same path in rendered preview and production. Rollback: revert this focused release commit after checking later changes.
+
+Scoped Gmail checks, including the existing Ukraine enquiries, found no substantive new Renogy, Waterdrop, PECRON or BLUETTI reply. The latest candidate was a generic Impact rate-boost digest without a named programme. Fresh site event, search, network click/action, commission and payout reports were unavailable. No partner mail or tracking clicks were generated.
