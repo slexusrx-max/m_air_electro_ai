@@ -33,6 +33,7 @@ export default async function Page({ params }: Props) {
   if (!solution) notFound();
   const locale = await getRequestLocale();
   const ro = locale === "ro";
+  const solarSizing = slug === "solar-battery";
   return (
     <PlatformShell>
       <main className="commerce-page">
@@ -71,9 +72,13 @@ export default async function Page({ params }: Props) {
         <div className="action-row">
           <Link
             className="button-primary"
-            href={`/marketplace/find-my-solution?application=${slug}&load=${solution.watts}&hours=${solution.hours}`}
+            href={solarSizing
+              ? "/calculators/solar"
+              : `/marketplace/find-my-solution?application=${slug}&load=${solution.watts}&hours=${solution.hours}`}
           >
-            {ro ? "Calculează sistemul meu" : "Calculate my system"}
+            {solarSizing
+              ? (ro ? "Calculează puterea panourilor" : "Estimate solar panel power")
+              : (ro ? "Calculează sistemul meu" : "Calculate my system")}
           </Link>
           <Link className="button-outline" href="/marketplace">
             {ro ? "Explorează marketplace" : "Browse marketplace"}
