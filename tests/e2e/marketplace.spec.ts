@@ -85,6 +85,21 @@ test("search, filters, no results and comparison flow", async ({ page }) => {
     page.getByText("Nicio potrivire în catalog", { exact: true }),
   ).toBeVisible();
 });
+test("the solar and battery example opens the localized solar calculator on mobile", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const locale of [
+    { prefix: "", action: "Calculează puterea panourilor", daily: "Consum zilnic (Wh)", panels: "Compară panouri" },
+    { prefix: "/en", action: "Estimate solar panel power", daily: "Daily energy (Wh)", panels: "Compare panels" },
+  ]) {
+    await page.goto(`${locale.prefix}/solutions/solar-battery`);
+    const action = page.getByRole("link", { name: locale.action, exact: true });
+    await expect(action).toHaveAttribute("href", `${locale.prefix}/calculators/solar`);
+    await action.click();
+    await expect(page.getByLabel(locale.daily)).toHaveValue("3000");
+    await expect(page.locator(".calculation-result")).toContainText("3000 Wh ÷ 3.5 h ÷ (75 / 100)");
+    await expect(page.getByRole("link", { name: locale.panels, exact: true })).toHaveAttribute("href", `${locale.prefix}/marketplace/solar/panels`);
+  }
+});
 test("solution finder rejects invalid inputs and returns transparent equipment recommendations", async ({
   page,
 }) => {
