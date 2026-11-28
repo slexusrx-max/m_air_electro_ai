@@ -1,4 +1,5 @@
 import type { Equipment } from "./catalog-data";
+import { comparisonGroup } from "./comparison";
 import { estimateSystem, matchingSystemCandidates } from "./recommendation";
 
 // Editorial examples, not customer cases, measured loads or preassembled kits.
@@ -32,8 +33,12 @@ export function stationCandidates(products: Equipment[], region: string, require
 /** Capacity screening only; no implicit series/parallel wiring or BMS compatibility. */
 export function batteryCandidates(products: Equipment[], minimumWh: number, voltage: number) {
   if (!Number.isFinite(minimumWh) || minimumWh <= 0 || !Number.isFinite(voltage) || voltage <= 0) return [];
-  return products.filter(p => p.kind === "product" && p.category === "lithium-batteries" &&
-    Number(p.facets.capacityWh) >= minimumWh && Number(p.facets.voltage) === voltage)
+  return products.filter(p => {
+    if (p.kind !== "product" || comparisonGroup(p) !== "lithium-batteries") return false;
+    const nominalVoltage = /^(\d+(?:\.\d+)?)\s*V$/.exec(p.technicalSpecs["Nominal voltage"] ?? "");
+    return Number(p.facets.capacityWh) >= minimumWh &&
+      (Number(p.facets.voltage) === voltage || Number(nominalVoltage?.[1]) === voltage);
+  })
     .sort((a, b) => Number(a.facets.capacityWh) - Number(b.facets.capacityWh)).slice(0, 4);
 }
 
