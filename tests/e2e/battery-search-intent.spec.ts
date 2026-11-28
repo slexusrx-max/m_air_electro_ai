@@ -18,8 +18,13 @@ for (const locale of ["ro", "en"] as const) test(`battery search landing explain
   const destination = new URL((await compare.getAttribute("href"))!, baseURL);
   expect(destination.pathname).toBe(`${locale === "en" ? "/en" : ""}/compare`);
   expect(destination.searchParams.get("ids")).toBe("renogy-mini-100,renogy-mini-200");
-  await compare.click();
+  const models = page.locator(".battery-candidates");
+  await expect(models.locator("li:has([data-supplier-product])")).toHaveCount(2);
+  const matchingComparison = models.getByRole("link", { name: locale === "ro" ? "Compară aceste baterii" : "Compare these batteries" });
+  await expect(matchingComparison).toHaveAttribute("href", /ids=renogy-mini-100%2Crenogy-pro-smart-200ah$/);
+  await matchingComparison.click();
   await expect(page.locator(".comparison-scroll table")).toBeVisible();
   await expect(page.locator(".comparison-scroll thead th")).toHaveCount(3);
+  await expect(page.locator(".comparison-scroll thead")).toContainText("Renogy Pro Smart 200 Ah");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
 });

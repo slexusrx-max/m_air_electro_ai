@@ -154,3 +154,7 @@ The [backup calculator](https://mairelectroai.com/en/backup-calculator) hands of
 ## 27 November 2026 — solar example to solar calculator
 
 The [Solar + battery solution](https://mairelectroai.com/en/solutions/solar-battery) sent readers to a finder application that defaulted to Apartment. The primary RO/EN action now opens the [existing solar calculator](https://mairelectroai.com/en/calculators/solar), where the same 3,000 Wh/day, 3.5 peak sun hours and 75% yield factor give 1,143 W before the reader supplies local inputs. Hypothesis: the worked example now leads directly to an editable calculation and the relevant panel category. Evaluate that path when authorized reports are available. The existing attribution and 26-SKU exact-link priorities remain open.
+
+## 28 November 2026 — battery calculator: nominal voltage
+
+The [RO/EN battery calculator](https://mairelectroai.com/en/calculators/battery) now screens candidates by the catalog voltage class or an exact documented nominal voltage. At 100 W for 4 hours, 80% usable depth and 90% efficiency, the 12.8 V input still produces 555.56 nominal Wh and now surfaces two documented standalone batteries with a same-role comparison. A class-only record still requires its documented class input. Hypothesis: fewer false empty results when readers copy a model's nominal rating. Monitor this path when authorized reports are available. The 26-SKU Impact link queue and separate network-report checks stay open.

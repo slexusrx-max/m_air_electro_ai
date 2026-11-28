@@ -475,3 +475,15 @@ Point the primary action in both languages to the existing solar calculator and 
 All 215 unit tests, TypeScript, targeted ESLint, the 419-key i18n check and diff validation passed. Added a 390 px Playwright regression for the two localized CTAs, calculation assumptions and onward panel link. Local Chromium is unavailable. Verify the same path in rendered preview and production. Rollback: revert this focused release commit after checking later changes.
 
 Scoped Gmail checks, including the existing Ukraine enquiries, found no substantive new Renogy, Waterdrop, PECRON or BLUETTI reply. The latest candidate was a generic Impact rate-boost digest without a named programme. Fresh site event, search, network click/action, commission and payout reports were unavailable. No partner mail or tracking clicks were generated.
+
+## 28 November 2026 — keep documented nominal battery voltage in the selection path
+
+Preflight: GitHub main `d5f1ed7aaebdf5a61f6212b2cfa2e61aed9912b0` matched READY production `dpl_7HjUqQ2v9HP2n2W2X2A1qRUipq3V`. No open PR, building deployment or workflow associated with that commit appeared. The release starts from that newer baseline.
+
+Production attribution check: eight EN Renogy pages returned HTTP 200, with 365 exact rows, 227 tracked and 138 ordinary hrefs, 365 cards without numerical prices and zero mismatches against the existing register. All 26 queued exact ordinary destinations matched. RO/EN Waterdrop each showed 32 regional notices and no active supplier CTA. Robots and sitemap returned HTTP 200. These checks inspected first-party HTML. Site event receipt, search reports, affiliate clicks, actions, confirmed commission and payout were unavailable in this run.
+
+The existing battery guide already uses a 12.8 V example, but testing the calculator's selection function returned no models for 12.8 V. Reuse the explicit `Nominal voltage` catalog specification alongside the existing voltage class, with the same minimum energy and an explicit exclusion for expansion-battery roles. Product data sources are the existing Core Mini 100 Ah and Pro Smart 200 Ah records. The 12.8 V example now yields those two comparison candidates, while the 12 V class still includes the class-only model. Numbers used for Wh and Ah come from the original calculation. Matching voltage and energy does not certify compatibility.
+
+215 unit tests, TypeScript, targeted ESLint, i18n and diff validation passed. The focused unit regression covers exact nominal inputs, an unsupported voltage and exclusion of expansion batteries. The existing 390 px RO/EN browser regression now tests the live-results comparison path. Rollback: revert this release commit after checking later changes, retaining the baseline commit.
+
+Gmail: the two 27 November candidates were a Waterdrop Germany campaign email and a Renogy EU consumer newsletter. Neither changes the Romanian Waterdrop gate, confirms a commission or answers the existing Ukraine enquiries. No new substantive reply from PECRON or BLUETTI surfaced. No contact was sent and no merchant or tracking link was opened.

@@ -32,6 +32,15 @@ test("station screening excludes unknown power/energy, excessive starts and unsu
 test("battery calculation candidates respect energy and voltage without inventing a bank", () => {
   assert.equal(batteryCandidates(catalog, 1000, 12).length, 3);
   assert.deepEqual(batteryCandidates(catalog, 1500, 12).map(p => p.id), ["renogy-mini-200", "renogy-pro-smart-200ah"]);
-  for (const voltage of [24, 48]) assert.deepEqual(batteryCandidates(catalog, 1000, voltage), []);
+  assert.deepEqual(batteryCandidates(catalog, 1000, 12.8).map(p => p.id), ["renogy-mini-100", "renogy-pro-smart-200ah"]);
+  assert.deepEqual(batteryCandidates(catalog, 1500, 12.8).map(p => p.id), ["renogy-pro-smart-200ah"]);
+  for (const voltage of [12.7, 24, 25.6, 48, 51.2]) assert.deepEqual(batteryCandidates(catalog, 1000, voltage), []);
   for (const wh of [NaN, Infinity, -1, 3000]) assert.deepEqual(batteryCandidates(catalog, wh, 12), []);
+  const extension = catalog.find(p => p.id === "pecron-ep3800-48v")!;
+  const documentedExtension = {
+    ...extension,
+    facets: { ...extension.facets, capacityWh: "3840" },
+    technicalSpecs: { ...extension.technicalSpecs, "Nominal voltage": "48 V" },
+  };
+  assert.deepEqual(batteryCandidates([documentedExtension], 1000, 48), []);
 });
